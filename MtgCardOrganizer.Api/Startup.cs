@@ -28,6 +28,7 @@ namespace MtgCardOrganizer.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            services.AddCors();
             services.AddMvc();
         }
 
@@ -37,6 +38,7 @@ namespace MtgCardOrganizer.Api
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseMvc();
         }
     }

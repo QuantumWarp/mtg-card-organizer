@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
     constructor(private _httpService: Http) { }
     apiValues: string[] = [];
     ngOnInit() {
-        this._httpService.get('/api/values').subscribe(values => {
+        this._httpService.get('http://localhost:57894/api/values').subscribe(values => {
             this.apiValues = values.json() as string[];
         });
     }
