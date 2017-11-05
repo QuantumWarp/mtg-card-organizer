@@ -1,0 +1,17 @@
+import { Component, ViewChildren } from '@angular/core';
+import { Card } from "../../cards/card";
+
+@Component({
+  selector: 'card-search-page',
+  templateUrl: './card-search-page.component.html',
+  styleUrls: ['./card-search-page.component.css']
+})
+export class CardSearchPageComponent {
+  selectedCard: Card;
+
+  constructor() { }
+
+  cardSelected(card: Card) {
+    this.selectedCard = card;
+  }
+}

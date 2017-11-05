@@ -1,0 +1,7 @@
+<mat-list>
+  <mat-list-item class="mat-2-line" *ngFor="let card of cards" >
+    <div>
+      <button mat-raised-button (click)="cardClick(card)">{{card.name}}</button>
+    </div>
+  </mat-list-item>
+</mat-list>

@@ -1,23 +1,23 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http'
+import { SharedModule } from './shared.module';
+import { GeneralModule } from './general/general.module';
+import { PageModule } from './pages/page.module';
 
-import { AppComponent } from './app.component';
-import { CardServiceComponent } from './cards/card-service/card-service.component';
-import { CardDetailsComponent } from './cards/card-details/card-details.component';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppComponent } from './app.component/app.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CardServiceComponent,
-    CardDetailsComponent
   ],
   imports: [
-    BrowserModule,
+    SharedModule,
+    GeneralModule,
+    PageModule,
     HttpClientModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
