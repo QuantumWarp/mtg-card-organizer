@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { MatSidenavContainer } from '@angular/material';
 import { Card } from '../cards/card';
 
 @Component({
@@ -7,6 +8,5 @@ import { Card } from '../cards/card';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'MTG Card Organizer';
   @Input() card: Card;
 }

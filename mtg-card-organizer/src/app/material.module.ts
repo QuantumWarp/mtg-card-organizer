@@ -4,6 +4,7 @@ import {
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
+    MatSidenavModule,
     MatIconModule,
     MatCardModule,
     MatListModule
@@ -14,6 +15,7 @@ import {
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
+    MatSidenavModule,
     MatIconModule,
     MatCardModule,
     MatListModule
@@ -22,6 +24,7 @@ import {
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
+    MatSidenavModule,
     MatIconModule,
     MatCardModule,
     MatListModule
