@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared.module';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { CardSearchComponent } from './card-search/card-search.component';
 
 import { CardService } from './card-service/card.service';
+import { CardsFixture } from './card-service/cards-fixture';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,8 @@ import { CardService } from './card-service/card.service';
     CardSearchComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    HttpClientInMemoryWebApiModule.forFeature(CardsFixture, { apiBase: 'api/' }),
   ],
   exports: [
     CardDetailsComponent,

@@ -8,5 +8,4 @@ import { Card } from '../cards/card';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @Input() card: Card;
 }

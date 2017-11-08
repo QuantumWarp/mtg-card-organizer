@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatToolbar, MatButton, MatIcon } from '@angular/material';
 
 @Component({
@@ -6,12 +6,11 @@ import { MatToolbar, MatButton, MatIcon } from '@angular/material';
   templateUrl: './main-nav-bar.component.html',
   styleUrls: ['./main-nav-bar.component.css']
 })
-export class MainNavBarComponent implements OnInit {
+export class MainNavBarComponent {
   title = 'MTG Card Organizer';
+  @Output() listToggleClick = new EventEmitter();
 
-  constructor() { }
-
-  ngOnInit() {
+  toggleNav(): void {
+    this.listToggleClick.emit();
   }
-
 }

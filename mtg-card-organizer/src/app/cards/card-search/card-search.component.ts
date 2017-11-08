@@ -4,7 +4,7 @@ import { Card } from '../card';
 import { CardService } from '../card-service/card.service';
 
 @Component({
-  selector: 'card-search',
+  selector: 'app-card-search',
   templateUrl: './card-search.component.html',
   styleUrls: ['./card-search.component.css']
 })
@@ -21,6 +21,6 @@ export class CardSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cardService.getCards().then(cards => this.cards = cards);
+    this.cardService.getCards().subscribe(cards => this.cards = cards);
   }
 }

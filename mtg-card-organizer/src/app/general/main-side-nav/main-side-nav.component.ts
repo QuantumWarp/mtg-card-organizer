@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatSidenavContainer, MatSidenav } from '@angular/material';
 
 @Component({
@@ -6,11 +6,8 @@ import { MatSidenavContainer, MatSidenav } from '@angular/material';
   templateUrl: './main-side-nav.component.html',
   styleUrls: ['./main-side-nav.component.css']
 })
-export class MainSideNavComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+export class MainSideNavComponent {
+  toggleSidenav(): void {
+    
   }
-
 }

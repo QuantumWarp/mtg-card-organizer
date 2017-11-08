@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { MaterialModule } from './material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   exports: [
     BrowserModule,
     MaterialModule,
-    BrowserAnimationsModule
+    FlexLayoutModule
   ]
 })
 export class SharedModule { }

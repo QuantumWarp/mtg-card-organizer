@@ -6,6 +6,8 @@ import { PageModule } from './pages/page.module';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppComponent } from './app.component/app.component';
 
 @NgModule({
@@ -13,10 +15,11 @@ import { AppComponent } from './app.component/app.component';
     AppComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
+    HttpClientModule,
     SharedModule,
     GeneralModule,
-    PageModule,
-    HttpClientModule
+    PageModule
   ],
   bootstrap: [AppComponent]
 })

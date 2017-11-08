@@ -1,14 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { Card } from '../card';
-import { CardService } from '../card-service/card.service';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { fadeInAnimation } from '../../animations/fade-in-animation';
 
 @Component({
-  selector: 'card-details',
+  selector: 'app-card-details',
   templateUrl: './card-details.component.html',
-  styleUrls: ['./card-details.component.css']
+  styleUrls: ['./card-details.component.css'],
+  animations: [
+    trigger('enterAnimation', [ transition(':enter', fadeInAnimation(2000)) ])
+  ]
 })
 export class CardDetailsComponent {
   @Input() card: Card;
-
-  constructor(private cardService: CardService) { }
 }
