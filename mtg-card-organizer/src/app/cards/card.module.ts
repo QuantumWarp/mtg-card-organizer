@@ -6,20 +6,27 @@ import { CardDetailsComponent } from './card-details/card-details.component';
 import { CardSearchComponent } from './card-search/card-search.component';
 
 import { CardService } from './card-service/card.service';
-import { CardsFixture } from './card-service/cards-fixture';
+import { CardSearchBarComponent } from './card-search/card-search-bar.component';
+import { CardSearchGridComponent } from './card-search/card-search-grid.component';
+import { CardSearchFilterComponent } from './card-search/card-search-filter.component';
 
 @NgModule({
   declarations: [
     CardDetailsComponent,
-    CardSearchComponent
+    CardSearchComponent,
+    CardSearchBarComponent,
+    CardSearchGridComponent,
+    CardSearchFilterComponent
+  ],
+  entryComponents: [
+    CardSearchFilterComponent
   ],
   imports: [
-    SharedModule,
-    HttpClientInMemoryWebApiModule.forFeature(CardsFixture, { apiBase: 'api/' }),
+    SharedModule
   ],
   exports: [
-    CardDetailsComponent,
-    CardSearchComponent
+    CardSearchComponent,
+    CardDetailsComponent
   ],
   providers: [
     CardService

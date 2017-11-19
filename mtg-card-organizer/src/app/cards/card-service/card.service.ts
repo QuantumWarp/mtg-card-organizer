@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Card } from '../card';
 import { Observable } from 'rxjs/Observable';
+import { GetAllData } from '../../general/grid/grid-data-source.interfaces';
+import { PageSortFilter } from '../../general/grid/page-sort-filter';
+import { PagedData } from '../../general/grid/paged-data';
 
 @Injectable()
-export class CardService {
+export class CardService implements GetAllData<Card> {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  getCards(): Observable<Card[]> {
-    return this._http.get<Card[]>('http://localhost/api/cards');
+  getAll(pageSortFilter: PageSortFilter): Observable<PagedData<Card>> {
+    return this.httpClient.post<PagedData<Card>>('http://localhost/api/cards/database', JSON.stringify(pageSortFilter));
   }
 }
 

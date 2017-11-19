@@ -1,7 +1,9 @@
-<mat-list>
-  <mat-list-item class="mat-2-line" *ngFor="let card of cards" >
-    <div>
-      <button mat-raised-button (click)="cardClick(card)">{{card.name}}</button>
-    </div>
-  </mat-list-item>
-</mat-list>
+<div class="mat-elevation-z8">
+  <app-card-search-bar [cardDataSource]="cardDataSource"></app-card-search-bar>
+  <app-card-search-grid #searchGrid (selectedCardChange)="selectedCardChange.emit($event)" [cardDataSource]="cardDataSource"></app-card-search-grid>
+  <mat-paginator #paginator
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 20, 50]">
+</mat-paginator>
+</div>

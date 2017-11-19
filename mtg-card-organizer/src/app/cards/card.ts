@@ -1,4 +1,4 @@
-export interface Card {
+export class Card {
     cardId: string;
     name: string;
     power: string;
@@ -6,4 +6,8 @@ export interface Card {
     oracleText: string;
     cost: string;
     imageUrl: string;
+
+    public constructor(init?: Partial<Card>) {
+      Object.assign(this, init);
+    }
 }

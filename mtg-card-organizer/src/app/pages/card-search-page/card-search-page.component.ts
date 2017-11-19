@@ -3,8 +3,7 @@ import { Card } from '../../cards/card';
 
 @Component({
   selector: 'app-card-search-page',
-  templateUrl: './card-search-page.component.html',
-  styleUrls: ['./card-search-page.component.css']
+  templateUrl: './card-search-page.component.html'
 })
 export class CardSearchPageComponent {
   selectedCard: Card;

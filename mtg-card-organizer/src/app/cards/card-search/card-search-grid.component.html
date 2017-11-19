@@ -1,0 +1,21 @@
+<mat-table #table [dataSource]="cardDataSource" matSort>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+    <mat-cell *matCellDef="let card"> {{card.name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="power">
+    <mat-header-cell *matHeaderCellDef> Power </mat-header-cell>
+    <mat-cell *matCellDef="let card"> {{card.power}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+    <mat-cell *matCellDef="let card">
+      <button mat-raised-button color="primary" (click)="detailsClick(card)">Details</button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

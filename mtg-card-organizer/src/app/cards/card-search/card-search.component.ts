@@ -1,26 +1,23 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { MatList, MatListItem, MatButton } from '@angular/material';
-import { Card } from '../card';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CardService } from '../card-service/card.service';
+import { GridDataSource } from '../../general/grid/grid-data-source';
+import { Card } from '../card';
+import { MatSort, MatPaginator } from '@angular/material';
+import { CardSearchGridComponent } from './card-search-grid.component';
 
 @Component({
   selector: 'app-card-search',
-  templateUrl: './card-search.component.html',
-  styleUrls: ['./card-search.component.css']
+  templateUrl: './card-search.component.html'
 })
 export class CardSearchComponent implements OnInit {
-  cards: Card[];
-  selectedCard: Card;
+  @ViewChild('paginator') paginator: MatPaginator;
+  @ViewChild('searchGrid') searchGrid: CardSearchGridComponent;
   @Output() selectedCardChange = new EventEmitter<Card>();
+  cardDataSource: GridDataSource<Card>;
 
   constructor(private cardService: CardService) { }
 
-  cardClick(card: Card): void {
-    this.selectedCard = card;
-    this.selectedCardChange.emit(this.selectedCard);
-  }
-
   ngOnInit(): void {
-    this.cardService.getCards().subscribe(cards => this.cards = cards);
+    this.cardDataSource = new GridDataSource<Card>(this.cardService, this.paginator, this.searchGrid.sort);
   }
 }
