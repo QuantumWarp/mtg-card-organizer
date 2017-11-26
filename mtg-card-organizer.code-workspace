@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "mtg-card-organizer"
+		},
+		{
+			"path": "MtgCardOrganizer.Api"
+		},
+		{
+			"path": "MtgCoreLib"
+		},
+		{
+			"path": "MtgTester"
+		},
+		{
+			"path": "MtgCoreLibBak"
+		}
+	],
+	"settings": {}
+}

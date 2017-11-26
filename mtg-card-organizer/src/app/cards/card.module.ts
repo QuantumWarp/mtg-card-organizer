@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared.module';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { CardSearchComponent } from './card-search/card-search.component';

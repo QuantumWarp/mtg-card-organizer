@@ -11,7 +11,11 @@ export class CardSearchFilterComponent {
 
   constructor(public dialogRef: MatDialogRef<CardSearchFilterComponent>) { }
 
-  apply() {
+  apply(): void {
+    this.dialogRef.close(this.cardSearchFilter);
+  }
+
+  cancel(): void {
     this.dialogRef.close();
   }
 }

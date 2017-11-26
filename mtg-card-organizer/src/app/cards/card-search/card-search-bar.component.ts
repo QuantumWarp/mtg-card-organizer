@@ -14,7 +14,7 @@ export class CardSearchBarComponent {
   constructor(private dialog: MatDialog) { }
 
   openFilterDialog() {
-    const dialogRef = this.dialog.open(CardSearchFilterComponent);
+    const dialogRef = this.dialog.open(CardSearchFilterComponent, { disableClose: true });
     // dialogRef.componentInstance.cardSearchFilter = this.cardDataSource.;
   }
 }
