@@ -1,9 +1,9 @@
 <div class="container" style="display: flex; flex-direction: column;">
   <mat-form-field>
-    <input matInput placeholder="Name">
+    <input matInput [(ngModel)]="nameFilter" placeholder="Name">
   </mat-form-field>
   <mat-form-field>
-    <input matInput placeholder="Oracle Text">
+    <input #oracleTextInput matInput placeholder="Oracle Text">
   </mat-form-field>
 </div>
 <button mat-raised-button (click)="cancel()">Cancel</button>
