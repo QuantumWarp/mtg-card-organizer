@@ -7,6 +7,17 @@
         "**/.DS_Store": true,
         "node_modules": true,
         "package-lock.json": true,
-        ".vscode": true
+        ".vscode": true,
+        "karma.conf.js": true,
+        ".gitignore": true,
+        "tsconfig.json": true,
+        "protractor.conf.js": true,
+        "tslint.json": true,
+        ".editorconfig": true,
+        "README.md": true,
+        "**/tsconfig.app.json": true,
+        "**/tsconfig.spec.json": true,
+        "**/polyfills.ts": true,
+        "**/typings.d.ts": true
     }
 }
