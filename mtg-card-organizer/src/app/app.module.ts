@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from './shared.module';
@@ -11,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component/app.component';
 import { environment } from '../environments/environment';
 import { MockingModule } from './mocking.module';
+import { CardSearchPageComponent } from './pages/card-search-page/card-search-page.component';
 
 const conditionalModules = [];
 if (environment.mockApi) {
@@ -27,8 +29,11 @@ if (environment.mockApi) {
     HttpClientModule,
     SharedModule,
     GeneralModule,
-    PageModule
+    PageModule,
+    RouterModule.forRoot([]),
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Card } from '../card';
+import { Card } from '../models/card';
 import { Observable } from 'rxjs/Observable';
 import { GetAllData } from '../../general/grid/grid-data-source.interfaces';
 import { PageSortFilter } from '../../general/grid/page-sort-filter';

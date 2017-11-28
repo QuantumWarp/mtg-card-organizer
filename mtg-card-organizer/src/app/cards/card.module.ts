@@ -4,7 +4,7 @@ import { SharedModule } from '../shared.module';
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { CardSearchComponent } from './card-search/card-search.component';
 
-import { CardService } from './card-service/card.service';
+import { CardService } from './services/card.service';
 import { CardSearchBarComponent } from './card-search/card-search-bar.component';
 import { CardSearchGridComponent } from './card-search/card-search-grid.component';
 import { CardSearchFilterComponent } from './card-search/card-search-filter.component';

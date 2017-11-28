@@ -1,5 +1,5 @@
 import { Component, ViewChildren } from '@angular/core';
-import { Card } from '../../cards/card';
+import { Card } from '../../cards/models/card';
 
 @Component({
   selector: 'app-card-search-page',

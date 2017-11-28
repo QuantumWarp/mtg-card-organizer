@@ -4,9 +4,9 @@ using MtgCoreLib.Entities.Other;
 
 namespace MtgCoreLib.Contexts
 {
-    public class CardsContext : DbContext
+    public class CardContext : DbContext
     {
-        public CardsContext(DbContextOptions<CardsContext> options) : base(options)
+        public CardContext(DbContextOptions<CardContext> options) : base(options)
         {
         }
 

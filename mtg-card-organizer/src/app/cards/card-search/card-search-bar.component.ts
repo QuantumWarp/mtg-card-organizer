@@ -2,7 +2,7 @@ import { Component, Input, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { CardSearchFilterComponent } from './card-search-filter.component';
 import { GridDataSource } from '../../general/grid/grid-data-source';
-import { Card } from '../card';
+import { Card } from '../models/card';
 import { PropertyFilter } from '../../general/grid/property-filter';
 import { Filterer } from '../../general/grid/filterer';
 

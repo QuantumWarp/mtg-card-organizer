@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, ViewChild } from '@angular/core';
-import { Card } from '../card';
-import { CardService } from '../card-service/card.service';
+import { Card } from '../models/card';
+import { CardService } from '../services/card.service';
 import { DataSource } from '@angular/cdk/table';
 import { GridDataSource } from '../../general/grid/grid-data-source';
 import { MatSort } from '@angular/material';

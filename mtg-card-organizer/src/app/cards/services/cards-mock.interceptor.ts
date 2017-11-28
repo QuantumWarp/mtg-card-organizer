@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { MockInterceptor } from '../../general/mock-interceptor';
 import { parse } from 'url';
 import { PagedData } from '../../general/grid/paged-data';
-import { Card } from '../card';
+import { Card } from '../models/card';
 import { PagedDataHelper } from '../../general/mocking/paged-data.helper';
 import { PageSortFilter } from '../../general/grid/page-sort-filter';
 import { cardsDatabase } from './card-database.fixture';

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Card } from '../card';
+import { Card } from '../models/card';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { fadeInAnimation } from '../../animations/fade-in-animation';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { CardService } from '../card-service/card.service';
+import { CardService } from '../services/card.service';
 import { GridDataSource } from '../../general/grid/grid-data-source';
-import { Card } from '../card';
+import { Card } from '../models/card';
 import { MatSort, MatPaginator } from '@angular/material';
 import { CardSearchGridComponent } from './card-search-grid.component';
 import { Filterer } from '../../general/grid/filterer';
