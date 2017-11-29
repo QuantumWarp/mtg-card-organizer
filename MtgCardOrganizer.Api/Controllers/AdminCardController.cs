@@ -22,7 +22,7 @@ namespace MtgCardOrganizer.Api.Controllers
         [HttpPost]
         public void AddCardInfos(IEnumerable<CardSetInfoDto> fullCardInfos)
         {
-
+            _adminCardsManager.
         }
 
         [HttpPost]

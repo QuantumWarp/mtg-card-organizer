@@ -11,9 +11,6 @@
 		},
 		{
 			"path": "MtgTester"
-		},
-		{
-			"path": "MtgCoreLibBak"
 		}
 	],
 	"settings": {}

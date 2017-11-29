@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MtgCoreLib.Contexts;
+using MtgCoreLib.Dtos.Cards;
 
 namespace MtgCoreLib.Managers
 {
@@ -12,6 +13,10 @@ namespace MtgCoreLib.Managers
         public AdminCardManager(CardContext cardContext)
         {
             _cardContext = cardContext;
+        }
+
+        public void AddCardInfos(IEnumerable<CardSetInfoDto> cards) {
+            
         }
 
         public void ClearCards()

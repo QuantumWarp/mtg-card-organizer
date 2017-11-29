@@ -1,10 +1,10 @@
-﻿namespace MtgCoreLib.Enums
+﻿namespace MtgCoreLib.Dtos.Enums
 {
     public enum Rarity
     {
         Common,
         Uncommon,
         Rare,
-        Mythic
+        Mythic,
     }
 }
