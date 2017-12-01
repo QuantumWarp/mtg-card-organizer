@@ -4,13 +4,13 @@ using MtgCoreLib.Contexts;
 
 namespace MtgCoreLib.Initialization
 {
-    public class CardsContextFactory : IDesignTimeDbContextFactory<CardsContext>
+    public class CardsContextFactory : IDesignTimeDbContextFactory<CardContext>
     {
-        public CardsContext CreateDbContext(string[] args)
+        public CardContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<CardsContext>();
+            var builder = new DbContextOptionsBuilder<CardContext>();
             builder.UseSqlServer(Configuration.ConnectionStrings.Default);
-            return new CardsContext(builder.Options);
+            return new CardContext(builder.Options);
         }
     }
 }

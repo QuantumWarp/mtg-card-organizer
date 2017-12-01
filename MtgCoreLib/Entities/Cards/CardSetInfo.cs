@@ -1,5 +1,5 @@
 ﻿using MtgCoreLib.Entities.Other;
-using MtgCoreLib.Enums;
+using MtgCoreLib.Dtos.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace MtgCoreLib.Entities.Cards

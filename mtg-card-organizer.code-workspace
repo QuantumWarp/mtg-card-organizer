@@ -10,7 +10,7 @@
 			"path": "MtgCoreLib"
 		},
 		{
-			"path": "MtgTester"
+			"path": "MtgCoreLib.Tests"
 		}
 	],
 	"settings": {}

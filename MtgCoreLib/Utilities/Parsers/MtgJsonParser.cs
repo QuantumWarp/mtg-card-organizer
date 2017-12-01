@@ -18,6 +18,7 @@ namespace MtgCoreLib.Utilities.Parsers
         public IEnumerable<CardDto> Parse(string mtgJsonText) 
         {
             JsonConvert.DeserializeObject(mtgJsonText);
+            return null; // TODO
         }
 
         public string DownloadAndUnzip()
