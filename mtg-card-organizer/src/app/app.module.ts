@@ -3,16 +3,16 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from './shared.module';
 import { GeneralModule } from './general/general.module';
-import { PageModule } from './pages/page.module';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppComponent } from './app.component/app.component';
+import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { MockingModule } from './mocking.module';
-import { CardSearchPageComponent } from './pages/card-search-page/card-search-page.component';
+import { CardSearchPageComponent } from './search/card-search-page/card-search-page.component';
 
 const conditionalModules = [];
 if (environment.mockApi) {
@@ -25,12 +25,15 @@ if (environment.mockApi) {
   ],
   imports: [
     ...conditionalModules,
+    BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
     GeneralModule,
-    PageModule,
-    RouterModule.forRoot([]),
+    RouterModule.forRoot([
+      { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' },
+      { path: 'search', loadChildren: 'app/search/search.module#SearchModule' },
+    ]),
   ],
   bootstrap: [
     AppComponent

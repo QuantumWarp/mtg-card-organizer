@@ -3,22 +3,22 @@ import { SharedModule } from '../shared.module';
 
 import { CardModule } from '../cards/card.module';
 
-import { CardSearchPageComponent } from './card-search-page/card-search-page.component';
+import { ImportCardsComponent } from './import-cards/import-cards.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    CardSearchPageComponent
+    ImportCardsComponent
   ],
   entryComponents: [
-    CardSearchPageComponent
+    ImportCardsComponent
   ],
   imports: [
     SharedModule,
     CardModule,
     RouterModule.forChild([
-      { path: 'card-search', component: CardSearchPageComponent }
+      { path: 'import-cards', component: ImportCardsComponent }
     ]),
   ]
 })
-export class PageModule {}
+export class AdminModule {}

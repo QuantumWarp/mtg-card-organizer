@@ -4,7 +4,12 @@ using System.Text;
 
 namespace MtgCoreLib.Managers
 {
-    public class CardManager
+    public interface ICardManager
+    {
+        void GetCards();
+    }
+
+    public class CardManager : ICardManager
     {
         public void GetCards()
         {

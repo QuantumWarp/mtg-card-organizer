@@ -30,6 +30,9 @@ namespace MtgCardOrganizer.Api
             // Add framework services.
             services.AddCors();
             services.AddMvc();
+
+            services.AddManagers();
+            services.AddContexts(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

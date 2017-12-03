@@ -4,11 +4,11 @@ using System.Text;
 
 namespace MtgCoreLib.Managers
 {
-    public class CollectionManager
+    public interface ICollectionManager
     {
-        public void GetCards()
-        {
+    }
 
-        }
+    public class CollectionManager : ICollectionManager
+    {
     }
 }

@@ -6,23 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using MtgCoreLib;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Entities.Cards;
+using MtgCoreLib.Managers;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
-    [Route("api/admin/[controller]")]
+    [Route("api/[controller]")]
     public class AdminCardController : Controller
     {
-        private AdminCardsManager _adminCardsManager;
+        private IAdminCardManager _adminCardsManager;
 
-        public AdminCardController(AdminCardsManager adminCardsManager)
+        public AdminCardController(IAdminCardManager adminCardsManager)
         {
             _adminCardsManager = adminCardsManager;
         }
 
         [HttpPost]
+        public void RepopulateFromMtgJson() 
+        {
+
+        }
+
+        [HttpPost]
         public void AddCardInfos(IEnumerable<CardSetInfoDto> fullCardInfos)
         {
-            _adminCardsManager.
+            
         }
 
         [HttpPost]
