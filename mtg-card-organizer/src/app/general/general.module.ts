@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared.module';
 
-import { MainNavBarComponent } from './main-nav-bar/main-nav-bar.component';
-import { MainSideNavComponent } from './main-side-nav/main-side-nav.component';
+import { NavigatorComponent } from './navigation/navigator.component';
+import { NavBarComponent } from './navigation/nav-bar.component';
 
 @NgModule({
   declarations: [
-    MainNavBarComponent,
-    MainSideNavComponent,
+    NavBarComponent,
+    NavigatorComponent,
   ],
   imports: [
     SharedModule
   ],
   exports: [
-    MainNavBarComponent,
-    MainSideNavComponent,
+    NavBarComponent,
+    NavigatorComponent,
   ]
 })
 export class GeneralModule {}

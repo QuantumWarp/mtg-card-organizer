@@ -1,6 +1,8 @@
-<main-nav-bar></main-nav-bar>
+<app-nav-bar (listToggleClick)="sidenav.toggle()"></app-nav-bar>
 <mat-sidenav-container>
-  <main-side-nav></main-side-nav>
+  <mat-sidenav #sidenav mode="side">
+    <app-navigator></app-navigator>
+  </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

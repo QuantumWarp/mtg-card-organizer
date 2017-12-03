@@ -2,11 +2,10 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { MatToolbar, MatButton, MatIcon } from '@angular/material';
 
 @Component({
-  selector: 'main-nav-bar',
-  templateUrl: './main-nav-bar.component.html',
-  styleUrls: ['./main-nav-bar.component.css']
+  selector: 'app-nav-bar',
+  templateUrl: './nav-bar.component.html',
 })
-export class MainNavBarComponent {
+export class NavBarComponent {
   title = 'MTG Card Organizer';
   @Output() listToggleClick = new EventEmitter();
 
