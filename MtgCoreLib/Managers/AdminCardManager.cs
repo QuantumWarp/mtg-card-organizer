@@ -9,7 +9,7 @@ namespace MtgCoreLib.Managers
 {
     public interface IAdminCardManager
     {
-        void AddCardInfos(IEnumerable<CardSetInfoDto> cardSet);
+        void ImportCards(ParseType parseType, string importString);
         void ClearCards();
     }
 
@@ -22,15 +22,16 @@ namespace MtgCoreLib.Managers
             _cardContext = cardContext;
         }
 
-        public void RetrieveAndAdd(ParseType parseType)
+        public void ImportCards(ParseType parseType, string importString)
         {
             var parser = parseType.GetParser();
-            var text = parser.Retrieve();
-            parser.Parse(text);
-        }
+            if (string.IsNullOrEmpty(importString)) {
+                importString = parser.Retrieve();
+            }
+            parser.Parse(importString);
 
-        public void AddCardInfos(IEnumerable<CardSetInfoDto> cards) {
-            
+            _cardContext.Cards.AddRange(parser.CardDtos);
+            _cardContext.CardSetInfos.AddRange(parser.CardSetInfoDtos);
         }
 
         public void ClearCards()

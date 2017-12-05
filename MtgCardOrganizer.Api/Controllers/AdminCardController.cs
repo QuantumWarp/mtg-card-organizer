@@ -7,6 +7,7 @@ using MtgCoreLib;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Entities.Cards;
 using MtgCoreLib.Managers;
+using MtgCoreLib.Utilities.Parsers;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
@@ -20,22 +21,16 @@ namespace MtgCardOrganizer.Api.Controllers
             _adminCardsManager = adminCardsManager;
         }
 
-        [HttpPost]
-        public void RepopulateFromMtgJson() 
+        [HttpPost("import-cards")]
+        public void ImportCards(string importString) 
         {
-
+            _adminCardsManager.ImportCards(ParseType.MtgJson, importString);
         }
 
-        [HttpPost]
-        public void AddCardInfos(IEnumerable<CardSetInfoDto> fullCardInfos)
+        [HttpPost("clear-cards")]
+        public void ClearCards() 
         {
-            
-        }
-
-        [HttpPost]
-        public void ClearCardInfos() 
-        {
-
+            _adminCardsManager.ClearCards();
         }
     }
 }

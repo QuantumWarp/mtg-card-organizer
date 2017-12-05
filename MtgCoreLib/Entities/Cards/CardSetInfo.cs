@@ -1,6 +1,7 @@
 ﻿using MtgCoreLib.Entities.Other;
 using MtgCoreLib.Dtos.Enums;
 using System.ComponentModel.DataAnnotations;
+using MtgCoreLib.Dtos.Cards;
 
 namespace MtgCoreLib.Entities.Cards
 {
@@ -15,6 +16,10 @@ namespace MtgCoreLib.Entities.Cards
         [Required]
         public Rarity Rarity { get; private set; }
         [Required]
-        public Set Set { get; private set; }        
+        public Set Set { get; private set; }
+
+        public CardSetInfo(CardSetInfoDto cardSetInfoDto) {
+            
+        }
     }
 }

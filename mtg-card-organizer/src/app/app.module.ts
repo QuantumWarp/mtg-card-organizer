@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { MockingModule } from './mocking.module';
 import { CardSearchPageComponent } from './search/card-search-page/card-search-page.component';
+import { HomeComponent } from './home/home.component';
 
 const conditionalModules = [];
 if (environment.mockApi) {
@@ -22,6 +23,10 @@ if (environment.mockApi) {
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
+  ],
+  entryComponents: [
+    HomeComponent
   ],
   imports: [
     ...conditionalModules,
@@ -31,6 +36,8 @@ if (environment.mockApi) {
     SharedModule,
     GeneralModule,
     RouterModule.forRoot([
+      { path: '', redirectTo: '/home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
       { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' },
       { path: 'search', loadChildren: 'app/search/search.module#SearchModule' },
     ]),

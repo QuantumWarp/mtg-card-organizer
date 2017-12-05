@@ -6,6 +6,7 @@ import { NavNode } from './nav-node';
 @Component({
   selector: 'app-navigator',
   templateUrl: './navigator.component.html',
+  styleUrls: ['./navigation.css']
 })
 export class NavigatorComponent {
   model = NavModel.default();

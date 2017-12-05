@@ -17,4 +17,4 @@ import { NavBarComponent } from './navigation/nav-bar.component';
     NavigatorComponent,
   ]
 })
-export class GeneralModule {}
+export class GeneralModule { }
