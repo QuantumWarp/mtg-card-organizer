@@ -6,12 +6,14 @@ using System.Net;
 using MtgCoreLib.Dtos.Cards;
 using Newtonsoft.Json;
 using MtgCoreLib.Utilities.General;
+using MtgCoreLib.Dtos.Enums;
+using System.Linq;
 
 namespace MtgCoreLib.Utilities.Parsers
 {
     public class MtgJsonParser : IParser
     {
-        private readonly string DownloadFilename = "cards.json.zip";
+        private readonly string DownloadFilename = "../AllSets-x.json.zip";
 
         private readonly Uri AllCardsUri = new Uri("https://mtgjson.com/json/AllSets.json.zip");
         private readonly Uri AllCardsAndExtrasUri = new Uri("https://mtgjson.com/json/AllSets-x.json.zip");
@@ -19,6 +21,9 @@ namespace MtgCoreLib.Utilities.Parsers
         public List<SetDto> SetDtos { get; } = new List<SetDto>();
         public List<CardDto> CardDtos { get; } = new List<CardDto>();
         public List<CardSetInfoDto> CardSetInfoDtos { get; } = new List<CardSetInfoDto>();
+
+        public Dictionary<CardSetInfoDto, SetDto> SetRelationship { get; }  = new Dictionary<CardSetInfoDto, SetDto>();
+        public Dictionary<CardSetInfoDto, CardDto> CardRelationship { get; } = new Dictionary<CardSetInfoDto, CardDto>();
 
         public void Parse(string mtgJsonText) 
         {
@@ -31,24 +36,22 @@ namespace MtgCoreLib.Utilities.Parsers
 
         private void ParseSingleSet(Dictionary<string, dynamic> setObj)
         {
-            var setId = setObj["code"].ToString();
-
-            SetDtos.Add(new SetDto {
-                SetId = setId,
+            var newSet = new SetDto {
                 Code = setObj["code"].ToString(),
                 Name = setObj["name"].ToString(),
-            });
+            };
+            SetDtos.Add(newSet);
 
             foreach (var cardObj in setObj["cards"])
             {
-                ParseSingleCard(cardObj, setId);
+                ParseSingleCard(cardObj, newSet);
             }
         }
 
-        private void ParseSingleCard(Dictionary<string, dynamic> cardObj, string setId)
+        private void ParseSingleCard(Dictionary<string, dynamic> cardObj, SetDto setDto)
         {
             var cardDto = new CardDto();
-            cardDto.CardId = cardObj["id"].ToString();
+
             cardDto.Name = cardObj["name"].ToString();
             if (cardObj.ContainsKey("manaCost")) cardDto.ManaCost = cardObj["manaCost"].ToString();
             cardDto.ConvertedManaCost = cardObj["cmc"].ToString();
@@ -56,22 +59,28 @@ namespace MtgCoreLib.Utilities.Parsers
             if (cardObj.ContainsKey("toughness")) cardDto.Toughness = cardObj["toughness"].ToString();
 
             var cardSetInfoDto = new CardSetInfoDto();
-            cardSetInfoDto.CardId = cardObj["id"].ToString();
             cardSetInfoDto.Artist = cardObj["artist"].ToString();
-            cardSetInfoDto.SetId = setId;
+            if (cardObj.ContainsKey("number")) cardSetInfoDto.Num = cardObj["number"].ToString();
+            cardSetInfoDto.Rarity = RarityExtensions.Parse(cardObj["rarity"].ToString());
 
             CardDtos.Add(cardDto);
             CardSetInfoDtos.Add(cardSetInfoDto);
+
+            SetRelationship.Add(cardSetInfoDto, setDto);
+            CardRelationship.Add(cardSetInfoDto, cardDto);
         }
 
         public string Retrieve()
         {
-            using (var client = new WebClient())
+            // using (var client = new WebClient())
+            // {
+            //     client.DownloadFile(AllCardsUri, DownloadFilename);
+            // }
+            if (!File.Exists("../AllSets-x.json"))
             {
-                client.DownloadFile(AllCardsUri, DownloadFilename);
+                ZipFile.ExtractToDirectory(DownloadFilename, "../");
             }
-            ZipFile.ExtractToDirectory(DownloadFilename, "./");
-            return File.ReadAllText("./");
+            return File.ReadAllText("../AllSets-x.json");
         }
     }
 }

@@ -6,7 +6,6 @@ namespace MtgCoreLib.Entities.Cards
 {
     public class Card : Entity
     {        
-        public string CardId { get; set; }
         [Required]
         public string Name { get; set; }
         public string ManaCost { get; set; }
@@ -14,31 +13,34 @@ namespace MtgCoreLib.Entities.Cards
         public string Power { get; set; }
         public string Toughness { get; set; }
         public string OracleText { get; set; }
+        public string Type { get; set; }
+        // public ICollection<CardType> CardTypes { get; private set; }
+        // public ICollection<CardSubType> CardSubTypes { get; private set; }
 
-        public ICollection<CardType> CardTypes { get; private set; }
-        public ICollection<CardSubType> CardSubTypes { get; private set; }
+        public ICollection<CardSetInfo> CardSetInfos { get; set; }
 
-        public ICollection<CardSetInfo> CardSetInfos { get; private set; }
+        public Card() { }
 
         public Card(CardDto cardDto) {
-            CardId = cardDto.CardId;
             Name = cardDto.Name;
             ManaCost = cardDto.ManaCost;
             ConvertedManaCost = cardDto.ConvertedManaCost;
             Power = cardDto.Power;
             Toughness = cardDto.Toughness;
             OracleText = cardDto.OracleText;
+            Type = cardDto.Type;
         }
 
         public CardDto AsDto() {
             return new CardDto {
-                CardId = CardId,
+                Id = Id,
                 Name = Name,
                 ManaCost = ManaCost,
                 ConvertedManaCost = ConvertedManaCost,
                 Power = Power,
                 Toughness = Toughness,
                 OracleText = OracleText,
+                Type = Type,
             };
         }
     }

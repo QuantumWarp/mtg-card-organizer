@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MtgCoreLib;
+using MtgCoreLib.Dtos.Admin;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Entities.Cards;
 using MtgCoreLib.Managers;
@@ -22,15 +25,17 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpPost("import-cards")]
-        public void ImportCards(string importString) 
+        public HttpResponseMessage ImportCards(ImportCommand importCommand) 
         {
-            _adminCardsManager.ImportCards(ParseType.MtgJson, importString);
+            _adminCardsManager.ImportCards(importCommand);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPost("clear-cards")]
-        public void ClearCards() 
+        public HttpResponseMessage ClearCards() 
         {
             _adminCardsManager.ClearCards();
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
 }

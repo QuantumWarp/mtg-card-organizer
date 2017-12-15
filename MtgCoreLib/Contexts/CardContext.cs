@@ -12,12 +12,6 @@ namespace MtgCoreLib.Contexts
 
         public DbSet<Card> Cards { get; set; }
         public DbSet<CardSetInfo> CardSetInfos { get; set; }
-        
-        public DbSet<CardType> CardTypes { get; set; }
-        public DbSet<CardTypeLink> CardTypeLinks { get; set; }
-        public DbSet<CardSubType> CardSubTypes { get; set; }
-        public DbSet<CardSubTypeLink> CardSubTypeLinks { get; set; }
-
         public DbSet<Format> Formats { get; set; }
         public DbSet<Set> Sets { get; set; }
     }

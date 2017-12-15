@@ -5,6 +5,7 @@ import { CardModule } from '../cards/card.module';
 
 import { ImportCardsComponent } from './import-cards/import-cards.component';
 import { RouterModule } from '@angular/router';
+import { ImportService } from './services/import.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,9 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       { path: 'import-cards', component: ImportCardsComponent }
     ]),
+  ],
+  providers: [
+    ImportService
   ]
 })
 export class AdminModule {}

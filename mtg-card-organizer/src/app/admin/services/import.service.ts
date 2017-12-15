@@ -4,14 +4,15 @@ import { Observable } from 'rxjs/Observable';
 import { GetAllData } from '../../general/grid/grid-data-source.interfaces';
 import { PageSortFilter } from '../../general/grid/page-sort-filter';
 import { PagedData } from '../../general/grid/paged-data';
+import { ApiService } from '../../general/communication/api.service';
 
 @Injectable()
 export class ImportService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private apiService: ApiService) { }
 
-  import(importString: string): Observable<void> {
-    return this.httpClient.post<void>('http://localhost/api/admin/import-cards', importString);
+  import(importString: string): void {
+    this.apiService.post<any>('api/admincard/import-cards', { importString: importString }).subscribe();
   }
 }
 

@@ -9,6 +9,9 @@ namespace  MtgCoreLib.Utilities.Parsers
         List<CardDto> CardDtos { get; }
         List<CardSetInfoDto> CardSetInfoDtos { get; }
         
+        Dictionary<CardSetInfoDto, SetDto> SetRelationship { get; } 
+        Dictionary<CardSetInfoDto, CardDto> CardRelationship { get; } 
+        
         string Retrieve();
         void Parse(string text);
     }

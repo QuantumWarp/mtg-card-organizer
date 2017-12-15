@@ -24,10 +24,10 @@ namespace MtgCardOrganizer.Api.Controllers
             return new { test = "test"};
         }
 
-        [HttpGet, Route("all")]
-        public IEnumerable<CardDto> GetAll()
+        [HttpPost, Route("all")]
+        public PagedData<CardDto> GetAll(PageSortFilter pageSortFilter = null)
         {
-            return null; // TODO
+            return _cardManager.GetCards(pageSortFilter);
         }
     }
 }
