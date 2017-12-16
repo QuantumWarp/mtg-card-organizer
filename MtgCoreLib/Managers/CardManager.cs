@@ -23,7 +23,7 @@ namespace MtgCoreLib.Managers
 
         public PagedData<CardDto> GetCards(PageSortFilter pageSortFilter)
         {
-            return new PagedData<CardDto>(_cardContext.Cards.Select(x => x.AsDto()).ApplyPageSortFilter(pageSortFilter), _cardContext.Cards.Count());
+            return new PagedData<CardDto>(_cardContext.Cards.OrderBy(x => x.Name).Select(x => x.AsDto()).ApplyPageSortFilter(pageSortFilter), _cardContext.Cards.Count());
         }
     }
 }

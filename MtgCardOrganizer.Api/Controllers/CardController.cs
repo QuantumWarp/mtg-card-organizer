@@ -25,7 +25,7 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpPost, Route("all")]
-        public PagedData<CardDto> GetAll(PageSortFilter pageSortFilter = null)
+        public PagedData<CardDto> GetAll([FromBody] PageSortFilter pageSortFilter = null)
         {
             return _cardManager.GetCards(pageSortFilter);
         }

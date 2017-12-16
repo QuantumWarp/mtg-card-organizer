@@ -12,9 +12,10 @@ export class ApiService {
   }
 
   get<T>(path: string): Observable<T> {
+    const headers = this.headers();
     return this.httpClient.get<T>(
       this.apiBaseUrl + '/' + path,
-      { headers: this.headers() });
+      { headers });
   }
 
   post<T>(path: string, body: any): Observable<T> {
@@ -25,8 +26,9 @@ export class ApiService {
   }
 
   private headers(): HttpHeaders {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers = headers.set('Accept', 'application/json');
     return headers;
   }
 }
