@@ -1,14 +1,14 @@
-<mat-card>
-  <div>
+<div class="padded-page">
+  <mat-card fxFlex fxLayout="column">  
     <mat-form-field fxFlex>
       <textarea #inputArea matInput placeholder="Input"></textarea>
     </mat-form-field>
-  </div>
-
-  <div fxLayout="row">
-    <button mat-raised-button color="primary" (click)="openFileDialog()">Select From File</button>
-    <input class="file-selector" type="file" ng2FileSelect #fileInput (change)="fileChanged($event)"/>
-    <span fxFlex></span>
-    <button mat-raised-button color="primary" (click)="import()">Import</button>
-  </div>
-</mat-card>
+  
+    <div fxLayout="row">
+      <button mat-raised-button color="primary" (click)="openFileDialog()">Select From File</button>
+      <input class="file-selector" type="file" ng2FileSelect #fileInput (change)="fileChanged($event)"/>
+      <span fxFlex></span>
+      <button mat-raised-button color="primary" (click)="import()">Import</button>
+    </div>
+  </mat-card>
+</div>

@@ -4,7 +4,7 @@ import { MaterialModule } from './material.module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ApiService } from './general/communication/api.service';
+import { ApiService } from './communication/api.service';
 
 @NgModule({
   exports: [

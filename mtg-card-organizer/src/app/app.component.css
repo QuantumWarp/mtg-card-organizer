@@ -2,6 +2,6 @@ mat-sidenav {
   width: 200px;
 }
 
-.maincontent {
-  margin: 10px;
+.main {
+  min-height: 100vh;
 }

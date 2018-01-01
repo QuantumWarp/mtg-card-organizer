@@ -1,7 +1,7 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from './shared.module';
+import { SharedModule } from './general/shared.module';
 import { GeneralModule } from './general/general.module';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -11,9 +11,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { MockingModule } from './mocking.module';
-import { CardSearchPageComponent } from './search/card-search-page/card-search-page.component';
+import { MockingModule } from './general/mocking.module';
 import { HomeComponent } from './home/home.component';
+import { AppRoutingModule } from './app-routing.module';
 
 const conditionalModules = [];
 if (environment.mockApi) {
@@ -25,9 +25,6 @@ if (environment.mockApi) {
     AppComponent,
     HomeComponent,
   ],
-  entryComponents: [
-    HomeComponent
-  ],
   imports: [
     ...conditionalModules,
     BrowserModule,
@@ -35,12 +32,7 @@ if (environment.mockApi) {
     HttpClientModule,
     SharedModule,
     GeneralModule,
-    RouterModule.forRoot([
-      { path: '', redirectTo: '/home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent },
-      { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' },
-      { path: 'search', loadChildren: 'app/search/search.module#SearchModule' },
-    ]),
+    AppRoutingModule,
   ],
   bootstrap: [
     AppComponent

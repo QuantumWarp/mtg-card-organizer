@@ -1,6 +1,6 @@
 import { HttpRequest, HttpHandler, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { MockInterceptor } from '../../general/mock-interceptor';
+import { MockInterceptor } from '../../general/mocking/mock-interceptor';
 import { parse } from 'url';
 import { PagedData } from '../../general/grid/paged-data';
 import { Card } from '../models/card';
@@ -15,7 +15,7 @@ export class CardsMockInterceptor extends MockInterceptor {
 
   chooseMethod(req: HttpRequest<any>): (req: HttpRequest<any>) => HttpResponse<any> {
     const url = parse(req.url, true);
-    if (url.path.includes('database')) {
+    if (url.path.endsWith('cards')) {
       return this.getCardsDatabase;
     }
   }
