@@ -7,7 +7,7 @@ import { CardSearchComponent } from './card-search/card-search.component';
 import { CardService } from './services/card.service';
 import { CardSearchBarComponent } from './card-search/card-search-bar.component';
 import { CardSearchGridComponent } from './card-search/card-search-grid.component';
-import { CardSearchFilterComponent } from './card-search/card-search-filter.component';
+import { CardFilterComponent } from './card-filter/card-filter.component';
 import { CardSearchPageComponent } from './card-search-page/card-search-page.component';
 import { RouterModule } from '@angular/router';
 
@@ -17,11 +17,11 @@ import { RouterModule } from '@angular/router';
     CardSearchComponent,
     CardSearchBarComponent,
     CardSearchGridComponent,
-    CardSearchFilterComponent,
+    CardFilterComponent,
     CardSearchPageComponent,
   ],
   entryComponents: [
-    CardSearchFilterComponent
+    CardFilterComponent,
   ],
   imports: [
     SharedModule,
@@ -34,7 +34,7 @@ import { RouterModule } from '@angular/router';
     CardDetailsComponent,
   ],
   providers: [
-    CardService
+    CardService,
   ]
 })
 export class CardModule {}

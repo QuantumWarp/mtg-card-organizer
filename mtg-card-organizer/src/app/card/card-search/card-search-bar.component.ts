@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { CardSearchFilterComponent } from './card-search-filter.component';
+import { CardFilterComponent } from '../card-filter/card-filter.component';
 import { GridDataSource } from '../../general/grid/grid-data-source';
 import { Card } from '../models/card';
 import { PropertyFilter } from '../../general/grid/property-filter';
@@ -17,7 +17,7 @@ export class CardSearchBarComponent {
   constructor(private dialog: MatDialog) { }
 
   openFilterDialog() {
-    const dialogRef = this.dialog.open(CardSearchFilterComponent, { disableClose: true });
+    const dialogRef = this.dialog.open(CardFilterComponent, { disableClose: true });
     dialogRef.componentInstance.filter = this.filterer.filter.deepClone();
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

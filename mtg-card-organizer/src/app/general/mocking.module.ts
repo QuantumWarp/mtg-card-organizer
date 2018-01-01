@@ -1,9 +1,11 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CardsMockInterceptor } from '../card/services/cards-mock.interceptor';
+import { CardMockInterceptor } from '../card/services/card-mock.interceptor';
+import { SetMockInterceptor } from '../card/services/set-mock.interceptor';
 
 const mockBackendFixtures = [
-  CardsMockInterceptor
+  CardMockInterceptor,
+  SetMockInterceptor,
 ];
 
 @NgModule()

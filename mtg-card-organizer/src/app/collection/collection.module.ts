@@ -11,7 +11,7 @@ import { CollectionEditorComponent } from './collection-editor/collection-editor
     CollectionEditorComponent,
   ],
   imports: [
-    SharedModule,    
+    SharedModule,
     RouterModule.forChild([
       { path: 'viewer', component: CollectionViewerComponent }
     ]),

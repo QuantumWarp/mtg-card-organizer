@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { EventEmitter } from '@angular/core';
 import { PageSortFilter } from './page-sort-filter';
 import { PropertySort } from './property-sort';
-import { GetAllData } from './grid-data-source.interfaces';
+import { QueryData } from './grid-data-source.interfaces';
 import { Filterer } from './filterer';
 
 export class GridDataSource<T> extends DataSource<T> {
@@ -15,7 +15,7 @@ export class GridDataSource<T> extends DataSource<T> {
   private currentPageSortFilter = new PageSortFilter();
 
   constructor(
-    protected service: GetAllData<T>,
+    protected service: QueryData<T>,
     protected paginator: MatPaginator,
     protected sort: MatSort,
     protected filterer: Filterer) {
@@ -35,7 +35,7 @@ export class GridDataSource<T> extends DataSource<T> {
     this.currentPageSortFilter.pageSize = this.paginator.pageSize || 10;
     this.currentPageSortFilter.filter = this.filterer.filter;
 
-    this.service.getAll(this.currentPageSortFilter).subscribe(result => {
+    this.service.query(this.currentPageSortFilter).subscribe(result => {
       this.currentData = result.data;
       this.paginator.length = result.totalCount;
       this.localDataChange.emit();

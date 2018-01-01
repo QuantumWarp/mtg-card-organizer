@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,19 +10,19 @@ using MtgCoreLib.Managers;
 namespace MtgCardOrganizer.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class CardController : Controller
+    public class SetController : Controller
     {
-        public ICardManager _cardManager;
+        public ISetManager _setManager;
 
-        public CardController(ICardManager cardManager) 
+        public SetController(ISetManager setManager) 
         {
-            _cardManager = cardManager;
+            _setManager = setManager;
         }
 
         [HttpPost, Route("query")]
-        public PagedData<CardDto> Query([FromBody] PageSortFilter pageSortFilter = null)
+        public PagedData<SetDto> Query([FromBody] PageSortFilter pageSortFilter = null)
         {
-            return _cardManager.GetCards(pageSortFilter);
+            return _setManager.GetSets(pageSortFilter);
         }
     }
 }

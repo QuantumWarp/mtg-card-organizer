@@ -3,12 +3,11 @@ import { Observable } from 'rxjs/Observable';
 import { MockInterceptor } from '../../general/mocking/mock-interceptor';
 import { parse } from 'url';
 import { PagedData } from '../../general/grid/paged-data';
-import { Card } from '../models/card';
 import { PagedDataHelper } from '../../general/mocking/paged-data.helper';
 import { PageSortFilter } from '../../general/grid/page-sort-filter';
-import { cardsDatabase } from './card-database.fixture';
+import { cardDatabase } from './card-database.fixture';
 
-export class CardsMockInterceptor extends MockInterceptor {
+export class CardMockInterceptor extends MockInterceptor {
   constructor() {
     super('api/cards');
   }
@@ -16,13 +15,13 @@ export class CardsMockInterceptor extends MockInterceptor {
   chooseMethod(req: HttpRequest<any>): (req: HttpRequest<any>) => HttpResponse<any> {
     const url = parse(req.url, true);
     if (url.path.endsWith('cards')) {
-      return this.getCardsDatabase;
+      return this.cardQuery;
     }
   }
 
-  getCardsDatabase(req: HttpRequest<any>): HttpResponse<any> {
+  cardQuery(req: HttpRequest<any>): HttpResponse<any> {
     const pageSortFilter = Object.assign(new PageSortFilter(), JSON.parse(req.body));
-    const result = PagedDataHelper.createPagedData(pageSortFilter, cardsDatabase);
+    const result = PagedDataHelper.createPagedData(pageSortFilter, cardDatabase);
     return new HttpResponse({
       status: 200,
       body: result

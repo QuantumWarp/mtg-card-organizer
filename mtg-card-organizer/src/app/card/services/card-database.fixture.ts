@@ -1,4 +1,4 @@
-export const cardsDatabase = [
+export const cardDatabase = [
   { cardId: '1', name: 'Adorned Pouncer', power: '1', toughness: '1', oracleText: 'Double strike Eternalize 3WhiteWhite (3WhiteWhite, Exile this card from your graveyard: Create a token thats a copy of it, except its a 4/4 black Zombie Cat with no mana cost. Eternalize only as a sorcery.)', cost: '1W', imageUrl: 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=430691&type=card' },
   { cardId: '2', name: 'Aerial Responder', power: '2', toughness: '3', oracleText: 'Flying, vigilance, lifelink', cost: '1WW', imageUrl: 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=417575&type=card' },
   { cardId: '3', name: 'Aethersphere Harvester', power: '3', toughness: '5', oracleText: 'When Aethersphere Harvester enters the battlefield, you get', cost: '3', imageUrl: 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=423809&type=card' },

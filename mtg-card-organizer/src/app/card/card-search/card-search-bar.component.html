@@ -1,1 +1,8 @@
-<button mat-raised-button color="primary" (click)="openFilterDialog()">Filter</button>
+<div class="search-bar">
+  <mat-form-field fxFlex>
+    <input matInput [(ngModel)]="nameFilter" placeholder="Search">
+  </mat-form-field>
+  <div>
+    <button mat-raised-button color="primary" (click)="openFilterDialog()">Filter</button>
+  </div>
+</div>

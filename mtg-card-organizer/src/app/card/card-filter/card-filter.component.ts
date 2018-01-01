@@ -4,14 +4,14 @@ import { PageSortFilter } from '../../general/grid/page-sort-filter';
 import { PropertyFilter } from '../../general/grid/property-filter';
 
 @Component({
-  selector: 'app-card-search-filter',
-  templateUrl: './card-search-filter.component.html'
+  selector: 'app-card-filter',
+  templateUrl: './card-filter.component.html'
 })
-export class CardSearchFilterComponent implements OnInit {
+export class CardFilterComponent implements OnInit {
   @Input() filter: PropertyFilter;
   nameFilter: string;
 
-  constructor(public dialogRef: MatDialogRef<CardSearchFilterComponent>) { }
+  constructor(public dialogRef: MatDialogRef<CardFilterComponent>) { }
 
   ngOnInit(): void {
     const nf = this.filter.subFilters.find(x => x.property === 'name');

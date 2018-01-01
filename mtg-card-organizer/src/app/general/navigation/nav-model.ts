@@ -1,4 +1,4 @@
-import { NavNode } from "./nav-node";
+import { NavNode } from './nav-node';
 
 export class NavModel {
     nodes: NavNode[];
@@ -9,9 +9,9 @@ export class NavModel {
 
     static default(): NavModel {
         return new NavModel(
-            new NavNode("Import Cards", "/admin/import-cards"),
-            new NavNode("Card Search", "/cards/search"),
-            new NavNode("Life Counter", "/life-counter"),
+            new NavNode('Import Cards', '/admin/import-cards'),
+            new NavNode('Card Search', '/cards/search'),
+            new NavNode('Life Counter', '/life-counter'),
             new NavNode('Collections', '/collections/viewer')
         );
     }
