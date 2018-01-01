@@ -11,9 +11,6 @@ import { ImportService } from './services/import.service';
   declarations: [
     ImportCardsComponent
   ],
-  entryComponents: [
-    ImportCardsComponent
-  ],
   imports: [
     SharedModule,
     CardModule,
