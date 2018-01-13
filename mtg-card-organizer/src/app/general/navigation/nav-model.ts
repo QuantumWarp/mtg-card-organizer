@@ -12,7 +12,7 @@ export class NavModel {
             new NavNode('Import Cards', '/admin/import-cards'),
             new NavNode('Card Search', '/cards/search'),
             new NavNode('Life Counter', '/life-counter'),
-            new NavNode('Collections', '/collections/viewer')
+            new NavNode('Collections', '/collections')
         );
     }
 }

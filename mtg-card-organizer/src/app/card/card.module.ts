@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
 import { SharedModule } from '../general/shared.module';
-
 import { CardDetailsComponent } from './card-details/card-details.component';
-import { CardSearchComponent } from './card-search/card-search.component';
-
-import { CardService } from './services/card.service';
+import { CardFilterComponent } from './card-filter/card-filter.component';
+import { CardRapidEntryComponent } from './card-rapid-entry/card-rapid-entry.component';
+import { RapidEntryResultGridComponent } from './card-rapid-entry/rapid-entry-result-grid.component';
+import { CardSearchPageComponent } from './card-search-page/card-search-page.component';
 import { CardSearchBarComponent } from './card-search/card-search-bar.component';
 import { CardSearchGridComponent } from './card-search/card-search-grid.component';
-import { CardFilterComponent } from './card-filter/card-filter.component';
-import { CardSearchPageComponent } from './card-search-page/card-search-page.component';
-import { RouterModule } from '@angular/router';
+import { CardSearchComponent } from './card-search/card-search.component';
+import { CardService } from './services/card.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,8 @@ import { RouterModule } from '@angular/router';
     CardSearchGridComponent,
     CardFilterComponent,
     CardSearchPageComponent,
+    CardRapidEntryComponent,
+    RapidEntryResultGridComponent,
   ],
   entryComponents: [
     CardFilterComponent,
@@ -32,6 +35,7 @@ import { RouterModule } from '@angular/router';
   exports: [
     CardSearchComponent,
     CardDetailsComponent,
+    CardRapidEntryComponent,
   ],
   providers: [
     CardService,

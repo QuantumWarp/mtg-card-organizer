@@ -1,0 +1,22 @@
+.collection-container {
+  padding: 10px;
+  max-width: 300px;
+
+  > .collection-card:hover {
+    background-color: lightgrey;
+  }
+}
+
+.title {
+  font-size: 30px;
+}
+
+.inner-content {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+
+  > * + * {
+    margin-right: 20px;
+  }
+}

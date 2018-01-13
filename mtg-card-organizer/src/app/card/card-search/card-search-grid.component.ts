@@ -13,7 +13,7 @@ export class CardSearchGridComponent {
   @Input() cardDataSource: GridDataSource<Card>;
   @ViewChild(MatSort) sort: MatSort;
   selectedCard: Card;
-  displayedColumns = ['name', 'actions'];
+  displayedColumns = ['name'];
   @Output() selectedCardChange = new EventEmitter<Card>();
 
   detailsClick(card: Card): void {

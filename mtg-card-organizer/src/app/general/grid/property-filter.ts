@@ -1,12 +1,12 @@
 export class PropertyFilter {
   constructor(
     public property: string,
-    public operator: string,
-    public value: string,
+    public operator: PropertyFilterOperator,
+    public value: any,
     public subFilters = new Array<PropertyFilter>()) { }
 
   static blank(): PropertyFilter {
-    return new PropertyFilter('', 'and', '');
+    return new PropertyFilter('', PropertyFilterOperator.And, '');
   }
 
   addSubFilter(filter: PropertyFilter) {
@@ -20,4 +20,10 @@ export class PropertyFilter {
     });
     return clone;
   }
+}
+
+export enum PropertyFilterOperator {
+  And,
+  Equals,
+  Contains,
 }

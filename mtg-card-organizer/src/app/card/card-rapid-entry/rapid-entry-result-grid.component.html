@@ -1,0 +1,18 @@
+<mat-table #table [dataSource]="rapidEntryResultDataSource" matSort>
+  <ng-container matColumnDef="text">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+    <mat-cell *matCellDef="let rapidEntryResult">
+      {{ rapidEntryResult.results.length === 1 ? rapidEntryResult.results[0].name : rapidEntryResult.entryText }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="hasError">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Error </mat-header-cell>
+    <mat-cell *matCellDef="let rapidEntryResult">
+      {{ rapidEntryResult.hasError ? 'Error' : 'Found' }}
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

@@ -1,12 +1,13 @@
 import { DataSource } from '@angular/cdk/collections';
-import { Observable } from 'rxjs/Observable';
+import { EventEmitter } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+import { Filterer } from './filterer';
+import { DataService } from './grid-data-source.interfaces';
 import { PageSortFilter } from './page-sort-filter';
 import { PropertySort } from './property-sort';
-import { QueryData } from './grid-data-source.interfaces';
-import { Filterer } from './filterer';
 
 export class GridDataSource<T> extends DataSource<T> {
   private currentData: T[] = [];
@@ -15,7 +16,7 @@ export class GridDataSource<T> extends DataSource<T> {
   private currentPageSortFilter = new PageSortFilter();
 
   constructor(
-    protected service: QueryData<T>,
+    protected dataService: DataService<T>,
     protected paginator: MatPaginator,
     protected sort: MatSort,
     protected filterer: Filterer) {
@@ -35,7 +36,7 @@ export class GridDataSource<T> extends DataSource<T> {
     this.currentPageSortFilter.pageSize = this.paginator.pageSize || 10;
     this.currentPageSortFilter.filter = this.filterer.filter;
 
-    this.service.query(this.currentPageSortFilter).subscribe(result => {
+    this.dataService.query(this.currentPageSortFilter).subscribe(result => {
       this.currentData = result.data;
       this.paginator.length = result.totalCount;
       this.localDataChange.emit();

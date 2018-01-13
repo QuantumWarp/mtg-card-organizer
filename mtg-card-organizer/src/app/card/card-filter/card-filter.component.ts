@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { PageSortFilter } from '../../general/grid/page-sort-filter';
-import { PropertyFilter } from '../../general/grid/property-filter';
+import { PropertyFilter, PropertyFilterOperator } from '../../general/grid/property-filter';
 
 @Component({
   selector: 'app-card-filter',
@@ -21,7 +21,7 @@ export class CardFilterComponent implements OnInit {
   }
 
   apply(): void {
-    const nameFilter = new PropertyFilter('name', 'contains', this.nameFilter);
+    const nameFilter = new PropertyFilter('name', PropertyFilterOperator.Contains, this.nameFilter);
     this.filter.addSubFilter(nameFilter);
     this.dialogRef.close(this.filter);
   }

@@ -1,7 +1,7 @@
 import { PageSortFilter } from '../grid/page-sort-filter';
-import { PropertySortHelper } from './property-sort.helper';
 import { PagedData } from '../grid/paged-data';
 import { PropertyFilterHelper } from './property-filter.helper';
+import { PropertySortHelper } from './property-sort.helper';
 
 export class PagedDataHelper {
   static createPagedData<T>(pageSortFilter: PageSortFilter, data: T[]): PagedData<T> {
@@ -13,8 +13,11 @@ export class PagedDataHelper {
       data = PropertySortHelper.applySort(pageSortFilter.sort, data);
     }
 
-    const startIndex = pageSortFilter.page * pageSortFilter.pageSize;
-    const endIndex = startIndex + pageSortFilter.pageSize;
+    const page = pageSortFilter.page != null ? pageSortFilter.page : 0;
+    const pageSize = pageSortFilter.pageSize != null ? pageSortFilter.pageSize : data.length;
+
+    const startIndex = page * pageSize;
+    const endIndex = startIndex + pageSize;
     const resultData = data.slice(startIndex, endIndex);
 
     const pagedData = new PagedData<T>();

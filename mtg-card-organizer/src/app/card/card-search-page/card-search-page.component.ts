@@ -1,4 +1,5 @@
-import { Component, ViewChildren } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { Card } from '../models/card';
 
 @Component({
@@ -7,8 +8,6 @@ import { Card } from '../models/card';
 })
 export class CardSearchPageComponent {
   selectedCard: Card;
-
-  constructor() { }
 
   cardSelected(card: Card) {
     this.selectedCard = card;

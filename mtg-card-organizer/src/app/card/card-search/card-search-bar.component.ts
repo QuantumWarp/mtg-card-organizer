@@ -8,7 +8,8 @@ import { Filterer } from '../../general/grid/filterer';
 
 @Component({
   selector: 'app-card-search-bar',
-  templateUrl: './card-search-bar.component.html'
+  templateUrl: './card-search-bar.component.html',
+  styleUrls: ['../card.scss']
 })
 export class CardSearchBarComponent {
   @Input() cardDataSource: GridDataSource<Card>;

@@ -16,3 +16,7 @@ html, body {
   padding: 15px;
   flex: 1;
 }
+
+mat-row:hover {
+  background-color: lightgray;
+}
