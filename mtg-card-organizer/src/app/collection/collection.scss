@@ -7,6 +7,14 @@
   }
 }
 
+.title-bar {
+  padding: 20px;
+
+  > * + * {
+    margin-left: 5px;
+  }
+}
+
 .title {
   font-size: 30px;
 }
@@ -19,4 +27,8 @@
   > * + * {
     margin-right: 20px;
   }
+}
+
+.file-selector {
+  display: none;
 }

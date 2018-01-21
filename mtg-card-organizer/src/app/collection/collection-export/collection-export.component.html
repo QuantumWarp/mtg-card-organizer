@@ -1,0 +1,13 @@
+<div class="modal">
+  <div class="modal-header">
+    <div class="modal-title">Export Collection - {{ collection.name }}</div>
+  </div>
+
+  <div class="modal-content">
+  </div>
+
+  <div class="modal-actions">
+    <button #cancelButton mat-raised-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="download()">Download</button>
+  </div>
+</div>

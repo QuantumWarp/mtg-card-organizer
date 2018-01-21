@@ -1,16 +1,21 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from './shared.module';
-
-import { NavigatorComponent } from './navigation/navigator.component';
-import { NavBarComponent } from './navigation/nav-bar.component';
-import { ContentComponent } from './content/content.component';
 import { RouterModule } from '@angular/router';
+
+import { ContentComponent } from './content/content.component';
+import { NavBarComponent } from './navigation/nav-bar.component';
+import { NavigatorComponent } from './navigation/navigator.component';
+import { SharedModule } from './shared.module';
+import { ConfirmComponent } from './components/confirm.component';
 
 @NgModule({
   declarations: [
     ContentComponent,
     NavBarComponent,
     NavigatorComponent,
+    ConfirmComponent,
+  ],
+  entryComponents: [
+    ConfirmComponent,
   ],
   imports: [
     SharedModule,
@@ -20,6 +25,7 @@ import { RouterModule } from '@angular/router';
     ContentComponent,
     NavBarComponent,
     NavigatorComponent,
+    ConfirmComponent,
   ]
 })
 export class GeneralModule { }

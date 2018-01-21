@@ -1,0 +1,19 @@
+<div class="modal">
+  <div class="modal-header">
+    <div class="modal-title">Import</div>
+  </div>
+
+  <div class="modal-content">
+    <mat-form-field fxFlex>
+      <textarea #inputArea matInput placeholder="Input"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="modal-actions">
+      <button mat-raised-button color="primary" (click)="openFileDialog()">Select From File</button>
+      <input class="file-selector" type="file" ng2FileSelect #fileInput (change)="fileChanged($event)"/>
+      <span fxFlex></span>
+    <button #cancelButton mat-raised-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="import()">Import</button>
+  </div>
+</div>

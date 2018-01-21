@@ -26,6 +26,22 @@ export class CollectionService implements DataService<Collection> {
   queryCards(collectionId: number, pageSortFilter: PageSortFilter): Observable<PagedData<Card>> {
     return this.apiService.post<PagedData<Card>>('api/collections/' + collectionId, pageSortFilter);
   }
+
+  addCards(collectionId: number, cardSetIds: number[]): Observable<boolean> {
+    return this.apiService.post<boolean>('api/collections/' + collectionId + '/add', cardSetIds);
+  }
+
+  importCards(collectionId: number, importString: string): Observable<boolean> {
+    return this.apiService.post<boolean>('api/collections/' + collectionId + 'import', importString);
+  }
+
+  createCollection(collectionName: string, parentCollectionId?: number) {
+    return this.apiService.post<boolean>('api/collections/create', { collectionName: collectionName, parentCollectionId: parentCollectionId });
+  }
+
+  deleteCollection(collectionId: number) {
+    return this.apiService.post<boolean>('api/collections/' + collectionId + '/delete', {});
+  }
 }
 
 export class CollectionCardServiceWrapper implements DataService<Card> {

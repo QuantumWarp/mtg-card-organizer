@@ -1,0 +1,44 @@
+.entry-bar {
+  display: flex;
+  flex-direction: row;
+
+  > .filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+
+  > .entry-field {
+    flex: 1;
+  }
+}
+
+.result-grid {
+  border-style: solid;
+  border-color: lightgray;
+  border-width: 1px;
+}
+
+.errored-row:not(:hover) {
+  background-color: lightcoral;
+}
+
+.details-area {
+  border-style: solid;
+  border-color: lightgray;
+  border-width: 1px;
+
+  > .details-info {
+    padding: 10px;
+    font-size: 20px;
+  }
+}
+
+.option-card {
+  margin: 5px;
+}
+
+.option-card:hover {
+  background-color: lightgray;
+}

@@ -1,10 +1,10 @@
 .search-bar {
-  padding: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: row;
 
   > .search-field {
-    margin-left: 10px;
+    margin-right: 10px;
     flex: 1;
   }
 
@@ -14,21 +14,3 @@
     justify-content: center;
   }
 }
-
-.modal {
-  display: flex;
-  flex-direction: column;
-
-  > .modal-actions {
-    margin-top: 10px;
-    margin-left: auto;
-    display: flex;
-    flex-direction: row;
-
-    > * + * {
-      margin-left: 5px;
-    }
-  }
-}
-
-

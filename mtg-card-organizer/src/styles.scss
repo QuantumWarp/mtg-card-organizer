@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+@import './app/general/styles/page.scss';
+@import './app/general/styles/grid.scss';
+@import './app/general/styles/modal.scss';
+
 * {
   font-family: Roboto,Helvetica Neue,sans-serif;
 }
@@ -10,13 +14,4 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
-}
-
-.padded-page {
-  padding: 15px;
-  flex: 1;
-}
-
-mat-row:hover {
-  background-color: lightgray;
 }

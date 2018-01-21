@@ -11,6 +11,8 @@ import { CardSearchBarComponent } from './card-search/card-search-bar.component'
 import { CardSearchGridComponent } from './card-search/card-search-grid.component';
 import { CardSearchComponent } from './card-search/card-search.component';
 import { CardService } from './services/card.service';
+import { RapidEntrySingleViewComponent } from './card-rapid-entry/rapid-entry-single-view.component';
+import { SetService } from './services/set.service';
 
 @NgModule({
   declarations: [
@@ -22,9 +24,11 @@ import { CardService } from './services/card.service';
     CardSearchPageComponent,
     CardRapidEntryComponent,
     RapidEntryResultGridComponent,
+    RapidEntrySingleViewComponent,
   ],
   entryComponents: [
     CardFilterComponent,
+    RapidEntrySingleViewComponent,
   ],
   imports: [
     SharedModule,
@@ -39,6 +43,7 @@ import { CardService } from './services/card.service';
   ],
   providers: [
     CardService,
+    SetService,
   ]
 })
 export class CardModule {}

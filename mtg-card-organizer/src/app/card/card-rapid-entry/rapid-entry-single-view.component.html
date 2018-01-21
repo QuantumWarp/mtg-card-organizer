@@ -1,0 +1,31 @@
+<div class="modal">
+  <div class="modal-header">
+    <div class="modal-title">Entry - {{ rapidEntryResult.results.length === 1 ? rapidEntryResult.results[0].name : rapidEntryResult.entryText }}</div>
+  </div>
+
+  <div class="modal-content">
+    <div class="entry-bar">
+      <div class="filter-button">
+        <button mat-raised-button color="primary" (click)="openFilterDialog()">Filter</button>
+      </div>
+      <mat-form-field class="entry-field">
+        <input #searchTextBox matInput [(ngModel)]="searchText" placeholder="Enter Cards" (keyup)="search($event)">
+      </mat-form-field>
+    </div>
+
+    <div class="details-area">
+      <div class="details-info">
+        {{ detailString }}
+      </div>
+      <div *ngIf="rapidEntryResult.results.length > 1" fxLayout="row">
+        <mat-card fxFlex class="option-card" *ngFor="let card of rapidEntryResult.results" (click)="optionClicked(card)">
+          {{ card.name }}
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-actions">
+    <button #cancelButton mat-raised-button (click)="close()">Close</button>
+  </div>
+</div>

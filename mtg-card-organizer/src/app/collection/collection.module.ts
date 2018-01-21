@@ -3,25 +3,32 @@ import { RouterModule } from '@angular/router';
 
 import { CardModule } from '../card/card.module';
 import { SharedModule } from '../general/shared.module';
-import { CollectionViewerComponent } from './collection-viewer/collection-viewer.component';
 import { CollectionResolver } from './services/collection.resolver';
 import { CollectionService } from './services/collection.service';
-import { SingleCollectionViewComponent } from './single-collection-view/single-collection-view.component';
+import { CollectionViewComponent } from './collection-view/collection-view.component';
 import { CardRapidEntryComponent } from '../card/card-rapid-entry/card-rapid-entry.component';
+import { CollectionExportComponent } from './collection-export/collection-export.component';
+import { CollectionImportComponent } from './collection-import/collection-import.component';
+import { CreateCollectionComponent } from './collection-view/create-collection.component';
 
 @NgModule({
   declarations: [
-    CollectionViewerComponent,
-    SingleCollectionViewComponent,
+    CollectionViewComponent,
+    CollectionExportComponent,
+    CollectionImportComponent,
+    CreateCollectionComponent,
   ],
   entryComponents: [
     CardRapidEntryComponent,
+    CollectionExportComponent,
+    CollectionImportComponent,
+    CreateCollectionComponent,
   ],
   imports: [
     SharedModule,
     RouterModule.forChild([
-      { path: '', component: CollectionViewerComponent },
-      { path: ':id', component: SingleCollectionViewComponent, resolve: { collection: CollectionResolver } },
+      { path: '', component: CollectionViewComponent },
+      { path: ':id', component: CollectionViewComponent, resolve: { collection: CollectionResolver } },
     ]),
     CardModule,
   ],

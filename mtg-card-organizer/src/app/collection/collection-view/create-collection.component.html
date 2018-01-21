@@ -1,0 +1,16 @@
+<div class="modal">
+  <div class="modal-header">
+    <div class="modal-title">Create Collection</div>
+  </div>
+
+  <div class="modal-content">
+    <mat-form-field>
+      <input matInput placeholder="Name"/>
+    </mat-form-field>
+  </div>
+
+  <div class="modal-actions">
+    <button #cancelButton mat-raised-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="create()">Create</button>
+  </div>
+</div>
