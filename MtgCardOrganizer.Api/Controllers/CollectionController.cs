@@ -10,7 +10,7 @@ using MtgCoreLib.Managers;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/collections")]
     public class CollectionController : Controller
     {
         public ICollectionManager _collectionManager;
@@ -21,9 +21,23 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CollectionDto> GetAll()
+        [Route("")]
+        public IEnumerable<CollectionDto> Query()
         {
-            return null; // TODO
+            return new List<CollectionDto>(); // TODO
+        }
+
+        [HttpPost]
+        [Route("")]
+        [Route("{parentCollectionId}")]
+        public int Create(int? parentCollectionId) {
+            
+        }
+        
+        [HttpDelete]
+        [Route("{collectionId}")]
+        public bool Delete(int collectionId) {
+            return false;
         }
     }
 }

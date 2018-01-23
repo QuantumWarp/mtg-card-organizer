@@ -1,22 +1,45 @@
+using System.Collections.Generic;
 using System.Linq;
 
 public static class PageSortFilterExtensions {
     public static IQueryable<T> ApplyPageSortFilter<T>(this IQueryable<T> queryable, PageSortFilter pageSortFilter) {
         return queryable
-            .ApplyFilter(pageSortFilter.Filter)
+            .ApplyFilters(pageSortFilter.Filters)
             .ApplySorting(pageSortFilter.Sort)
-            .ApplyPaging(pageSortFilter.Page, pageSortFilter.PageSize);
+            .ApplyOffset(pageSortFilter.Offset)
+            .ApplyLimit(pageSortFilter.Limit);
     }
 
-    private static IQueryable<T> ApplyFilter<T>(this IQueryable<T> queryable, PropertyFilter filter) {
-        return queryable; // TODO
+    private static IQueryable<T> ApplyFilters<T>(this IQueryable<T> queryable, IEnumerable<PropertyFilter> filters) {
+        foreach (var filter in filters) {
+            queryable.W
+        }
+        return queryable;
     }
 
     private static IQueryable<T> ApplySorting<T>(this IQueryable<T> queryable, PropertySort sort) {
-        return queryable; // TODO
+        if (sort == null) return queryable;
+        if (sort.Ascending) {
+            return queryable.OrderBy();
+        } else {
+            return queryable.OrderByDescending();
+        }
     }
 
-    private static IQueryable<T> ApplyPaging<T>(this IQueryable<T> queryable, int pageNo, int pageSize) {
-        return queryable.Skip(pageNo * pageSize).Take(pageSize);
+    private static IQueryable<T> ApplyOffset<T>(this IQueryable<T> queryable, int offset) {
+        return queryable.Skip(offset);
+    }
+    
+    private static IQueryable<T> ApplyLimit<T>(this IQueryable<T> queryable, int? limit) {
+        return limit.HasValue ? queryable.Take(limit.Value) : queryable;
+    }
+
+    private static IQueryable<T> ApplyFilter<T>(this IQueryable<T> queryable, PropertyFilter filter) {
+        switch (filter.Operator) {
+            case PropertyFilterOperator.IsEqual:
+                return queryable.Where()
+            default:
+                return queryable;
+        }
     }
 }

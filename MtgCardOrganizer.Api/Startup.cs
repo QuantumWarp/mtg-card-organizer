@@ -29,7 +29,8 @@ namespace MtgCardOrganizer.Api
         {
             // Add framework services.
             services.AddCors();
-            services.AddMvc();
+            services.AddMvc(config =>
+		        config.ModelBinderProviders.Add(new PageSortFilterProvider()));
 
             services.AddManagers();
             services.AddContexts(Configuration);
