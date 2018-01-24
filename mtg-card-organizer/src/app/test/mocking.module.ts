@@ -8,6 +8,7 @@ import { NetworkLogInterceptor } from './mocking/network-log-interceptor';
 
 const mockBackendFixtures = [
   NetworkLogInterceptor,
+
   CardMockInterceptor,
   SetMockInterceptor,
   CollectionMockInterceptor,

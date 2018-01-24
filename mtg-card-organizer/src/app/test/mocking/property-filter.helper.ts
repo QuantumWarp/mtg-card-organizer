@@ -1,14 +1,17 @@
-import { PropertyFilter, PropertyFilterOperator } from '../grid/property-filter';
+import { PropertyFilter } from '../../general/filtering/property-filter';
+import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
 
 export class PropertyFilterHelper {
+  static applyFilters<T>(propertyFilters: PropertyFilter[], data: T[]): T[] {
+    propertyFilters.forEach(propertyFilter => {
+      data = this.applyFilter(propertyFilter, data);
+    });
+    return data;
+  }
+
   static applyFilter<T>(propertyFilter: PropertyFilter, data: T[]): T[] {
     switch (propertyFilter.operator) {
-      case PropertyFilterOperator.And:
-        propertyFilter.subFilters.forEach(subFilter => {
-          data = PropertyFilterHelper.applyFilter(subFilter, data);
-        });
-        break;
-      case PropertyFilterOperator.Equals:
+      case PropertyFilterOperator.IsEqual:
         // tslint:disable-next-line:triple-equals
         data = data.filter(elem => elem[propertyFilter.property] == propertyFilter.value);
         break;

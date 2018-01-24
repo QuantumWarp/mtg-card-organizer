@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MtgCoreLib.Contexts;
 using MtgCoreLib.Dtos.Cards;
+using MtgCoreLib.Utilities.General;
 
 namespace MtgCoreLib.Managers
 {
@@ -23,7 +24,7 @@ namespace MtgCoreLib.Managers
 
         public PagedData<CardDto> GetCards(PageSortFilter pageSortFilter)
         {
-            return new PagedData<CardDto>(_cardContext.Cards.OrderBy(x => x.Name).Select(x => x.AsDto()).ApplyPageSortFilter(pageSortFilter), _cardContext.Cards.Count());
+            return new PagedData<CardDto>(_cardContext.Cards.ApplyPageSortFilter(pageSortFilter).Select(x => x.AsDto()), _cardContext.Cards.Count());
         }
     }
 }

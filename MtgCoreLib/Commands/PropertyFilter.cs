@@ -7,7 +7,9 @@ public class PropertyFilter {
 }
 
 public enum PropertyFilterOperator {
+    Contains,
     IsEqual,
+    IsContainedIn,
 }
 
 public static class PropertyFilterOperatorHelper {
@@ -17,6 +19,12 @@ public static class PropertyFilterOperatorHelper {
         switch (s) {
             case "eq":
                 propertyFilterOperator = PropertyFilterOperator.IsEqual;
+                break;
+            case "con":
+                propertyFilterOperator = PropertyFilterOperator.Contains;
+                break;
+            case "in":
+                propertyFilterOperator = PropertyFilterOperator.IsContainedIn;
                 break;
             default:
                 return false;

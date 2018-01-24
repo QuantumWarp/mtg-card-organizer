@@ -38,7 +38,9 @@ public class PageSortFilterBinder : IModelBinder
         
         if (bindingContext.ModelState.ErrorCount == 0) {
             bindingContext.Result = ModelBindingResult.Success(pageSortFilter);
-        }        
+        } else {
+            bindingContext.Result = ModelBindingResult.Failed();
+        }
 
         return Task.CompletedTask;
     }
@@ -100,7 +102,7 @@ public static class PageSortFilterParseHelper {
         foreach (var filterString in filtersSplit) {
             var filterParts = filtersString.Split(' ');
             
-            if (filterParts.Length <= 3) {                
+            if (filterParts.Length < 3) {                
                 bindingContext.ModelState.AddModelError("filter", $"Failed to parse filter '{filterString}'");
                 return false;
             }

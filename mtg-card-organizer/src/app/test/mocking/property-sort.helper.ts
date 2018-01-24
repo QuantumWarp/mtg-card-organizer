@@ -1,4 +1,4 @@
-import { PropertySort } from '../grid/property-sort';
+import { PropertySort } from '../../general/filtering/property-sort';
 
 export class PropertySortHelper {
   static applySort<T>(propertySort: PropertySort, data: T[]): T[] {

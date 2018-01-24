@@ -1,10 +1,9 @@
-import { HttpRequest, HttpHandler, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { MockInterceptor } from '../../general/mocking/mock-interceptor';
+import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { parse } from 'url';
-import { PagedData } from '../../general/grid/paged-data';
-import { PagedDataHelper } from '../../general/mocking/paged-data.helper';
-import { PageSortFilter } from '../../general/grid/page-sort-filter';
+
+import { PageSortFilter } from '../../general/filtering/page-sort-filter';
+import { MockInterceptor } from '../../test/mocking/mock-interceptor';
+import { PagedDataHelper } from '../../test/mocking/paged-data.helper';
 import { cardDatabase } from './card-database.fixture';
 
 export class CardMockInterceptor extends MockInterceptor {

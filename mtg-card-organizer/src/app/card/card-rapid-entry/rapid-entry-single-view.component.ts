@@ -1,11 +1,12 @@
-import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
+import { PageSortFilter } from '../../general/filtering/page-sort-filter';
+import { PropertyFilter } from '../../general/filtering/property-filter';
+import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
+import { Card } from '../models/card';
 import { CardService } from '../services/card.service';
 import { RapidEntryResult } from './rapid-entry-result';
-import { Card } from '../models/card';
-import { PropertyFilterOperator, PropertyFilter } from '../../general/grid/property-filter';
-import { PageSortFilter } from '../../general/grid/page-sort-filter';
 
 @Component({
   selector: 'app-rapid-entry-single-view',
@@ -38,15 +39,15 @@ export class RapidEntrySingleViewComponent implements OnInit {
     const psFilter = new PageSortFilter();
     const searchText = this.searchText;
     this.searchText = '';
-    psFilter.filter.addSubFilter(new PropertyFilter(
-      'name',
-      PropertyFilterOperator.Contains,
-      searchText
-    ));
+    psFilter.addSubFilter(new PropertyFilter({
+      property: 'name',
+      operator: PropertyFilterOperator.Contains,
+      value: searchText,
+    }));
 
     this.cardService.query(psFilter).subscribe(result => {
       this.rapidEntryResult.entryText = searchText;
-      this.rapidEntryResult.filter = psFilter.filter;
+      this.rapidEntryResult.filters = psFilter.filters;
       this.rapidEntryResult.hasError = result.data.length !== 1;
       this.rapidEntryResult.results = result.data.length > 10 ? new Card[0] : result.data;
 
@@ -58,7 +59,7 @@ export class RapidEntrySingleViewComponent implements OnInit {
 
   optionClicked(card: Card) {
     this.rapidEntryResult.entryText = card.name;
-    this.rapidEntryResult.filter = PropertyFilter.blank();
+    this.rapidEntryResult.filters = new Array<PropertyFilter>();
     this.rapidEntryResult.hasError = false;
     this.rapidEntryResult.results = [ card ];
     this.dialogRef.close();

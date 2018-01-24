@@ -1,10 +1,11 @@
-import { Component, Input, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { CardFilterComponent } from '../card-filter/card-filter.component';
+import * as _ from 'lodash';
+
+import { Filterer } from '../../general/filtering/filterer';
 import { GridDataSource } from '../../general/grid/grid-data-source';
+import { CardFilterComponent } from '../card-filter/card-filter.component';
 import { Card } from '../models/card';
-import { PropertyFilter } from '../../general/grid/property-filter';
-import { Filterer } from '../../general/grid/filterer';
 
 @Component({
   selector: 'app-card-search-bar',
@@ -19,10 +20,10 @@ export class CardSearchBarComponent {
 
   openFilterDialog() {
     const dialogRef = this.dialog.open(CardFilterComponent, { disableClose: true });
-    dialogRef.componentInstance.filter = this.filterer.filter.deepClone();
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.filterer.applyFilter(result);
+    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.deepClone(x));
+    dialogRef.afterClosed().subscribe(results => {
+      if (results) {
+        this.filterer.applyFilters(results);
       }
     });
   }

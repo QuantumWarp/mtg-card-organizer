@@ -2,12 +2,13 @@ import 'rxjs/add/operator/map';
 
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-
-import { PageSortFilter } from '../../general/grid/page-sort-filter';
-import { PropertyFilter, PropertyFilterOperator } from '../../general/grid/property-filter';
-import { CollectionService } from './collection.service';
 import { Observable } from 'rxjs/Observable';
+
+import { PageSortFilter } from '../../general/filtering/page-sort-filter';
+import { PropertyFilter } from '../../general/filtering/property-filter';
+import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
 import { Collection } from '../models/collection';
+import { CollectionService } from './collection.service';
 
 @Injectable()
 export class CollectionResolver implements Resolve<Collection> {
@@ -15,11 +16,11 @@ export class CollectionResolver implements Resolve<Collection> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<Collection> {
     const pageSortFilter = new PageSortFilter();
-    pageSortFilter.filter.addSubFilter(new PropertyFilter(
-      'id',
-      PropertyFilterOperator.Equals,
-      route.paramMap.get('id')
-    ));
+    pageSortFilter.addSubFilter(new PropertyFilter({
+      property: 'id',
+      operator: PropertyFilterOperator.IsEqual,
+      value: route.paramMap.get('id')
+    }));
     return this.collectionService.query(pageSortFilter).map(x => x.data[0]);
   }
 }

@@ -2,17 +2,19 @@ import { Component, ElementRef, ViewChild, EventEmitter, Output } from '@angular
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatDialog, MatDialogRef, MatPaginator } from '@angular/material';
 
-import { Filterer } from '../../general/grid/filterer';
+import { Filterer } from '../../general/filtering/filterer';
 import { GridDataSource } from '../../general/grid/grid-data-source';
-import { PageSortFilter } from '../../general/grid/page-sort-filter';
-import { PropertyFilter, PropertyFilterOperator } from '../../general/grid/property-filter';
+import { PageSortFilter } from '../../general/filtering/page-sort-filter';
+import { PropertyFilter } from '../../general/filtering/property-filter';
 import { CardFilterComponent } from '../card-filter/card-filter.component';
 import { Card } from '../models/card';
 import { CardService } from '../services/card.service';
 import { RapidEntryResult } from './rapid-entry-result';
 import { RapidEntryResultGridComponent } from './rapid-entry-result-grid.component';
 import { RapidEntryResultStore } from './rapid-entry-result.store';
-import { PagedDataHelper } from '../../general/mocking/paged-data.helper';
+import { PagedDataHelper } from '../../test/mocking/paged-data.helper';
+import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-card-rapid-entry',
@@ -40,10 +42,10 @@ export class CardRapidEntryComponent implements OnInit {
 
   openFilterDialog() {
     const dialogRef = this.dialog.open(CardFilterComponent, { disableClose: true, minWidth: '300px' });
-    dialogRef.componentInstance.filter = this.filterer.filter.deepClone();
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.filterer.applyFilter(result);
+    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.deepClone(x));
+    dialogRef.afterClosed().subscribe(filters => {
+      if (filters) {
+        this.filterer.applyFilters(filters);
       }
     });
   }
@@ -82,11 +84,11 @@ export class CardRapidEntryComponent implements OnInit {
     }
 
     const psFilter = new PageSortFilter();
-    psFilter.filter.addSubFilter(new PropertyFilter(
-      'name',
-      PropertyFilterOperator.Contains,
-      this.searchText,
-    ));
+    psFilter.addSubFilter(new PropertyFilter({
+      property: 'name',
+      operator: PropertyFilterOperator.Contains,
+      value: this.searchText,
+    }));
 
     this.triggerSearch(this.searchText, psFilter);
 
@@ -98,7 +100,7 @@ export class CardRapidEntryComponent implements OnInit {
     this.cardService.query(psFilter).subscribe(result => {
       const rpr: RapidEntryResult = {
         entryText: searchText,
-        filter: psFilter.filter,
+        filters: psFilter.filters,
         hasError: result.data.length !== 1,
         results: result.data.length > 10 ? new Card[0] : result.data
        };

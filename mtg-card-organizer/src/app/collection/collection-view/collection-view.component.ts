@@ -7,9 +7,9 @@ import { Observable } from 'rxjs/Observable';
 import { Card } from '../../card/models/card';
 import { CardService } from '../../card/services/card.service';
 import { DataService } from '../../general/grid/grid-data-source.interfaces';
-import { PageSortFilter } from '../../general/grid/page-sort-filter';
-import { PagedData } from '../../general/grid/paged-data';
-import { PropertyFilter, PropertyFilterOperator } from '../../general/grid/property-filter';
+import { PageSortFilter } from '../../general/filtering/page-sort-filter';
+import { PagedData } from '../../general/filtering/paged-data';
+import { PropertyFilter } from '../../general/filtering/property-filter';
 import { Collection } from '../models/collection';
 import { CollectionService, CollectionCardServiceWrapper } from '../services/collection.service';
 import { CardRapidEntryComponent } from '../../card/card-rapid-entry/card-rapid-entry.component';
@@ -17,6 +17,7 @@ import { CollectionExportComponent } from '../collection-export/collection-expor
 import { CollectionImportComponent } from '../collection-import/collection-import.component';
 import { CreateCollectionComponent } from './create-collection.component';
 import { ConfirmComponent } from '../../general/components/confirm.component';
+import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
 
 @Component({
   selector: 'app-collection-view',
@@ -44,11 +45,11 @@ export class CollectionViewComponent implements OnInit {
       this.collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionService);
 
       const pageSortFilter = new PageSortFilter();
-      pageSortFilter.filter.addSubFilter(new PropertyFilter(
-        'parentId',
-        PropertyFilterOperator.Equals,
-        this.collection.id
-      ));
+      pageSortFilter.addSubFilter(new PropertyFilter({
+        property: 'parentId',
+        operator: PropertyFilterOperator.IsEqual,
+        value: this.collection.id
+      }));
       this.collectionService.query(pageSortFilter).subscribe(result => {
         this.subCollections = result.data;
       });

@@ -3,9 +3,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { ApiService } from '../../general/communication/api.service';
 import { Cache } from '../../general/communication/cache';
+import { PageSortFilter } from '../../general/filtering/page-sort-filter';
+import { PagedData } from '../../general/filtering/paged-data';
 import { DataService } from '../../general/grid/grid-data-source.interfaces';
-import { PageSortFilter } from '../../general/grid/page-sort-filter';
-import { PagedData } from '../../general/grid/paged-data';
 import { Set } from '../models/set';
 
 @Injectable()

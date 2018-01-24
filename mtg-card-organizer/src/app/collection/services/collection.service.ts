@@ -4,10 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { Card } from '../../card/models/card';
 import { ApiService } from '../../general/communication/api.service';
 import { DataService } from '../../general/grid/grid-data-source.interfaces';
-import { PageSortFilter } from '../../general/grid/page-sort-filter';
-import { PagedData } from '../../general/grid/paged-data';
-import { PropertyFilter, PropertyFilterOperator } from '../../general/grid/property-filter';
+import { PageSortFilter } from '../../general/filtering/page-sort-filter';
+import { PagedData } from '../../general/filtering/paged-data';
+import { PropertyFilter } from '../../general/filtering/property-filter';
 import { Collection } from '../models/collection';
+import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
 
 @Injectable()
 export class CollectionService implements DataService<Collection> {
@@ -19,7 +20,11 @@ export class CollectionService implements DataService<Collection> {
   }
 
   queryBaseCollections(pageSortFilter: PageSortFilter): Observable<PagedData<Collection>> {
-    pageSortFilter.filter.addSubFilter(new PropertyFilter('parentId', PropertyFilterOperator.Equals, null));
+    pageSortFilter.addSubFilter(new PropertyFilter({
+      property: 'parentId',
+      operator: PropertyFilterOperator.IsEqual,
+      value: null,
+    }));
     return this.apiService.post<PagedData<Collection>>('api/collections', pageSortFilter);
   }
 

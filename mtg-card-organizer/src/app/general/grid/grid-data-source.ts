@@ -4,10 +4,10 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { Filterer } from './filterer';
+import { Filterer } from '../filtering/filterer';
 import { DataService } from './grid-data-source.interfaces';
-import { PageSortFilter } from './page-sort-filter';
-import { PropertySort } from './property-sort';
+import { PageSortFilter } from '../filtering/page-sort-filter';
+import { PropertySort } from '../filtering/property-sort';
 
 export class GridDataSource<T> extends DataSource<T> {
   private currentData: T[] = [];
@@ -32,9 +32,9 @@ export class GridDataSource<T> extends DataSource<T> {
 
   reloadData(): void {
     this.currentPageSortFilter.sort = PropertySort.parseSort(this.sort);
-    this.currentPageSortFilter.page = this.paginator.pageIndex;
-    this.currentPageSortFilter.pageSize = this.paginator.pageSize || 10;
-    this.currentPageSortFilter.filter = this.filterer.filter;
+    this.currentPageSortFilter.filters = this.filterer.filters;
+    this.currentPageSortFilter.offset = this.paginator.pageIndex * (this.paginator.pageSize || 10);
+    this.currentPageSortFilter.limit = this.paginator.pageSize || 10;
 
     this.dataService.query(this.currentPageSortFilter).subscribe(result => {
       this.currentData = result.data;

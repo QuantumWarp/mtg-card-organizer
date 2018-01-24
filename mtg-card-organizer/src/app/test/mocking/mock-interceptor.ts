@@ -1,15 +1,18 @@
-import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { HttpInterceptor } from '@angular/common/http/src/interceptor';
-import { parse } from 'url';
 import 'rxjs/add/observable/of';
+
+import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpInterceptor } from '@angular/common/http/src/interceptor';
+import { Observable } from 'rxjs/Observable';
+import { parse } from 'url';
+
+import { environment } from '../../../environments/environment';
 
 export abstract class MockInterceptor implements HttpInterceptor {
   constructor(private baseArea: string) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const url = parse(req.url, true);
-    if (!url.path.startsWith('/' + this.baseArea)) {
+    if ((environment.testSettings && !environment.testSettings.mockApi) || !url.path.startsWith('/' + this.baseArea)) {
       return next.handle(req);
     }
 

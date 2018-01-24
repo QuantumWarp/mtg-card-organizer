@@ -1,9 +1,9 @@
+import { PropertyFilter } from '../../general/filtering/property-filter';
 import { Card } from '../models/card';
-import { PropertyFilter } from '../../general/grid/property-filter';
 
 export class RapidEntryResult {
   entryText: string;
-  filter: PropertyFilter;
+  filters: PropertyFilter[];
   results: Card[];
   hasError: boolean;
 }

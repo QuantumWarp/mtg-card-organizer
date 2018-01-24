@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 
-import { PageSortFilter } from '../../general/grid/page-sort-filter';
-import { PropertyFilter, PropertyFilterOperator } from '../../general/grid/property-filter';
+import { PageSortFilter } from '../../general/filtering/page-sort-filter';
+import { PropertyFilter } from '../../general/filtering/property-filter';
+import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
 import { Set } from '../models/set';
 import { SetService } from '../services/set.service';
 
@@ -12,7 +13,7 @@ import { SetService } from '../services/set.service';
   templateUrl: './card-filter.component.html'
 })
 export class CardFilterComponent implements OnInit {
-  @Input() filter: PropertyFilter;
+  @Input() filters: PropertyFilter[];
   setsFormControl = new FormControl();
 
   sets: Array<Set>;
@@ -26,16 +27,20 @@ export class CardFilterComponent implements OnInit {
       this.sets = results.data;
     });
 
-    const nf = this.filter.subFilters.find(x => x.property === 'name');
+    const nf = this.filters.find(x => x.property === 'name');
     if (nf) {
       this.nameFilter = nf.value;
     }
   }
 
   apply(): void {
-    const nameFilter = new PropertyFilter('name', PropertyFilterOperator.Contains, this.nameFilter);
-    this.filter.addSubFilter(nameFilter);
-    this.dialogRef.close(this.filter);
+    const nameFilter = new PropertyFilter({
+      property: 'name',
+      operator: PropertyFilterOperator.Contains,
+      value: this.nameFilter
+    });
+    this.filters.push(nameFilter);
+    this.dialogRef.close(this.filters);
   }
 
   cancel(): void {

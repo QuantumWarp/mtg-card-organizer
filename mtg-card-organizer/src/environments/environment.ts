@@ -5,6 +5,9 @@
 
 export const environment = {
   apiBaseUrl: 'http://localhost:57894',
-  mockApi: true,
-  production: false
+  production: false,
+  testSettings: {
+    includeTestModule: true,
+    mockApi: false,
+  }
 };

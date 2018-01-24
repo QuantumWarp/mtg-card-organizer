@@ -1,15 +1,11 @@
-import { Component, EventEmitter, Inject, OnInit, Output, ViewChild, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 
-import { Filterer } from '../../general/grid/filterer';
+import { Filterer } from '../../general/filtering/filterer';
 import { GridDataSource } from '../../general/grid/grid-data-source';
-import { DataService } from '../../general/grid/grid-data-source.interfaces';
 import { Card } from '../models/card';
 import { CardService } from '../services/card.service';
 import { CardSearchGridComponent } from './card-search-grid.component';
-import { Observable } from 'rxjs/Observable';
-import { PagedData } from '../../general/grid/paged-data';
-import { PageSortFilter } from '../../general/grid/page-sort-filter';
 
 @Component({
   selector: 'app-card-search',

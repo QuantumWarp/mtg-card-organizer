@@ -9,7 +9,7 @@ using MtgCoreLib.Managers;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/cards")]
     public class CardController : Controller
     {
         public ICardManager _cardManager;
@@ -19,8 +19,8 @@ namespace MtgCardOrganizer.Api.Controllers
             _cardManager = cardManager;
         }
 
-        [HttpPost, Route("query")]
-        public PagedData<CardDto> Query([FromBody] PageSortFilter pageSortFilter = null)
+        [HttpGet, Route("")]
+        public PagedData<CardDto> Query(PageSortFilter pageSortFilter)
         {
             return _cardManager.GetCards(pageSortFilter);
         }

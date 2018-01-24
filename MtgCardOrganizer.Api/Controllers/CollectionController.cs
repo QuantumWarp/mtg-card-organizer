@@ -31,7 +31,7 @@ namespace MtgCardOrganizer.Api.Controllers
         [Route("")]
         [Route("{parentCollectionId}")]
         public int Create(int? parentCollectionId) {
-            
+            return 0;
         }
         
         [HttpDelete]
