@@ -11,6 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddTransient<IAdminCardManager, AdminCardManager>();
             services.AddTransient<ICardManager, CardManager>();
+            services.AddTransient<ISetManager, SetManager>();
             services.AddTransient<ICollectionManager, CollectionManager>();
         }
 

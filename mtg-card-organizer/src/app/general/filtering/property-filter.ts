@@ -11,6 +11,18 @@ export class PropertyFilter implements QueryStringGenerator {
   }
 
   toQueryString(): string {
-    return this.property + ' ' + PropertyFilterOperatorExtensions.toQueryStringOperator(this.operator) + ' ' + '\'' + this.value + '\'';
+    return this.property + ' ' + PropertyFilterOperatorExtensions.toQueryStringOperator(this.operator) + ' ' + this.valueQueryString();
+  }
+
+  private valueQueryString(): string {
+    switch (this.operator) {
+      case PropertyFilterOperator.Contains:
+      case PropertyFilterOperator.IsEqual:
+        return '\'' + this.value + '\'';
+      case PropertyFilterOperator.IsContainedIn:
+        if (this.value instanceof Array) {
+          return '[\'' + this.value.join('\',\'') + '\']';
+        }
+    }
   }
 }

@@ -19,12 +19,13 @@ export class CardFilterComponent implements OnInit {
   sets: Array<Set>;
 
   nameFilter: string;
+  setFilter: number[];
 
   constructor(private setService: SetService, public dialogRef: MatDialogRef<CardFilterComponent>) { }
 
   ngOnInit(): void {
     this.setService.query(new PageSortFilter()).subscribe(results => {
-      this.sets = results.data;
+      this.sets = results.data.sort((x, y) => x.name > y.name ? 1 : -1);
     });
 
     const nf = this.filters.find(x => x.property === 'name');
@@ -39,7 +40,17 @@ export class CardFilterComponent implements OnInit {
       operator: PropertyFilterOperator.Contains,
       value: this.nameFilter
     });
+
+    const setFilter = new PropertyFilter({
+      property: 'setId',
+      operator: PropertyFilterOperator.IsContainedIn,
+      value: this.setFilter
+    });
+
     this.filters.push(nameFilter);
+    this.filters.push(setFilter);
+
+    console.log(setFilter);
     this.dialogRef.close(this.filters);
   }
 

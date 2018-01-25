@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -100,7 +101,7 @@ public static class PageSortFilterParseHelper {
         var filtersSplit = filtersString.Split(" and ");
 
         foreach (var filterString in filtersSplit) {
-            var filterParts = filtersString.Split(' ');
+            var filterParts = filterString.Split(' ');
             
             if (filterParts.Length < 3) {                
                 bindingContext.ModelState.AddModelError("filter", $"Failed to parse filter '{filterString}'");
@@ -112,10 +113,18 @@ public static class PageSortFilterParseHelper {
                 return false;
             }
 
+            object value;
+            var valueArg = filterString.Substring(filterParts[0].Length + filterParts[1].Length + 2);
+            if (valueArg.StartsWith('[')) {
+                value = valueArg.Trim(new[] { '[', ']' }).Split(',').Select(x => x.Trim('\'')).ToList();
+            } else {
+                value = valueArg.Trim('\'');
+            }
+
             propertyFilters.Add(new PropertyFilter() {
                 Property = filterParts[0],
                 Operator = propertyFilterOperator,
-                Value = filterString.Substring(filterParts[0].Length + filterParts[1].Length + 2).Trim('\'')
+                Value = value
             });
         }
 

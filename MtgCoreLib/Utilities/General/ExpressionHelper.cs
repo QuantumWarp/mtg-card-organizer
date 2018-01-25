@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -20,7 +21,12 @@ namespace MtgCoreLib.Utilities.General
         public static Expression<Func<T, bool>> CreateFilterExpression<T>(PropertyFilter filter) {
             var param = Expression.Parameter(typeof(T), "_");
             var property = Expression.Property(param, filter.Property);
-            var constant = Expression.Convert(Expression.Constant(filter.Value), property.Type);
+            UnaryExpression constant;
+            if (filter.Value is IList) {
+                constant = Expression.Convert(Expression.Constant(filter.Value), typeof(List<>).MakeGenericType(property.Type));
+            } else {
+                constant = Expression.Convert(Expression.Constant(filter.Value), property.Type);
+            }
             var expression = GetBaseExpression(property, constant, filter.Operator);
             var result = Expression.Lambda<Func<T, bool>>(expression, param);
             return result;

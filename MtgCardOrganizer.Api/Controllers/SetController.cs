@@ -9,7 +9,7 @@ using MtgCoreLib.Managers;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/sets")]
     public class SetController : Controller
     {
         public ISetManager _setManager;
@@ -19,8 +19,8 @@ namespace MtgCardOrganizer.Api.Controllers
             _setManager = setManager;
         }
 
-        [HttpPost, Route("query")]
-        public PagedData<SetDto> Query([FromBody] PageSortFilter pageSortFilter = null)
+        [HttpGet, Route("")]
+        public PagedData<SetDto> Query(PageSortFilter pageSortFilter)
         {
             return _setManager.GetSets(pageSortFilter);
         }

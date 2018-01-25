@@ -11,7 +11,7 @@
       <input #oracleTextInput matInput placeholder="Oracle Text">
     </mat-form-field>
     <mat-form-field>
-       <mat-select placeholder="Set" multiple>
+       <mat-select [(ngModel)]="setFilter" placeholder="Set" multiple>
         <mat-option *ngFor="let set of sets" [value]="set.id">
           {{ set.name }}
         </mat-option>

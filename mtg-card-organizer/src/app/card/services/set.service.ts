@@ -14,8 +14,8 @@ export class SetService implements DataService<Set> {
 
   constructor(private apiService: ApiService) { }
 
-  query(pageSortFilter: PageSortFilter): Observable<PagedData<Set>> {
+  query(pageSortFilter?: PageSortFilter): Observable<PagedData<Set>> {
     this.cache.cacheMethod(this.query, () => this.apiService.post<PagedData<Set>>('api/sets', pageSortFilter), !pageSortFilter);
-    return this.apiService.post<PagedData<Set>>('api/sets', pageSortFilter);
+    return this.apiService.get<PagedData<Set>>('api/sets', pageSortFilter);
   }
 }
