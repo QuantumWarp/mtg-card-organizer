@@ -1,16 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using MtgCoreLib.Contexts;
 
 namespace MtgCoreLib.Initialization
 {
-    public class CardsContextFactory : IDesignTimeDbContextFactory<CardContext>
+    public class MtgCoreLibContextFactory : IDesignTimeDbContextFactory<MtgCoreLibContext>
     {
-        public CardContext CreateDbContext(string[] args)
+        public MtgCoreLibContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<CardContext>();
+            var builder = new DbContextOptionsBuilder<MtgCoreLibContext>();
             builder.UseSqlServer(Configuration.ConnectionStrings.Default);
-            return new CardContext(builder.Options);
+            return new MtgCoreLibContext(builder.Options);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpGet, Route("")]
-        public PagedData<CardDto> Query(PageSortFilter pageSortFilter)
+        public PagedData<CardDetailsDto> Query(PageSortFilter pageSortFilter)
         {
             return _cardManager.GetCards(pageSortFilter);
         }

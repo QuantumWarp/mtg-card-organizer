@@ -35,22 +35,24 @@ export class CardFilterComponent implements OnInit {
   }
 
   apply(): void {
-    const nameFilter = new PropertyFilter({
-      property: 'name',
-      operator: PropertyFilterOperator.Contains,
-      value: this.nameFilter
-    });
+    if (this.nameFilter) {
+      const nameFilter = new PropertyFilter({
+        property: 'name',
+        operator: PropertyFilterOperator.Contains,
+        value: this.nameFilter
+      });
+      this.filters.push(nameFilter);
+    }
 
-    const setFilter = new PropertyFilter({
-      property: 'setId',
-      operator: PropertyFilterOperator.IsContainedIn,
-      value: this.setFilter
-    });
+    if (this.setFilter && this.setFilter.length !== 0) {
+      const setFilter = new PropertyFilter({
+        property: 'setId',
+        operator: PropertyFilterOperator.IsContainedIn,
+        value: this.setFilter
+      });
+      this.filters.push(setFilter);
+    }
 
-    this.filters.push(nameFilter);
-    this.filters.push(setFilter);
-
-    console.log(setFilter);
     this.dialogRef.close(this.filters);
   }
 

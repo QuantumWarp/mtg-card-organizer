@@ -29,6 +29,26 @@ namespace MtgCoreLib.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Collections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Collections", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Collections_Collections_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Collections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Formats",
                 columns: table => new
                 {
@@ -84,6 +104,32 @@ namespace MtgCoreLib.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CollectionCardLinks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CardSetInfoId = table.Column<int>(type: "int", nullable: false),
+                    CollectionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollectionCardLinks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CollectionCardLinks_CardSetInfos_CardSetInfoId",
+                        column: x => x.CardSetInfoId,
+                        principalTable: "CardSetInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollectionCardLinks_Collections_CollectionId",
+                        column: x => x.CollectionId,
+                        principalTable: "Collections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CardSetInfos_CardId",
                 table: "CardSetInfos",
@@ -93,15 +139,36 @@ namespace MtgCoreLib.Migrations
                 name: "IX_CardSetInfos_SetId",
                 table: "CardSetInfos",
                 column: "SetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CollectionCardLinks_CardSetInfoId",
+                table: "CollectionCardLinks",
+                column: "CardSetInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CollectionCardLinks_CollectionId",
+                table: "CollectionCardLinks",
+                column: "CollectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Collections_ParentId",
+                table: "Collections",
+                column: "ParentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CardSetInfos");
+                name: "CollectionCardLinks");
 
             migrationBuilder.DropTable(
                 name: "Formats");
+
+            migrationBuilder.DropTable(
+                name: "CardSetInfos");
+
+            migrationBuilder.DropTable(
+                name: "Collections");
 
             migrationBuilder.DropTable(
                 name: "Cards");

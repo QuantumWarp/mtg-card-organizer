@@ -16,7 +16,7 @@ export class CollectionService implements DataService<Collection> {
   constructor(private apiService: ApiService) { }
 
   query(pageSortFilter: PageSortFilter): Observable<PagedData<Collection>> {
-    return this.apiService.post<PagedData<Collection>>('api/collections', pageSortFilter);
+    return this.apiService.get<PagedData<Collection>>('api/collections', pageSortFilter);
   }
 
   queryBaseCollections(pageSortFilter: PageSortFilter): Observable<PagedData<Collection>> {
@@ -25,27 +25,27 @@ export class CollectionService implements DataService<Collection> {
       operator: PropertyFilterOperator.IsEqual,
       value: null,
     }));
-    return this.apiService.post<PagedData<Collection>>('api/collections', pageSortFilter);
+    return this.apiService.get<PagedData<Collection>>('api/collections', pageSortFilter);
   }
 
   queryCards(collectionId: number, pageSortFilter: PageSortFilter): Observable<PagedData<Card>> {
-    return this.apiService.post<PagedData<Card>>('api/collections/' + collectionId, pageSortFilter);
+    return this.apiService.get<PagedData<Card>>('api/collections/' + collectionId + '/cards', pageSortFilter);
   }
 
   addCards(collectionId: number, cardSetIds: number[]): Observable<boolean> {
-    return this.apiService.post<boolean>('api/collections/' + collectionId + '/add', cardSetIds);
+    return this.apiService.post<boolean>('api/collections/' + collectionId + '/cards', cardSetIds);
   }
 
   importCards(collectionId: number, importString: string): Observable<boolean> {
-    return this.apiService.post<boolean>('api/collections/' + collectionId + 'import', importString);
+    return this.apiService.post<boolean>('api/collections/' + collectionId + '/import', importString);
   }
 
   createCollection(collectionName: string, parentCollectionId?: number) {
-    return this.apiService.post<boolean>('api/collections/create', { collectionName: collectionName, parentCollectionId: parentCollectionId });
+    return this.apiService.post<boolean>('api/collections', new Collection({ name: collectionName, parentId: parentCollectionId }));
   }
 
   deleteCollection(collectionId: number) {
-    return this.apiService.post<boolean>('api/collections/' + collectionId + '/delete', {});
+    return this.apiService.delete<boolean>('api/collections/' + collectionId);
   }
 }
 

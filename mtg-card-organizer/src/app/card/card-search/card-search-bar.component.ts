@@ -20,7 +20,7 @@ export class CardSearchBarComponent {
 
   openFilterDialog() {
     const dialogRef = this.dialog.open(CardFilterComponent, { disableClose: true });
-    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.deepClone(x));
+    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.cloneDeep(x));
     dialogRef.afterClosed().subscribe(results => {
       if (results) {
         this.filterer.applyFilters(results);

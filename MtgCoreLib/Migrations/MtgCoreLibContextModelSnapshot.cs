@@ -5,17 +5,16 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using MtgCoreLib.Contexts;
 using MtgCoreLib.Dtos.Enums;
+using MtgCoreLib.Initialization;
 using System;
 
 namespace MtgCoreLib.Migrations
 {
-    [DbContext(typeof(CardContext))]
-    [Migration("20171214190522_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(MtgCoreLibContext))]
+    partial class MtgCoreLibContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,6 +87,41 @@ namespace MtgCoreLib.Migrations
                     b.ToTable("Sets");
                 });
 
+            modelBuilder.Entity("MtgCoreLib.Entities.Collections.Collection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int?>("ParentId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Collections");
+                });
+
+            modelBuilder.Entity("MtgCoreLib.Entities.Collections.CollectionCardLink", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CardSetInfoId");
+
+                    b.Property<int>("CollectionId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardSetInfoId");
+
+                    b.HasIndex("CollectionId");
+
+                    b.ToTable("CollectionCardLinks");
+                });
+
             modelBuilder.Entity("MtgCoreLib.Entities.Other.Format", b =>
                 {
                     b.Property<int>("Id")
@@ -109,8 +143,28 @@ namespace MtgCoreLib.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MtgCoreLib.Entities.Cards.Set", "Set")
-                        .WithMany()
+                        .WithMany("CardSetInfos")
                         .HasForeignKey("SetId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MtgCoreLib.Entities.Collections.Collection", b =>
+                {
+                    b.HasOne("MtgCoreLib.Entities.Collections.Collection", "Parent")
+                        .WithMany("SubCollections")
+                        .HasForeignKey("ParentId");
+                });
+
+            modelBuilder.Entity("MtgCoreLib.Entities.Collections.CollectionCardLink", b =>
+                {
+                    b.HasOne("MtgCoreLib.Entities.Cards.CardSetInfo", "CardSetInfo")
+                        .WithMany("CollectionCardLinks")
+                        .HasForeignKey("CardSetInfoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MtgCoreLib.Entities.Collections.Collection", "Collection")
+                        .WithMany("CollectionCardLinks")
+                        .HasForeignKey("CollectionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

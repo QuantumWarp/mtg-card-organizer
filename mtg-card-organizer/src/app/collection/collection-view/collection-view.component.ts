@@ -26,7 +26,7 @@ import { PropertyFilterOperator } from '../../general/filtering/property-filter-
 })
 export class CollectionViewComponent implements OnInit {
   collection: Collection;
-  subCollections: Collection[];
+  subCollections = new Array<Collection>();
 
   collectionCardServiceWrapper: CollectionCardServiceWrapper;
 

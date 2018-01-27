@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MtgCoreLib.Contexts;
+using AutoMapper.QueryableExtensions;
 using MtgCoreLib.Dtos.Cards;
+using MtgCoreLib.Initialization;
 using MtgCoreLib.Utilities.General;
 
 namespace MtgCoreLib.Managers
@@ -15,16 +16,18 @@ namespace MtgCoreLib.Managers
 
     public class SetManager : ISetManager
     {
-        private CardContext _cardContext;
+        private MtgCoreLibContext _dbContext;
 
-        public SetManager(CardContext cardContext)
+        public SetManager(MtgCoreLibContext dbContext)
         {
-            _cardContext = cardContext;
+            _dbContext = dbContext;
         }
 
         public PagedData<SetDto> GetSets(PageSortFilter pageSortFilter)
         {
-            return new PagedData<SetDto>(_cardContext.Sets.ApplyPageSortFilter(pageSortFilter).ToList().Select(x => x.AsDto()), _cardContext.Sets.Count());
+            return new PagedData<SetDto>(
+                _dbContext.Sets.ProjectTo<SetDto>().ApplyPageSortFilter(pageSortFilter), 
+                _dbContext.Sets.Count());
         }
     }
 }

@@ -3,26 +3,30 @@ using MtgCoreLib.Dtos.Enums;
 using System.ComponentModel.DataAnnotations;
 using MtgCoreLib.Dtos.Cards;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using MtgCoreLib.Entities.Collections;
 
 namespace MtgCoreLib.Entities.Cards
 {
     public class CardSetInfo : Entity
     {
-        [ForeignKey(nameof(Card))]
-        public int CardId { get; private set; }
         [Required]
-        public Card Card { get; set; }
-        
+        public int CardId { get; private set; }     
         [Required]
         public string Artist { get; private set; }
         public string Num { get; private set; }
         [Required]
         public Rarity Rarity { get; private set; }
-
-        [ForeignKey(nameof(Set))]
-        public int SetId { get; private set; }
         [Required]
+        public int SetId { get; private set; }
+        
+        [ForeignKey(nameof(CardId))]
+        public Card Card { get; set; }   
+        [ForeignKey(nameof(SetId))]
         public Set Set { get; set; }
+
+        // Collection <-> CardSetInfo Many to Many Relationship
+        public ICollection<CollectionCardLink> CollectionCardLinks { get; set; }
 
         public CardSetInfo() { }
 

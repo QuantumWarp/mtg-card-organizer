@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -9,7 +10,7 @@ namespace MtgCoreLib.Utilities.General
     public static class ExpressionHelper 
     {
         private static MethodInfo ContainsMethod = typeof(string).GetMethod(nameof(string.Contains), new[] { typeof(string) });
-        private static MethodInfo ListContainsMethod = typeof(List<>).GetMethod("Contains");
+        private static MethodInfo ListContainsMethod = typeof(List<int>).GetMethod("Contains");
 
         public static Expression<Func<T, object>> CreateKeySelectorExpression<T>(PropertySort sort) {  
             var param = Expression.Parameter(typeof(T), "_");
@@ -21,18 +22,30 @@ namespace MtgCoreLib.Utilities.General
         public static Expression<Func<T, bool>> CreateFilterExpression<T>(PropertyFilter filter) {
             var param = Expression.Parameter(typeof(T), "_");
             var property = Expression.Property(param, filter.Property);
-            UnaryExpression constant;
-            if (filter.Value is IList) {
-                constant = Expression.Convert(Expression.Constant(filter.Value), typeof(List<>).MakeGenericType(property.Type));
+            ConstantExpression constant;
+            if (filter.Value is List<string>) {
+                MethodInfo method = typeof(ExpressionHelper).GetMethod("ConvertList");
+                MethodInfo generic = method.MakeGenericMethod(property.Type);
+                constant = Expression.Constant(generic.Invoke(null, new [] { filter.Value }));
             } else {
-                constant = Expression.Convert(Expression.Constant(filter.Value), property.Type);
+                if (filter.Value as string == "null") {
+                    constant = Expression.Constant(null);
+                } else if (property.Type == typeof(int?)) {
+                    constant = Expression.Constant(int.Parse((string)filter.Value), typeof(int?));
+                } else {
+                    constant = Expression.Constant(Convert.ChangeType(filter.Value, property.Type));
+                }
             }
             var expression = GetBaseExpression(property, constant, filter.Operator);
             var result = Expression.Lambda<Func<T, bool>>(expression, param);
             return result;
         }
 
-        private static Expression GetBaseExpression(MemberExpression property, UnaryExpression constant, PropertyFilterOperator filterOperator) {
+        public static List<T> ConvertList<T>(List<string> inputList) {
+            return inputList.Select(x => (T)Convert.ChangeType(x, typeof(T))).ToList();
+        }
+
+        private static Expression GetBaseExpression(MemberExpression property, ConstantExpression constant, PropertyFilterOperator filterOperator) {
             switch (filterOperator) {
                 case PropertyFilterOperator.IsEqual:
                     return Expression.Equal(property, constant);

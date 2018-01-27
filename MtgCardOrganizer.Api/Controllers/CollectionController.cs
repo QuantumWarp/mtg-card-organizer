@@ -22,22 +22,44 @@ namespace MtgCardOrganizer.Api.Controllers
 
         [HttpGet]
         [Route("")]
-        public IEnumerable<CollectionDto> Query()
+        public PagedData<CollectionDto> Query(PageSortFilter pageSortFilter)
         {
-            return new List<CollectionDto>(); // TODO
+            return _collectionManager.GetCollections(pageSortFilter);
         }
 
         [HttpPost]
         [Route("")]
-        [Route("{parentCollectionId}")]
-        public int Create(int? parentCollectionId) {
-            return 0;
+        public bool Create([FromBody] CollectionDto collectionDto)
+        {
+            return _collectionManager.CreateCollection(collectionDto);
         }
         
         [HttpDelete]
         [Route("{collectionId}")]
-        public bool Delete(int collectionId) {
-            return false;
+        public bool Delete(int collectionId)
+        {
+            return _collectionManager.DeleteCollection(collectionId);
+        }
+        
+        [HttpGet]
+        [Route("{collectionId}/cards")]
+        public PagedData<CardDetailsDto> GetCards(int collectionId, PageSortFilter pageSortFilter)
+        {
+            return _collectionManager.GetCards(collectionId, pageSortFilter);
+        }
+        
+        [HttpPost]
+        [Route("{collectionId}/cards")]
+        public bool AddCards(int collectionId, [FromBody] List<int> cardSetInfoIds)
+        {
+            return _collectionManager.AddCards(collectionId, cardSetInfoIds);
+        }
+
+        [HttpPatch]
+        [Route("{collectionId}/cards")]
+        public bool DeleteCards(int collectionId, List<int> cardSetInfoIds)
+        {
+            return _collectionManager.DeleteCards(collectionId, cardSetInfoIds);
         }
     }
 }

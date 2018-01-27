@@ -21,6 +21,11 @@ export class ApiService {
     return this.httpClient.post<T>(url, JSON.stringify(body), { headers: this.headers() });
   }
 
+  delete<T>(path: string): Observable<T> {
+    const url = this.apiBaseUrl + '/' + path;
+    return this.httpClient.delete<T>(url, { headers: this.headers() });
+  }
+
   private headers(): HttpHeaders {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json; charset=utf-8');

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MtgCoreLib.Contexts;
+using MtgCoreLib.Initialization;
 using MtgCoreLib.Managers;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -17,9 +17,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static void AddContexts(this IServiceCollection services, IConfigurationRoot configuration)
         {
-            services.AddDbContext<CardContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Default")));
-            services.AddDbContext<CollectionContext>(options =>
+            services.AddDbContext<MtgCoreLibContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Default")));
         }
     }

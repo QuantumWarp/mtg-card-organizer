@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MtgCoreLib.Contexts;
 using MtgCoreLib.Dtos.Admin;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Entities.Cards;
+using MtgCoreLib.Initialization;
 using MtgCoreLib.Utilities.Parsers;
 
 namespace MtgCoreLib.Managers
@@ -18,11 +18,11 @@ namespace MtgCoreLib.Managers
 
     public class AdminCardManager : IAdminCardManager
     {
-        private CardContext _cardContext;
+        private MtgCoreLibContext _dbContext;
 
-        public AdminCardManager(CardContext cardContext)
+        public AdminCardManager(MtgCoreLibContext dbContext)
         {
-            _cardContext = cardContext;
+            _dbContext = dbContext;
         }
 
         public void ImportCards(ImportCommand importCommand)
@@ -33,27 +33,27 @@ namespace MtgCoreLib.Managers
             }
             parser.Parse(importCommand.ImportString);
 
-            using (var transaction = _cardContext.Database.BeginTransaction()) {
+            using (var transaction = _dbContext.Database.BeginTransaction()) {
                 var setDict = new Dictionary<SetDto, Set>();
-                _cardContext.Sets.AddRange(parser.SetDtos.Select(setDto => {
+                _dbContext.Sets.AddRange(parser.SetDtos.Select(setDto => {
                     var set = new Set(setDto);
                     setDict.Add(setDto, set);
                     return set;
                 }));
-                _cardContext.SaveChanges();
+                _dbContext.SaveChanges();
 
                 var cardDict = new Dictionary<CardDto, Card>();
-                _cardContext.Cards.AddRange(parser.CardDtos.Select(cardDto => {
+                _dbContext.Cards.AddRange(parser.CardDtos.Select(cardDto => {
                     var card = new Card(cardDto);
                     cardDict.Add(cardDto, card);
                     return card;
                 }));
-                _cardContext.SaveChanges();
+                _dbContext.SaveChanges();
 
-                _cardContext.CardSetInfos.AddRange(parser.CardSetInfoDtos.Select(x => {
+                _dbContext.CardSetInfos.AddRange(parser.CardSetInfoDtos.Select(x => {
                     return new CardSetInfo(setDict[parser.SetRelationship[x]], cardDict[parser.CardRelationship[x]], x);
                 }));
-                _cardContext.SaveChanges();
+                _dbContext.SaveChanges();
                 
                 transaction.Commit();
             }
@@ -61,7 +61,7 @@ namespace MtgCoreLib.Managers
 
         public void ClearCards()
         {
-            _cardContext.CardSetInfos.RemoveRange(_cardContext.CardSetInfos);
+            _dbContext.CardSetInfos.RemoveRange(_dbContext.CardSetInfos);
         }
     }
 }
