@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment.prod';
 import { QueryStringGenerator } from './query-string-generator.interface';
+import { getFileNameFromResponseContentDisposition, saveFile } from '../../collection/services/download-helper';
 
 @Injectable()
 export class ApiService {
@@ -24,6 +25,20 @@ export class ApiService {
   delete<T>(path: string): Observable<T> {
     const url = this.apiBaseUrl + '/' + path;
     return this.httpClient.delete<T>(url, { headers: this.headers() });
+  }
+
+  download(path: string): void {
+    const url = this.apiBaseUrl + '/' + path;
+    
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
+    headers = headers.set('Accept', 'application/json');
+
+    // Process the file downloaded
+    this.httpClient.get(url, { responseType: 'blob' }).subscribe(res => {
+        //const fileName = getFileNameFromResponseContentDisposition(res);
+        saveFile(res, 'collection-export.json');
+    });
   }
 
   private headers(): HttpHeaders {

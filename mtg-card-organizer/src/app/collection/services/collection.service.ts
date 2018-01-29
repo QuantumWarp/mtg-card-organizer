@@ -47,6 +47,10 @@ export class CollectionService implements DataService<Collection> {
   deleteCollection(collectionId: number) {
     return this.apiService.delete<boolean>('api/collections/' + collectionId);
   }
+
+  export(collectionId: number): void {
+    this.apiService.download('api/collections/' + collectionId + '/download');
+  }
 }
 
 export class CollectionCardServiceWrapper implements DataService<Card> {

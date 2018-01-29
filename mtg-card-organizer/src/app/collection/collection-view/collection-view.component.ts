@@ -72,7 +72,8 @@ export class CollectionViewComponent implements OnInit {
     const dialogRef = this.dialog.open(CollectionExportComponent);
     dialogRef.componentInstance.collection = this.collection;
     dialogRef.afterClosed().subscribe(results => {
-      this.collectionService.addCards(this.collection.id, results).subscribe(cardsAdded => {});
+      this.collectionService.export(this.collection.id);
+      // this.collectionService.addCards(this.collection.id, results).subscribe(cardsAdded => {});
     });
   }
 

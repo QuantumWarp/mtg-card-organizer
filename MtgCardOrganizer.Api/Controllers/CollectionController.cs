@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +61,19 @@ namespace MtgCardOrganizer.Api.Controllers
         public bool DeleteCards(int collectionId, List<int> cardSetInfoIds)
         {
             return _collectionManager.DeleteCards(collectionId, cardSetInfoIds);
+        }
+
+        [HttpGet()]
+        [Route("{collectionId}/download")]
+        public IActionResult Download(int collectionId) {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            _collectionManager.Export(collectionId);
+            writer.Write(_collectionManager.Export(collectionId));
+            writer.Flush();
+            stream.Position = 0;
+            var response = File(stream, "application/octet-stream", "collection-export.json"); // FileStreamResult
+            return response;
         }
     }
 }

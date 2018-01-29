@@ -25,7 +25,9 @@ export class RapidEntrySingleViewComponent implements OnInit {
   ngOnInit() {
     this.dialogRef.afterOpen().subscribe(() => setTimeout(() => this.searchTextBox.nativeElement.focus(), 0));
     if (this.rapidEntryResult.hasError) {
-      this.detailString = this.rapidEntryResult.results.length === 0 ? 'No matches found' : 'Multiple matches found';
+      this.detailString = this.rapidEntryResult.results.length === 0 ? 
+        (this.rapidEntryResult.results.length > 10 ? 'Multiple matches found (Over 10)' : 'No matches found')
+        : 'Multiple matches found';
     } else {
       this.detailString = 'Matched';
     }
@@ -49,7 +51,7 @@ export class RapidEntrySingleViewComponent implements OnInit {
       this.rapidEntryResult.entryText = searchText;
       this.rapidEntryResult.filters = psFilter.filters;
       this.rapidEntryResult.hasError = result.data.length !== 1;
-      this.rapidEntryResult.results = result.data.length > 10 ? new Card[0] : result.data;
+      this.rapidEntryResult.results = result.data.length > 10 ? result.data.splice(0, 10) : result.data;
 
       if (!this.rapidEntryResult.hasError) {
         this.dialogRef.close();

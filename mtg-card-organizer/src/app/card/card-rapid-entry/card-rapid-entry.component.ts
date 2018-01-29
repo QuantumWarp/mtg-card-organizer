@@ -78,17 +78,17 @@ export class CardRapidEntryComponent implements OnInit {
       default: return;
     }
 
-    if (this.searchText === '') {
-      this.triggerSearch(this.lastSearchText, new PageSortFilter());
-      return;
-    }
-
     const psFilter = new PageSortFilter();
     psFilter.addSubFilter(new PropertyFilter({
       property: 'name',
       operator: PropertyFilterOperator.Contains,
-      value: this.searchText,
+      value: this.searchText === '' ? this.lastSearchText: this.searchText,
     }));
+
+    if (this.searchText === '') {
+      this.triggerSearch(this.lastSearchText, psFilter);
+      return;
+    }    
 
     this.triggerSearch(this.searchText, psFilter);
 
@@ -102,7 +102,7 @@ export class CardRapidEntryComponent implements OnInit {
         entryText: searchText,
         filters: psFilter.filters,
         hasError: result.data.length !== 1,
-        results: result.data.length > 10 ? new Card[0] : result.data
+        results: result.data
        };
        this.rapidEntryResultStore.rapidEntryResults.splice(0, 0, rpr);
        this.rapidEntryResultDataSource.reloadData();

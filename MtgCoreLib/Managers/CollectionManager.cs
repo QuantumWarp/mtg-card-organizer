@@ -22,6 +22,9 @@ namespace MtgCoreLib.Managers
         PagedData<CardDetailsDto> GetCards(int collectionId, PageSortFilter pageSortFilter);
         bool AddCards(int collectionId, List<int> cardSetInfoIds);
         bool DeleteCards(int collectionId, List<int> cardSetInfoIds);
+
+        string Export(int collectionId);
+        bool Import(string importString);
     }
 
     public class CollectionManager : ICollectionManager
@@ -84,6 +87,14 @@ namespace MtgCoreLib.Managers
             _dbContext.CollectionCardLinks.RemoveRange(cardLinksToDelete);
             _dbContext.SaveChanges();
             return true;
+        }
+
+        public string Export(int collectionId) {
+            return new Exporter(this, new SetManager(_dbContext)).ConstructExport(collectionId);
+        }
+
+        public bool Import(string importString) {
+            return false;
         }
     }
 }

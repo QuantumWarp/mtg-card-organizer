@@ -27,7 +27,9 @@ namespace MtgCoreLib.Managers
 
         public PagedData<CardDetailsDto> GetCards(PageSortFilter pageSortFilter)
         {
-            return new PagedData<CardDetailsDto>(_dbContext.CardSetInfos.ProjectTo<CardDetailsDto>(Mapper.Configuration).ApplyPageSortFilter(pageSortFilter), _dbContext.Cards.Count());
+            return new PagedData<CardDetailsDto>(
+                _dbContext.CardSetInfos.ProjectTo<CardDetailsDto>(Mapper.Configuration).ApplyPageSortFilter(pageSortFilter),
+                _dbContext.Cards.Count());
         }
     }
 }
