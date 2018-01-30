@@ -16,7 +16,7 @@ export class GridDataSource<T> extends DataSource<T> {
   private currentPageSortFilter = new PageSortFilter();
 
   constructor(
-    protected dataService: DataService<T>,
+    public dataService: DataService<T>,
     protected paginator: MatPaginator,
     protected sort: MatSort,
     protected filterer: Filterer) {

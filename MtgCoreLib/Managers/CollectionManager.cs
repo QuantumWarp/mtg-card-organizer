@@ -24,7 +24,7 @@ namespace MtgCoreLib.Managers
         bool DeleteCards(int collectionId, List<int> cardSetInfoIds);
 
         string Export(int collectionId);
-        bool Import(string importString);
+        bool Import(int? collectionId, string importString);
     }
 
     public class CollectionManager : ICollectionManager
@@ -93,8 +93,9 @@ namespace MtgCoreLib.Managers
             return new Exporter(this, new SetManager(_dbContext)).ConstructExport(collectionId);
         }
 
-        public bool Import(string importString) {
-            return false;
+        public bool Import(int? collectionId, string importString) {
+            new Importer(_dbContext).ProcessInport(importString, collectionId);
+            return true;
         }
     }
 }

@@ -34,12 +34,12 @@ export class CollectionImportComponent {
   }
 
   import(): void {
-    this.collectionService.importCards(this.collection.id, this.inputArea.nativeElement.value).subscribe(() => {
-      this.dialogRef.close();
+    this.collectionService.importCards(this.collection ? this.collection.id : null, this.inputArea.nativeElement.value).subscribe(() => {
+      this.dialogRef.close(true);
     });
   }
 
   close(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 }

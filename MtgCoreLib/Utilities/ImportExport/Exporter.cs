@@ -30,15 +30,14 @@ public class Exporter {
 
     private JObject ConstructExport(CollectionDto collectionDto) {
         dynamic obj = new JObject();
-        obj.collectionId = collectionDto.Id;
         obj.name = collectionDto.Name;
 
         var cardDetailsDtos = _collectionManager.GetCards(collectionDto.Id, new PageSortFilter());
         obj.cards = new JArray(cardDetailsDtos.Data.Select(x => {
             dynamic cardObj = new JObject();
-            cardObj.Name = x.Name;
-            cardObj.SetId = _sets.Single(set => set.Id == x.SetId).Name;
-            cardObj.Num = x.Num;
+            cardObj.name = x.Name;
+            cardObj.setName = _sets.Single(set => set.Id == x.SetId).Name;
+            cardObj.num = x.Num;
             return cardObj;
         }));
 

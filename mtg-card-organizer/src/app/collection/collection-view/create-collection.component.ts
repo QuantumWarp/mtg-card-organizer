@@ -16,12 +16,12 @@ export class CreateCollectionComponent {
   constructor(public collectionService: CollectionService, private dialogRef: MatDialogRef<CreateCollectionComponent>) { }
 
   close(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   create(): void {
     this.collectionService.createCollection(this.collectionName, this.parentCollection ? this.parentCollection.id : null).subscribe(() => {
-      this.dialogRef.close();
+      this.dialogRef.close(true);
     });
   }
 }

@@ -7,9 +7,16 @@
   </ng-container>
 
   <ng-container matColumnDef="hasError">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Error </mat-header-cell>
-    <mat-cell *matCellDef="let rapidEntryResult">
+    <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header> Error </mat-header-cell>
+    <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">
       {{ rapidEntryResult.hasError ? 'Error' : 'Found' }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="deleteColumn">
+    <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header></mat-header-cell>
+    <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">
+      <button mat-raised-button (click)="$event.stopPropagation(); deleteEntry(rapidEntryResult)">Delete</button>
     </mat-cell>
   </ng-container>
 

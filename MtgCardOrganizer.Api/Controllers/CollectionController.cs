@@ -63,7 +63,7 @@ namespace MtgCardOrganizer.Api.Controllers
             return _collectionManager.DeleteCards(collectionId, cardSetInfoIds);
         }
 
-        [HttpGet()]
+        [HttpGet]
         [Route("{collectionId}/download")]
         public IActionResult Download(int collectionId) {
             var stream = new MemoryStream();
@@ -74,6 +74,13 @@ namespace MtgCardOrganizer.Api.Controllers
             stream.Position = 0;
             var response = File(stream, "application/octet-stream", "collection-export.json"); // FileStreamResult
             return response;
+        }
+        
+        [HttpPost]
+        [Route("{collectionId}/import")]
+        [Route("import")]
+        public bool Import(int? collectionId, [FromBody] string importString) {
+            return _collectionManager.Import(collectionId, importString);
         }
     }
 }

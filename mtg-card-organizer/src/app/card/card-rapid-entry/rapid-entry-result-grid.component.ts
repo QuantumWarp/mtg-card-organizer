@@ -14,12 +14,20 @@ import { RapidEntrySingleViewComponent } from './rapid-entry-single-view.compone
 export class RapidEntryResultGridComponent {
   @Input() rapidEntryResultDataSource: GridDataSource<RapidEntryResult>;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns = ['text', 'hasError'];
+  displayedColumns = ['text', 'hasError', 'deleteColumn'];
 
   constructor(private dialog: MatDialog) { }
 
   singleEntryView(rapidEntryResult: RapidEntryResult) {
-    const dialogRef = this.dialog.open(RapidEntrySingleViewComponent, { minWidth: '500px' });
+    const dialogRef = this.dialog.open(RapidEntrySingleViewComponent, { minWidth: '600px' });
     dialogRef.componentInstance.rapidEntryResult = rapidEntryResult;
+  }
+
+  deleteEntry(rapidEntryResult: RapidEntryResult) {
+    const index = (<RapidEntryResultStore>this.rapidEntryResultDataSource.dataService).rapidEntryResults.indexOf(rapidEntryResult);
+    if (index > -1) {
+      (<RapidEntryResultStore>this.rapidEntryResultDataSource.dataService).rapidEntryResults.splice(index, 1);
+    }
+    this.rapidEntryResultDataSource.reloadData();
   }
 }

@@ -82,13 +82,13 @@ export class CardRapidEntryComponent implements OnInit {
     psFilter.addSubFilter(new PropertyFilter({
       property: 'name',
       operator: PropertyFilterOperator.Contains,
-      value: this.searchText === '' ? this.lastSearchText: this.searchText,
+      value: this.searchText === '' ? this.lastSearchText : this.searchText,
     }));
 
     if (this.searchText === '') {
       this.triggerSearch(this.lastSearchText, psFilter);
       return;
-    }    
+    }
 
     this.triggerSearch(this.searchText, psFilter);
 

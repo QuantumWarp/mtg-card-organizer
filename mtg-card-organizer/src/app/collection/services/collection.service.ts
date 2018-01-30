@@ -51,6 +51,14 @@ export class CollectionService implements DataService<Collection> {
   export(collectionId: number): void {
     this.apiService.download('api/collections/' + collectionId + '/download');
   }
+
+  import(collectionId: number | undefined, importString: string): void {
+    if (collectionId) {
+      this.apiService.post('api/collections/' + collectionId + '/import', importString);
+    } else {
+      this.apiService.post('api/collections/import', importString);
+    }
+  }
 }
 
 export class CollectionCardServiceWrapper implements DataService<Card> {
