@@ -99,13 +99,13 @@ export class CollectionViewComponent implements OnInit {
   openImport(): void {
     const dialogRef = this.dialog.open(CollectionImportComponent);
     dialogRef.componentInstance.collection = this.collection;
-    dialogRef.afterClosed().subscribe(success => success ? this.refresh() : null);
+    dialogRef.afterClosed().subscribe(success => success ? this.refreshPage(this.collection) : null);
   }
 
   createCollection(): void {
     const dialogRef = this.dialog.open(CreateCollectionComponent);
     dialogRef.componentInstance.parentCollection = this.collection;
-    dialogRef.afterClosed().subscribe(success => success ? this.refresh() : null);
+    dialogRef.afterClosed().subscribe(success => success ? this.refreshPage(this.collection) : null);
   }
 
   deleteCollection(): void {

@@ -1,11 +1,16 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import * as _ from 'lodash';
 
+import { Filterer } from '../../general/filtering/filterer';
 import { PageSortFilter } from '../../general/filtering/page-sort-filter';
 import { PropertyFilter } from '../../general/filtering/property-filter';
 import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
+import { CardFilterComponent } from '../card-filter/card-filter.component';
 import { Card } from '../models/card';
+import { Set } from '../models/set';
 import { CardService } from '../services/card.service';
+import { SetService } from '../services/set.service';
 import { RapidEntryResult } from './rapid-entry-result';
 
 @Component({
@@ -15,22 +20,36 @@ import { RapidEntryResult } from './rapid-entry-result';
 })
 export class RapidEntrySingleViewComponent implements OnInit {
   @Input() rapidEntryResult: RapidEntryResult;
+  @Input() filterer: Filterer;
   @ViewChild('searchTextBox') searchTextBox: ElementRef;
+  @Input() sets: Map<number, Set>;
   detailString: string;
 
   searchText: string;
 
-  constructor(private cardService: CardService, private dialog: MatDialog, private dialogRef: MatDialogRef<RapidEntrySingleViewComponent>) { }
+  constructor(
+    private cardService: CardService,
+    private dialog: MatDialog,
+    private dialogRef: MatDialogRef<RapidEntrySingleViewComponent>) { }
 
   ngOnInit() {
     this.dialogRef.afterOpen().subscribe(() => setTimeout(() => this.searchTextBox.nativeElement.focus(), 0));
     if (this.rapidEntryResult.hasError) {
-      this.detailString = this.rapidEntryResult.results.length === 0 ? 
-        (this.rapidEntryResult.results.length > 10 ? 'Multiple matches found (Over 10)' : 'No matches found')
-        : 'Multiple matches found';
+      this.detailString = this.rapidEntryResult.results.length === 0 ? 'No matches found' :
+        (this.rapidEntryResult.results.length > 10 ? 'Multiple matches found (Over 10)' : 'Multiple matches found');
     } else {
       this.detailString = 'Matched';
     }
+  }
+
+  openFilterDialog() {
+    const dialogRef = this.dialog.open(CardFilterComponent, { disableClose: true, minWidth: '300px' });
+    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.deepClone(x));
+    dialogRef.afterClosed().subscribe(filters => {
+      if (filters) {
+        this.filterer.applyFilters(filters);
+      }
+    });
   }
 
   search(keyEvent: KeyboardEvent): void {
@@ -39,6 +58,7 @@ export class RapidEntrySingleViewComponent implements OnInit {
     }
 
     const psFilter = new PageSortFilter();
+    psFilter.addSubFilters(this.filterer.filters);
     const searchText = this.searchText;
     this.searchText = '';
     psFilter.addSubFilter(new PropertyFilter({
@@ -46,6 +66,7 @@ export class RapidEntrySingleViewComponent implements OnInit {
       operator: PropertyFilterOperator.Contains,
       value: searchText,
     }));
+    psFilter.limit = 11;
 
     this.cardService.query(psFilter).subscribe(result => {
       this.rapidEntryResult.entryText = searchText;

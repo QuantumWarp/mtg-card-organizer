@@ -6,6 +6,13 @@
     </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="setName">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Set </mat-header-cell>
+    <mat-cell *matCellDef="let rapidEntryResult">
+      {{ rapidEntryResult.results.length === 1 ? rapidEntryResult.results[0].name : rapidEntryResult.entryText }}
+    </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="hasError">
     <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header> Error </mat-header-cell>
     <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">
@@ -22,5 +29,5 @@
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row [class.errored-row]="rapidEntryResult.hasError"
-   *matRowDef="let rapidEntryResult; columns: displayedColumns;" (click)="singleEntryView(rapidEntryResult)"></mat-row>
+   *matRowDef="let rapidEntryResult; columns: displayedColumns;" (click)="singleEntryView(rapidEntryResult, rapidEntryResult.filters)"></mat-row>
 </mat-table>

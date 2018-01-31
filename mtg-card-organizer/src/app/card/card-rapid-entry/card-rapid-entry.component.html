@@ -14,7 +14,7 @@
     </div>
 
     <div class="result-grid">
-      <app-rapid-entry-result-grid #resultGrid [rapidEntryResultDataSource]="rapidEntryResultDataSource"></app-rapid-entry-result-grid>
+      <app-rapid-entry-result-grid #resultGrid [sets]="sets" [rapidEntryResultDataSource]="rapidEntryResultDataSource"></app-rapid-entry-result-grid>
       <mat-paginator #paginator
         [pageIndex]="0"
         [pageSize]="5"

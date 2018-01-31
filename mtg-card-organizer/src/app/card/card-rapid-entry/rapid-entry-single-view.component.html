@@ -17,10 +17,11 @@
       <div class="details-info">
         {{ detailString }}
       </div>
-      <div *ngIf="rapidEntryResult.results.length > 1" fxLayout="row">
-        <mat-card fxFlex class="option-card" *ngFor="let card of rapidEntryResult.results" (click)="optionClicked(card)">
-          {{ card.name }}
-        </mat-card>
+      <div class="result-tiles-container" *ngIf="rapidEntryResult.results.length > 1">
+        <div class="result-tile mat-elevation-z4" *ngFor="let card of rapidEntryResult.results" (click)="optionClicked(card)">
+          <div class="large-text">{{ card.name }}</div>
+          <div>{{ sets ? sets.get(card.setId).name : '' }}</div>
+        </div>
       </div>
     </div>
   </div>

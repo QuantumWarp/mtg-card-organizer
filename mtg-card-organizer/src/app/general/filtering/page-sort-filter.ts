@@ -12,6 +12,10 @@ export class PageSortFilter implements QueryStringGenerator {
     Object.assign(this, init);
   }
 
+  addSubFilters(filters: PropertyFilter[]) {
+    filters.forEach(filter => this.addSubFilter(filter));
+  }
+
   addSubFilter(filter: PropertyFilter) {
     this.filters.push(filter);
   }

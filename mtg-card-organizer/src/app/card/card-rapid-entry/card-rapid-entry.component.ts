@@ -1,20 +1,20 @@
-import { Component, ElementRef, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatDialog, MatDialogRef, MatPaginator } from '@angular/material';
+import * as _ from 'lodash';
 
 import { Filterer } from '../../general/filtering/filterer';
-import { GridDataSource } from '../../general/grid/grid-data-source';
 import { PageSortFilter } from '../../general/filtering/page-sort-filter';
 import { PropertyFilter } from '../../general/filtering/property-filter';
+import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
+import { GridDataSource } from '../../general/grid/grid-data-source';
 import { CardFilterComponent } from '../card-filter/card-filter.component';
-import { Card } from '../models/card';
+import { Set } from '../models/set';
 import { CardService } from '../services/card.service';
+import { SetService } from '../services/set.service';
 import { RapidEntryResult } from './rapid-entry-result';
 import { RapidEntryResultGridComponent } from './rapid-entry-result-grid.component';
 import { RapidEntryResultStore } from './rapid-entry-result.store';
-import { PagedDataHelper } from '../../test/mocking/paged-data.helper';
-import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'app-card-rapid-entry',
@@ -25,6 +25,7 @@ export class CardRapidEntryComponent implements OnInit {
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('resultGrid') resultGrid: RapidEntryResultGridComponent;
   @ViewChild('searchTextBox') searchTextBox: ElementRef;
+  sets: Map<number, Set>;
   filterer = new Filterer();
 
   searchText: string;
@@ -33,9 +34,17 @@ export class CardRapidEntryComponent implements OnInit {
   rapidEntryResultDataSource: GridDataSource<RapidEntryResult>;
   rapidEntryResultStore = new RapidEntryResultStore();
 
-  constructor(private cardService: CardService, private dialog: MatDialog, private dialogRef: MatDialogRef<CardRapidEntryComponent>) { }
+  constructor(
+    private setService: SetService,
+    private cardService: CardService,
+    private dialog: MatDialog,
+    private dialogRef: MatDialogRef<CardRapidEntryComponent>) { }
 
   ngOnInit(): void {
+    this.setService.query().subscribe(results => {
+      this.sets = new Map(results.data.map(x => [ x.id, x ] as [ number, Set ]));
+    });
+
     this.dialogRef.afterOpen().subscribe(() => setTimeout(() => this.searchTextBox.nativeElement.focus(), 0));
     this.rapidEntryResultDataSource = new GridDataSource<RapidEntryResult>(this.rapidEntryResultStore, this.paginator, this.resultGrid.sort, this.filterer);
   }
@@ -53,7 +62,7 @@ export class CardRapidEntryComponent implements OnInit {
   openLatestError(): void {
     const firstError = this.rapidEntryResultStore.rapidEntryResults.find(x => x.hasError);
     if (firstError) {
-      this.resultGrid.singleEntryView(firstError);
+      this.resultGrid.singleEntryView(firstError, this.filterer.filters);
     }
   }
 
@@ -79,11 +88,13 @@ export class CardRapidEntryComponent implements OnInit {
     }
 
     const psFilter = new PageSortFilter();
+    psFilter.addSubFilters(this.filterer.filters);
     psFilter.addSubFilter(new PropertyFilter({
       property: 'name',
       operator: PropertyFilterOperator.Contains,
       value: this.searchText === '' ? this.lastSearchText : this.searchText,
     }));
+    psFilter.limit = 11;
 
     if (this.searchText === '') {
       this.triggerSearch(this.lastSearchText, psFilter);
