@@ -5,6 +5,7 @@ using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Dtos.Collections;
 using MtgCoreLib.Initialization;
 using MtgCoreLib.Managers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 public class Exporter {
@@ -25,28 +26,30 @@ public class Exporter {
             Operator = PropertyFilterOperator.IsEqual,
             Value = collectionId.ToString()
         }}});       
-        return this.ConstructExport(collectionDtos.Data.First()).ToString();        
+        return JsonConvert.SerializeObject(this.ConstructExportModel(collectionDtos.Data.First()), Formatting.Indented);        
     }
 
-    private JObject ConstructExport(CollectionDto collectionDto) {
-        dynamic obj = new JObject();
-        obj.name = collectionDto.Name;
+    private CollectionExportModel ConstructExportModel(CollectionDto collectionDto) {
+        var model = new CollectionExportModel();
+        model.Name = collectionDto.Name;
 
         var cardDetailsDtos = _collectionManager.GetCards(collectionDto.Id, new PageSortFilter());
-        obj.cards = new JArray(cardDetailsDtos.Data.Select(x => {
-            dynamic cardObj = new JObject();
-            cardObj.name = x.Name;
-            cardObj.setName = _sets.Single(set => set.Id == x.SetId).Name;
-            cardObj.num = x.Num;
-            return cardObj;
-        }));
+        model.Cards = cardDetailsDtos.Data.Select(x => {
+            var card = new CardInstanceExportModel();
+            card.Name = x.Name;
+            card.SetName = _sets.Single(set => set.Id == x.SetId).Name;
+            card.Num = x.Num;
+            card.Foil = x.Foil;
+            card.Promo = x.Promo;
+            return card;
+        }).ToList();
 
         var subCollectionDtos = _collectionManager.GetCollections(new PageSortFilter() { Filters = new [] { new PropertyFilter() { 
             Property = "ParentId",
             Operator = PropertyFilterOperator.IsEqual,
             Value = collectionDto.Id.ToString()
         }}});       
-        obj.subCollections = new JArray(subCollectionDtos.Data.Select(x => ConstructExport(x)));        
-        return obj;
+        model.SubCollections = subCollectionDtos.Data.Select(x => ConstructExportModel(x)).ToList();        
+        return model;
     }
 }

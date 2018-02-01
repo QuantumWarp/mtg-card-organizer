@@ -18,7 +18,7 @@ export class RapidEntryResultGridComponent {
   @Input() rapidEntryResultDataSource: GridDataSource<RapidEntryResult>;
   @Input() sets: Map<number, Set>;
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns = ['text', 'hasError', 'deleteColumn'];
+  displayedColumns = ['text', 'hasError', 'foil', 'promo', 'deleteColumn'];
 
   constructor(private dialog: MatDialog) { }
 

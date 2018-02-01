@@ -1,6 +1,6 @@
 import { Set } from '../models/set';
 
 export const setDatabase: Set[] = [
-  new Set({ id: '1', name: 'Ixalan' }),
-  new Set({ id: '2', name: 'Amonkhet' }),
+  // new Set({ id: '1', name: 'Ixalan' }),
+  // new Set({ id: '2', name: 'Amonkhet' }),
 ];

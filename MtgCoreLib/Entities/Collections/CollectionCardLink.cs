@@ -14,18 +14,23 @@ namespace MtgCoreLib.Entities.Collections
         [Required]
         public int CollectionId { get; set; }
         [Required]
-        public int CardSetInfoId { get; set; }                 
+        public int CardSetInfoId { get; set; }
+        [Required]
+        public int CardOtherInfoId { get; set; }       
 
         [ForeignKey(nameof(CollectionId))]
         public Collection Collection { get; set; }
         [ForeignKey(nameof(CardSetInfoId))]
         public CardSetInfo CardSetInfo { get; set; }
+        [ForeignKey(nameof(CardOtherInfoId))]
+        public CardOtherInfo CardOtherInfo { get; set; }
 
         public CollectionCardLink() { }
 
-        public CollectionCardLink(int collectionId, int cardSetInfoId) {
+        public CollectionCardLink(int collectionId, int cardSetInfoId, int cardOtherInfoId) {
             CollectionId = collectionId;
             CardSetInfoId = cardSetInfoId;
+            CardOtherInfoId = cardOtherInfoId;
         }
     }
 }

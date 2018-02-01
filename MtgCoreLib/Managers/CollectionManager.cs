@@ -6,6 +6,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Dtos.Collections;
+using MtgCoreLib.Entities.Cards;
 using MtgCoreLib.Entities.Collections;
 using MtgCoreLib.Initialization;
 using MtgCoreLib.Utilities.General;
@@ -19,9 +20,9 @@ namespace MtgCoreLib.Managers
         bool DeleteCollection(int collectionId);
 
 
-        PagedData<CardDetailsDto> GetCards(int collectionId, PageSortFilter pageSortFilter);
-        bool AddCards(int collectionId, List<int> cardSetInfoIds);
-        bool DeleteCards(int collectionId, List<int> cardSetInfoIds);
+        PagedData<CardInstanceDto> GetCards(int collectionId, PageSortFilter pageSortFilter);
+        bool AddCards(int collectionId, List<AddCollectionCardCommand> cardSetInfoOtherInfoDict);
+        bool DeleteCards(int collectionId, List<int> cardCollectionLinkIds);
 
         string Export(int collectionId);
         bool Import(int? collectionId, string importString);
@@ -59,32 +60,38 @@ namespace MtgCoreLib.Managers
             return true;
         }
 
-        public PagedData<CardDetailsDto> GetCards(int collectionId, PageSortFilter pageSortFilter)
+        public PagedData<CardInstanceDto> GetCards(int collectionId, PageSortFilter pageSortFilter)
         {
-            return new PagedData<CardDetailsDto>(
-                _dbContext.CollectionCardLinks.Where(ccl => ccl.CollectionId == collectionId).Select(ccl => ccl.CardSetInfo).ProjectTo<CardDetailsDto>(Mapper.Configuration).ApplyPageSortFilter(pageSortFilter), 
+            return new PagedData<CardInstanceDto>(
+                _dbContext.CollectionCardLinks
+                    .Where(ccl => ccl.CollectionId == collectionId)
+                    .ProjectTo<CardInstanceDto>(Mapper.Configuration)
+                    .ApplyPageSortFilter(pageSortFilter), 
                 _dbContext.CollectionCardLinks.Where(ccl => ccl.CollectionId == collectionId).Count());
         }
 
-        public bool AddCards(int collectionId, List<int> cardSetInfoIds)
+        public bool AddCards(int collectionId, List<AddCollectionCardCommand> cardSetInfoOtherInfoDict)
         {
-            var cardLinks = cardSetInfoIds.Select(cardSetInfoId => new CollectionCardLink(collectionId, cardSetInfoId));
-            _dbContext.CollectionCardLinks.AddRange(cardLinks);
-            _dbContext.SaveChanges();
-            return true;
+            using(var transaction = _dbContext.Database.BeginTransaction()) {
+                var cardSetInfoOtherInfoIdsDict = new Dictionary<int, CardOtherInfo>(cardSetInfoOtherInfoDict.Select(command => 
+                    KeyValuePair.Create(command.CardSetInfoId, new CardOtherInfo(new CardOtherInfoDto() {
+                        Foil = command.Foil,
+                        Promo = command.Promo
+                    }))));
+                _dbContext.CardOtherInfos.AddRange(cardSetInfoOtherInfoIdsDict.Values);
+                _dbContext.SaveChanges();
+                var cardLinks = cardSetInfoOtherInfoIdsDict.Select(kvp => new CollectionCardLink(collectionId, kvp.Key, kvp.Value.Id));
+                _dbContext.CollectionCardLinks.AddRange(cardLinks);
+                _dbContext.SaveChanges();
+                transaction.Commit();
+                return true;
+            }
         }
         
-        public bool DeleteCards(int collectionId, List<int> cardSetInfoIds)
+        public bool DeleteCards(int collectionId, List<int> cardCollectionLinkIds)
         {
-            var cardLinks = _dbContext.CollectionCardLinks.Where(x => x.CollectionId == collectionId);
-            var cardLinksToDelete = new List<CollectionCardLink>();
-            foreach (var cardLink in cardLinks) {
-                if (cardSetInfoIds.Contains(cardLink.CardSetInfoId)) {
-                    cardLinksToDelete.Add(cardLink);
-                    cardSetInfoIds.Remove(cardLink.CardSetInfoId);
-                }
-            }
-            _dbContext.CollectionCardLinks.RemoveRange(cardLinksToDelete);
+            var cardLinks = _dbContext.CollectionCardLinks.Where(x => cardCollectionLinkIds.Contains(x.Id));
+            _dbContext.CollectionCardLinks.RemoveRange(cardLinks);
             _dbContext.SaveChanges();
             return true;
         }
@@ -94,7 +101,7 @@ namespace MtgCoreLib.Managers
         }
 
         public bool Import(int? collectionId, string importString) {
-            new Importer(_dbContext).ProcessInport(importString, collectionId);
+            new Importer(_dbContext).ProcessImport(importString, collectionId);
             return true;
         }
     }

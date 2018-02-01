@@ -83,11 +83,13 @@ export class CollectionViewComponent implements OnInit {
   }
 
   openRapidEntry() {
-    const dialogRef = this.dialog.open(CardRapidEntryComponent, { disableClose: true, minWidth: '600px' });
+    const dialogRef = this.dialog.open(CardRapidEntryComponent, { disableClose: true, minWidth: '800px' });
     dialogRef.afterClosed().subscribe(results => {
-      this.collectionService.addCards(this.collection.id, results).subscribe(cardsAdded =>
-        this.cardSearchComponent.cardDataSource.reloadData()
-      );
+      if (results) {
+        this.collectionService.addCards(this.collection.id, results).subscribe(cardsAdded =>
+          this.cardSearchComponent.cardDataSource.reloadData()
+        );
+      }
     });
   }
 

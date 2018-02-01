@@ -44,16 +44,16 @@ namespace MtgCardOrganizer.Api.Controllers
         
         [HttpGet]
         [Route("{collectionId}/cards")]
-        public PagedData<CardDetailsDto> GetCards(int collectionId, PageSortFilter pageSortFilter)
+        public PagedData<CardInstanceDto> GetCards(int collectionId, PageSortFilter pageSortFilter)
         {
             return _collectionManager.GetCards(collectionId, pageSortFilter);
         }
         
         [HttpPost]
         [Route("{collectionId}/cards")]
-        public bool AddCards(int collectionId, [FromBody] List<int> cardSetInfoIds)
+        public bool AddCards(int collectionId, [FromBody] List<AddCollectionCardCommand> cardSetInfoOtherInfoDict)
         {
-            return _collectionManager.AddCards(collectionId, cardSetInfoIds);
+            return _collectionManager.AddCards(collectionId, cardSetInfoOtherInfoDict);
         }
 
         [HttpPatch]

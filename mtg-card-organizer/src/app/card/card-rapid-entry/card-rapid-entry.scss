@@ -39,6 +39,10 @@
   }
 }
 
+mat-cell {
+  overflow: visible;
+}
+
 .result-tiles-container {
   display: flex;
   flex-direction: row;

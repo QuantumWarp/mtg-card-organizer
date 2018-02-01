@@ -10,6 +10,7 @@ import { GeneralModule } from './general/general.module';
 import { SharedModule } from './general/shared.module';
 import { HomeComponent } from './home/home.component';
 import { TestModule } from './test/test.module';
+import { FormsModule } from '@angular/forms';
 
 const conditionalModules = [];
 if (environment.testSettings && environment.testSettings.includeTestModule) {

@@ -46,6 +46,20 @@ namespace MtgCoreLib.Migrations
                     b.ToTable("Cards");
                 });
 
+            modelBuilder.Entity("MtgCoreLib.Entities.Cards.CardOtherInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Foil");
+
+                    b.Property<bool>("Promo");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CardOtherInfos");
+                });
+
             modelBuilder.Entity("MtgCoreLib.Entities.Cards.CardSetInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -109,11 +123,15 @@ namespace MtgCoreLib.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CardOtherInfoId");
+
                     b.Property<int>("CardSetInfoId");
 
                     b.Property<int>("CollectionId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CardOtherInfoId");
 
                     b.HasIndex("CardSetInfoId");
 
@@ -157,6 +175,11 @@ namespace MtgCoreLib.Migrations
 
             modelBuilder.Entity("MtgCoreLib.Entities.Collections.CollectionCardLink", b =>
                 {
+                    b.HasOne("MtgCoreLib.Entities.Cards.CardOtherInfo", "CardOtherInfo")
+                        .WithMany()
+                        .HasForeignKey("CardOtherInfoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("MtgCoreLib.Entities.Cards.CardSetInfo", "CardSetInfo")
                         .WithMany("CollectionCardLinks")
                         .HasForeignKey("CardSetInfoId")

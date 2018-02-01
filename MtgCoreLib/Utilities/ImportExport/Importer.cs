@@ -5,9 +5,11 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Dtos.Collections;
+using MtgCoreLib.Entities.Cards;
 using MtgCoreLib.Entities.Collections;
 using MtgCoreLib.Initialization;
 using MtgCoreLib.Managers;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 public class Importer {
@@ -18,53 +20,53 @@ public class Importer {
         _dbContext = dbContext;
     }
 
-    public void ProcessInport(string serializedExport, int? parentId) {
+    public void ProcessImport(string serializedExport, int? parentId) {
         using (var transaction = _dbContext.Database.BeginTransaction()) {
            _setDtos = _dbContext.Sets.ProjectTo<SetDto>().ToList();
-            var jObject = JObject.Parse(serializedExport);
-            ProcessCollection(jObject, parentId);
+            var model = JsonConvert.DeserializeObject<CollectionExportModel>(serializedExport);
+            ProcessCollection(model, parentId);
             _dbContext.SaveChanges();
             transaction.Commit();
         }
     }
 
-    private void ProcessCollection(JObject collection, int? parentId) {
-
-        collection.TryGetValue("name", out JToken name);
+    private void ProcessCollection(CollectionExportModel collection, int? parentId) {
         var collectionEntity = new Collection(new CollectionDto() {
-            Name = name.ToString(),
+            Name = collection.Name,
             ParentId = parentId
         });
 
         _dbContext.Collections.Add(collectionEntity);
         _dbContext.SaveChanges();
 
-        collection.TryGetValue("cards", out JToken cards);
-        foreach (var card in cards) {
-            ProcessCard((JObject)card, collectionEntity.Id);
+        foreach (var card in collection.Cards) {
+            ProcessCard(card, collectionEntity.Id);
         }
 
-        collection.TryGetValue("subCollections", out JToken subCollections);
-        foreach (var subCollection in subCollections) {
-            ProcessCollection((JObject)subCollection, collectionEntity.Id);
+        foreach (var subCollection in collection.SubCollections) {
+            ProcessCollection(subCollection, collectionEntity.Id);
         }
     }
 
-    private void ProcessCard(JObject card, int collectionId) {
-        card.TryGetValue("name", out JToken name);
-        card.TryGetValue("setName", out JToken setName);
-        card.TryGetValue("num", out JToken num);
-
+    private void ProcessCard(CardInstanceExportModel card, int collectionId) {
         var cardSetInfoQueryable = _dbContext.CardSetInfos.ProjectTo<CardDetailsDto>(Mapper.Configuration);
 
-        if (!string.IsNullOrEmpty(num.ToString())) {
-            cardSetInfoQueryable = cardSetInfoQueryable.Where(x => x.Num == num.ToString());
+        if (!string.IsNullOrEmpty(card.Num)) {
+            cardSetInfoQueryable = cardSetInfoQueryable.Where(x => x.Num == card.Num);
         }
 
-        var cardSetInfo = cardSetInfoQueryable.Where(x => x.Name == name.ToString())
-            .Where(x => x.SetId == _setDtos.First(set => set.Name == setName.ToString()).Id)
-            .Single();
+        var cardSetInfoId = cardSetInfoQueryable.Where(x => x.Name == card.Name)
+            .Where(x => x.SetId == _setDtos.First(set => set.Name == card.SetName).Id)
+            .Single().CardSetInfoId;
 
-        _dbContext.CollectionCardLinks.Add(new CollectionCardLink(collectionId, cardSetInfo.CardSetInfoId));
+        var cardOtherInfo = new CardOtherInfo(new CardOtherInfoDto() {
+            Foil = card.Foil,
+            Promo = card.Promo
+        });
+
+        _dbContext.CardOtherInfos.Add(cardOtherInfo);
+        _dbContext.SaveChanges();
+
+        _dbContext.CollectionCardLinks.Add(new CollectionCardLink(collectionId, cardSetInfoId, cardOtherInfo.Id));
     }
 }

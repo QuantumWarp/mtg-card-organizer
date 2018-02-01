@@ -1,4 +1,4 @@
-import { Rarity } from "./rarity";
+import { Rarity } from './rarity';
 
 export class Card {
     // Card
@@ -11,11 +11,16 @@ export class Card {
     oracleText: string;
     type: string;
 
+    // Card Set Info
     cardSetInfoId: number;
     num: string;
     setId: number;
     rarity: Rarity;
     artist: string;
+
+    // Card Other Info
+    foil: boolean;
+    promo: boolean;
 
     imageUrl: string;
 

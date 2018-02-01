@@ -10,6 +10,20 @@ namespace MtgCoreLib.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "CardOtherInfos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Foil = table.Column<bool>(type: "bit", nullable: false),
+                    Promo = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CardOtherInfos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cards",
                 columns: table => new
                 {
@@ -110,12 +124,19 @@ namespace MtgCoreLib.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CardOtherInfoId = table.Column<int>(type: "int", nullable: false),
                     CardSetInfoId = table.Column<int>(type: "int", nullable: false),
                     CollectionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CollectionCardLinks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CollectionCardLinks_CardOtherInfos_CardOtherInfoId",
+                        column: x => x.CardOtherInfoId,
+                        principalTable: "CardOtherInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CollectionCardLinks_CardSetInfos_CardSetInfoId",
                         column: x => x.CardSetInfoId,
@@ -141,6 +162,11 @@ namespace MtgCoreLib.Migrations
                 column: "SetId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CollectionCardLinks_CardOtherInfoId",
+                table: "CollectionCardLinks",
+                column: "CardOtherInfoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CollectionCardLinks_CardSetInfoId",
                 table: "CollectionCardLinks",
                 column: "CardSetInfoId");
@@ -163,6 +189,9 @@ namespace MtgCoreLib.Migrations
 
             migrationBuilder.DropTable(
                 name: "Formats");
+
+            migrationBuilder.DropTable(
+                name: "CardOtherInfos");
 
             migrationBuilder.DropTable(
                 name: "CardSetInfos");

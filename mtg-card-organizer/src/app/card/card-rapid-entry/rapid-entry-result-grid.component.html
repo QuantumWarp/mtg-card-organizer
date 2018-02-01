@@ -20,6 +20,20 @@
     </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="foil">
+    <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header> Foil </mat-header-cell>
+    <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">
+      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="rapidEntryResult.cardOtherInfo.foil"></mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="promo">
+    <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header> Promo </mat-header-cell>
+    <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">
+      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="rapidEntryResult.cardOtherInfo.promo"></mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="deleteColumn">
     <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header></mat-header-cell>
     <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">

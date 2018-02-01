@@ -16,6 +16,8 @@ namespace MtgCoreLib.Initialization
 
         public DbSet<Card> Cards { get; set; }
         public DbSet<CardSetInfo> CardSetInfos { get; set; }
+        public DbSet<CardOtherInfo> CardOtherInfos { get; set; }
+
         public DbSet<Format> Formats { get; set; }
         public DbSet<Set> Sets { get; set; }
     }

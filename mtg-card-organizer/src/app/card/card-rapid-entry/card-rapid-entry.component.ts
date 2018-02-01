@@ -15,6 +15,7 @@ import { SetService } from '../services/set.service';
 import { RapidEntryResult } from './rapid-entry-result';
 import { RapidEntryResultGridComponent } from './rapid-entry-result-grid.component';
 import { RapidEntryResultStore } from './rapid-entry-result.store';
+import { CardOtherInfo } from '../models/card-other-info';
 
 @Component({
   selector: 'app-card-rapid-entry',
@@ -72,7 +73,13 @@ export class CardRapidEntryComponent implements OnInit {
 
   apply(): void {
     if (!this.rapidEntryResultStore.rapidEntryResults.find(x => x.hasError)) {
-      this.dialogRef.close(this.rapidEntryResultStore.rapidEntryResults.map(x => x.results[0].cardId));
+      this.dialogRef.close(this.rapidEntryResultStore.rapidEntryResults.map(x => {
+        const command = new CardOtherInfo();
+        command.cardSetInfoId = x.results[0].cardId;
+        command.foil = x.cardOtherInfo.foil;
+        command.promo = x.cardOtherInfo.promo;
+        return command;
+      }));
     } else {
       this.openLatestError();
     }
@@ -113,7 +120,8 @@ export class CardRapidEntryComponent implements OnInit {
         entryText: searchText,
         filters: psFilter.filters,
         hasError: result.data.length !== 1,
-        results: result.data
+        results: result.data,
+        cardOtherInfo: new CardOtherInfo()
        };
        this.rapidEntryResultStore.rapidEntryResults.splice(0, 0, rpr);
        this.rapidEntryResultDataSource.reloadData();
