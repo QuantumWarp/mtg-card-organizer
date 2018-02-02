@@ -83,7 +83,7 @@ export class CollectionViewComponent implements OnInit {
   }
 
   openRapidEntry() {
-    const dialogRef = this.dialog.open(CardRapidEntryComponent, { disableClose: true, minWidth: '800px' });
+    const dialogRef = this.dialog.open(CardRapidEntryComponent, { disableClose: true, minWidth: '600px' });
     dialogRef.afterClosed().subscribe(results => {
       if (results) {
         this.collectionService.addCards(this.collection.id, results).subscribe(cardsAdded =>

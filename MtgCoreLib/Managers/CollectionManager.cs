@@ -73,14 +73,14 @@ namespace MtgCoreLib.Managers
         public bool AddCards(int collectionId, List<AddCollectionCardCommand> cardSetInfoOtherInfoDict)
         {
             using(var transaction = _dbContext.Database.BeginTransaction()) {
-                var cardSetInfoOtherInfoIdsDict = new Dictionary<int, CardOtherInfo>(cardSetInfoOtherInfoDict.Select(command => 
-                    KeyValuePair.Create(command.CardSetInfoId, new CardOtherInfo(new CardOtherInfoDto() {
+                var cardSetInfoOtherInfoIdsDict = new Dictionary<AddCollectionCardCommand, CardOtherInfo>(cardSetInfoOtherInfoDict.Select(command => 
+                    KeyValuePair.Create(command, new CardOtherInfo(new CardOtherInfoDto() {
                         Foil = command.Foil,
                         Promo = command.Promo
                     }))));
                 _dbContext.CardOtherInfos.AddRange(cardSetInfoOtherInfoIdsDict.Values);
                 _dbContext.SaveChanges();
-                var cardLinks = cardSetInfoOtherInfoIdsDict.Select(kvp => new CollectionCardLink(collectionId, kvp.Key, kvp.Value.Id));
+                var cardLinks = cardSetInfoOtherInfoIdsDict.Select(kvp => new CollectionCardLink(collectionId, kvp.Key.CardSetInfoId, kvp.Value.Id));
                 _dbContext.CollectionCardLinks.AddRange(cardLinks);
                 _dbContext.SaveChanges();
                 transaction.Commit();

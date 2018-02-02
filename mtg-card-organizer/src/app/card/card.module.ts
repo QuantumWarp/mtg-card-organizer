@@ -13,6 +13,7 @@ import { CardSearchComponent } from './card-search/card-search.component';
 import { CardService } from './services/card.service';
 import { RapidEntrySingleViewComponent } from './card-rapid-entry/rapid-entry-single-view.component';
 import { SetService } from './services/set.service';
+import { SetSymbolComponent } from './set-symbol/set-symbol.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SetService } from './services/set.service';
     CardRapidEntryComponent,
     RapidEntryResultGridComponent,
     RapidEntrySingleViewComponent,
+    SetSymbolComponent,
   ],
   entryComponents: [
     CardFilterComponent,

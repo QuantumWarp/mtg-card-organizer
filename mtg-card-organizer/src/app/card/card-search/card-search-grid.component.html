@@ -4,6 +4,11 @@
     <mat-cell *matCellDef="let card"> {{card.name}} </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="setSymbol">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Set </mat-header-cell>
+    <mat-cell *matCellDef="let card"><app-ss [card]="card" [sets]="sets"></app-ss></mat-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let card; columns: displayedColumns;" (click)="detailsClick(card)"></mat-row>
 </mat-table>

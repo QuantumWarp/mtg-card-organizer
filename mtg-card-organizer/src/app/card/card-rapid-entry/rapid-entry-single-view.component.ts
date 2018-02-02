@@ -19,12 +19,13 @@ import { RapidEntryResult } from './rapid-entry-result';
   styleUrls: ['./card-rapid-entry.scss']
 })
 export class RapidEntrySingleViewComponent implements OnInit {
+  @ViewChild('searchTextBox') searchTextBox: ElementRef;
+
   @Input() rapidEntryResult: RapidEntryResult;
   @Input() filterer: Filterer;
-  @ViewChild('searchTextBox') searchTextBox: ElementRef;
-  @Input() sets: Map<number, Set>;
-  detailString: string;
+  @Input() sets: Set[];
 
+  detailString: string;
   searchText: string;
 
   constructor(
@@ -42,9 +43,13 @@ export class RapidEntrySingleViewComponent implements OnInit {
     }
   }
 
+  setById(id: number): Set {
+    return this.sets.find(x => x.id === id);
+  }
+
   openFilterDialog() {
     const dialogRef = this.dialog.open(CardFilterComponent, { disableClose: true, minWidth: '300px' });
-    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.deepClone(x));
+    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.cloneDeep(x));
     dialogRef.afterClosed().subscribe(filters => {
       if (filters) {
         this.filterer.applyFilters(filters);

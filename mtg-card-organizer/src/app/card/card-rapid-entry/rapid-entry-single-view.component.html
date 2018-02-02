@@ -20,7 +20,7 @@
       <div class="result-tiles-container" *ngIf="rapidEntryResult.results.length > 1">
         <div class="result-tile mat-elevation-z4" *ngFor="let card of rapidEntryResult.results" (click)="optionClicked(card)">
           <div class="large-text">{{ card.name }}</div>
-          <div>{{ sets ? sets.get(card.setId).name : '' }}</div>
+          <div><app-ss [card]="card" [sets]="sets"></app-ss> {{ setById(card.setId).name }} - ({{card.num}})</div>
         </div>
       </div>
     </div>

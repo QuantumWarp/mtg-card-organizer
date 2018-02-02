@@ -14,7 +14,11 @@
   }
 }
 
-.thin-width-column{
+.thin-width-column {
+  flex: 0 0 60px;
+}
+
+.button-column {
   flex: 0 0 100px;
 }
 

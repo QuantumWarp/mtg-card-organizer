@@ -6,17 +6,10 @@
     </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="setName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Set </mat-header-cell>
-    <mat-cell *matCellDef="let rapidEntryResult">
-      {{ rapidEntryResult.results.length === 1 ? rapidEntryResult.results[0].name : rapidEntryResult.entryText }}
-    </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="hasError">
-    <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header> Error </mat-header-cell>
+  <ng-container matColumnDef="set">
+    <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header> Set </mat-header-cell>
     <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">
-      {{ rapidEntryResult.hasError ? 'Error' : 'Found' }}
+      <app-ss *ngIf="rapidEntryResult.results.length === 1" [card]="rapidEntryResult.results[0]" [sets]="sets"></app-ss>
     </mat-cell>
   </ng-container>
 
@@ -35,8 +28,8 @@
   </ng-container>
 
   <ng-container matColumnDef="deleteColumn">
-    <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header></mat-header-cell>
-    <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">
+    <mat-header-cell class="button-column" *matHeaderCellDef mat-sort-header></mat-header-cell>
+    <mat-cell class="button-column" *matCellDef="let rapidEntryResult">
       <button mat-raised-button (click)="$event.stopPropagation(); deleteEntry(rapidEntryResult)">Delete</button>
     </mat-cell>
   </ng-container>

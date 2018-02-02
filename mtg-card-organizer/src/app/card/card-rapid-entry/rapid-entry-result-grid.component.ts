@@ -16,9 +16,9 @@ import { PropertyFilter } from '../../general/filtering/property-filter';
 })
 export class RapidEntryResultGridComponent {
   @Input() rapidEntryResultDataSource: GridDataSource<RapidEntryResult>;
-  @Input() sets: Map<number, Set>;
+  @Input() sets: Set[];
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns = ['text', 'hasError', 'foil', 'promo', 'deleteColumn'];
+  displayedColumns = ['text', 'set', 'foil', 'promo', 'deleteColumn'];
 
   constructor(private dialog: MatDialog) { }
 

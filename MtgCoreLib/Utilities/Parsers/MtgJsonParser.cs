@@ -61,13 +61,23 @@ namespace MtgCoreLib.Utilities.Parsers
             var cardSetInfoDto = new CardSetInfoDto();
             cardSetInfoDto.Artist = cardObj["artist"].ToString();
             if (cardObj.ContainsKey("number")) cardSetInfoDto.Num = cardObj["number"].ToString();
-            cardSetInfoDto.Rarity = RarityExtensions.Parse(cardObj["rarity"].ToString());
+            cardSetInfoDto.Rarity = ParseRarity(cardObj["rarity"].ToString());
 
             CardDtos.Add(cardDto);
             CardSetInfoDtos.Add(cardSetInfoDto);
 
             SetRelationship.Add(cardSetInfoDto, setDto);
             CardRelationship.Add(cardSetInfoDto, cardDto);
+        }
+        
+        public Rarity ParseRarity(string rarityString) {
+            switch (rarityString) {
+                case "Common": return Rarity.Common;
+                case "Uncommon": return Rarity.Uncommon;
+                case "Rare": return Rarity.Rare;
+                case "Mythic Rare": return Rarity.Mythic;
+                default: return Rarity.Common;
+            }
         }
 
         public string Retrieve()

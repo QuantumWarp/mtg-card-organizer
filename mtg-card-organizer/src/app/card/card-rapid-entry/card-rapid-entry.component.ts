@@ -26,7 +26,7 @@ export class CardRapidEntryComponent implements OnInit {
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('resultGrid') resultGrid: RapidEntryResultGridComponent;
   @ViewChild('searchTextBox') searchTextBox: ElementRef;
-  sets: Map<number, Set>;
+  sets: Set[];
   filterer = new Filterer();
 
   searchText: string;
@@ -43,7 +43,7 @@ export class CardRapidEntryComponent implements OnInit {
 
   ngOnInit(): void {
     this.setService.query().subscribe(results => {
-      this.sets = new Map(results.data.map(x => [ x.id, x ] as [ number, Set ]));
+      this.sets = results.data;
     });
 
     this.dialogRef.afterOpen().subscribe(() => setTimeout(() => this.searchTextBox.nativeElement.focus(), 0));
@@ -52,7 +52,7 @@ export class CardRapidEntryComponent implements OnInit {
 
   openFilterDialog() {
     const dialogRef = this.dialog.open(CardFilterComponent, { disableClose: true, minWidth: '300px' });
-    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.deepClone(x));
+    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.cloneDeep(x));
     dialogRef.afterClosed().subscribe(filters => {
       if (filters) {
         this.filterer.applyFilters(filters);

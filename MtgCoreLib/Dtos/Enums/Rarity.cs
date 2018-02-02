@@ -10,14 +10,4 @@ namespace MtgCoreLib.Dtos.Enums
         Rare,
         Mythic,
     }
-
-    public static class RarityExtensions {
-        public static Rarity Parse(string rarityString) {
-            if (Enum.TryParse(rarityString, out Rarity result)) {
-                return result;
-            } else {
-                return Rarity.Unknown;
-            }
-        }
-    }
 }
