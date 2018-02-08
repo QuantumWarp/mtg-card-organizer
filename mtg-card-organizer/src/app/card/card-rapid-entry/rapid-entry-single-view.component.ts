@@ -22,8 +22,8 @@ export class RapidEntrySingleViewComponent implements OnInit {
   @ViewChild('searchTextBox') searchTextBox: ElementRef;
 
   @Input() rapidEntryResult: RapidEntryResult;
-  @Input() filterer: Filterer;
   @Input() sets: Set[];
+  @Input() selectedSetIds: number[];
 
   detailString: string;
   searchText: string;
@@ -35,6 +35,7 @@ export class RapidEntrySingleViewComponent implements OnInit {
 
   ngOnInit() {
     this.dialogRef.afterOpen().subscribe(() => setTimeout(() => this.searchTextBox.nativeElement.focus(), 0));
+    this.selectedSetIds = this.rapidEntryResult.selectedSetIds;
     if (this.rapidEntryResult.hasError) {
       this.detailString = this.rapidEntryResult.results.length === 0 ? 'No matches found' :
         (this.rapidEntryResult.results.length > 10 ? 'Multiple matches found (Over 10)' : 'Multiple matches found');
@@ -47,14 +48,8 @@ export class RapidEntrySingleViewComponent implements OnInit {
     return this.sets.find(x => x.id === id);
   }
 
-  openFilterDialog() {
-    const dialogRef = this.dialog.open(CardFilterComponent, { disableClose: true, minWidth: '300px' });
-    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.cloneDeep(x));
-    dialogRef.afterClosed().subscribe(filters => {
-      if (filters) {
-        this.filterer.applyFilters(filters);
-      }
-    });
+  applySetFilter(selectedSetIds: number[]): void {
+    this.selectedSetIds = selectedSetIds;
   }
 
   search(keyEvent: KeyboardEvent): void {
@@ -63,7 +58,11 @@ export class RapidEntrySingleViewComponent implements OnInit {
     }
 
     const psFilter = new PageSortFilter();
-    psFilter.addSubFilters(this.filterer.filters);
+    psFilter.addSubFilter(new PropertyFilter({
+      property: 'setId',
+      operator: PropertyFilterOperator.IsContainedIn,
+      value: this.selectedSetIds,
+    }));
     const searchText = this.searchText;
     this.searchText = '';
     psFilter.addSubFilter(new PropertyFilter({
@@ -75,7 +74,7 @@ export class RapidEntrySingleViewComponent implements OnInit {
 
     this.cardService.query(psFilter).subscribe(result => {
       this.rapidEntryResult.entryText = searchText;
-      this.rapidEntryResult.filters = psFilter.filters;
+      this.rapidEntryResult.selectedSetIds = this.selectedSetIds;
       this.rapidEntryResult.hasError = result.data.length !== 1;
       this.rapidEntryResult.results = result.data.length > 10 ? result.data.splice(0, 10) : result.data;
 
@@ -87,7 +86,7 @@ export class RapidEntrySingleViewComponent implements OnInit {
 
   optionClicked(card: Card) {
     this.rapidEntryResult.entryText = card.name;
-    this.rapidEntryResult.filters = new Array<PropertyFilter>();
+    this.rapidEntryResult.selectedSetIds = new Array<number>();
     this.rapidEntryResult.hasError = false;
     this.rapidEntryResult.results = [ card ];
     this.dialogRef.close();

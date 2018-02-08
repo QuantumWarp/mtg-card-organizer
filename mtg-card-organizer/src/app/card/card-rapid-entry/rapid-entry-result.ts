@@ -4,7 +4,7 @@ import { CardOtherInfo } from '../models/card-other-info';
 
 export class RapidEntryResult {
   entryText: string;
-  filters: PropertyFilter[];
+  selectedSetIds: number[];
   results: Card[];
   hasError: boolean;
   cardOtherInfo: CardOtherInfo;

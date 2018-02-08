@@ -28,6 +28,11 @@ export class CardFilterComponent implements OnInit {
       this.sets = results.data.sort((x, y) => x.name > y.name ? 1 : -1);
     });
 
+    const sf = this.filters.find(x => x.property === 'setId');
+    if (sf) {
+      this.setFilter = sf.value;
+    }
+
     const nf = this.filters.find(x => x.property === 'name');
     if (nf) {
       this.nameFilter = nf.value;

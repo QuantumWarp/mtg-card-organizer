@@ -5,9 +5,7 @@
 
   <div class="modal-content">
     <div class="entry-bar">
-      <div class="filter-button">
-        <button mat-raised-button color="primary" (click)="openFilterDialog()">Filter</button>
-      </div>
+      <app-set-selector class="set-selector" [selectedSetIds]="selectedSetIds" (setsSelected)="applySetFilter($event)"></app-set-selector>
       <mat-form-field class="entry-field">
         <input #searchTextBox matInput [(ngModel)]="searchText" placeholder="Enter Cards" (keyup)="search($event)">
       </mat-form-field>

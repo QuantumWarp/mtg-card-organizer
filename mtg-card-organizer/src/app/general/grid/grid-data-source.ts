@@ -19,7 +19,7 @@ export class GridDataSource<T> extends DataSource<T> {
     public dataService: DataService<T>,
     protected paginator: MatPaginator,
     protected sort: MatSort,
-    protected filterer: Filterer) {
+    protected filterer: Filterer = new Filterer()) {
     super();
     this.subject = new BehaviorSubject<T[]>(this.currentData);
     this.localDataChange.subscribe(() => this.subject.next(this.currentData));

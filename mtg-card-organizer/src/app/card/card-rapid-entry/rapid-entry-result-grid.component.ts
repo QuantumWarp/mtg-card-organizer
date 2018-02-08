@@ -22,12 +22,9 @@ export class RapidEntryResultGridComponent {
 
   constructor(private dialog: MatDialog) { }
 
-  singleEntryView(rapidEntryResult: RapidEntryResult, filters: PropertyFilter[]) {
+  singleEntryView(rapidEntryResult: RapidEntryResult, selectedSetIds: number[]) {
     const dialogRef = this.dialog.open(RapidEntrySingleViewComponent, { minWidth: '600px' });
     dialogRef.componentInstance.rapidEntryResult = rapidEntryResult;
-    const filterer = new Filterer();
-    filterer.filters = filters;
-    dialogRef.componentInstance.filterer = filterer;
     dialogRef.componentInstance.sets = this.sets;
   }
 

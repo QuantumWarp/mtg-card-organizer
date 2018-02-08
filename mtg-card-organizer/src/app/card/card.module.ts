@@ -14,6 +14,7 @@ import { CardService } from './services/card.service';
 import { RapidEntrySingleViewComponent } from './card-rapid-entry/rapid-entry-single-view.component';
 import { SetService } from './services/set.service';
 import { SetSymbolComponent } from './set-symbol/set-symbol.component';
+import { SetSelectorComponent } from './card-filter/set-selector.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { SetSymbolComponent } from './set-symbol/set-symbol.component';
     RapidEntryResultGridComponent,
     RapidEntrySingleViewComponent,
     SetSymbolComponent,
+    SetSelectorComponent,
   ],
   entryComponents: [
     CardFilterComponent,

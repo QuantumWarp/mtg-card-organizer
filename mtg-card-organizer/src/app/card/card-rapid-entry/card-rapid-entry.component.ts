@@ -26,8 +26,9 @@ export class CardRapidEntryComponent implements OnInit {
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('resultGrid') resultGrid: RapidEntryResultGridComponent;
   @ViewChild('searchTextBox') searchTextBox: ElementRef;
+
   sets: Set[];
-  filterer = new Filterer();
+  selectedSetIds = new Array<number>();
 
   searchText: string;
   lastSearchText: string;
@@ -47,23 +48,17 @@ export class CardRapidEntryComponent implements OnInit {
     });
 
     this.dialogRef.afterOpen().subscribe(() => setTimeout(() => this.searchTextBox.nativeElement.focus(), 0));
-    this.rapidEntryResultDataSource = new GridDataSource<RapidEntryResult>(this.rapidEntryResultStore, this.paginator, this.resultGrid.sort, this.filterer);
+    this.rapidEntryResultDataSource = new GridDataSource<RapidEntryResult>(this.rapidEntryResultStore, this.paginator, this.resultGrid.sort);
   }
 
-  openFilterDialog() {
-    const dialogRef = this.dialog.open(CardFilterComponent, { disableClose: true, minWidth: '300px' });
-    dialogRef.componentInstance.filters = this.filterer.filters.map(x => _.cloneDeep(x));
-    dialogRef.afterClosed().subscribe(filters => {
-      if (filters) {
-        this.filterer.applyFilters(filters);
-      }
-    });
+  applySetFilter(selectedSetIds: number[]): void {
+    this.selectedSetIds = selectedSetIds;
   }
 
   openLatestError(): void {
     const firstError = this.rapidEntryResultStore.rapidEntryResults.find(x => x.hasError);
     if (firstError) {
-      this.resultGrid.singleEntryView(firstError, this.filterer.filters);
+      this.resultGrid.singleEntryView(firstError, this.selectedSetIds);
     }
   }
 
@@ -95,7 +90,11 @@ export class CardRapidEntryComponent implements OnInit {
     }
 
     const psFilter = new PageSortFilter();
-    psFilter.addSubFilters(this.filterer.filters);
+    psFilter.addSubFilter(new PropertyFilter({
+      property: 'setId',
+      operator: PropertyFilterOperator.IsContainedIn,
+      value: this.selectedSetIds,
+    }));
     psFilter.addSubFilter(new PropertyFilter({
       property: 'name',
       operator: PropertyFilterOperator.Contains,
@@ -118,7 +117,7 @@ export class CardRapidEntryComponent implements OnInit {
     this.cardService.query(psFilter).subscribe(result => {
       const rpr: RapidEntryResult = {
         entryText: searchText,
-        filters: psFilter.filters,
+        selectedSetIds: this.selectedSetIds,
         hasError: result.data.length !== 1,
         results: result.data,
         cardOtherInfo: new CardOtherInfo()

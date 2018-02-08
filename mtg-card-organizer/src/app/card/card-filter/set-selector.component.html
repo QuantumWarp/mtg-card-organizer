@@ -1,0 +1,7 @@
+<mat-form-field>
+  <mat-select (change)="setsChanged()" [(ngModel)]="selectedSetIds" placeholder="Sets" multiple>
+    <mat-option *ngFor="let set of sets" [value]="set.id">
+      {{ set.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
