@@ -16,7 +16,7 @@ export class CardSearchGridComponent implements OnInit {
   @Input() sets: Set[];
   @ViewChild(MatSort) sort: MatSort;
   selectedCard: Card;
-  displayedColumns = ['name', 'setSymbol'];
+  displayedColumns = ['name', 'setSymbol', 'manaCost'];
   @Output() selectedCardChange = new EventEmitter<Card>();
 
   constructor(private setService: SetService) { }

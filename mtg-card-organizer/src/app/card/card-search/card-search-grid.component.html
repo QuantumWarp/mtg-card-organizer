@@ -1,12 +1,17 @@
 <mat-table #table [dataSource]="cardDataSource" matSort>
   <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-    <mat-cell *matCellDef="let card"> {{card.name}} </mat-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+    <mat-cell *matCellDef="let card">{{card.name}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="setSymbol">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Set </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Set</mat-header-cell>
     <mat-cell *matCellDef="let card"><app-ss [card]="card" [sets]="sets"></app-ss></mat-cell>
+  </ng-container>
+  
+  <ng-container matColumnDef="manaCost">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Mana Cost</mat-header-cell>
+    <mat-cell *matCellDef="let card"><app-mc [card]="card"></app-mc></mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

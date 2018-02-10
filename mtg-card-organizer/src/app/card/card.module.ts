@@ -15,6 +15,8 @@ import { RapidEntrySingleViewComponent } from './card-rapid-entry/rapid-entry-si
 import { SetService } from './services/set.service';
 import { SetSymbolComponent } from './set-symbol/set-symbol.component';
 import { SetSelectorComponent } from './card-filter/set-selector.component';
+import { SingleManaSymbolComponent } from './mana-symbol/single-mana-symbol.component';
+import { ManaCostComponent } from './mana-symbol/mana-cost.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { SetSelectorComponent } from './card-filter/set-selector.component';
     RapidEntrySingleViewComponent,
     SetSymbolComponent,
     SetSelectorComponent,
+    ManaCostComponent,
+    SingleManaSymbolComponent,
   ],
   entryComponents: [
     CardFilterComponent,

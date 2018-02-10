@@ -1,9 +1,8 @@
-import { Component, Input, ElementRef, OnInit, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, Input, ElementRef, OnInit, ViewChild, SimpleChanges, OnChanges } from '@angular/core';
 
 import { Card } from '../models/card';
 import { Set } from '../models/set';
 import { Rarity } from '../models/rarity';
-import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-ss',
@@ -12,6 +11,9 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 export class SetSymbolComponent implements OnChanges {
   @ViewChild('ssField') ssField: ElementRef;
   @Input() card: Card;
+  @Input() setId: number;
+  @Input() rarity: Rarity;
+
   @Input() sets: Set[];
 
   @Input() size = 2;
@@ -28,11 +30,15 @@ export class SetSymbolComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (this.card) {
+      this.setId = this.card.setId;
+      this.rarity = this.card.rarity;
+    }
     if (this.sets) {
-      const set = this.sets.find(x => x.id === this.card.setId);
+      const set = this.sets.find(x => x.id === this.setId);
       this.ssField.nativeElement.classList.add('ss-' + set.code.toLowerCase());
     }
-    this.ssField.nativeElement.classList.add(SetSymbolComponent.toRarityClass(this.card.rarity));
+    this.ssField.nativeElement.classList.add(SetSymbolComponent.toRarityClass(this.rarity));
     this.ssField.nativeElement.classList.add();
     if (this.size > 0) {
       this.ssField.nativeElement.classList.add('ss-' + this.size + 'x');
