@@ -1,6 +1,10 @@
 <div class="mat-elevation-z8">
   <app-card-search-bar [filterer]="filterer" [cardDataSource]="cardDataSource"></app-card-search-bar>
-  <app-card-search-grid #searchGrid (selectedCardChange)="selectedCardChange.emit($event)" [cardDataSource]="cardDataSource"></app-card-search-grid>
+  <app-card-search-grid #searchGrid
+    (cardSelected)="cardSelected.emit($event)"
+    [cardDataSource]="cardDataSource"
+    [displayedColumns]="displayedColumns">
+  </app-card-search-grid>
   <mat-paginator #paginator
     [pageIndex]="0"
     [pageSize]="10"

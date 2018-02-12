@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
 
 import { Card } from '../models/card';
+import { MatDialog } from '@angular/material';
+import { CardDetailsModalComponent } from '../card-details/card-details-modal.component';
 
 @Component({
-  selector: 'app-card-search-page',
   templateUrl: './card-search-page.component.html'
 })
 export class CardSearchPageComponent {
-  selectedCard: Card;
+
+  constructor(private dialog: MatDialog) { }
 
   cardSelected(card: Card) {
-    this.selectedCard = card;
+    const dialogRef = this.dialog.open(CardDetailsModalComponent);
+    dialogRef.componentInstance.card = card;
   }
 }

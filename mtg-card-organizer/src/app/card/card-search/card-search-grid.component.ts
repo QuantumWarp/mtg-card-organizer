@@ -12,19 +12,15 @@ import { SetService } from '../services/set.service';
   templateUrl: './card-search-grid.component.html'
 })
 export class CardSearchGridComponent implements OnInit {
+  @ViewChild(MatSort) sort: MatSort;
+
+  @Output() cardSelected = new EventEmitter<Card>();
+
   @Input() cardDataSource: GridDataSource<Card>;
   @Input() sets: Set[];
-  @ViewChild(MatSort) sort: MatSort;
-  selectedCard: Card;
-  displayedColumns = ['name', 'setSymbol', 'manaCost'];
-  @Output() selectedCardChange = new EventEmitter<Card>();
+  @Input() displayedColumns = ['name', 'setSymbol', 'manaCost'];
 
   constructor(private setService: SetService) { }
-
-  detailsClick(card: Card): void {
-    this.selectedCard = card;
-    this.selectedCardChange.emit(this.selectedCard);
-  }
 
   ngOnInit(): void {
     if (!this.sets) {

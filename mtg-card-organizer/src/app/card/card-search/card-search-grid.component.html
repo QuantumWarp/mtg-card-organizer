@@ -8,12 +8,37 @@
     <mat-header-cell *matHeaderCellDef mat-sort-header>Set</mat-header-cell>
     <mat-cell *matCellDef="let card"><app-ss [card]="card" [sets]="sets"></app-ss></mat-cell>
   </ng-container>
-  
+
+  <ng-container matColumnDef="setNum">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Num</mat-header-cell>
+    <mat-cell *matCellDef="let card">{{card.num}}</mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="manaCost">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Mana Cost</mat-header-cell>
     <mat-cell *matCellDef="let card"><app-mc [card]="card"></app-mc></mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="power">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Power</mat-header-cell>
+    <mat-cell *matCellDef="let card">{{card.power}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="toughness">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Toughness</mat-header-cell>
+    <mat-cell *matCellDef="let card">{{card.toughness}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="foil">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Foil</mat-header-cell>
+    <mat-cell *matCellDef="let card"><mat-checkbox disabled [(ngModel)]="card.foil"></mat-checkbox></mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="promo">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Promo</mat-header-cell>
+    <mat-cell *matCellDef="let card"><mat-checkbox disabled [(ngModel)]="card.promo"></mat-checkbox></mat-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let card; columns: displayedColumns;" (click)="detailsClick(card)"></mat-row>
+  <mat-row *matRowDef="let card; columns: displayedColumns;" (click)="cardSelected.emit(card);"></mat-row>
 </mat-table>

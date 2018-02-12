@@ -14,10 +14,14 @@ import { CardSearchGridComponent } from './card-search-grid.component';
 export class CardSearchComponent implements OnInit {
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild('searchGrid') searchGrid: CardSearchGridComponent;
-  @Output() selectedCardChange = new EventEmitter<Card>();
+
+  @Output() cardSelected = new EventEmitter<Card>();
+
+  @Input() displayedColumns = ['name', 'setSymbol', 'manaCost'];
+  @Input() cardService: CardService;
+
   filterer = new Filterer();
   cardDataSource: GridDataSource<Card>;
-  @Input() cardService: CardService;
 
   constructor(private defaultCardService: CardService) {
     this.cardService = defaultCardService;

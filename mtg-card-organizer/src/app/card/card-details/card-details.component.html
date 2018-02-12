@@ -1,8 +1,4 @@
-<div [@enterAnimation] *ngIf="card">
-  <mat-card>
-    <p>Name: {{card.name}}</p>
-    <p *ngIf="card.power">P/T: {{card.power}}/{{card.toughness}}</p>
-    <p>Text: {{card.oracleText}}</p>
-    <img src={{card.imageUrl}} alt="Image Not Found"/>
-  </mat-card>
-</div>
+<p>Name: {{card.name}}</p>
+<p *ngIf="card.power">P/T: {{card.power}}/{{card.toughness}}</p>
+<p>Text: {{card.oracleText}}</p>
+<img src={{card.imageUrl}} alt="Image Not Found"/>

@@ -23,6 +23,9 @@
       </div>
     </div>
 
-    <app-card-search *ngIf="collection" fxFlex [cardService]="collectionCardServiceWrapper"></app-card-search>
+    <app-card-search *ngIf="collection" fxFlex
+      [displayedColumns]="['name', 'setSymbol', 'manaCost', 'foil', 'promo']"
+      [cardService]="collectionCardServiceWrapper">
+    </app-card-search>
   </div>
 </div>
