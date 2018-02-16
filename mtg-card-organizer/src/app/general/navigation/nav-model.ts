@@ -1,18 +1,36 @@
 import { NavNode } from './nav-node';
 
-export class NavModel {
-    nodes: NavNode[];
-
-    constructor(...nodes: NavNode[]) {
-        this.nodes = nodes;
-    }
-
-    static default(): NavModel {
-        return new NavModel(
-            new NavNode('Import Cards', '/admin/import-cards'),
-            new NavNode('Card Search', '/cards/search'),
-            new NavNode('Life Counter', '/life-counter'),
-            new NavNode('Collections', '/collections')
-        );
-    }
-}
+export const navModel: NavNode[] = [
+  {
+    text: 'Admin',
+    icon: 'lock',
+    children: [
+      {
+        text: 'Import Cards',
+        icon: 'get_app',
+        routerLink: '/admin/import-cards',
+      },
+    ]
+  },
+  {
+    text: 'Collections',
+    icon: 'view_list',
+    routerLink: '/collections',
+  },
+  {
+    text: 'Tools',
+    icon: 'build',
+    children: [
+      {
+        text: 'Card Search',
+        icon: 'view_list',
+        routerLink: '/cards/search',
+      },
+      {
+        text: 'Life Counter',
+        icon: 'favorite',
+        routerLink: '/life-counter',
+      },
+    ]
+  },
+];

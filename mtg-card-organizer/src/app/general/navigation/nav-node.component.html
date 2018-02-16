@@ -1,0 +1,12 @@
+<div class="nav-node" [class.nav-node-open]="open">
+  <div mat-ripple class="nav-node-button" (click)="nodeClicked()">
+    <mat-icon>{{ navNode.icon }}</mat-icon>
+    <div class="nav-node-text">{{ navNode.text }}</div>
+    <div [@arrowDown]="open" *ngIf="hasChildren"><mat-icon>keyboard_arrow_right</mat-icon></div>
+  </div>
+  <div [@slideOpen]="open" class="nav-children">
+    <div *ngIf="hasChildren">
+      <app-nav-node *ngFor="let navNode of navNode.children" [navNode]="navNode" [nestedIndex]="nestedIndex + 1"></app-nav-node>
+    </div>
+  </div>
+</div>

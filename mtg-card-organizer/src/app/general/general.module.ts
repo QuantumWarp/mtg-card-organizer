@@ -6,11 +6,13 @@ import { NavBarComponent } from './navigation/nav-bar.component';
 import { NavigatorComponent } from './navigation/navigator.component';
 import { SharedModule } from './shared.module';
 import { ConfirmComponent } from './components/confirm.component';
+import { NavNodeComponent } from './navigation/nav-node.component';
 
 @NgModule({
   declarations: [
     ContentComponent,
     NavBarComponent,
+    NavNodeComponent,
     NavigatorComponent,
     ConfirmComponent,
   ],

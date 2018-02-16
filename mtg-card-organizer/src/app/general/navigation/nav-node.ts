@@ -1,5 +1,7 @@
-export class NavNode {
-    constructor(
-        public text: string,
-        public link: string) { }
+export interface NavNode {
+  text: string;
+  routerLink?: string;
+  icon?: string;
+  action?: () => void;
+  children?: NavNode[];
 }

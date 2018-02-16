@@ -1,0 +1,36 @@
+.nav-node {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  user-select: none;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  .nav-node-open {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  > .nav-node-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
+
+    > .nav-node-text {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      margin: 0px 10px 0px 10px;
+    }
+  }
+
+  > .nav-node-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  > .nav-children {
+    overflow: hidden;
+  }
+}
+
