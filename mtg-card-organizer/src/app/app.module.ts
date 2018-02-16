@@ -11,6 +11,7 @@ import { SharedModule } from './general/shared.module';
 import { HomeComponent } from './home/home.component';
 import { TestModule } from './test/test.module';
 import { FormsModule } from '@angular/forms';
+import { StandardLayoutComponent } from './general/layouts/standard-layout.component';
 
 const conditionalModules = [];
 if (environment.testSettings && environment.testSettings.includeTestModule) {
@@ -21,6 +22,7 @@ if (environment.testSettings && environment.testSettings.includeTestModule) {
   declarations: [
     AppComponent,
     HomeComponent,
+    StandardLayoutComponent,
   ],
   imports: [
     ...conditionalModules,
