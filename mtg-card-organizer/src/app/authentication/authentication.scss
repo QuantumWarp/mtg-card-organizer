@@ -1,0 +1,63 @@
+.page-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('http://eskipaper.com/images/free-hd-background-2.jpg');
+}
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-around;
+  background-color: white;
+  min-width: 300px;
+  min-height: 500px;
+  padding: 30px;
+
+  > .login-header {
+    display: flex;
+    flex-direction: column;
+
+    > .app-logo {
+      width: 250px;
+      height: 100px;
+    }
+
+    > .login-title {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  > .login-content {
+    display: flex;
+    flex-direction: column;
+
+    > .login-forgot-password {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    > .login-button-area {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+
+      > .login-button {
+        min-width: 200px;
+      }
+    }
+  }
+
+  > .login-footer {
+    display: flex;
+    flex-direction: column;
+
+    > * {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
