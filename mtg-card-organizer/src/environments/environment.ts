@@ -5,6 +5,7 @@
 
 export const environment = {
   apiBaseUrl: 'http://localhost:57894',
+  identityServerUrl: 'http://localhost:5000',
   production: false,
   testSettings: {
     includeTestModule: true,
