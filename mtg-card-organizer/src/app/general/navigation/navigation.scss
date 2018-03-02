@@ -1,12 +1,22 @@
+:host {
+  display: flex;
+  width: 200px;
+}
+
+.nav-container {
+  flex: 1;
+  background-color: white;
+}
+
 .nav-node {
   display: flex;
   flex-direction: column;
   color: white;
   user-select: none;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 1);
 
   .nav-node-open {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 1);
   }
 
   > .nav-node-button {

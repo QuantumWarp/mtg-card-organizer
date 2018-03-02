@@ -8,5 +8,6 @@ import { navModel } from './nav-model';
   styleUrls: ['./navigation.scss']
 })
 export class NavigatorComponent {
+  open = false;
   navModel = navModel;
 }

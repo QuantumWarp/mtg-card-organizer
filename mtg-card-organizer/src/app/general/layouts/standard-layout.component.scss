@@ -2,6 +2,15 @@ mat-sidenav {
   width: 200px;
 }
 
+app-navigator {
+  position: relative;
+  width: 50px;
+  left: -150px;
+  height: 100%;
+  z-index: 100;
+  overflow: visible;
+}
+
 .main {
   flex: 1;
   min-height: 100vh;
