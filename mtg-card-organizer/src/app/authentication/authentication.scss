@@ -4,56 +4,69 @@
   align-items: center;
   justify-content: center;
   background-image: url('http://eskipaper.com/images/free-hd-background-2.jpg');
+
 }
 
-.login-card {
+a.auth-link-text {
+  text-decoration: none;
+  color: steelblue; 
+}
+
+.auth-card {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: space-around;
+  justify-content: space-between;
   background-color: white;
   min-width: 300px;
-  min-height: 500px;
-  padding: 30px;
 
-  > .login-header {
+  > .auth-header {
     display: flex;
     flex-direction: column;
+    background-color: darkslategray;
 
-    > .app-logo {
-      width: 250px;
-      height: 100px;
-    }
-
-    > .login-title {
+    > .auth-title {
       display: flex;
       justify-content: center;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 20px;
     }
   }
 
-  > .login-content {
+  > .auth-content {
     display: flex;
     flex-direction: column;
+    color: grey;
+    margin: 30px;
+
+    > .register-terms-conditions {
+      display: flex;
+      justify-content: center;
+    }
 
     > .login-forgot-password {
       display: flex;
       justify-content: flex-end;
     }
 
-    > .login-button-area {
+    > .auth-button-area {
       display: flex;
       justify-content: center;
       margin-top: 10px;
 
-      > .login-button {
+      > .auth-button {
         min-width: 200px;
       }
     }
   }
 
-  > .login-footer {
+  > .auth-footer {
     display: flex;
     flex-direction: column;
+    color: grey;
+    margin: 0px 30px 30px 30px;
 
     > * {
       display: flex;

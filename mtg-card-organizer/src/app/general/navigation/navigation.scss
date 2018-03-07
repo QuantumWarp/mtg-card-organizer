@@ -1,14 +1,24 @@
 :host {
   display: flex;
-  width: 200px;
+  flex-direction: column;
+  width: 50px;
 }
 
 .nav-container {
   flex: 1;
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 1);
+  width: 50px;
+  overflow: hidden;
+}
+
+app-nav-node {
+  width: 200px;
 }
 
 .nav-node {
+  width: 100%;
   display: flex;
   flex-direction: column;
   color: white;
@@ -27,11 +37,15 @@
     cursor: pointer;
     padding: 10px;
 
+    > mat-icon {
+      width: 50px;
+    }
+
     > .nav-node-text {
       flex: 1;
       display: flex;
       justify-content: flex-start;
-      margin: 0px 10px 0px 10px;
+      margin: 0px 10px 0px 0px;
     }
   }
 
