@@ -5,28 +5,32 @@
     </div>
 
     <div class="auth-content">
-      <mat-form-field>
-        <input matInput placeholder="Email" />
-      </mat-form-field>
+      <form method="POST" class="auth-form">
+        <mat-form-field>
+          <input matInput name="email" placeholder="Email" [(ngModel)]="email" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <input matInput name="password" placeholder="Password" type="password" [(ngModel)]="password" />
+        </mat-form-field>
+      </form>
 
-      <mat-form-field>
-        <input matInput placeholder="Password" type="password" />
-      </mat-form-field>
+      <div *ngIf="error" class="auth-error">{{ error }}</div>
 
       <div class="login-forgot-password">
         <a class="auth-link-text" href="javascript:void(0)">Forgot Password?</a>
       </div>
 
       <div class="auth-button-area">
-        <button class="auth-button" mat-raised-button color="primary">Login</button>
+        <button class="auth-button" [disabled]="loading" mat-raised-button color="primary" (click)="login()">
+          {{ loading ? "Loading..." : "Login" }}
+        </button>
       </div>
     </div>
 
     <div class="auth-footer">
       <div>Don't have an account?</div>
-      <div>
-        <a class="auth-link-text" href="javascript:void(0)">Create an account</a>
-      </div>
+      <div routerLink="/auth/register" class="auth-link-text">Create an account</div>
     </div>
   </div>
 </div>

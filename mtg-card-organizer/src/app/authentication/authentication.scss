@@ -7,9 +7,9 @@
 
 }
 
-a.auth-link-text {
-  text-decoration: none;
+.auth-link-text {
   color: steelblue; 
+  cursor: pointer;
 }
 
 .auth-card {
@@ -41,12 +41,23 @@ a.auth-link-text {
     color: grey;
     margin: 30px;
 
+    > .auth-form {
+      display: flex;
+      flex-direction: column;
+    }
+
     > .register-terms-conditions {
       display: flex;
       justify-content: center;
     }
 
+    > .auth-error {
+      color: red;
+      font-size: 14px;
+    }
+    
     > .login-forgot-password {
+      margin-top: 10px;
       display: flex;
       justify-content: flex-end;
     }

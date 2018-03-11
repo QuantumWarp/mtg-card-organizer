@@ -2,6 +2,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
 import { StandardLayoutComponent } from './general/layouts/standard-layout.component';
+import { AuthGuard } from './authentication/services/auth.guard';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { StandardLayoutComponent } from './general/layouts/standard-layout.compo
       {
         path: '',
         component: StandardLayoutComponent,
+        canActivate: [ AuthGuard ],
         children: [
           {
             path: 'home',

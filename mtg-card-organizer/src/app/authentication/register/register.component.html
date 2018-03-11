@@ -6,37 +6,35 @@
 
     <div class="auth-content">
       <mat-form-field>
-        <input matInput placeholder="Username" />
+        <input matInput placeholder="Username" [(ngModel)]="username" />
       </mat-form-field>
       
       <mat-form-field>
-        <input matInput placeholder="Email" />
+        <input matInput placeholder="Email" [(ngModel)]="email" />
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Password" type="password" />
+        <input matInput placeholder="Password" type="password" [(ngModel)]="password" />
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Password (Confirm)" type="password" />
+        <input matInput placeholder="Password (Confirm)" type="password" [(ngModel)]="confirmPassword" />
       </mat-form-field>
 
       <div class="register-terms-conditions">
-        <mat-checkbox>
+        <mat-checkbox [(ngModel)]="termsAndConditionsAgreed">
           I accept the <a class="auth-link-text" href="javascript:void(0)">Terms and Conditions</a>
         </mat-checkbox>
       </div>
 
       <div class="auth-button-area">
-        <button class="auth-button" mat-raised-button color="primary">Register</button>
+        <button class="auth-button" [disabled]="!termsAndConditionsAgreed" mat-raised-button color="primary" (click)="register()">Register</button>
       </div>
     </div>
 
     <div class="auth-footer">
       <div>Already have an account?</div>
-      <div>
-        <a class="auth-link-text" href="javascript:void(0)">Sign In</a>
-      </div>
+      <div routerLink="/auth/login" class="auth-link-text">Sign In</div>
     </div>
   </div>
 </div>

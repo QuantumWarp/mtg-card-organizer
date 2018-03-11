@@ -12,6 +12,10 @@ import { HomeComponent } from './home/home.component';
 import { TestModule } from './test/test.module';
 import { FormsModule } from '@angular/forms';
 import { StandardLayoutComponent } from './general/layouts/standard-layout.component';
+import { OAuthService, UrlHelperService, OAuthModule } from 'angular-oauth2-oidc';
+import { AuthenticationService } from './authentication/services/authentication.service';
+import { AuthApiService } from './authentication/services/auth-api.service';
+import { AuthGuard } from './authentication/services/auth.guard';
 
 const conditionalModules = [];
 if (environment.testSettings && environment.testSettings.includeTestModule) {
@@ -32,9 +36,17 @@ if (environment.testSettings && environment.testSettings.includeTestModule) {
     SharedModule,
     GeneralModule,
     AppRoutingModule,
+    OAuthModule.forRoot(),
   ],
   bootstrap: [
     AppComponent
+  ],
+  providers: [
+    OAuthService,
+    UrlHelperService,
+    AuthApiService,
+    AuthenticationService,
+    AuthGuard,
   ]
 })
 export class AppModule { }

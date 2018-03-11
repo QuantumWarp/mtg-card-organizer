@@ -19,7 +19,7 @@ import { MaterialModule } from './material.module';
     AutofocusDirective,
   ],
   providers: [
-    ApiService
+    ApiService,
   ],
 })
 export class SharedModule { }
