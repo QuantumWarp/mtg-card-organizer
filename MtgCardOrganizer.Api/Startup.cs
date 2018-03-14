@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +41,14 @@ namespace MtgCardOrganizer.Api
 
             services.AddManagers();
             services.AddContexts(Configuration);
+
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options => {
+                    options.Authority = "http://localhost:5000";
+                    options.ApiName = "mtg-card-organiser";
+                    options.ApiSecret = "4ef65ea8-0d55-4f62-8354-efa6332a6b54";
+                    options.RequireHttpsMetadata = false;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +58,7 @@ namespace MtgCardOrganizer.Api
             loggerFactory.AddDebug();
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

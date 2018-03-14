@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Entities.Cards;
@@ -9,6 +10,7 @@ using MtgCoreLib.Managers;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
+    [Authorize]
     [Route("api/sets")]
     public class SetController : Controller
     {

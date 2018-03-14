@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { OAuthService } from "angular-oauth2-oidc";
-import { AuthApiService } from "./auth-api.service";
-import { RegisterModel } from "../models/register.model";
+import { Injectable } from '@angular/core';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { AuthApiService } from './auth-api.service';
+import { RegisterModel } from '../models/register.model';
 import { decode } from 'jsonwebtoken';
 
 @Injectable()
@@ -10,6 +10,10 @@ export class AuthenticationService {
 
     get hasValidToken(): boolean {
         return this.oauthService.hasValidAccessToken() && this.tokenInfo;
+    }
+
+    get accessToken(): any {
+      return this.oauthService.getAccessToken();
     }
 
     constructor(
@@ -21,7 +25,7 @@ export class AuthenticationService {
         this.oauthService.clientId = 'mtg-card-organiser-client';
         this.oauthService.scope = 'openid profile mtg-card-organiser';
         this.oauthService.setStorage(sessionStorage);
-        this.oauthService.dummyClientSecret = "dummysecret";
+        this.oauthService.dummyClientSecret = 'dummysecret';
         const uri = 'http://localhost:5000/.well-known/openid-configuration';
         if (this.oauthService.hasValidAccessToken()) {
             this.parseToken(this.oauthService.getAccessToken());
@@ -50,7 +54,7 @@ export class AuthenticationService {
 
     private parseToken(token: any): void {
         const decodedToken = decode(token);
-        console.log(decodedToken); 
+        console.log(decodedToken);
         this.tokenInfo = {};
     }
 }

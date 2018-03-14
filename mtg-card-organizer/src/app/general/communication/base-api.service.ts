@@ -4,9 +4,13 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment.prod';
 import { QueryStringGenerator } from './query-string-generator.interface';
 import { getFileNameFromResponseContentDisposition, saveFile } from '../../collection/services/download-helper';
+import { AuthenticationService } from '../../authentication/services/authentication.service';
 
 export class BaseApiService {
-  constructor(protected httpClient: HttpClient, protected apiBaseUrl: string) { }
+  constructor(
+    protected httpClient: HttpClient,
+    protected apiBaseUrl: string,
+    protected authService?: AuthenticationService) { }
 
   public get<T>(path: string, queryStringGenerator?: QueryStringGenerator): Observable<T> {
     let url = this.apiBaseUrl + '/' + path;
@@ -40,6 +44,9 @@ export class BaseApiService {
 
   private headers(): HttpHeaders {
     let headers = new HttpHeaders();
+    if (this.authService) {
+      headers = headers.set('Authorization', 'Bearer ' + this.authService.accessToken);
+    }
     headers = headers.set('Content-Type', 'application/json; charset=utf-8');
     headers = headers.set('Accept', 'application/json');
     return headers;

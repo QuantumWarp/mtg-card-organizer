@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Dtos.Collections;
@@ -11,6 +12,7 @@ using MtgCoreLib.Managers;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
+    [Authorize]
     [Route("api/collections")]
     public class CollectionController : Controller
     {
