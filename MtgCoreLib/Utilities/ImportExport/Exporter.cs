@@ -20,8 +20,8 @@ public class Exporter {
     }
 
     public string ConstructExport(int collectionId) {
-        _sets = _setManager.GetSets(new PageSortFilter()).Data.ToList();
-        var collectionDtos = _collectionManager.GetCollections(new PageSortFilter() { Filters = new [] { new PropertyFilter() { 
+        _sets = _setManager.GetSets(new QueryModel<SetDto>()).Data.ToList();
+        var collectionDtos = _collectionManager.GetCollections(new QueryModel<CollectionDto>() { Filters = new [] { new PropertyFilter<CollectionDto>() { 
             Property = "Id",
             Operator = PropertyFilterOperator.IsEqual,
             Value = collectionId.ToString()
@@ -33,7 +33,7 @@ public class Exporter {
         var model = new CollectionExportModel();
         model.Name = collectionDto.Name;
 
-        var cardDetailsDtos = _collectionManager.GetCards(collectionDto.Id, new PageSortFilter());
+        var cardDetailsDtos = _collectionManager.GetCards(collectionDto.Id, new QueryModel<CardInstanceDto>());
         model.Cards = cardDetailsDtos.Data.Select(x => {
             var card = new CardInstanceExportModel();
             card.Name = x.Name;
@@ -44,7 +44,7 @@ public class Exporter {
             return card;
         }).ToList();
 
-        var subCollectionDtos = _collectionManager.GetCollections(new PageSortFilter() { Filters = new [] { new PropertyFilter() { 
+        var subCollectionDtos = _collectionManager.GetCollections(new QueryModel<CollectionDto>() { Filters = new [] { new PropertyFilter<CollectionDto>() { 
             Property = "ParentId",
             Operator = PropertyFilterOperator.IsEqual,
             Value = collectionDto.Id.ToString()

@@ -39,6 +39,7 @@ namespace MtgCardOrganizer.Api
             services.AddMvc(config =>
 		        config.ModelBinderProviders.Insert(0, new PageSortFilterProvider()));
 
+            services.AddAuth();
             services.AddManagers();
             services.AddContexts(Configuration);
 
@@ -48,6 +49,7 @@ namespace MtgCardOrganizer.Api
                     options.ApiName = "mtg-card-organiser";
                     options.ApiSecret = "4ef65ea8-0d55-4f62-8354-efa6332a6b54";
                     options.RequireHttpsMetadata = false;
+                    options.EnableCaching = true;
                 });
         }
 

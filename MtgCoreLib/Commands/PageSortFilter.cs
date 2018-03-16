@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-public class PageSortFilter {
-    public PropertySort Sort { get; set; } = null;
-    public IEnumerable<PropertyFilter> Filters { get; set; } = new List<PropertyFilter>();
+public class QueryModel<TDto> {
     public int Offset { get; set; } = 0;
     public int? Limit { get; set; } = null;
+    public PropertySort<TDto> Sort { get; set; } = null;
+    public IEnumerable<PropertyFilter<TDto>> Filters { get; set; } = new List<PropertyFilter<TDto>>();
 }

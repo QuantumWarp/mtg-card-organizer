@@ -13,7 +13,7 @@ namespace MtgCoreLib.Managers
 {
     public interface ICardManager
     {
-        PagedData<CardDetailsDto> GetCards(PageSortFilter pageSortFilter);
+        PagedData<CardDetailsDto> GetCards(QueryModel<CardDetailsDto> queryModel);
     }
 
     public class CardManager : ICardManager
@@ -25,11 +25,9 @@ namespace MtgCoreLib.Managers
             _dbContext = dbContext;
         }
 
-        public PagedData<CardDetailsDto> GetCards(PageSortFilter pageSortFilter)
+        public PagedData<CardDetailsDto> GetCards(QueryModel<CardDetailsDto> queryModel)
         {
-            return new PagedData<CardDetailsDto>(
-                _dbContext.CardSetInfos.ProjectTo<CardDetailsDto>(Mapper.Configuration).ApplyPageSortFilter(pageSortFilter),
-                _dbContext.Cards.Count());
+            return _dbContext.CardSetInfos.AsPagedData(queryModel);
         }
     }
 }

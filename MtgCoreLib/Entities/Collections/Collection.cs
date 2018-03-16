@@ -15,14 +15,12 @@ namespace MtgCoreLib.Entities.Collections
         public string Name { get; set; }
         public int? ParentId { get; set; }
 
-        [NotMapped]
-        public bool hasSubCollections { get; set; }
-        [NotMapped]
-        public bool hasCards { get; set; }
-          
+        public bool IsPublic { get; set; } = false;
+        public string OwnerUserId { get; set; }
 
         [ForeignKey(nameof(ParentId))]
         public Collection Parent { get; set; }
+
         // Collection <-> CardSetInfo Many to Many Relationship
         public ICollection<CollectionCardLink> CollectionCardLinks { get; set; }
         // Collection -> Collection One to Many Relationship

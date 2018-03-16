@@ -106,8 +106,12 @@ namespace MtgCoreLib.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("IsPublic");
+
                     b.Property<string>("Name")
                         .IsRequired();
+
+                    b.Property<string>("OwnerUserId");
 
                     b.Property<int?>("ParentId");
 

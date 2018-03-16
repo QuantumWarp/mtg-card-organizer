@@ -22,9 +22,9 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpGet, Route("")]
-        public PagedData<CardDetailsDto> Query(PageSortFilter pageSortFilter)
+        public PagedData<CardDetailsDto> Query(QueryModel<CardDetailsDto> queryModel)
         {
-            return _cardManager.GetCards(pageSortFilter);
+            return _cardManager.GetCards(queryModel);
         }
     }
 }

@@ -12,7 +12,7 @@ using System;
 namespace MtgCoreLib.Migrations
 {
     [DbContext(typeof(MtgCoreLibContext))]
-    [Migration("20180131224637_InitialCreate")]
+    [Migration("20180317221602_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -107,8 +107,12 @@ namespace MtgCoreLib.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("IsPublic");
+
                     b.Property<string>("Name")
                         .IsRequired();
+
+                    b.Property<string>("OwnerUserId");
 
                     b.Property<int?>("ParentId");
 

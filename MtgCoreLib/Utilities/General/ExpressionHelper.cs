@@ -12,14 +12,14 @@ namespace MtgCoreLib.Utilities.General
         private static MethodInfo ContainsMethod = typeof(string).GetMethod(nameof(string.Contains), new[] { typeof(string) });
         private static MethodInfo ListContainsMethod = typeof(List<int>).GetMethod("Contains");
 
-        public static Expression<Func<T, object>> CreateKeySelectorExpression<T>(PropertySort sort) {  
+        public static Expression<Func<T, object>> CreateKeySelectorExpression<T>(PropertySort<T> sort) {  
             var param = Expression.Parameter(typeof(T), "_");
             var property = Expression.Property(param, sort.Field);
             var convertedProperty = Expression.Convert(property, typeof(object));
             return Expression.Lambda<Func<T, object>>(convertedProperty, param);
         }
 
-        public static Expression<Func<T, bool>> CreateFilterExpression<T>(PropertyFilter filter) {
+        public static Expression<Func<T, bool>> CreateFilterExpression<T>(PropertyFilter<T> filter) {
             var param = Expression.Parameter(typeof(T), "_");
             var property = Expression.Property(param, filter.Property);
             ConstantExpression constant;

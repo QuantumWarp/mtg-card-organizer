@@ -11,7 +11,7 @@ namespace MtgCoreLib.Managers
 {
     public interface ISetManager
     {
-        PagedData<SetDto> GetSets(PageSortFilter pageSortFilter);
+        PagedData<SetDto> GetSets(QueryModel<SetDto> queryModel);
     }
 
     public class SetManager : ISetManager
@@ -23,11 +23,9 @@ namespace MtgCoreLib.Managers
             _dbContext = dbContext;
         }
 
-        public PagedData<SetDto> GetSets(PageSortFilter pageSortFilter)
+        public PagedData<SetDto> GetSets(QueryModel<SetDto> queryModel)
         {
-            return new PagedData<SetDto>(
-                _dbContext.Sets.ProjectTo<SetDto>().ApplyPageSortFilter(pageSortFilter), 
-                _dbContext.Sets.Count());
+            return _dbContext.Sets.AsPagedData(queryModel);
         }
     }
 }

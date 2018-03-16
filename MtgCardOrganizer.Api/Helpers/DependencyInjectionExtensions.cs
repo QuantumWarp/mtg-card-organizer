@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MtgCoreLib.Initialization;
@@ -7,6 +9,11 @@ namespace Microsoft.Extensions.DependencyInjection
 {    
     public static class DependencyInjectionExtensions
     {
+        public static void AddAuth(this IServiceCollection services)
+        {
+            services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+        }
+
         public static void AddManagers(this IServiceCollection services)
         {
             services.AddTransient<IAdminCardManager, AdminCardManager>();

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +26,9 @@ namespace MtgCardOrganizer.Api.Controllers
 
         [HttpGet]
         [Route("")]
-        public PagedData<CollectionDto> Query(PageSortFilter pageSortFilter)
+        public PagedData<CollectionDto> Query(QueryModel<CollectionDto> queryModel)
         {
-            return _collectionManager.GetCollections(pageSortFilter);
+            return _collectionManager.GetCollections(queryModel);
         }
 
         [HttpPost]
@@ -46,9 +47,9 @@ namespace MtgCardOrganizer.Api.Controllers
         
         [HttpGet]
         [Route("{collectionId}/cards")]
-        public PagedData<CardInstanceDto> GetCards(int collectionId, PageSortFilter pageSortFilter)
+        public PagedData<CardInstanceDto> GetCards(int collectionId, QueryModel<CardInstanceDto> queryModel)
         {
-            return _collectionManager.GetCards(collectionId, pageSortFilter);
+            return _collectionManager.GetCards(collectionId, queryModel);
         }
         
         [HttpPost]

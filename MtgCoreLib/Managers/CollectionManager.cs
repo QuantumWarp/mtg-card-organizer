@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -15,12 +16,12 @@ namespace MtgCoreLib.Managers
 {
     public interface ICollectionManager
     {
-        PagedData<CollectionDto> GetCollections(PageSortFilter pageSortFilter);
+        PagedData<CollectionDto> GetCollections(QueryModel<CollectionDto> queryModel);
         bool CreateCollection(CollectionDto collectionDto);
         bool DeleteCollection(int collectionId);
 
 
-        PagedData<CardInstanceDto> GetCards(int collectionId, PageSortFilter pageSortFilter);
+        PagedData<CardInstanceDto> GetCards(int collectionId, QueryModel<CardInstanceDto> queryModel);
         bool AddCards(int collectionId, List<AddCollectionCardCommand> cardSetInfoOtherInfoDict);
         bool DeleteCards(int collectionId, List<int> cardCollectionLinkIds);
 
@@ -30,22 +31,25 @@ namespace MtgCoreLib.Managers
 
     public class CollectionManager : ICollectionManager
     {
-        private MtgCoreLibContext _dbContext;
+        private readonly MtgCoreLibContext _dbContext;
+        private readonly ClaimsPrincipal _user;
 
-        public CollectionManager(MtgCoreLibContext dbContext)
+        public CollectionManager(ClaimsPrincipal user, MtgCoreLibContext dbContext)
         {
+            _user = user;
             _dbContext = dbContext;
         }
 
-        public PagedData<CollectionDto> GetCollections(PageSortFilter pageSortFilter)
+        public PagedData<CollectionDto> GetCollections(QueryModel<CollectionDto> queryModel)
         {
-            return new PagedData<CollectionDto>(
-                _dbContext.Collections.ProjectTo<CollectionDto>(Mapper.Configuration).ApplyPageSortFilter(pageSortFilter), 
-                _dbContext.Collections.Count());
+            return _dbContext.Collections
+                .Where(x => x.OwnerUserId == _user.GetId())
+                .AsPagedData(queryModel);
         }
 
         public bool CreateCollection(CollectionDto collectionDto)
         {
+            collectionDto.OwnerUserId = _user.GetId();
             _dbContext.Collections.Add(new Collection(collectionDto));
             _dbContext.SaveChanges();
             return true;
@@ -60,14 +64,11 @@ namespace MtgCoreLib.Managers
             return true;
         }
 
-        public PagedData<CardInstanceDto> GetCards(int collectionId, PageSortFilter pageSortFilter)
+        public PagedData<CardInstanceDto> GetCards(int collectionId, QueryModel<CardInstanceDto> queryModel)
         {
-            return new PagedData<CardInstanceDto>(
-                _dbContext.CollectionCardLinks
-                    .Where(ccl => ccl.CollectionId == collectionId)
-                    .ProjectTo<CardInstanceDto>(Mapper.Configuration)
-                    .ApplyPageSortFilter(pageSortFilter), 
-                _dbContext.CollectionCardLinks.Where(ccl => ccl.CollectionId == collectionId).Count());
+            return _dbContext.CollectionCardLinks
+                .Where(ccl => ccl.CollectionId == collectionId)
+                .AsPagedData(queryModel);
         }
 
         public bool AddCards(int collectionId, List<AddCollectionCardCommand> cardSetInfoOtherInfoDict)

@@ -9,20 +9,23 @@ public class PageSortFilterProvider : IModelBinderProvider
 {
     public IModelBinder GetBinder(ModelBinderProviderContext context)
     {
-        if (context.Metadata.ModelType == typeof(PageSortFilter))  
-            return new PageSortFilterBinder();  
-        return null;  
+        if (!context.Metadata.ModelType.IsGenericType || context.Metadata.ModelType.GetGenericTypeDefinition() != typeof(QueryModel<>)) 
+            return null;
+        
+        var binder = typeof(PageSortFilterBinder<>);
+        var binderGeneric = binder.MakeGenericType(context.Metadata.ModelType.GenericTypeArguments[0]);
+        return (IModelBinder)Activator.CreateInstance(binderGeneric);
     }
 }
 
-public class PageSortFilterBinder : IModelBinder
+public class PageSortFilterBinder<TDto> : IModelBinder
 {
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
         if (bindingContext == null)  
             throw new ArgumentNullException(nameof(bindingContext));  
 
-        var pageSortFilter = new PageSortFilter();
+        var pageSortFilter = new QueryModel<TDto>();
         var queryCollection = bindingContext.ActionContext.HttpContext.Request.Query;
         
         if (queryCollection.TryParseOffset(bindingContext, out int offset))
@@ -31,10 +34,10 @@ public class PageSortFilterBinder : IModelBinder
         if (queryCollection.TryParseLimit(bindingContext, out int limit))
             pageSortFilter.Limit = limit;
 
-        if (queryCollection.TryParseSort(bindingContext, out PropertySort propertySort))
+        if (queryCollection.TryParseSort(bindingContext, out PropertySort<TDto> propertySort))
             pageSortFilter.Sort = propertySort;
 
-        if (queryCollection.TryParseFilter(bindingContext, out List<PropertyFilter> propertyFilters))
+        if (queryCollection.TryParseFilter(bindingContext, out List<PropertyFilter<TDto>> propertyFilters))
             pageSortFilter.Filters = propertyFilters;
         
         if (bindingContext.ModelState.ErrorCount == 0) {
@@ -75,7 +78,7 @@ public static class PageSortFilterParseHelper {
         return true;
     }
     
-    public static bool TryParseSort(this IQueryCollection queryCollection, ModelBindingContext bindingContext, out PropertySort propertySort) {
+    public static bool TryParseSort<TDto>(this IQueryCollection queryCollection, ModelBindingContext bindingContext, out PropertySort<TDto> propertySort) {
         propertySort = null;
         if (!queryCollection.ContainsKey("sort"))
             return false;
@@ -84,7 +87,7 @@ public static class PageSortFilterParseHelper {
         var acsending = !sortString.StartsWith('-');
         sortString = (sortString.StartsWith('-') || sortString.StartsWith('+')) ? sortString.Substring(1) : sortString;
 
-        propertySort = new PropertySort() {
+        propertySort = new PropertySort<TDto>() {
             Ascending = acsending,
             Field = sortString,
         };
@@ -92,8 +95,8 @@ public static class PageSortFilterParseHelper {
         return true;
     }
     
-    public static bool TryParseFilter(this IQueryCollection queryCollection, ModelBindingContext bindingContext, out List<PropertyFilter> propertyFilters) {
-        propertyFilters = new List<PropertyFilter>();
+    public static bool TryParseFilter<TDto>(this IQueryCollection queryCollection, ModelBindingContext bindingContext, out List<PropertyFilter<TDto>> propertyFilters) {
+        propertyFilters = new List<PropertyFilter<TDto>>();
         if (!queryCollection.ContainsKey("filter"))
             return false;
         
@@ -121,7 +124,7 @@ public static class PageSortFilterParseHelper {
                 value = valueArg.Trim('\'');
             }
 
-            propertyFilters.Add(new PropertyFilter() {
+            propertyFilters.Add(new PropertyFilter<TDto>() {
                 Property = filterParts[0],
                 Operator = propertyFilterOperator,
                 Value = value

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class PropertyFilter {
+public class PropertyFilter<T> {
     public string Property { get; set; }
     public PropertyFilterOperator Operator { get; set; }
     public object Value { get; set; }

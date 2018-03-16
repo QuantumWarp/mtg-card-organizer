@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
 public class PagedData<T> {
-    public IEnumerable<T> Data { get; set; }
+    public List<T> Data { get; set; }
     public int TotalCount { get; set; }
 
-    public PagedData(IEnumerable<T> data, int totalCount) {
+    public PagedData(List<T> data, int totalCount) {
         Data = data;
         TotalCount = totalCount;
     }
