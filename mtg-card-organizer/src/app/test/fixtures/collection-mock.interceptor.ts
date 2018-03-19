@@ -1,10 +1,10 @@
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { parse } from 'url';
 
-import { cardDatabase } from '../../card/services/card-database.fixture';
 import { PageSortFilter } from '../../general/filtering/page-sort-filter';
 import { MockInterceptor } from '../../test/mocking/mock-interceptor';
 import { PagedDataHelper } from '../../test/mocking/paged-data.helper';
+import { cardDatabase } from './card-database.fixture';
 import { collectionDatabase } from './collection-database.fixture';
 
 export class CollectionMockInterceptor extends MockInterceptor {

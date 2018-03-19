@@ -1,4 +1,4 @@
-import { Set } from '../models/set';
+import { Set } from '../../card/models/set';
 
 export const setDatabase: Set[] = [
   // new Set({ id: '1', name: 'Ixalan' }),
