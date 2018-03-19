@@ -32,9 +32,9 @@ namespace MtgCoreLib.Managers
     public class CollectionManager : ICollectionManager
     {
         private readonly MtgCoreLibContext _dbContext;
-        private readonly ClaimsPrincipal _user;
+        private readonly UserService _user;
 
-        public CollectionManager(ClaimsPrincipal user, MtgCoreLibContext dbContext)
+        public CollectionManager(UserService user, MtgCoreLibContext dbContext)
         {
             _user = user;
             _dbContext = dbContext;
@@ -43,13 +43,13 @@ namespace MtgCoreLib.Managers
         public PagedData<CollectionDto> GetCollections(QueryModel<CollectionDto> queryModel)
         {
             return _dbContext.Collections
-                .Where(x => x.OwnerUserId == _user.GetId())
+                .Where(x => x.OwnerUserId == _user.Id)
                 .AsPagedData(queryModel);
         }
 
         public bool CreateCollection(CollectionDto collectionDto)
         {
-            collectionDto.OwnerUserId = _user.GetId();
+            collectionDto.OwnerUserId = _user.Id;
             _dbContext.Collections.Add(new Collection(collectionDto));
             _dbContext.SaveChanges();
             return true;

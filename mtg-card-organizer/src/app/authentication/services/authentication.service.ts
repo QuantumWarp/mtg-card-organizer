@@ -8,6 +8,14 @@ import { decode } from 'jsonwebtoken';
 export class AuthenticationService {
     tokenInfo: any;
 
+    get username(): string {
+      return this.tokenInfo.username;
+    }
+
+    get email(): string {
+      return this.tokenInfo.email;
+    }
+
     get hasValidToken(): boolean {
         return this.oauthService.hasValidAccessToken() && this.tokenInfo;
     }
@@ -35,7 +43,7 @@ export class AuthenticationService {
 
     register(username: string, email: string, password: string, confirmPassword: string): Promise<{}> {
         const registerModel: RegisterModel =  {
-            // username: username,
+            username: username,
             email: email,
             password: password,
             confirmPassword: confirmPassword
@@ -45,7 +53,7 @@ export class AuthenticationService {
 
     login(username: string, password: string): Promise<void> {
         return this.oauthService.fetchTokenUsingPasswordFlow(username, password)
-            .then((token) => this.parseToken(token));
+            .then((token: any) => this.parseToken(token.access_token));
     }
 
     logout(): void {
@@ -53,8 +61,6 @@ export class AuthenticationService {
     }
 
     private parseToken(token: any): void {
-        const decodedToken = decode(token);
-        console.log(decodedToken);
-        this.tokenInfo = {};
+        this.tokenInfo = decode(token);
     }
 }

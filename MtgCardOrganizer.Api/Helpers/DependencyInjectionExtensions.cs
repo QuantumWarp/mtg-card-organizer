@@ -12,6 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static void AddAuth(this IServiceCollection services)
         {
             services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddTransient<UserService>();
         }
 
         public static void AddManagers(this IServiceCollection services)

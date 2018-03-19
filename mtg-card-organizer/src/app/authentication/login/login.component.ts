@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['../authentication.scss']
 })
 export class LoginComponent {
-  email: string;
+  username: string;
   password: string;
 
   loading = false;
@@ -21,7 +21,7 @@ export class LoginComponent {
 
   login(): void {
     this.loading = true;
-    this.authenticationService.login(this.email, this.password)
+    this.authenticationService.login(this.username, this.password)
       .then(() => this.loginSuccess())
       .catch((erRes) => this.processErrorResponse(erRes));
   }
