@@ -1,0 +1,17 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+
+  > .snack-icon {
+    font-size: 45px;
+    height: 45px;
+    width: 45px;
+  }
+
+  > .message {
+    margin-left: 5px;
+  }
+}
+

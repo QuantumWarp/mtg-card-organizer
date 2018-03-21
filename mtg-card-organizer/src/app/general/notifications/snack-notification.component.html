@@ -1,0 +1,9 @@
+<div class="content" (click)="runAction()">
+  <mat-icon *ngIf="model.type == snackNotificationType.Success" style="color: green" class="snack-icon">check_circle</mat-icon>
+  <mat-icon *ngIf="model.type == snackNotificationType.Error" style="color: lightcoral" class="snack-icon">cancel</mat-icon>
+  <mat-icon *ngIf="model.type == snackNotificationType.Info" style="color: lightblue" class="snack-icon">info</mat-icon>
+  <mat-icon *ngIf="model.type == snackNotificationType.Warning" style="color: orange" class="snack-icon">warning</mat-icon>
+  <div class="message">
+    {{ model.message }}
+  </div>
+</div>

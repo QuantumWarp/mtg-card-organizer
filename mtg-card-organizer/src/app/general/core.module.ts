@@ -17,8 +17,11 @@ import { GravatarService } from './services/gravatar.service';
 import { SharedModule } from './shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
+import { SnackNotificationComponent } from './notifications/snack-notification.component';
+import { SnackNotificationService } from './notifications/snack-notification.service';
+import { ErrorInterceptor } from './communication/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,9 +32,11 @@ import { AppRoutingModule } from '../app-routing.module';
     NavNodeComponent,
     NavigatorComponent,
     ConfirmComponent,
+    SnackNotificationComponent,
   ],
   entryComponents: [
     ConfirmComponent,
+    SnackNotificationComponent,
   ],
   imports: [
     OAuthModule.forRoot(),
@@ -51,6 +56,7 @@ import { AppRoutingModule } from '../app-routing.module';
     ConfirmComponent,
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     OAuthService,
     UrlHelperService,
     AuthApiService,
@@ -58,6 +64,7 @@ import { AppRoutingModule } from '../app-routing.module';
     AuthGuard,
     ApiService,
     GravatarService,
+    SnackNotificationService,
   ]
 })
 export class CoreModule { }

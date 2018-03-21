@@ -2,6 +2,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { MatToolbar, MatButton, MatIcon } from '@angular/material';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { Router } from '@angular/router';
+import { SnackNotificationService } from '../notifications/snack-notification.service';
+import { SnackNotificationType } from '../notifications/snack-notification.type';
 
 @Component({
   selector: 'app-nav-bar',
