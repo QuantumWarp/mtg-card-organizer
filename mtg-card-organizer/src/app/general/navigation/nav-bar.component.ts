@@ -8,6 +8,7 @@ import { SnackNotificationType } from '../notifications/snack-notification.type'
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
+  styleUrls: ['./nav-bar.scss']
 })
 export class NavBarComponent {
   title = 'MTG Card Organizer';

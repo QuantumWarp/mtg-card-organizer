@@ -1,0 +1,32 @@
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  align-items: stretch;
+  height: 60px;
+
+  > .title {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    font-size: 25px;
+  }
+
+  > .account {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    font-size: 18px;
+    border-left: solid 1px grey;
+    cursor: pointer;
+
+    > app-gravatar-icon {
+      margin-right: 5px;
+    }
+  }
+
+  > .account:hover {
+    background-color: rgba($color: black, $alpha: 0.1)
+  }
+}
