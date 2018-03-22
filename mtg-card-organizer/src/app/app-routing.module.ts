@@ -17,6 +17,10 @@ import { AuthGuard } from './authentication/services/auth.guard';
         loadChildren: 'app/authentication/authentication.module#AuthenticationModule',
       },
       {
+        path: 'error',
+        loadChildren: 'app/error/error.module#ErrorModule',
+      },
+      {
         path: '',
         component: StandardLayoutComponent,
         canActivate: [ AuthGuard ],
@@ -42,6 +46,10 @@ import { AuthGuard } from './authentication/services/auth.guard';
             loadChildren: 'app/collection/collection.module#CollectionModule',
           },
         ]
+      },
+      {
+        path: '**',
+        redirectTo: '/error/404',
       }
     ]),
   ]
