@@ -22,6 +22,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { SnackNotificationComponent } from './notifications/snack-notification.component';
 import { SnackNotificationService } from './notifications/snack-notification.service';
 import { ErrorInterceptor } from './communication/error.interceptor';
+import { LoadingComponent } from './loading/loading.component';
+import { LoadingService } from './loading/loading.service';
 
 @NgModule({
   declarations: [
@@ -33,10 +35,12 @@ import { ErrorInterceptor } from './communication/error.interceptor';
     NavigatorComponent,
     ConfirmComponent,
     SnackNotificationComponent,
+    LoadingComponent,
   ],
   entryComponents: [
     ConfirmComponent,
     SnackNotificationComponent,
+    LoadingComponent,
   ],
   imports: [
     OAuthModule.forRoot(),
@@ -65,6 +69,7 @@ import { ErrorInterceptor } from './communication/error.interceptor';
     ApiService,
     GravatarService,
     SnackNotificationService,
+    LoadingService,
   ]
 })
 export class CoreModule { }

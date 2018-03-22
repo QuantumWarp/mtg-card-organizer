@@ -4,6 +4,8 @@ import { AuthenticationService } from '../../authentication/services/authenticat
 import { Router } from '@angular/router';
 import { SnackNotificationService } from '../notifications/snack-notification.service';
 import { SnackNotificationType } from '../notifications/snack-notification.type';
+import { LoadingService } from '../loading/loading.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-nav-bar',

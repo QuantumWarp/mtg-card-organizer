@@ -1,6 +1,7 @@
-import { Component, ViewEncapsulation, Inject } from '@angular/core';
-import { SnackNotificationModel } from './snack-notification.model';
+import { Component, Inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material';
+
+import { SnackNotificationModel } from './snack-notification.model';
 import { SnackNotificationType } from './snack-notification.type';
 
 @Component({

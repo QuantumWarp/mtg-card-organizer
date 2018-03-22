@@ -1,0 +1,10 @@
+.loading-dialog {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  > .loading-spinner {
+    margin: 10px 10px;
+  }
+}
