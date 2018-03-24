@@ -24,6 +24,7 @@ import { SnackNotificationService } from './notifications/snack-notification.ser
 import { ErrorInterceptor } from './communication/error.interceptor';
 import { LoadingComponent } from './loading/loading.component';
 import { LoadingService } from './loading/loading.service';
+import { UserService } from '../authentication/services/user.service';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { LoadingService } from './loading/loading.service';
     GravatarService,
     SnackNotificationService,
     LoadingService,
+    UserService,
   ]
 })
 export class CoreModule { }
