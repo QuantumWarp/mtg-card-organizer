@@ -5,10 +5,11 @@ import { StandardLayoutComponent } from './general/layouts/standard-layout.compo
 import { AuthGuard } from './authentication/services/auth.guard';
 import { environment } from '../environments/environment';
 
-const testRoute: Route = {
-  path: 'test',
-  loadChildren: 'app/test/test.module#TestModule',
-};
+const testRoutes: Route[] = environment.testSettings && environment.testSettings.includeTestModule ?
+  [{
+    path: 'test',
+    loadChildren: 'app/test/test.module#TestModule',
+  }] : [];
 
 @NgModule({
   imports: [
@@ -31,7 +32,7 @@ const testRoute: Route = {
         component: StandardLayoutComponent,
         canActivate: [ AuthGuard ],
         children: [
-          ...(environment.testSettings && environment.testSettings.includeTestModule ? [testRoute] : []),
+          ...testRoutes,
           {
             path: 'home',
             component: HomeComponent
