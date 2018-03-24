@@ -13,5 +13,6 @@ namespace MtgCoreLib.Dtos.Cards
         public int SetId { get; set; }
         public Rarity Rarity { get; set; }
         public string Artist { get; set; }
+        public string MultiverseId { get; set; }
     }
 }

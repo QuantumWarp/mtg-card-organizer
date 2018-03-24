@@ -9,7 +9,7 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 })
 export class SingleManaSymbolComponent implements OnChanges {
   @ViewChild('msField') msField: ElementRef;
-  @Input() symbolString: string; 
+  @Input() symbolString: string;
 
   @Input() size = 1;
   @Input() shadow = true;
@@ -23,9 +23,9 @@ export class SingleManaSymbolComponent implements OnChanges {
     if (this.shadow) {
         this.msField.nativeElement.classList.add('ms-shadow');
     }
-    
+
     this.msField.nativeElement.classList.add(SingleManaSymbolComponent.symbolToClass(this.symbolString));
-    
+
     if (this.size > 0) {
         this.msField.nativeElement.classList.add('ms-' + this.size + 'x');
       }

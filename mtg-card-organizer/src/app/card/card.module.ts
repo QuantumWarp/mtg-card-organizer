@@ -18,6 +18,8 @@ import { SetSelectorComponent } from './card-filter/set-selector.component';
 import { SingleManaSymbolComponent } from './mana-symbol/single-mana-symbol.component';
 import { ManaCostComponent } from './mana-symbol/mana-cost.component';
 import { CardDetailsModalComponent } from './card-details/card-details-modal.component';
+import { CardImagePipe } from './card-image/card-image.pipe';
+import { CardImageComponent } from './card-image/card-image.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { CardDetailsModalComponent } from './card-details/card-details-modal.com
     ManaCostComponent,
     SingleManaSymbolComponent,
     CardDetailsModalComponent,
+    CardImageComponent,
+    CardImagePipe,
   ],
   entryComponents: [
     CardFilterComponent,
@@ -56,6 +60,7 @@ import { CardDetailsModalComponent } from './card-details/card-details-modal.com
   providers: [
     CardService,
     SetService,
+    CardImagePipe,
   ]
 })
 export class CardModule {}

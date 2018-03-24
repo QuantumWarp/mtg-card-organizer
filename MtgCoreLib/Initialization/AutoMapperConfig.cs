@@ -6,6 +6,7 @@ using MtgCoreLib.Entities.Collections;
 
 public class AutoMapperConfig : Profile
 {
+    // TODO: This is somewhat unmanagable
     public AutoMapperConfig()
     {
         CreateMap<Card,CardDto>();
@@ -26,7 +27,8 @@ public class AutoMapperConfig : Profile
             .ForMember(dst => dst.Num, opt => opt.MapFrom(src => src.Num))
             .ForMember(dst => dst.SetId, opt => opt.MapFrom(src => src.SetId))
             .ForMember(dst => dst.Rarity, opt => opt.MapFrom(src => src.Rarity))
-            .ForMember(dst => dst.Artist, opt => opt.MapFrom(src => src.Artist));
+            .ForMember(dst => dst.Artist, opt => opt.MapFrom(src => src.Artist))
+            .ForMember(dst => dst.MultiverseId, opt => opt.MapFrom(src => src.MultiverseId));
 
         CreateMap<CollectionCardLink, CardDetailsDto>()
             .ForMember(dst => dst.CardId, opt => opt.MapFrom(src => src.CardSetInfo.Card.Id))
@@ -42,7 +44,8 @@ public class AutoMapperConfig : Profile
             .ForMember(dst => dst.Num, opt => opt.MapFrom(src => src.CardSetInfo.Num))
             .ForMember(dst => dst.SetId, opt => opt.MapFrom(src => src.CardSetInfo.SetId))
             .ForMember(dst => dst.Rarity, opt => opt.MapFrom(src => src.CardSetInfo.Rarity))
-            .ForMember(dst => dst.Artist, opt => opt.MapFrom(src => src.CardSetInfo.Artist));
+            .ForMember(dst => dst.Artist, opt => opt.MapFrom(src => src.CardSetInfo.Artist))
+            .ForMember(dst => dst.MultiverseId, opt => opt.MapFrom(src => src.CardSetInfo.MultiverseId));
             
         CreateMap<CollectionCardLink, CardInstanceDto>()
             .ForMember(dst => dst.CardOtherInfoId, opt => opt.MapFrom(src => src.CardOtherInfo.Id))
@@ -62,7 +65,8 @@ public class AutoMapperConfig : Profile
             .ForMember(dst => dst.Num, opt => opt.MapFrom(src => src.CardSetInfo.Num))
             .ForMember(dst => dst.SetId, opt => opt.MapFrom(src => src.CardSetInfo.SetId))
             .ForMember(dst => dst.Rarity, opt => opt.MapFrom(src => src.CardSetInfo.Rarity))
-            .ForMember(dst => dst.Artist, opt => opt.MapFrom(src => src.CardSetInfo.Artist));
+            .ForMember(dst => dst.Artist, opt => opt.MapFrom(src => src.CardSetInfo.Artist))
+            .ForMember(dst => dst.MultiverseId, opt => opt.MapFrom(src => src.CardSetInfo.MultiverseId));
             
         CreateMap<Set,SetDto>();
 

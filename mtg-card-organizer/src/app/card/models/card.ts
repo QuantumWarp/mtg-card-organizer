@@ -17,6 +17,7 @@ export class Card {
     setId: number;
     rarity: Rarity;
     artist: string;
+    multiverseId: string;
 
     // Card Other Info
     foil: boolean;

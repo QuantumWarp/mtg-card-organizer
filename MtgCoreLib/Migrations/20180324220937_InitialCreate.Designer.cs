@@ -12,7 +12,7 @@ using System;
 namespace MtgCoreLib.Migrations
 {
     [DbContext(typeof(MtgCoreLibContext))]
-    [Migration("20180317221602_InitialCreate")]
+    [Migration("20180324220937_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,6 +70,8 @@ namespace MtgCoreLib.Migrations
                         .IsRequired();
 
                     b.Property<int>("CardId");
+
+                    b.Property<string>("MultiverseId");
 
                     b.Property<string>("Num");
 

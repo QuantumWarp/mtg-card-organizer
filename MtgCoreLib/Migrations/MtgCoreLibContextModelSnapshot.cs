@@ -70,6 +70,8 @@ namespace MtgCoreLib.Migrations
 
                     b.Property<int>("CardId");
 
+                    b.Property<string>("MultiverseId");
+
                     b.Property<string>("Num");
 
                     b.Property<int>("Rarity");

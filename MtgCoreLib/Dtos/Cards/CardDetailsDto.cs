@@ -6,6 +6,7 @@ using MtgCoreLib.Entities;
 
 namespace MtgCoreLib.Dtos.Cards
 {
+    // Represents a card with the set information
     public class CardDetailsDto
     {
         // Card
@@ -24,5 +25,6 @@ namespace MtgCoreLib.Dtos.Cards
         public int SetId { get; set; }
         public Rarity Rarity { get; set; }
         public string Artist { get; set; }
+        public string MultiverseId { get; set; }
     }
 }

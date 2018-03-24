@@ -16,7 +16,7 @@ export class NavBarComponent {
   title = 'MTG Card Organizer';
 
   constructor(
-    private authenticationService: AuthenticationService,
+    public authenticationService: AuthenticationService,
     private router: Router) {}
 
   logout() {

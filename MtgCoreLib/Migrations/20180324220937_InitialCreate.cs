@@ -99,6 +99,7 @@ namespace MtgCoreLib.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Artist = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CardId = table.Column<int>(type: "int", nullable: false),
+                    MultiverseId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Num = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Rarity = table.Column<int>(type: "int", nullable: false),
                     SetId = table.Column<int>(type: "int", nullable: false)

@@ -2,7 +2,7 @@
   <div class="title">{{title}}</div>
   <div class="account" [matMenuTriggerFor]="menu">
     <app-gravatar-icon size="40"></app-gravatar-icon>
-    <div>Account</div>
+    <div>{{ authenticationService.username }}</div>
   </div>
 </div>
 

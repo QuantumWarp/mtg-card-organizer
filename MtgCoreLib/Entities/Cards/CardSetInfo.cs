@@ -19,6 +19,7 @@ namespace MtgCoreLib.Entities.Cards
         public Rarity Rarity { get; private set; }
         [Required]
         public int SetId { get; private set; }
+        public string MultiverseId { get; private set; }
         
         [ForeignKey(nameof(CardId))]
         public Card Card { get; set; }   
@@ -38,6 +39,7 @@ namespace MtgCoreLib.Entities.Cards
             Rarity = cardSetInfoDto.Rarity;
             SetId = cardSetInfoDto.SetId;
             CardId = cardSetInfoDto.CardId;
+            MultiverseId = cardSetInfoDto.MultiverseId;
         }
 
         public CardSetInfoDto AsDto() {
@@ -48,6 +50,7 @@ namespace MtgCoreLib.Entities.Cards
                 Artist = Artist,
                 Rarity = Rarity,
                 SetId = SetId,
+                MultiverseId = MultiverseId,
             };
         }
     }

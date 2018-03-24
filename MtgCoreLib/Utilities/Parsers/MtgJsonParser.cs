@@ -62,6 +62,7 @@ namespace MtgCoreLib.Utilities.Parsers
             cardSetInfoDto.Artist = cardObj["artist"].ToString();
             if (cardObj.ContainsKey("number")) cardSetInfoDto.Num = cardObj["number"].ToString();
             cardSetInfoDto.Rarity = ParseRarity(cardObj["rarity"].ToString());
+            if (cardObj.ContainsKey("multiverseid")) cardSetInfoDto.MultiverseId = cardObj["multiverseid"].ToString();
 
             CardDtos.Add(cardDto);
             CardSetInfoDtos.Add(cardSetInfoDto);
