@@ -14,10 +14,12 @@ import { CoreModule } from './general/core.module';
 import { StandardLayoutComponent } from './general/layouts/standard-layout.component';
 import { HomeComponent } from './home/home.component';
 import { TestModule } from './test/test.module';
+import { MockingModule } from './test/mocking.module';
 
-const testModule = [];
+const testModules = [];
 if (environment.testSettings && environment.testSettings.includeTestModule) {
-  testModule.push(TestModule);
+  testModules.push(TestModule.forRoot());
+  testModules.push(MockingModule.forRoot());
 }
 
 @NgModule({
@@ -25,7 +27,7 @@ if (environment.testSettings && environment.testSettings.includeTestModule) {
     AppComponent,
   ],
   imports: [
-    ...testModule,
+    ...testModules,
     CoreModule,
   ],
   bootstrap: [

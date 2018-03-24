@@ -1,8 +1,14 @@
-import { RouterModule } from '@angular/router';
+import { RouterModule, Route } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
 import { StandardLayoutComponent } from './general/layouts/standard-layout.component';
 import { AuthGuard } from './authentication/services/auth.guard';
+import { environment } from '../environments/environment';
+
+const testRoute: Route = {
+  path: 'test',
+  loadChildren: 'app/test/test.module#TestModule',
+};
 
 @NgModule({
   imports: [
@@ -25,6 +31,7 @@ import { AuthGuard } from './authentication/services/auth.guard';
         component: StandardLayoutComponent,
         canActivate: [ AuthGuard ],
         children: [
+          ...(environment.testSettings && environment.testSettings.includeTestModule ? [testRoute] : []),
           {
             path: 'home',
             component: HomeComponent
