@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { OAuthService, UrlHelperService, OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthService, UrlHelperService, OAuthModule, ValidationHandler, AuthConfig } from 'angular-oauth2-oidc';
 
 import { AuthApiService } from '../authentication/services/auth-api.service';
 import { AuthGuard } from '../authentication/services/auth.guard';
@@ -62,7 +62,8 @@ import { UserService } from '../authentication/services/user.service';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    OAuthService,
+    { provide: ValidationHandler, useValue: ValidationHandler },
+    AuthConfig,
     UrlHelperService,
     AuthApiService,
     AuthenticationService,
