@@ -20,20 +20,21 @@ public class Importer {
         _dbContext = dbContext;
     }
 
-    public void ProcessImport(string serializedExport, int? parentId) {
+    public void ProcessImport(string serializedExport, int? parentId, string userId) {
         using (var transaction = _dbContext.Database.BeginTransaction()) {
            _setDtos = _dbContext.Sets.ProjectTo<SetDto>().ToList();
             var model = JsonConvert.DeserializeObject<CollectionExportModel>(serializedExport);
-            ProcessCollection(model, parentId);
+            ProcessCollection(model, parentId, userId);
             _dbContext.SaveChanges();
             transaction.Commit();
         }
     }
 
-    private void ProcessCollection(CollectionExportModel collection, int? parentId) {
+    private void ProcessCollection(CollectionExportModel collection, int? parentId, string userId) {
         var collectionEntity = new Collection(new CollectionDto() {
             Name = collection.Name,
-            ParentId = parentId
+            ParentId = parentId,
+            OwnerUserId = userId,
         });
 
         _dbContext.Collections.Add(collectionEntity);
@@ -44,7 +45,7 @@ public class Importer {
         }
 
         foreach (var subCollection in collection.SubCollections) {
-            ProcessCollection(subCollection, collectionEntity.Id);
+            ProcessCollection(subCollection, collectionEntity.Id, userId);
         }
     }
 

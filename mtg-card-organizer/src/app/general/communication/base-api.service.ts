@@ -32,11 +32,10 @@ export class BaseApiService {
     const url = this.apiBaseUrl + '/' + path;
 
     let headers = new HttpHeaders();
-    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-    headers = headers.set('Accept', 'application/json');
+    headers = headers.set('Authorization', 'Bearer ' + this.authService.accessToken);
 
     // Process the file downloaded
-    this.httpClient.get(url, { responseType: 'blob' }).subscribe(res => {
+    this.httpClient.get(url, { responseType: 'blob', headers: headers }).subscribe(res => {
         // const fileName = getFileNameFromResponseContentDisposition(res);
         saveFile(res, 'collection-export-' + new Date().getTime() + '.json');
     });

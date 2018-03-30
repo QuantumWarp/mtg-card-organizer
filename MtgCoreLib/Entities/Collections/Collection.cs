@@ -31,6 +31,7 @@ namespace MtgCoreLib.Entities.Collections
         public Collection(CollectionDto collectionDto) {
             Name = collectionDto.Name;
             ParentId = collectionDto.ParentId;
+            OwnerUserId = collectionDto.OwnerUserId;
         }
     }
 }

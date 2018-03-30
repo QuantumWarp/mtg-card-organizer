@@ -18,10 +18,19 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   private handleError(err: HttpErrorResponse): boolean {
-    this.snackNotificationService.notify({
-      type: SnackNotificationType.Error,
-      message: 'Error contacting the server',
-    });
-    return false;
+    switch (err.status) {
+      case 401:
+        this.snackNotificationService.notify({
+          type: SnackNotificationType.Error,
+          message: 'Unauthorized',
+        });
+        return true;
+      default:
+        this.snackNotificationService.notify({
+          type: SnackNotificationType.Error,
+          message: 'Error contacting the server',
+        });
+        return false;
+    }
   }
 }

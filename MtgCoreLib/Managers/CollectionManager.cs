@@ -102,7 +102,7 @@ namespace MtgCoreLib.Managers
         }
 
         public bool Import(int? collectionId, string importString) {
-            new Importer(_dbContext).ProcessImport(importString, collectionId);
+            new Importer(_dbContext).ProcessImport(importString, collectionId, _user.Id);
             return true;
         }
     }
