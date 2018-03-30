@@ -1,4 +1,7 @@
 .padded-page {
   padding: 15px;
   flex: 1;
+  position: relative;
+  z-index: -1;
+  background-color: rgb(230,230,230);
 }
