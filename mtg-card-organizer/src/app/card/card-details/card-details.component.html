@@ -1,4 +1,11 @@
-<p>Name: {{card.name}}</p>
-<p *ngIf="card.power">P/T: {{card.power}}/{{card.toughness}}</p>
-<p>Text: {{card.oracleText}}</p>
-<app-card-image [card]="card"></app-card-image>
+<div class="card-details-modal">
+  <!-- <div class="card-details">
+    <p>Name: {{card.name}}</p>
+    <p *ngIf="card.power">P/T: {{card.power}}/{{card.toughness}}</p>
+    <p>Text: {{card.oracleText}}</p>
+  </div> -->
+  <div class="card-image">
+    <app-card-image [card]="card"></app-card-image>
+  </div>
+</div>
+

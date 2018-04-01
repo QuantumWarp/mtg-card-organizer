@@ -1,0 +1,26 @@
+.card-details-modal {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
+
+  > .card-details {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+  }
+
+  > .card-image {
+    display: flex;
+    align-items: stretch;
+    min-width: 223px;
+    max-width: 223px;
+    min-height: 311px;
+    max-height: 311px;
+
+    > app-card-image {
+      flex: 1;
+    }
+  }
+}

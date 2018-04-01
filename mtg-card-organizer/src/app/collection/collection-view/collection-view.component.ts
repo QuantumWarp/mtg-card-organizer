@@ -93,6 +93,10 @@ export class CollectionViewComponent implements OnInit {
     });
   }
 
+  cardSelected(card: Card) {
+    const dialogRef = this.dialog.open(CardDetailsModalComponent);
+    dialogRef.componentInstance.card = card;
+  }
   openExport(): void {
     const dialogRef = this.dialog.open(CollectionExportComponent);
     dialogRef.componentInstance.collection = this.collection;

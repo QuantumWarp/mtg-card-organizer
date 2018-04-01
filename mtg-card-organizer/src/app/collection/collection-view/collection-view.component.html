@@ -27,7 +27,8 @@
 
     <app-card-search *ngIf="collection" fxFlex
       [displayedColumns]="['name', 'setSymbol', 'manaCost', 'foil', 'promo']"
-      [cardService]="collectionCardServiceWrapper">
+      [cardService]="collectionCardServiceWrapper"
+      (cardSelected)="cardSelected($event)">
     </app-card-search>
   </div>
 </div>

@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+}
+
+.card-image-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-image-area-loading {
+  border: 1px grey solid;
+}
