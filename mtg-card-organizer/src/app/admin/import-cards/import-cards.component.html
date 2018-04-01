@@ -1,9 +1,12 @@
 <div class="padded-page">
-  <mat-card fxFlex fxLayout="column">  
-    <mat-form-field fxFlex>
+  <app-page-header></app-page-header>
+  <app-title-and-trail title="Import Cards" [trail]="['Admin']"></app-title-and-trail>
+
+  <mat-card class="import-cards-content">
+    <mat-form-field class="input-area">
       <textarea #inputArea matInput placeholder="Input"></textarea>
     </mat-form-field>
-  
+
     <div fxLayout="row">
       <button mat-raised-button color="primary" (click)="openFileDialog()">Select From File</button>
       <input class="file-selector" type="file" ng2FileSelect #fileInput (change)="fileChanged($event)"/>

@@ -4,7 +4,7 @@ import { ImportService } from '../services/import.service';
 @Component({
   selector: 'app-import-cards',
   templateUrl: './import-cards.component.html',
-  styleUrls: ['./import-cards.css']
+  styleUrls: ['./import-cards.scss']
 })
 export class ImportCardsComponent {
   @ViewChild('fileInput') fileInput: ElementRef;

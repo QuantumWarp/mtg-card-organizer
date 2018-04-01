@@ -7,12 +7,14 @@ import { AutofocusDirective } from './directives/autofocus.directive';
 import { MaterialModule } from './material.module';
 import { GravatarIconComponent } from './services/gravatar-icon.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
+import { TitleAndTrailComponent } from './page-header/title-and-trail.component';
 
 @NgModule({
   declarations: [
     AutofocusDirective,
     GravatarIconComponent,
     PageHeaderComponent,
+    TitleAndTrailComponent,
   ],
   exports: [
     MaterialModule,
@@ -22,6 +24,7 @@ import { PageHeaderComponent } from './page-header/page-header.component';
     AutofocusDirective,
     GravatarIconComponent,
     PageHeaderComponent,
+    TitleAndTrailComponent,
   ]
 })
 export class SharedModule { }

@@ -3,12 +3,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('http://eskipaper.com/images/free-hd-background-2.jpg');
+  background-image: url('/assets/page-header.jpg');
+  background-size: cover;
+  background-position: center;
 
 }
 
 .auth-link-text {
-  color: steelblue; 
+  color: steelblue;
   cursor: pointer;
 }
 
@@ -55,7 +57,7 @@
       color: red;
       font-size: 14px;
     }
-    
+
     > .login-forgot-password {
       margin-top: 10px;
       display: flex;

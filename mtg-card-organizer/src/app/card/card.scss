@@ -2,6 +2,7 @@
   padding: 20px;
   display: flex;
   flex-direction: row;
+  border-bottom: 1px lightgray solid;
 
   > .search-field {
     margin-right: 10px;
@@ -13,4 +14,8 @@
     align-items: center;
     justify-content: center;
   }
+}
+
+.card-search {
+  background-color: white;
 }

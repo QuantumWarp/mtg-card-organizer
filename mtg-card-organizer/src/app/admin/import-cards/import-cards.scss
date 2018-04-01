@@ -1,0 +1,13 @@
+.file-selector {
+  display: none;
+}
+
+.import-cards-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  > .input-area {
+    flex: 1;
+  }
+}

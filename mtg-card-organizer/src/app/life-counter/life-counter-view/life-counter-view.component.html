@@ -1,6 +1,9 @@
 <div class="padded-page" fxLayoutGap="10px">
-    <app-life-counter-controller [lifeCounterModel]="lifeCounterModel"></app-life-counter-controller>
-    <div fxLayoutGap="10px">
-        <app-life-counter-single *ngFor="let lifeCounter of lifeCounterModel.lifeCounters" [lifeCounter]="lifeCounter" fxFlex></app-life-counter-single>
-    </div>
+  <app-page-header></app-page-header>
+  <app-title-and-trail title="Life Counter" [trail]="['Tools']"></app-title-and-trail>
+
+  <app-life-counter-controller [lifeCounterModel]="lifeCounterModel"></app-life-counter-controller>
+  <div fxLayoutGap="10px">
+    <app-life-counter-single *ngFor="let lifeCounter of lifeCounterModel.lifeCounters" [lifeCounter]="lifeCounter" fxFlex></app-life-counter-single>
+  </div>
 </div>
