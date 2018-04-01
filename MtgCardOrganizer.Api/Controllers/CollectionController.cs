@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Dtos.Collections;
+using MtgCoreLib.Dtos.Enums;
 using MtgCoreLib.Entities.Cards;
 using MtgCoreLib.Managers;
 
@@ -40,35 +43,43 @@ namespace MtgCardOrganizer.Api.Controllers
         
         [HttpDelete]
         [Route("{collectionId}")]
-        public bool Delete(int collectionId)
+        public IActionResult Delete(int collectionId)
         {
-            return _collectionManager.DeleteCollection(collectionId);
+            if (_collectionManager.UserHasPermission(Permission.Owner, collectionId)) return Unauthorized();
+            _collectionManager.DeleteCollection(collectionId);
+            return NoContent();
         }
         
         [HttpGet]
         [Route("{collectionId}/cards")]
-        public PagedData<CardInstanceDto> GetCards(int collectionId, QueryModel<CardInstanceDto> queryModel)
+        public IActionResult GetCards(int collectionId, QueryModel<CardInstanceDto> queryModel)
         {
-            return _collectionManager.GetCards(collectionId, queryModel);
+            if (_collectionManager.UserHasPermission(Permission.Read, collectionId)) return Unauthorized();
+            return Ok(_collectionManager.GetCards(collectionId, queryModel));
         }
         
         [HttpPost]
         [Route("{collectionId}/cards")]
-        public bool AddCards(int collectionId, [FromBody] List<AddCollectionCardCommand> cardSetInfoOtherInfoDict)
+        public IActionResult AddCards(int collectionId, [FromBody] List<AddCollectionCardCommand> cardSetInfoOtherInfoDict)
         {
-            return _collectionManager.AddCards(collectionId, cardSetInfoOtherInfoDict);
+            if (_collectionManager.UserHasPermission(Permission.Write, collectionId)) return Unauthorized();
+            _collectionManager.AddCards(collectionId, cardSetInfoOtherInfoDict);
+            return NoContent();
         }
 
         [HttpPatch]
         [Route("{collectionId}/cards")]
-        public bool DeleteCards(int collectionId, List<int> cardSetInfoIds)
+        public IActionResult DeleteCards(int collectionId, List<int> cardSetInfoIds)
         {
-            return _collectionManager.DeleteCards(collectionId, cardSetInfoIds);
+            if (_collectionManager.UserHasPermission(Permission.Write, collectionId)) return Unauthorized();
+            _collectionManager.DeleteCards(collectionId, cardSetInfoIds);
+            return NoContent();
         }
 
         [HttpGet]
         [Route("{collectionId}/download")]
         public IActionResult Download(int collectionId) {
+            if (_collectionManager.UserHasPermission(Permission.Read, collectionId)) return Unauthorized();
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
             _collectionManager.Export(collectionId);
@@ -82,8 +93,10 @@ namespace MtgCardOrganizer.Api.Controllers
         [HttpPost]
         [Route("{collectionId}/import")]
         [Route("import")]
-        public bool Import(int? collectionId, [FromBody] string importString) {
-            return _collectionManager.Import(collectionId, importString);
+        public IActionResult Import(int? collectionId, [FromBody] string importString) {
+            if (collectionId.HasValue && _collectionManager.UserHasPermission(Permission.Write, collectionId.Value)) return Unauthorized();
+            _collectionManager.Import(collectionId, importString);
+            return NoContent();
         }
     }
 }

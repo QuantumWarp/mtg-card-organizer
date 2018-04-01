@@ -12,7 +12,7 @@ using System;
 namespace MtgCoreLib.Migrations
 {
     [DbContext(typeof(MtgCoreLibContext))]
-    [Migration("20180324220937_InitialCreate")]
+    [Migration("20180331212339_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,6 +147,21 @@ namespace MtgCoreLib.Migrations
                     b.ToTable("CollectionCardLinks");
                 });
 
+            modelBuilder.Entity("MtgCoreLib.Entities.Collections.CollectionUserLink", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<int>("CollectionId");
+
+                    b.Property<int>("Permission");
+
+                    b.HasKey("UserId", "CollectionId");
+
+                    b.HasAlternateKey("CollectionId", "UserId");
+
+                    b.ToTable("CollectionUserLinks");
+                });
+
             modelBuilder.Entity("MtgCoreLib.Entities.Other.Format", b =>
                 {
                     b.Property<int>("Id")
@@ -194,6 +209,14 @@ namespace MtgCoreLib.Migrations
 
                     b.HasOne("MtgCoreLib.Entities.Collections.Collection", "Collection")
                         .WithMany("CollectionCardLinks")
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MtgCoreLib.Entities.Collections.CollectionUserLink", b =>
+                {
+                    b.HasOne("MtgCoreLib.Entities.Collections.Collection", "Collection")
+                        .WithMany()
                         .HasForeignKey("CollectionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

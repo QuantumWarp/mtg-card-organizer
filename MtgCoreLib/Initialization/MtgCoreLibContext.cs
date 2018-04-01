@@ -13,6 +13,7 @@ namespace MtgCoreLib.Initialization
 
         public DbSet<Collection> Collections { get; set; }
         public DbSet<CollectionCardLink> CollectionCardLinks { get; set;}
+        public DbSet<CollectionUserLink> CollectionUserLinks { get; set;}
 
         public DbSet<Card> Cards { get; set; }
         public DbSet<CardSetInfo> CardSetInfos { get; set; }
@@ -20,5 +21,11 @@ namespace MtgCoreLib.Initialization
 
         public DbSet<Format> Formats { get; set; }
         public DbSet<Set> Sets { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CollectionUserLink>()
+                .HasKey(c => new { c.UserId, c. CollectionId });
+        }
     }
 }

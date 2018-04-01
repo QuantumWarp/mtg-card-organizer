@@ -92,6 +92,26 @@ namespace MtgCoreLib.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CollectionUserLinks",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CollectionId = table.Column<int>(type: "int", nullable: false),
+                    Permission = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollectionUserLinks", x => new { x.UserId, x.CollectionId });
+                    table.UniqueConstraint("AK_CollectionUserLinks_CollectionId_UserId", x => new { x.CollectionId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_CollectionUserLinks_Collections_CollectionId",
+                        column: x => x.CollectionId,
+                        principalTable: "Collections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CardSetInfos",
                 columns: table => new
                 {
@@ -189,6 +209,9 @@ namespace MtgCoreLib.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CollectionCardLinks");
+
+            migrationBuilder.DropTable(
+                name: "CollectionUserLinks");
 
             migrationBuilder.DropTable(
                 name: "Formats");

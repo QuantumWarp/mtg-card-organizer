@@ -1,12 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Dtos.Collections;
+using MtgCoreLib.Dtos.Enums;
 using MtgCoreLib.Entities.Cards;
 using MtgCoreLib.Entities.Collections;
 using MtgCoreLib.Initialization;
@@ -16,6 +12,8 @@ namespace MtgCoreLib.Managers
 {
     public interface ICollectionManager
     {
+        bool UserHasPermission(Permission permission, params int[] collectionIds);
+
         PagedData<CollectionDto> GetCollections(QueryModel<CollectionDto> queryModel);
         bool CreateCollection(CollectionDto collectionDto);
         bool DeleteCollection(int collectionId);
@@ -38,6 +36,15 @@ namespace MtgCoreLib.Managers
         {
             _user = user;
             _dbContext = dbContext;
+        }
+
+        public bool UserHasPermission(Permission permission, params int[] collectionIds) {
+            var validPermissions = PermissionExtensions.ValidPermissions(permission);
+            var collectionUserLinks = _dbContext.CollectionUserLinks
+                .Where(x => collectionIds.Contains(x.CollectionId))
+                .Where(x => validPermissions.Contains(x.Permission));
+            return collectionIds.All(id => 
+                collectionUserLinks.SingleOrDefault(x => x.CollectionId == id) != null);
         }
 
         public PagedData<CollectionDto> GetCollections(QueryModel<CollectionDto> queryModel)
