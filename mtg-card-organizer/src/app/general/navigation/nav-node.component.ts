@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 
 import { NavNode } from './nav-node';
 import { navModel } from './nav-model';
@@ -22,10 +22,10 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ])
   ]
 })
-export class NavNodeComponent {
+export class NavNodeComponent implements OnInit {
+  @Output() nodeActionEvent = new EventEmitter<NavNode>();
   @Input() navNode: NavNode;
   @Input() nestedIndex: number;
-  open = false;
 
   get hasChildren(): boolean {
     return this.navNode.children && this.navNode.children.length > 0;
@@ -33,15 +33,21 @@ export class NavNodeComponent {
 
   constructor(private router: Router) { }
 
+  ngOnInit(): void {
+    this.navNode.open = false;
+  }
+
   nodeClicked(): void {
     if (this.navNode.children && this.navNode.children.length !== 0) {
-      this.open = !this.open;
+      this.navNode.open = !this.navNode.open;
     }
     if (this.navNode.action) {
       this.navNode.action();
+      this.nodeActionEvent.emit(this.navNode);
     }
     if (this.navNode.routerLink) {
       this.router.navigateByUrl(this.navNode.routerLink);
+      this.nodeActionEvent.emit(this.navNode);
     }
   }
 }

@@ -4,4 +4,5 @@ export interface NavNode {
   icon?: string;
   action?: () => void;
   children?: NavNode[];
+  open?: boolean;
 }
