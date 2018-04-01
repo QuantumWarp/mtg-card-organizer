@@ -10,8 +10,8 @@ export class ImportService {
 
   constructor(private apiService: ApiService) { }
 
-  import(importString: string): void {
-    this.apiService.post<any>('api/admincard/import-cards', { importString: importString }).subscribe();
+  import(importString: string): Observable<void> {
+    return this.apiService.post<any>('api/admincard/import-cards', { importString: importString });
   }
 }
 

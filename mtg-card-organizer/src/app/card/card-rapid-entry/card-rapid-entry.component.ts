@@ -1,6 +1,6 @@
-import { Component, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input, Inject } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatDialog, MatDialogRef, MatPaginator } from '@angular/material';
+import { MatDialog, MatDialogRef, MatPaginator, MAT_DIALOG_DATA } from '@angular/material';
 import * as _ from 'lodash';
 
 import { Filterer } from '../../general/filtering/filterer';
@@ -16,6 +16,7 @@ import { RapidEntryResult } from './rapid-entry-result';
 import { RapidEntryResultGridComponent } from './rapid-entry-result-grid.component';
 import { RapidEntryResultStore } from './rapid-entry-result.store';
 import { CardOtherInfo } from '../models/card-other-info';
+import { LoadingService } from '../../general/loading/loading.service';
 
 @Component({
   selector: 'app-card-rapid-entry',
@@ -37,12 +38,15 @@ export class CardRapidEntryComponent implements OnInit {
   rapidEntryResultStore = new RapidEntryResultStore();
 
   constructor(
+    private loadingService: LoadingService,
     private setService: SetService,
     private cardService: CardService,
     private dialog: MatDialog,
-    private dialogRef: MatDialogRef<CardRapidEntryComponent>) { }
+    private dialogRef: MatDialogRef<CardRapidEntryComponent>,
+    @Inject(MAT_DIALOG_DATA) private processPromise: (coi: CardOtherInfo[]) => Promise<boolean>) { }
 
   ngOnInit(): void {
+    this.processPromise = this.processPromise ? this.processPromise : () => Promise.resolve(true);
     this.setService.query().subscribe(results => {
       this.sets = results.data;
     });
@@ -68,13 +72,21 @@ export class CardRapidEntryComponent implements OnInit {
 
   apply(): void {
     if (!this.rapidEntryResultStore.rapidEntryResults.find(x => x.hasError)) {
-      this.dialogRef.close(this.rapidEntryResultStore.rapidEntryResults.map(x => {
+      const cardOtherInfos = this.rapidEntryResultStore.rapidEntryResults.map(x => {
         const command = new CardOtherInfo();
         command.cardSetInfoId = x.results[0].cardId;
         command.foil = x.cardOtherInfo.foil;
         command.promo = x.cardOtherInfo.promo;
         return command;
-      }));
+      });
+      const processPromise = this.processPromise(cardOtherInfos);
+      this.loadingService.load('Processing...', processPromise);
+      processPromise.then(success => {
+        if (success === false) {
+          return;
+        }
+        this.dialogRef.close(cardOtherInfos);
+      });
     } else {
       this.openLatestError();
     }
@@ -90,11 +102,13 @@ export class CardRapidEntryComponent implements OnInit {
     }
 
     const psFilter = new PageSortFilter();
-    psFilter.addSubFilter(new PropertyFilter({
-      property: 'setId',
-      operator: PropertyFilterOperator.IsContainedIn,
-      value: this.selectedSetIds,
-    }));
+    if (this.selectedSetIds.length !== 0) {
+      psFilter.addSubFilter(new PropertyFilter({
+        property: 'setId',
+        operator: PropertyFilterOperator.IsContainedIn,
+        value: this.selectedSetIds,
+      }));
+    }
     psFilter.addSubFilter(new PropertyFilter({
       property: 'name',
       operator: PropertyFilterOperator.Contains,

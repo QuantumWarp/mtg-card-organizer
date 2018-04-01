@@ -9,7 +9,8 @@ import { CardSearchGridComponent } from './card-search-grid.component';
 
 @Component({
   selector: 'app-card-search',
-  templateUrl: './card-search.component.html'
+  templateUrl: './card-search.component.html',
+  styleUrls: ['../card.scss']
 })
 export class CardSearchComponent implements OnInit {
   @ViewChild('paginator') paginator: MatPaginator;

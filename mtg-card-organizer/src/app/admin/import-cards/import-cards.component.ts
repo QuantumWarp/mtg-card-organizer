@@ -1,5 +1,8 @@
 import { Component, ViewChildren, ViewChild, ElementRef } from '@angular/core';
 import { ImportService } from '../services/import.service';
+import { LoadingService } from '../../general/loading/loading.service';
+import { SnackNotificationService } from '../../general/notifications/snack-notification.service';
+import { SnackNotificationType } from '../../general/notifications/snack-notification.type';
 
 @Component({
   selector: 'app-import-cards',
@@ -10,7 +13,10 @@ export class ImportCardsComponent {
   @ViewChild('fileInput') fileInput: ElementRef;
   @ViewChild('inputArea') inputArea: ElementRef;
 
-  constructor(private importService: ImportService) {}
+  constructor(
+    private importService: ImportService,
+    private loadingService: LoadingService,
+    private notificationService: SnackNotificationService) {}
 
   openFileDialog(): void {
     const event = new MouseEvent('click', {bubbles: false});
@@ -30,6 +36,11 @@ export class ImportCardsComponent {
   }
 
   import(): void {
-    this.importService.import(this.inputArea.nativeElement.value);
+    const importPromise = this.importService.import(this.inputArea.nativeElement.value).toPromise();
+    this.loadingService.load('Importing...', importPromise);
+    importPromise.then(() => this.notificationService.notify({
+      message: 'Import Successful',
+      type: SnackNotificationType.Success,
+    }));
   }
 }

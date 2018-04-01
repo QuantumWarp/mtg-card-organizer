@@ -9,6 +9,7 @@ import { PagedData } from '../../general/filtering/paged-data';
 import { PropertyFilter } from '../../general/filtering/property-filter';
 import { Collection } from '../models/collection';
 import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
+import { CardOtherInfo } from '../../card/models/card-other-info';
 
 @Injectable()
 export class CollectionService implements DataService<Collection> {
@@ -32,8 +33,8 @@ export class CollectionService implements DataService<Collection> {
     return this.apiService.get<PagedData<Card>>('api/collections/' + collectionId + '/cards', pageSortFilter);
   }
 
-  addCards(collectionId: number, cardSetIds: number[]): Observable<boolean> {
-    return this.apiService.post<boolean>('api/collections/' + collectionId + '/cards', cardSetIds);
+  addCards(collectionId: number, cardOtherInfos: CardOtherInfo[]): Observable<boolean> {
+    return this.apiService.post<boolean>('api/collections/' + collectionId + '/cards', cardOtherInfos);
   }
 
   importCards(collectionId: number, importString: string): Observable<boolean> {

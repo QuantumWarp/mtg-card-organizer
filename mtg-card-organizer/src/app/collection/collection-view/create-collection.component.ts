@@ -3,6 +3,9 @@ import { MatDialogRef } from '@angular/material';
 
 import { Collection } from '../models/collection';
 import { CollectionService } from '../services/collection.service';
+import { LoadingService } from '../../general/loading/loading.service';
+import { SnackNotificationService } from '../../general/notifications/snack-notification.service';
+import { SnackNotificationType } from '../../general/notifications/snack-notification.type';
 
 @Component({
   selector: 'app-create-collection',
@@ -13,14 +16,25 @@ export class CreateCollectionComponent {
   parentCollection: Collection;
   collectionName: string;
 
-  constructor(public collectionService: CollectionService, private dialogRef: MatDialogRef<CreateCollectionComponent>) { }
+  constructor(
+    private loadingSerivce: LoadingService,
+    private notificationService: SnackNotificationService,
+    public collectionService: CollectionService,
+    private dialogRef: MatDialogRef<CreateCollectionComponent>) { }
 
   close(): void {
     this.dialogRef.close(false);
   }
 
   create(): void {
-    this.collectionService.createCollection(this.collectionName, this.parentCollection ? this.parentCollection.id : null).subscribe(() => {
+    const createPromise = this.collectionService.createCollection(
+      this.collectionName, this.parentCollection ? this.parentCollection.id : null).toPromise();
+    this.loadingSerivce.load('Creating collection...', createPromise);
+    createPromise.then(() => {
+      this.notificationService.notify({
+        message: 'Collection Created',
+        type: SnackNotificationType.Success,
+      });
       this.dialogRef.close(true);
     });
   }

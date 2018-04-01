@@ -3,6 +3,9 @@ import { MatDialogRef } from '@angular/material';
 
 import { Collection } from '../models/collection';
 import { CollectionService } from '../services/collection.service';
+import { LoadingService } from '../../general/loading/loading.service';
+import { SnackNotificationService } from '../../general/notifications/snack-notification.service';
+import { SnackNotificationType } from '../../general/notifications/snack-notification.type';
 
 @Component({
   selector: 'app-collection-import',
@@ -14,7 +17,11 @@ export class CollectionImportComponent {
   @ViewChild('inputArea') inputArea: ElementRef;
   @Input() collection: Collection;
 
-  constructor(private collectionService: CollectionService, private dialogRef: MatDialogRef<CollectionImportComponent>) { }
+  constructor(
+    private loadingService: LoadingService,
+    private notificationService: SnackNotificationService,
+    private collectionService: CollectionService,
+    private dialogRef: MatDialogRef<CollectionImportComponent>) { }
 
   openFileDialog(): void {
     const event = new MouseEvent('click', {bubbles: false});
@@ -22,7 +29,6 @@ export class CollectionImportComponent {
   }
 
   fileChanged(value: any) {
-    console.log(this.fileInput.nativeElement.files[0]);
     const file: File = this.fileInput.nativeElement.files[0];
     const myReader: FileReader = new FileReader();
 
@@ -34,9 +40,13 @@ export class CollectionImportComponent {
   }
 
   import(): void {
-    this.collectionService.importCards(this.collection ? this.collection.id : null, this.inputArea.nativeElement.value).subscribe(() => {
-      this.dialogRef.close(true);
-    });
+    const importPromise = this.collectionService.importCards(
+      this.collection ? this.collection.id : null, this.inputArea.nativeElement.value).toPromise();
+    this.loadingService.load('Importing...', importPromise);
+    importPromise.then(() => this.notificationService.notify({
+      message: 'Collection Imported',
+      type: SnackNotificationType.Success,
+    }));
   }
 
   close(): void {

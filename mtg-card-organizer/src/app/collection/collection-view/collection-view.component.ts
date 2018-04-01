@@ -19,6 +19,11 @@ import { CreateCollectionComponent } from './create-collection.component';
 import { ConfirmComponent } from '../../general/components/confirm.component';
 import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
 import { CardSearchComponent } from '../../card/card-search/card-search.component';
+import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
+import { CardOtherInfo } from '../../card/models/card-other-info';
+import { LoadingService } from '../../general/loading/loading.service';
+import { SnackNotificationService } from '../../general/notifications/snack-notification.service';
+import { SnackNotificationType } from '../../general/notifications/snack-notification.type';
 
 @Component({
   selector: 'app-collection-view',
@@ -32,7 +37,13 @@ export class CollectionViewComponent implements OnInit {
 
   collectionCardServiceWrapper: CollectionCardServiceWrapper;
 
-  constructor(public collectionService: CollectionService, private route: ActivatedRoute, private router: Router, private dialog: MatDialog) { }
+  constructor(
+    public collectionService: CollectionService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private loadingService: LoadingService,
+    private notificationService: SnackNotificationService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -83,13 +94,15 @@ export class CollectionViewComponent implements OnInit {
   }
 
   openRapidEntry() {
-    const dialogRef = this.dialog.open(CardRapidEntryComponent, { disableClose: true, minWidth: '600px' });
+    const dialogRef = this.dialog.open(CardRapidEntryComponent, {
+      disableClose: true,
+      minWidth: '600px',
+      data: (cio: CardOtherInfo[]) => this.collectionService.addCards(this.collection.id, cio).toPromise()
+    });
+
     dialogRef.afterClosed().subscribe(results => {
-      if (results) {
-        this.collectionService.addCards(this.collection.id, results).subscribe(cardsAdded =>
-          this.cardSearchComponent.cardDataSource.reloadData()
-        );
-      }
+      this.notificationService.notify({ message: 'Added Cards', type: SnackNotificationType.Success });
+      this.cardSearchComponent.cardDataSource.reloadData();
     });
   }
 
@@ -97,6 +110,7 @@ export class CollectionViewComponent implements OnInit {
     const dialogRef = this.dialog.open(CardDetailsModalComponent);
     dialogRef.componentInstance.card = card;
   }
+
   openExport(): void {
     const dialogRef = this.dialog.open(CollectionExportComponent);
     dialogRef.componentInstance.collection = this.collection;
@@ -120,13 +134,16 @@ export class CollectionViewComponent implements OnInit {
     dialogRef.componentInstance.description = 'Are you sure?';
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        this.collectionService.deleteCollection(this.collection.id).subscribe(success => {
-          if (success && this.collection.parentId) {
-            this.router.navigate([this.collection ? '../' : './', this.collection.parentId], { relativeTo: this.route });
-          } else if (success) {
-            this.router.navigate(['../'], { relativeTo: this.route });
+        const deletePromise = this.collectionService.deleteCollection(this.collection.id).toPromise();
+        const navPromise = () => {
+          if (this.collection.parentId) {
+            return this.router.navigate([this.collection ? '../' : './', this.collection.parentId], { relativeTo: this.route });
+          } else {
+            return this.router.navigate(['../'], { relativeTo: this.route });
           }
-        });
+        };
+        this.loadingService.load('Deleting...', deletePromise.then(navPromise));
+        deletePromise.then(() => this.notificationService.notify({ message: 'Collection Deleted', type: SnackNotificationType.Success }));
       }
     });
   }
