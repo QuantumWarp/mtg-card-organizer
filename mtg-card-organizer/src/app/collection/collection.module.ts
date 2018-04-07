@@ -10,6 +10,8 @@ import { CardRapidEntryComponent } from '../card/card-rapid-entry/card-rapid-ent
 import { CollectionExportComponent } from './collection-export/collection-export.component';
 import { CollectionImportComponent } from './collection-import/collection-import.component';
 import { CreateCollectionComponent } from './collection-view/create-collection.component';
+import { SubCollectionsComponent } from './collection-view/sub-collections.component';
+import { CollectionCardsComponent } from './collection-view/collection-cards.component';
 
 @NgModule({
   declarations: [
@@ -17,12 +19,16 @@ import { CreateCollectionComponent } from './collection-view/create-collection.c
     CollectionExportComponent,
     CollectionImportComponent,
     CreateCollectionComponent,
+    SubCollectionsComponent,
+    CollectionCardsComponent,
   ],
   entryComponents: [
     CardRapidEntryComponent,
     CollectionExportComponent,
     CollectionImportComponent,
     CreateCollectionComponent,
+    SubCollectionsComponent,
+    CollectionCardsComponent,
   ],
   imports: [
     SharedModule,

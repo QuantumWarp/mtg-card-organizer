@@ -21,9 +21,8 @@
 }
 
 .inner-content {
-  margin-top: 10px;
   display: flex;
-  flex-direction: row;
+  background-color: white;
 
   > * + * {
     margin-right: 20px;

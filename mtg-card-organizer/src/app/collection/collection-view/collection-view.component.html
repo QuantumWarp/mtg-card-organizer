@@ -1,34 +1,24 @@
 <div class="padded-page">
   <app-page-header></app-page-header>
+  <app-title-and-trail [title]="collection ? collection.name : authService.username + '\'s Collections'"></app-title-and-trail>
 
-  <div class="title-bar mat-elevation-z4" *ngIf="collection">
-    <div fxFlex class="title">Collection: {{ collection.name }}</div>
+  <mat-menu #collectionMenu="matMenu">
     <button mat-raised-button color="primary" (click)="createCollection()">Add Collection</button>
-    <button mat-raised-button color="primary" (click)="deleteCollection()">Delete Collection</button>
+    <button *ngIf="collection" mat-raised-button color="primary" (click)="deleteCollection()">Delete Collection</button>
     <button mat-raised-button color="primary" (click)="openImport()">Import</button>
-    <button mat-raised-button color="primary" (click)="openExport()">Export</button>
-    <button mat-raised-button color="primary" (click)="openRapidEntry()">Fast Add</button>
-  </div>
+    <button *ngIf="collection" mat-raised-button color="primary" (click)="openExport()">Export</button>
+    <button *ngIf="collection" mat-raised-button color="primary" (click)="openRapidEntry()">Fast Add</button>
+  </mat-menu>
 
-  <div class="title-bar mat-elevation-z4" *ngIf="!collection">
-    <div fxFlex class="title">Collections</div>
-    <button mat-raised-button color="primary" (click)="createCollection()">Add Collection</button>
-    <button mat-raised-button color="primary" (click)="openImport()">Import</button>
-  </div>
+  <app-sub-collections *ngIf="!collection" [collection]="collection" [subCollections]="subCollections"></app-sub-collections>
+  <app-collection-cards *ngIf="subCollections.length === 0 && collection" [collection]="collection"></app-collection-cards>
 
-  <div class="inner-content">
-    <div *ngIf="subCollections.length !== 0">
-      <div class="collection-container" *ngFor="let collection of subCollections">
-        <mat-card class="collection-card" (click)="collectionClicked(collection)">
-          {{ collection.name }}
-        </mat-card>
-      </div>
-    </div>
-
-    <app-card-search *ngIf="collection" fxFlex
-      [displayedColumns]="['name', 'setSymbol', 'manaCost', 'foil', 'promo']"
-      [cardService]="collectionCardServiceWrapper"
-      (cardSelected)="cardSelected($event)">
-    </app-card-search>
-  </div>
+  <mat-tab-group class="inner-content mat-elevation-z4" *ngIf="subCollections.length !== 0 && collection">
+    <mat-tab label="Sub Collections">
+      <app-sub-collections [collection]="collection" [subCollections]="subCollections"></app-sub-collections>
+    </mat-tab>
+    <mat-tab label="Cards">
+      <app-collection-cards [collection]="collection"></app-collection-cards>
+    </mat-tab>
+  </mat-tab-group>
 </div>

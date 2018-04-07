@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -52,13 +53,24 @@ public class Importer {
     private void ProcessCard(CardInstanceExportModel card, int collectionId) {
         var cardSetInfoQueryable = _dbContext.CardSetInfos.ProjectTo<CardDetailsDto>(Mapper.Configuration);
 
+        var possibleSetIds = _setDtos.Where(set => set.Name.ToLower() == card.SetName.ToLower()).Select(x => x.Id);
+
+        cardSetInfoQueryable = cardSetInfoQueryable.Where(x => x.Name.ToLower() == card.Name.ToLower())
+            .Where(x => possibleSetIds.Contains(x.SetId));
+
+        CardDetailsDto cardSetInfo;
         if (!string.IsNullOrEmpty(card.Num)) {
-            cardSetInfoQueryable = cardSetInfoQueryable.Where(x => x.Num == card.Num);
+            cardSetInfo = cardSetInfoQueryable.Where(x => x.Num == card.Num).FirstOrDefault();
+            if (cardSetInfo == null) {
+                cardSetInfo = cardSetInfoQueryable.Where(x => x.Num == card.Num + "a").FirstOrDefault();
+            }
+        } else {
+            cardSetInfo = cardSetInfoQueryable.SingleOrDefault();
         }
 
-        var cardSetInfoId = cardSetInfoQueryable.Where(x => x.Name == card.Name)
-            .Where(x => x.SetId == _setDtos.First(set => set.Name == card.SetName).Id)
-            .Single().CardSetInfoId;
+        if (cardSetInfo == null) {
+            cardSetInfo = cardSetInfoQueryable.FirstOrDefault();
+        }
 
         var cardOtherInfo = new CardOtherInfo(new CardOtherInfoDto() {
             Foil = card.Foil,
@@ -68,6 +80,6 @@ public class Importer {
         _dbContext.CardOtherInfos.Add(cardOtherInfo);
         _dbContext.SaveChanges();
 
-        _dbContext.CollectionCardLinks.Add(new CollectionCardLink(collectionId, cardSetInfoId, cardOtherInfo.Id));
+        _dbContext.CollectionCardLinks.Add(new CollectionCardLink(collectionId, cardSetInfo.CardSetInfoId, cardOtherInfo.Id));
     }
 }

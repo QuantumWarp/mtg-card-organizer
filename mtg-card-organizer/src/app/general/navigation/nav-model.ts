@@ -15,7 +15,18 @@ export const navModel: NavNode[] = [
   {
     text: 'Collections',
     icon: 'view_list',
-    routerLink: '/collections',
+    children: [
+      {
+        text: 'My Collections',
+        icon: 'view_list',
+        routerLink: '/collections',
+      },
+      {
+        text: 'Search',
+        icon: 'search',
+        routerLink: '/collections',
+      },
+    ]
   },
   {
     text: 'Tools',

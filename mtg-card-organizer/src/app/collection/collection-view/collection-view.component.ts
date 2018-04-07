@@ -24,6 +24,9 @@ import { CardOtherInfo } from '../../card/models/card-other-info';
 import { LoadingService } from '../../general/loading/loading.service';
 import { SnackNotificationService } from '../../general/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../general/notifications/snack-notification.type';
+import { SubCollectionsComponent } from './sub-collections.component';
+import { CollectionCardsComponent } from './collection-cards.component';
+import { AuthenticationService } from '../../authentication/services/authentication.service';
 
 @Component({
   selector: 'app-collection-view',
@@ -31,11 +34,11 @@ import { SnackNotificationType } from '../../general/notifications/snack-notific
   styleUrls: ['../collection.scss']
 })
 export class CollectionViewComponent implements OnInit {
-  @ViewChild(CardSearchComponent) cardSearchComponent: CardSearchComponent;
+  @ViewChild(SubCollectionsComponent) subCollectionsComponent: SubCollectionsComponent;
+  @ViewChild(CollectionCardsComponent) collectionCardsComponent: CollectionCardsComponent;
+
   collection: Collection;
   subCollections = new Array<Collection>();
-
-  collectionCardServiceWrapper: CollectionCardServiceWrapper;
 
   constructor(
     public collectionService: CollectionService,
@@ -43,54 +46,17 @@ export class CollectionViewComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private loadingService: LoadingService,
-    private notificationService: SnackNotificationService) { }
+    private notificationService: SnackNotificationService,
+    public authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.collection = this.route.snapshot.data['collection'];
-      this.refreshPage(this.collection);
+      this.refreshSubCollections();
+      if (this.collection) {
+        this.refreshCards();
+      }
     });
-  }
-
-  refreshPage(collection: Collection): void {
-    this.collection = collection;
-    this.subCollections = new Array<Collection>();
-
-    if (!this.collection) {
-      this.refreshAsBase();
-    } else {
-      this.refresh();
-    }
-  }
-
-  refreshAsBase(): void {
-    this.collectionService.queryBaseCollections(new PageSortFilter()).subscribe(result => {
-      this.subCollections = result.data;
-    });
-  }
-
-  refresh(): void {
-    this.collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionService);
-
-    if (this.cardSearchComponent) {
-      this.cardSearchComponent.cardDataSource.dataService = this.collectionCardServiceWrapper;
-      this.cardSearchComponent.cardDataSource.reloadData();
-    }
-
-    const pageSortFilter = new PageSortFilter();
-    pageSortFilter.addSubFilter(new PropertyFilter({
-      property: 'parentId',
-      operator: PropertyFilterOperator.IsEqual,
-      value: this.collection.id
-    }));
-    this.collectionService.query(pageSortFilter).subscribe(result => {
-      this.subCollections = result.data;
-    });
-  }
-
-  collectionClicked(collection: Collection): void {
-    const prefix = this.collection ? '../' : './';
-    this.router.navigate([prefix, collection.id], { relativeTo: this.route });
   }
 
   openRapidEntry() {
@@ -102,13 +68,8 @@ export class CollectionViewComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(results => {
       this.notificationService.notify({ message: 'Added Cards', type: SnackNotificationType.Success });
-      this.cardSearchComponent.cardDataSource.reloadData();
+      this.refreshCards();
     });
-  }
-
-  cardSelected(card: Card) {
-    const dialogRef = this.dialog.open(CardDetailsModalComponent);
-    dialogRef.componentInstance.card = card;
   }
 
   openExport(): void {
@@ -119,13 +80,13 @@ export class CollectionViewComponent implements OnInit {
   openImport(): void {
     const dialogRef = this.dialog.open(CollectionImportComponent);
     dialogRef.componentInstance.collection = this.collection;
-    dialogRef.afterClosed().subscribe(success => success ? this.refreshPage(this.collection) : null);
+    dialogRef.afterClosed().subscribe(success => success ? this.refreshCards() : null);
   }
 
   createCollection(): void {
     const dialogRef = this.dialog.open(CreateCollectionComponent);
     dialogRef.componentInstance.parentCollection = this.collection;
-    dialogRef.afterClosed().subscribe(success => success ? this.refreshPage(this.collection) : null);
+    dialogRef.afterClosed().subscribe(success => success ? this.refreshSubCollections() : null);
   }
 
   deleteCollection(): void {
@@ -146,5 +107,39 @@ export class CollectionViewComponent implements OnInit {
         deletePromise.then(() => this.notificationService.notify({ message: 'Collection Deleted', type: SnackNotificationType.Success }));
       }
     });
+  }
+
+  private refreshSubCollections(): void {
+    this.subCollections = new Array<Collection>();
+
+    if (!this.collection) {
+      this.refreshAsBase();
+    } else {
+      this.refresh();
+    }
+  }
+
+  private refresh(): void {
+    const pageSortFilter = new PageSortFilter();
+    pageSortFilter.addSubFilter(new PropertyFilter({
+      property: 'parentId',
+      operator: PropertyFilterOperator.IsEqual,
+      value: this.collection.id
+    }));
+    this.collectionService.query(pageSortFilter).subscribe(result => {
+      this.subCollections = result.data;
+    });
+  }
+
+  private refreshAsBase(): void {
+    this.collectionService.queryBaseCollections(new PageSortFilter()).subscribe(result => {
+      this.subCollections = result.data;
+    });
+  }
+
+  private refreshCards(): void {
+    if (this.collectionCardsComponent) {
+      this.collectionCardsComponent.refresh();
+    }
   }
 }

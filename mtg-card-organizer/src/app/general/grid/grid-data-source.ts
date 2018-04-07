@@ -36,6 +36,10 @@ export class GridDataSource<T> extends DataSource<T> {
     this.currentPageSortFilter.offset = this.paginator.pageIndex * (this.paginator.pageSize || 10);
     this.currentPageSortFilter.limit = this.paginator.pageSize || 10;
 
+    if (!this.dataService) {
+      return;
+    }
+
     this.dataService.query(this.currentPageSortFilter).subscribe(result => {
       this.currentData = result.data;
       this.paginator.length = result.totalCount;

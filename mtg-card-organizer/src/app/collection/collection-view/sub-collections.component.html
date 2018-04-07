@@ -1,0 +1,5 @@
+<div class="collection-container" *ngFor="let collection of subCollections">
+  <mat-card class="collection-card" (click)="collectionClicked(collection)">
+    {{ collection.name }}
+  </mat-card>
+</div>
