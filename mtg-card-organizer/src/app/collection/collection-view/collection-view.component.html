@@ -1,13 +1,17 @@
 <div class="padded-page">
   <app-page-header></app-page-header>
-  <app-title-and-trail [title]="collection ? collection.name : authService.username + '\'s Collections'"></app-title-and-trail>
+  <app-title-and-trail [title]="collection ? collection.name : authService.username + '\'s Collections'">
+    <button [matMenuTriggerFor]="collectionMenu" class="options-button mat-elevation-z4" mat-icon-button>
+      <mat-icon>settings</mat-icon>
+    </button>
+  </app-title-and-trail>
 
   <mat-menu #collectionMenu="matMenu">
-    <button mat-raised-button color="primary" (click)="createCollection()">Add Collection</button>
-    <button *ngIf="collection" mat-raised-button color="primary" (click)="deleteCollection()">Delete Collection</button>
-    <button mat-raised-button color="primary" (click)="openImport()">Import</button>
-    <button *ngIf="collection" mat-raised-button color="primary" (click)="openExport()">Export</button>
-    <button *ngIf="collection" mat-raised-button color="primary" (click)="openRapidEntry()">Fast Add</button>
+    <button mat-menu-item (click)="createCollection()">Add Collection</button>
+    <button mat-menu-item *ngIf="collection" (click)="deleteCollection()">Delete Collection</button>
+    <button mat-menu-item (click)="openImport()">Import</button>
+    <button mat-menu-item *ngIf="collection" (click)="openExport()">Export</button>
+    <button mat-menu-item *ngIf="collection" (click)="openRapidEntry()">Fast Add</button>
   </mat-menu>
 
   <app-sub-collections *ngIf="!collection" [collection]="collection" [subCollections]="subCollections"></app-sub-collections>

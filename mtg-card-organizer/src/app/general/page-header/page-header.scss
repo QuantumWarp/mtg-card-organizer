@@ -13,7 +13,6 @@
 .page-header-text {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   margin: 5px 0px 20px 0px;
 
@@ -21,6 +20,10 @@
     font-size: 25px;
     font-weight: 500;
     color: white;
+  }
+
+  > ng-content {
+    flex: 1;
   }
 
   > .page-header-trail {

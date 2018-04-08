@@ -1,32 +1,25 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 
-import { Card } from '../../card/models/card';
-import { CardService } from '../../card/services/card.service';
-import { DataService } from '../../general/grid/grid-data-source.interfaces';
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
-import { PagedData } from '../../general/filtering/paged-data';
-import { PropertyFilter } from '../../general/filtering/property-filter';
-import { Collection } from '../models/collection';
-import { CollectionService, CollectionCardServiceWrapper } from '../services/collection.service';
+import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { CardRapidEntryComponent } from '../../card/card-rapid-entry/card-rapid-entry.component';
-import { CollectionExportComponent } from '../collection-export/collection-export.component';
-import { CollectionImportComponent } from '../collection-import/collection-import.component';
-import { CreateCollectionComponent } from './create-collection.component';
-import { ConfirmComponent } from '../../general/components/confirm.component';
-import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
-import { CardSearchComponent } from '../../card/card-search/card-search.component';
-import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
 import { CardOtherInfo } from '../../card/models/card-other-info';
+import { ConfirmComponent } from '../../general/components/confirm.component';
+import { PageSortFilter } from '../../general/filtering/page-sort-filter';
+import { PropertyFilter } from '../../general/filtering/property-filter';
+import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
 import { LoadingService } from '../../general/loading/loading.service';
 import { SnackNotificationService } from '../../general/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../general/notifications/snack-notification.type';
-import { SubCollectionsComponent } from './sub-collections.component';
+import { CollectionExportComponent } from '../collection-export/collection-export.component';
+import { CollectionImportComponent } from '../collection-import/collection-import.component';
+import { Collection } from '../models/collection';
+import { CollectionService } from '../services/collection.service';
 import { CollectionCardsComponent } from './collection-cards.component';
-import { AuthenticationService } from '../../authentication/services/authentication.service';
+import { CreateCollectionComponent } from './create-collection.component';
+import { SubCollectionsComponent } from './sub-collections.component';
 
 @Component({
   selector: 'app-collection-view',
@@ -47,11 +40,13 @@ export class CollectionViewComponent implements OnInit {
     private dialog: MatDialog,
     private loadingService: LoadingService,
     private notificationService: SnackNotificationService,
-    public authService: AuthenticationService) { }
+    public authService: AuthenticationService,
+    private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.collection = this.route.snapshot.data['collection'];
+      this.changeDetector.detectChanges();
       this.refreshSubCollections();
       if (this.collection) {
         this.refreshCards();
