@@ -27,7 +27,8 @@ namespace MtgCoreLib.Managers
 
         public PagedData<CardDetailsDto> GetCards(QueryModel<CardDetailsDto> queryModel)
         {
-            return _dbContext.CardSetInfos.AsPagedData(queryModel);
+            var defaultSort = new PropertySort<CardDetailsDto>(nameof(CardDetailsDto.Name));
+            return _dbContext.CardSetInfos.AsPagedData(queryModel, defaultSort);
         }
     }
 }

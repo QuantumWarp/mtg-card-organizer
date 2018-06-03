@@ -84,13 +84,10 @@ public static class PageSortFilterParseHelper {
             return false;
         
         var sortString = queryCollection["sort"].ToString();
-        var acsending = !sortString.StartsWith('-');
+        var ascending = !sortString.StartsWith('-');
         sortString = (sortString.StartsWith('-') || sortString.StartsWith('+')) ? sortString.Substring(1) : sortString;
 
-        propertySort = new PropertySort<TDto>() {
-            Ascending = acsending,
-            Field = sortString,
-        };
+        propertySort = new PropertySort<TDto>(sortString, ascending);
 
         return true;
     }

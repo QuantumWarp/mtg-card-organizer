@@ -7,15 +7,15 @@ using AutoMapper.QueryableExtensions;
 namespace MtgCoreLib.Utilities.General
 {
     public static class PageSortFilterExtensions {
-        public static PagedData<T> AsPagedData<T>(this IQueryable queryable, QueryModel<T> queryModel) {
+        public static PagedData<T> AsPagedData<T>(this IQueryable queryable, QueryModel<T> queryModel, PropertySort<T> defaultSort = null) {
             var typedQueryable = queryable.ProjectTo<T>(Mapper.Configuration);
-            var results = typedQueryable.ApplyQueryModel(queryModel, out int totalCount).ToList();
+            var results = typedQueryable.ApplyQueryModel(queryModel, out int totalCount, defaultSort).ToList();
             return new PagedData<T>(results, totalCount);
         }
 
-        public static IQueryable<T> ApplyQueryModel<T>(this IQueryable<T> queryable, QueryModel<T> queryModel, out int totalCount) {
+        public static IQueryable<T> ApplyQueryModel<T>(this IQueryable<T> queryable, QueryModel<T> queryModel, out int totalCount, PropertySort<T> defaultSort = null) {
             queryable = queryable.ApplyFilters(queryModel.Filters);
-            queryable = queryable.ApplySorting(queryModel.Sort);
+            queryable = queryable.ApplySorting(queryModel.Sort, defaultSort);
             totalCount = queryable.Count();
             queryable = queryable.ApplyOffset(queryModel.Offset);
             queryable = queryable.ApplyLimit(queryModel.Limit);
@@ -29,8 +29,9 @@ namespace MtgCoreLib.Utilities.General
             return queryable;
         }
 
-        private static IQueryable<T> ApplySorting<T>(this IQueryable<T> queryable, PropertySort<T> sort) {
-            if (sort == null) return queryable;
+        private static IQueryable<T> ApplySorting<T>(this IQueryable<T> queryable, PropertySort<T> sort, PropertySort<T> defaultSort = null) {
+            if (sort == null && defaultSort == null) return queryable;
+            sort = sort != null ? sort : defaultSort;
             if (sort.Ascending) {
                 return queryable.OrderBy(ExpressionHelper.CreateKeySelectorExpression<T>(sort));
             } else {

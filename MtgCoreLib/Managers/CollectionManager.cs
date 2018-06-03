@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MtgCoreLib.Dtos.Cards;
 using MtgCoreLib.Dtos.Collections;
 using MtgCoreLib.Dtos.Enums;
@@ -49,9 +51,10 @@ namespace MtgCoreLib.Managers
 
         public PagedData<CollectionDto> GetCollections(QueryModel<CollectionDto> queryModel)
         {
+            var defaultSort = new PropertySort<CollectionDto>(nameof(CollectionDto.Name));
             return _dbContext.Collections
                 .Where(x => x.OwnerUserId == _user.Id)
-                .AsPagedData(queryModel);
+                .AsPagedData(queryModel, defaultSort);
         }
 
         public bool CreateCollection(CollectionDto collectionDto)
@@ -73,9 +76,10 @@ namespace MtgCoreLib.Managers
 
         public PagedData<CardInstanceDto> GetCards(int collectionId, QueryModel<CardInstanceDto> queryModel)
         {
+            var defaultSort = new PropertySort<CardInstanceDto>(nameof(CardInstanceDto.Name));
             return _dbContext.CollectionCardLinks
                 .Where(ccl => ccl.CollectionId == collectionId)
-                .AsPagedData(queryModel);
+                .AsPagedData(queryModel, defaultSort);
         }
 
         public bool AddCards(int collectionId, List<AddCollectionCardCommand> cardSetInfoOtherInfoDict)

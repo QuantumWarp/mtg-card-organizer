@@ -25,7 +25,8 @@ namespace MtgCoreLib.Managers
 
         public PagedData<SetDto> GetSets(QueryModel<SetDto> queryModel)
         {
-            return _dbContext.Sets.AsPagedData(queryModel);
+            var defaultSort = new PropertySort<SetDto>(nameof(SetDto.Name));
+            return _dbContext.Sets.AsPagedData(queryModel, defaultSort);
         }
     }
 }
