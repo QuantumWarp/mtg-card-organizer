@@ -34,6 +34,8 @@ namespace MtgCardOrganizer.Api
                 cfg.AddProfile(new AutoMapperConfig());
             });
 
+            services.AddSingleton(_ => Configuration);
+
             // Add framework services.
             services.AddCors();
             services.AddMvc(config =>
@@ -45,7 +47,7 @@ namespace MtgCardOrganizer.Api
 
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options => {
-                    options.Authority = "http://localhost:5000";
+                    options.Authority = Configuration["IdentityServerUrl"];
                     options.ApiName = "mtg-card-organiser";
                     options.ApiSecret = "4ef65ea8-0d55-4f62-8354-efa6332a6b54";
                     options.RequireHttpsMetadata = false;

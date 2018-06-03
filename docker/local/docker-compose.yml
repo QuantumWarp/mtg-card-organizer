@@ -1,0 +1,27 @@
+version: '3'
+services:
+  mtg-card-organizer-db:
+    build:
+      context: ./
+      dockerfile: ./mtg-card-organizer-db/dockerfile
+    ports:
+      - "3001:1433"
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+
+  mtg-card-organizer-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Local
+    build:
+      context: ../../
+      dockerfile: ./docker/local/mtg-card-organizer-api/dockerfile
+    ports:
+      - "3002:80"
+      
+  mtg-card-organizer-web:
+    build:
+      context: ../../mtg-card-organizer
+      dockerfile: ../docker/local/mtg-card-organizer-web/dockerfile
+    ports:
+      - "80:80"

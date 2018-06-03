@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static void AddContexts(this IServiceCollection services, IConfigurationRoot configuration)
         {
             services.AddDbContext<MtgCoreLibContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Default")));
+                options.UseSqlServer(configuration["ConnectionString"]));
         }
     }
 }

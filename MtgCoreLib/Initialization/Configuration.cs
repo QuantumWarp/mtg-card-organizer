@@ -12,10 +12,9 @@ namespace MtgCoreLib.Initialization
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             var Configuration = builder.Build();
 
-            var connectionStringSection = Configuration.GetSection("ConnectionStrings");
             ConnectionStrings = new ConnectionStrings()
             {
-                Default = connectionStringSection["Default"]
+                Default = Configuration["ConnectionString"]
             };
         }
 

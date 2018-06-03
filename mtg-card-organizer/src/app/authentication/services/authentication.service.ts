@@ -10,6 +10,7 @@ import { AuthApiService } from './auth-api.service';
 import { RegisterModel } from '../models/register.model';
 import { decode } from 'jsonwebtoken';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
@@ -48,12 +49,14 @@ export class AuthenticationService {
   }
 
   configure(): void {
-    this.oauthService.issuer = 'http://localhost:5000';
+    this.oauthService.skipIssuerCheck = true;
+    this.oauthService.requireHttps = false;
+    this.oauthService.issuer = environment.identityServerUrl;
     this.oauthService.clientId = 'mtg-card-organiser-client';
     this.oauthService.scope = 'openid profile mtg-card-organiser';
     this.oauthService.setStorage(sessionStorage);
     this.oauthService.dummyClientSecret = 'dummysecret';
-    const uri = 'http://localhost:5000/.well-known/openid-configuration';
+    const uri = environment.identityServerUrl + '/.well-known/openid-configuration';
     if (this.oauthService.hasValidAccessToken()) {
       this.parseToken(this.oauthService.getAccessToken());
     }
