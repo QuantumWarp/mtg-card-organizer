@@ -83,12 +83,13 @@ namespace MtgCoreLib.Utilities.Parsers
 
         public string Retrieve()
         {
-            // using (var client = new WebClient())
-            // {
-            //     client.DownloadFile(AllCardsUri, DownloadFilename);
-            // }
             if (!File.Exists("../AllSets-x.json"))
             {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(AllCardsAndExtrasUri, DownloadFilename);
+                    
+                }
                 ZipFile.ExtractToDirectory(DownloadFilename, "../");
             }
             return File.ReadAllText("../AllSets-x.json");
