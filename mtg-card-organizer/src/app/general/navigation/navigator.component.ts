@@ -1,4 +1,5 @@
-import { Component, style, state, trigger, transition, animate } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component } from '@angular/core';
 
 import { navModel } from './nav-model';
 import { NavNode } from './nav-node';

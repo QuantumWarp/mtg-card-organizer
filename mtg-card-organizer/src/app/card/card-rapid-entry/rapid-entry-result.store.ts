@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 
 import { PageSortFilter } from '../../general/filtering/page-sort-filter';
 import { PagedData } from '../../general/filtering/paged-data';
@@ -10,7 +10,7 @@ export class RapidEntryResultStore implements DataService<RapidEntryResult> {
   rapidEntryResults = new Array<RapidEntryResult>();
 
   query(pageSortFilter: PageSortFilter): Observable<PagedData<RapidEntryResult>> {
-    return Observable.of(PagedDataHelper.createPagedData(pageSortFilter, this.rapidEntryResults));
+    return of(PagedDataHelper.createPagedData(pageSortFilter, this.rapidEntryResults));
   }
 }
 

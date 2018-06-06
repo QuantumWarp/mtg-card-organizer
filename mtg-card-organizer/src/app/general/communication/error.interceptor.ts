@@ -1,20 +1,22 @@
+
+import { never, throwError,   Observable} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor } from '@angular/common/http/src/interceptor';
 import { HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/never';
+
 import { SnackNotificationService } from '../notifications/snack-notification.service';
 import { SnackNotificationType } from '../notifications/snack-notification.type';
+import { catchError } from 'rxjs/internal/operators';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private snackNotificationService: SnackNotificationService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).catch((err, caught) => {
+    return next.handle(req).pipe(catchError((err, caught) => {
       const handled = this.handleError(err);
-      return handled ? Observable.never() : Observable.throw(err);
-    });
+      return handled ? never() : throwError(err);
+    }));
   }
 
   private handleError(err: HttpErrorResponse): boolean {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { BaseApiService } from '../../general/communication/base-api.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { LoadingService } from '../../general/loading/loading.service';
 import { environment } from '../../../environments/environment.prod';
 

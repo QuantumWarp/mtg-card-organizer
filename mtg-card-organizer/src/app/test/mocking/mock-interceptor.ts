@@ -1,8 +1,8 @@
-import 'rxjs/add/observable/of';
+
 
 import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { HttpInterceptor } from '@angular/common/http/src/interceptor';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { parse } from 'url';
 
 import { environment } from '../../../environments/environment';
@@ -21,7 +21,7 @@ export abstract class MockInterceptor implements HttpInterceptor {
       method = this.methodNotFound;
     }
 
-    return Observable.of(method(req));
+    return of(method(req));
   }
 
   abstract chooseMethod(req: HttpRequest<any>): (req: HttpRequest<any>) => HttpResponse<any>;

@@ -1,8 +1,7 @@
 import { DataSource } from '@angular/cdk/collections';
 import { EventEmitter } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject ,  Observable } from 'rxjs';
 
 import { Filterer } from '../filtering/filterer';
 import { DataService } from './grid-data-source.interfaces';

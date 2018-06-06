@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { Observable, of, Subscription } from 'rxjs';
+import { delay } from 'rxjs/internal/operators';
+
 import { LoadingComponent } from './loading.component';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 
 // TODO: check for any race condition problems
 @Injectable()
@@ -25,7 +26,7 @@ export class LoadingService {
 
   private conditionalSetupDelay(promise: Promise<any>) {
     if (this.promiseArray.length === 0) {
-      const delayObs = Observable.of(0).delay(this.delayTime);
+      const delayObs = of(0).pipe(delay(this.delayTime));
       this.delaySub = delayObs.subscribe(() => this.openDialog(promise));
     }
   }
@@ -47,7 +48,7 @@ export class LoadingService {
   }
 
   private openDialog(ongoingPromise: Promise<any>): void {
-    const minTimePromise = Observable.of(0).delay(this.minTime).toPromise();
+    const minTimePromise = of(0).pipe(delay(this.minTime)).toPromise();
     this.promiseBegin(minTimePromise);
     this.dialogRef = this.dialog.open(LoadingComponent, {
       maxWidth: '300px', width: '300px',

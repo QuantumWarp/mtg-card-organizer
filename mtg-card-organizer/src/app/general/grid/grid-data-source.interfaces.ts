@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { PageSortFilter } from '../filtering/page-sort-filter';
 import { PagedData } from '../filtering/paged-data';

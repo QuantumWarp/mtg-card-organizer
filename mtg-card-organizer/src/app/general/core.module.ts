@@ -62,9 +62,6 @@ import { UserService } from '../authentication/services/user.service';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: ValidationHandler, useValue: ValidationHandler },
-    AuthConfig,
-    UrlHelperService,
     AuthApiService,
     AuthenticationService,
     AuthGuard,

@@ -1,5 +1,6 @@
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
+import { tap } from 'rxjs/internal/operators';
+import { of, Observable } from 'rxjs';
+
 
 export class Cache {
   private resultCache = new Map<any, any>();
@@ -10,13 +11,13 @@ export class Cache {
     }
 
     if (this.resultCache.has(cacheKey)) {
-      return Observable.of(this.resultCache.get(cacheKey));
+      return of(this.resultCache.get(cacheKey));
     }
 
     const obs = func();
-    obs.do(result => {
+    obs.pipe(tap(result => {
       this.resultCache.set(cacheKey, result);
-    });
+    }));
   }
 
   clearCache(cacheKey: any = null) {

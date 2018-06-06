@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { ApiService } from '../../general/communication/api.service';
 import { PageSortFilter } from '../../general/filtering/page-sort-filter';

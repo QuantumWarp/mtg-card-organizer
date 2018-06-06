@@ -1,10 +1,8 @@
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import * as _ from 'lodash';
+import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
 
 import { Filterer } from '../../general/filtering/filterer';
 import { PropertyFilter } from '../../general/filtering/property-filter';
@@ -29,8 +27,9 @@ export class CardSearchBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.nameFilterControl.valueChanges
-      .debounceTime(500)
-      .distinctUntilChanged()
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged())
       .subscribe(value => this.updateFilters());
   }
 

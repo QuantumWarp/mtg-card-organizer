@@ -1,20 +1,13 @@
-import { Injectable, NgZone } from '@angular/core';
-import {
-  OAuthService,
-  OAuthStorage,
-  ValidationHandler,
-  AuthConfig,
-  UrlHelperService
-} from 'angular-oauth2-oidc';
-import { AuthApiService } from './auth-api.service';
-import { RegisterModel } from '../models/register.model';
-import { decode } from 'jsonwebtoken';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { OAuthService } from 'angular-oauth2-oidc';
+
 import { environment } from '../../../environments/environment';
+import { RegisterModel } from '../models/register.model';
+import { AuthApiService } from './auth-api.service';
 
 @Injectable()
 export class AuthenticationService {
-  oauthService: OAuthService;
   tokenInfo: any;
 
   get username(): string {
@@ -34,19 +27,9 @@ export class AuthenticationService {
   }
 
   constructor(
-    private zone: NgZone,
-    private httpClient: HttpClient,
-    private storage: OAuthStorage,
-    private tokenValidationHandler: ValidationHandler,
-    private config: AuthConfig,
-    private urlHelper: UrlHelperService,
+    private oauthService: OAuthService,
     private authApiService: AuthApiService
-  ) {
-    // Running outside angular zone to prevent issues with waitForAngular and protractor.
-    this.oauthService = this.zone.runOutsideAngular(() => {
-      return new OAuthService(httpClient, storage, tokenValidationHandler, config, urlHelper);
-    });
-  }
+  ) { }
 
   configure(): void {
     this.oauthService.skipIssuerCheck = true;
@@ -81,9 +64,8 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string): Promise<void> {
-    return this.zone.runOutsideAngular(() => {
-      return this.oauthService.fetchTokenUsingPasswordFlow(username, password);
-    }).then((token: any) => this.parseToken(token.access_token));
+    return this.oauthService.fetchTokenUsingPasswordFlow(username, password)
+      .then((token: any) => this.parseToken(token.access_token));
   }
 
   logout(): void {
@@ -91,6 +73,6 @@ export class AuthenticationService {
   }
 
   private parseToken(token: any): void {
-    this.tokenInfo = decode(token);
+    this.tokenInfo =  new JwtHelperService().decodeToken(token);
   }
 }
