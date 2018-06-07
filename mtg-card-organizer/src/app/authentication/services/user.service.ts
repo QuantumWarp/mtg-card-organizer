@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AuthApiService } from './auth-api.service';
-import { UserModel } from '../models/user.model';
 import { Observable } from 'rxjs';
-import { QueryStringGenerator } from '../../general/communication/query-string-generator.interface';
-import { BasicQueryStringGenerator } from '../../general/communication/basic-query-string-generator';
+
+import { BasicQueryStringGenerator } from '../../shared/utils/basic-query-string-generator';
+import { UserModel } from '../models/user.model';
+import { AuthApiService } from './auth-api.service';
 
 @Injectable()
 export class UserService {

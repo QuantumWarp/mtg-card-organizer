@@ -1,13 +1,11 @@
 import { Component, Input, ViewChild } from '@angular/core';
+import { MatDialog, MatSort } from '@angular/material';
 
-import { RapidEntryResultStore } from './rapid-entry-result.store';
-import { MatSort, MatDialog } from '@angular/material';
-import { RapidEntryResult } from './rapid-entry-result';
-import { GridDataSource } from '../../general/grid/grid-data-source';
-import { RapidEntrySingleViewComponent } from './rapid-entry-single-view.component';
-import { Filterer } from '../../general/filtering/filterer';
+import { GridDataSource } from '../../shared/grid/grid-data-source';
 import { Set } from '../models/set';
-import { PropertyFilter } from '../../general/filtering/property-filter';
+import { RapidEntryResult } from './rapid-entry-result';
+import { RapidEntryResultStore } from './rapid-entry-result.store';
+import { RapidEntrySingleViewComponent } from './rapid-entry-single-view.component';
 
 @Component({
   selector: 'app-rapid-entry-result-grid',

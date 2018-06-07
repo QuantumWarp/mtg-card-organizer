@@ -4,10 +4,10 @@ import { MatDialog } from '@angular/material';
 import * as _ from 'lodash';
 import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
 
-import { Filterer } from '../../general/filtering/filterer';
-import { PropertyFilter } from '../../general/filtering/property-filter';
-import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
-import { GridDataSource } from '../../general/grid/grid-data-source';
+import { Filterer } from '../../shared/filtering/filterer';
+import { PropertyFilter } from '../../shared/filtering/property-filter';
+import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
+import { GridDataSource } from '../../shared/grid/grid-data-source';
 import { CardFilterComponent } from '../card-filter/card-filter.component';
 import { Card } from '../models/card';
 

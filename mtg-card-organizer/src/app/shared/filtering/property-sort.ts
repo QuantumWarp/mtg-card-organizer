@@ -1,6 +1,6 @@
 import { MatSort } from '@angular/material';
 
-import { QueryStringGenerator } from '../communication/query-string-generator.interface';
+import { QueryStringGenerator } from '../utils/query-string-generator.interface';
 
 export class PropertySort implements QueryStringGenerator {
   field: string;

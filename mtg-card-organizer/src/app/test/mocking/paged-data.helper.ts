@@ -1,5 +1,5 @@
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
-import { PagedData } from '../../general/filtering/paged-data';
+import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
+import { PagedData } from '../../shared/filtering/paged-data';
 import { PropertyFilterHelper } from './property-filter.helper';
 import { PropertySortHelper } from './property-sort.helper';
 

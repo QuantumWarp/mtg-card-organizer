@@ -9,7 +9,7 @@ import { Card } from '../models/card';
 export class ManaCostComponent implements OnChanges {
   @ViewChild('msField') msField: ElementRef;
   @Input() card: Card;
-  @Input() manaCost: string; 
+  @Input() manaCost: string;
 
   @Input() size = 1;
   @Input() shadow = true;

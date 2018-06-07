@@ -7,14 +7,12 @@ import { AuthGuard } from '../authentication/services/auth.guard';
 import { AuthenticationService } from '../authentication/services/authentication.service';
 import { HomeComponent } from '../home/home.component';
 import { ApiService } from './communication/api.service';
-import { ConfirmComponent } from './components/confirm.component';
 import { ContentComponent } from './content/content.component';
 import { StandardLayoutComponent } from './layouts/standard-layout.component';
 import { NavBarComponent } from './navigation/nav-bar.component';
 import { NavNodeComponent } from './navigation/nav-node.component';
 import { NavigatorComponent } from './navigation/navigator.component';
-import { GravatarService } from './services/gravatar.service';
-import { SharedModule } from './shared.module';
+import { GravatarService } from './gravatar/gravatar.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -25,6 +23,7 @@ import { ErrorInterceptor } from './communication/error.interceptor';
 import { LoadingComponent } from './loading/loading.component';
 import { LoadingService } from './loading/loading.service';
 import { UserService } from '../authentication/services/user.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,12 +33,10 @@ import { UserService } from '../authentication/services/user.service';
     NavBarComponent,
     NavNodeComponent,
     NavigatorComponent,
-    ConfirmComponent,
     SnackNotificationComponent,
     LoadingComponent,
   ],
   entryComponents: [
-    ConfirmComponent,
     SnackNotificationComponent,
     LoadingComponent,
   ],
@@ -53,12 +50,12 @@ import { UserService } from '../authentication/services/user.service';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+
     HomeComponent,
     StandardLayoutComponent,
     ContentComponent,
     NavBarComponent,
     NavigatorComponent,
-    ConfirmComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

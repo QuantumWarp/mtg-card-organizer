@@ -6,9 +6,9 @@ $keyrune-font-path: "../node_modules/keyrune/fonts/";
 
 @import '../node_modules/mana-font/css/mana.min.css';
 
-@import './app/general/styles/page.scss';
-@import './app/general/styles/grid.scss';
-@import './app/general/styles/modal.scss';
+@import './app/shared/styles/page.scss';
+@import './app/shared/styles/grid.scss';
+@import './app/shared/styles/modal.scss';
 
 * {
   font-family: Roboto,Helvetica Neue,sans-serif;

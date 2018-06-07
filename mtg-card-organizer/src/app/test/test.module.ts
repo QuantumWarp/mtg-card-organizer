@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { navModel } from '../general/navigation/nav-model';
-import { SharedModule } from '../general/shared.module';
+import { navModel } from '../core/navigation/nav-model';
+import { SharedModule } from '../shared/shared.module';
 import { ApiTesterComponent } from './api-tester/api-tester.component';
 
 @NgModule({

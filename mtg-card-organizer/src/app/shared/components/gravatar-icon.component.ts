@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
-import { GravatarService } from './gravatar.service';
+import { GravatarService } from '../../core/gravatar/gravatar.service';
 
 @Component({
   selector: 'app-gravatar-icon',

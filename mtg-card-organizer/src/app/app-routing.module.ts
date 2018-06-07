@@ -1,9 +1,10 @@
-import { RouterModule, Route } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { HomeComponent } from './home/home.component';
-import { StandardLayoutComponent } from './general/layouts/standard-layout.component';
-import { AuthGuard } from './authentication/services/auth.guard';
+import { Route, RouterModule } from '@angular/router';
+
 import { environment } from '../environments/environment';
+import { AuthGuard } from './authentication/services/auth.guard';
+import { StandardLayoutComponent } from './core/layouts/standard-layout.component';
+import { HomeComponent } from './home/home.component';
 
 const testRoutes: Route[] = environment.testSettings && environment.testSettings.includeTestModule ?
   [{

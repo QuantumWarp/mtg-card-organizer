@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
-import { PropertyFilter } from '../../general/filtering/property-filter';
-import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
+import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
 import { Set } from '../models/set';
 import { SetService } from '../services/set.service';
 

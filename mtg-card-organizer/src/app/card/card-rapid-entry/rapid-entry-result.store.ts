@@ -1,8 +1,8 @@
 import { Observable, of } from 'rxjs';
 
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
-import { PagedData } from '../../general/filtering/paged-data';
-import { DataService } from '../../general/grid/grid-data-source.interfaces';
+import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
+import { PagedData } from '../../shared/filtering/paged-data';
+import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 import { PagedDataHelper } from '../../test/mocking/paged-data.helper';
 import { RapidEntryResult } from './rapid-entry-result';
 

@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
-import { PropertyFilter } from '../../general/filtering/property-filter';
-import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
+import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
+import { PropertyFilter } from '../../shared/filtering/property-filter';
+import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
 import { Set } from '../models/set';
 import { SetService } from '../services/set.service';
 

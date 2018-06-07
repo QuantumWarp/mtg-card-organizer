@@ -1,4 +1,4 @@
-import { PropertySort } from '../../general/filtering/property-sort';
+import { PropertySort } from '../../shared/filtering/property-sort';
 
 export class PropertySortHelper {
   static applySort<T>(propertySort: PropertySort, data: T[]): T[] {

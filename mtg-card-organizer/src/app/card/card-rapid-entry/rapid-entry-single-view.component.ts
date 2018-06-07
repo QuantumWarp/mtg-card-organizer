@@ -1,16 +1,12 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import * as _ from 'lodash';
 
-import { Filterer } from '../../general/filtering/filterer';
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
-import { PropertyFilter } from '../../general/filtering/property-filter';
-import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
-import { CardFilterComponent } from '../card-filter/card-filter.component';
+import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
+import { PropertyFilter } from '../../shared/filtering/property-filter';
+import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
 import { Card } from '../models/card';
 import { Set } from '../models/set';
 import { CardService } from '../services/card.service';
-import { SetService } from '../services/set.service';
 import { RapidEntryResult } from './rapid-entry-result';
 
 @Component({

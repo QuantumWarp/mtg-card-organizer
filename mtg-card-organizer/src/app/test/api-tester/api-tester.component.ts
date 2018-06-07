@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
-import { BaseApiService } from '../../general/communication/base-api.service';
+import { BaseApiService } from '../../core/communication/base-api.service';
 import { Observable } from 'rxjs';
-import { LoadingService } from '../../general/loading/loading.service';
+import { LoadingService } from '../../core/loading/loading.service';
 import { environment } from '../../../environments/environment.prod';
 
 @Component({

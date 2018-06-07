@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
+import { LoadingService } from '../../core/loading/loading.service';
+import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
+import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
 import { Collection } from '../models/collection';
 import { CollectionService } from '../services/collection.service';
-import { LoadingService } from '../../general/loading/loading.service';
-import { SnackNotificationService } from '../../general/notifications/snack-notification.service';
-import { SnackNotificationType } from '../../general/notifications/snack-notification.type';
 
 @Component({
   selector: 'app-create-collection',

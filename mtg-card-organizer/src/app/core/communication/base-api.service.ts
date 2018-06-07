@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
-import { QueryStringGenerator } from './query-string-generator.interface';
+import { QueryStringGenerator } from '../../shared/utils/query-string-generator.interface';
 import { getFileNameFromResponseContentDisposition, saveFile } from '../../collection/services/download-helper';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 

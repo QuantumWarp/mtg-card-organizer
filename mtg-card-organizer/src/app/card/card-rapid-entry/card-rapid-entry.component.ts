@@ -1,22 +1,19 @@
-import { Component, ElementRef, ViewChild, Input, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatDialog, MatDialogRef, MatPaginator, MAT_DIALOG_DATA } from '@angular/material';
-import * as _ from 'lodash';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator } from '@angular/material';
 
-import { Filterer } from '../../general/filtering/filterer';
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
-import { PropertyFilter } from '../../general/filtering/property-filter';
-import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
-import { GridDataSource } from '../../general/grid/grid-data-source';
-import { CardFilterComponent } from '../card-filter/card-filter.component';
+import { LoadingService } from '../../core/loading/loading.service';
+import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
+import { PropertyFilter } from '../../shared/filtering/property-filter';
+import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
+import { GridDataSource } from '../../shared/grid/grid-data-source';
+import { CardOtherInfo } from '../models/card-other-info';
 import { Set } from '../models/set';
 import { CardService } from '../services/card.service';
 import { SetService } from '../services/set.service';
 import { RapidEntryResult } from './rapid-entry-result';
 import { RapidEntryResultGridComponent } from './rapid-entry-result-grid.component';
 import { RapidEntryResultStore } from './rapid-entry-result.store';
-import { CardOtherInfo } from '../models/card-other-info';
-import { LoadingService } from '../../general/loading/loading.service';
 
 @Component({
   selector: 'app-card-rapid-entry',

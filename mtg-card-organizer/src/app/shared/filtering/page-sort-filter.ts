@@ -1,4 +1,4 @@
-import { QueryStringGenerator } from '../communication/query-string-generator.interface';
+import { QueryStringGenerator } from '../utils/query-string-generator.interface';
 import { PropertyFilter } from './property-filter';
 import { PropertySort } from './property-sort';
 

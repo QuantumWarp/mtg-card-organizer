@@ -1,8 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BaseApiService } from '../../general/communication/base-api.service';
+
 import { environment } from '../../../environments/environment';
-import { AuthenticationService } from './authentication.service';
+import { BaseApiService } from '../../core/communication/base-api.service';
 
 @Injectable()
 export class AuthApiService extends BaseApiService {

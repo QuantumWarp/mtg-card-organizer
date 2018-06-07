@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Card } from '../../card/models/card';
-import { ApiService } from '../../general/communication/api.service';
-import { DataService } from '../../general/grid/grid-data-source.interfaces';
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
-import { PagedData } from '../../general/filtering/paged-data';
-import { PropertyFilter } from '../../general/filtering/property-filter';
-import { Collection } from '../models/collection';
-import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
 import { CardOtherInfo } from '../../card/models/card-other-info';
+import { ApiService } from '../../core/communication/api.service';
+import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
+import { PagedData } from '../../shared/filtering/paged-data';
+import { PropertyFilter } from '../../shared/filtering/property-filter';
+import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
+import { DataService } from '../../shared/grid/grid-data-source.interfaces';
+import { Collection } from '../models/collection';
 
 @Injectable()
 export class CollectionService implements DataService<Collection> {

@@ -1,8 +1,8 @@
 import { Component, ViewChildren, ViewChild, ElementRef } from '@angular/core';
 import { ImportService } from '../services/import.service';
-import { LoadingService } from '../../general/loading/loading.service';
-import { SnackNotificationService } from '../../general/notifications/snack-notification.service';
-import { SnackNotificationType } from '../../general/notifications/snack-notification.type';
+import { LoadingService } from '../../core/loading/loading.service';
+import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
+import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
 
 @Component({
   selector: 'app-import-cards',

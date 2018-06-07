@@ -1,5 +1,5 @@
 import { NgModule, } from '@angular/core';
-import { SharedModule } from '../general/shared.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { RouterModule } from '@angular/router';
 import { LifeCounterViewComponent } from './life-counter-view/life-counter-view.component';

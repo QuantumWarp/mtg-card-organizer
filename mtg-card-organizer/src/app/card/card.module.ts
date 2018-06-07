@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SharedModule } from '../general/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { CardFilterComponent } from './card-filter/card-filter.component';
 import { CardRapidEntryComponent } from './card-rapid-entry/card-rapid-entry.component';

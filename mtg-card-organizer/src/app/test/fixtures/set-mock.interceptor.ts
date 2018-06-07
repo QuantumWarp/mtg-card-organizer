@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { parse } from 'url';
 
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
+import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
 import { MockInterceptor } from '../../test/mocking/mock-interceptor';
 import { PagedDataHelper } from '../../test/mocking/paged-data.helper';
 import { setDatabase } from './set-database.fixture';

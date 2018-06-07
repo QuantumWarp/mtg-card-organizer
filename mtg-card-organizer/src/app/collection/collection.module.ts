@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { CardModule } from '../card/card.module';
-import { SharedModule } from '../general/shared.module';
-import { CollectionResolver } from './services/collection.resolver';
-import { CollectionService } from './services/collection.service';
-import { CollectionViewComponent } from './collection-view/collection-view.component';
 import { CardRapidEntryComponent } from '../card/card-rapid-entry/card-rapid-entry.component';
+import { CardModule } from '../card/card.module';
+import { SharedModule } from '../shared/shared.module';
 import { CollectionExportComponent } from './collection-export/collection-export.component';
 import { CollectionImportComponent } from './collection-import/collection-import.component';
+import { CollectionCardsComponent } from './collection-view/collection-cards.component';
+import { CollectionViewComponent } from './collection-view/collection-view.component';
 import { CreateCollectionComponent } from './collection-view/create-collection.component';
 import { SubCollectionsComponent } from './collection-view/sub-collections.component';
-import { CollectionCardsComponent } from './collection-view/collection-cards.component';
+import { CollectionResolver } from './services/collection.resolver';
+import { CollectionService } from './services/collection.service';
 
 @NgModule({
   declarations: [

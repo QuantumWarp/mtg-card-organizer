@@ -3,9 +3,9 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
-import { PropertyFilter } from '../../general/filtering/property-filter';
-import { PropertyFilterOperator } from '../../general/filtering/property-filter-operator';
+import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
+import { PropertyFilter } from '../../shared/filtering/property-filter';
+import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
 import { Collection } from '../models/collection';
 import { CollectionService } from './collection.service';
 

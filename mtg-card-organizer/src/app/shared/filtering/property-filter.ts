@@ -1,4 +1,4 @@
-import { QueryStringGenerator } from '../communication/query-string-generator.interface';
+import { QueryStringGenerator } from '../utils/query-string-generator.interface';
 import { PropertyFilterOperator, PropertyFilterOperatorExtensions } from './property-filter-operator';
 
 export class PropertyFilter implements QueryStringGenerator {

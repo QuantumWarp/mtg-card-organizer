@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ApiService } from '../../general/communication/api.service';
-import { PageSortFilter } from '../../general/filtering/page-sort-filter';
-import { PagedData } from '../../general/filtering/paged-data';
-import { DataService } from '../../general/grid/grid-data-source.interfaces';
+import { ApiService } from '../../core/communication/api.service';
+import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
+import { PagedData } from '../../shared/filtering/paged-data';
+import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 import { Card } from '../models/card';
 
 @Injectable()
