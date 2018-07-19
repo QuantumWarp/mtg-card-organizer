@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MtgCardOrganizer.Api\MtgCardOrganizer.Api.csproj" />
+    <ProjectReference Include="..\MtgCardOrganizer.Core\MtgCardOrganizer.Core.csproj" />
+    <ProjectReference Include="..\MtgCardOrganizer.Identity\MtgCardOrganizer.Identity.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="appsettings.json" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+</Project>

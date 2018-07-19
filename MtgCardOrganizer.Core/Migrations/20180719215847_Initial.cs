@@ -1,11 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MtgCoreLib.Migrations
+namespace MtgCardOrganizer.Core.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,10 +10,10 @@ namespace MtgCoreLib.Migrations
                 name: "CardOtherInfos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Foil = table.Column<bool>(type: "bit", nullable: false),
-                    Promo = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Foil = table.Column<bool>(nullable: false),
+                    Promo = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,15 +24,15 @@ namespace MtgCoreLib.Migrations
                 name: "Cards",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ConvertedManaCost = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ManaCost = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OracleText = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Power = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Toughness = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: false),
+                    ManaCost = table.Column<string>(nullable: true),
+                    ConvertedManaCost = table.Column<string>(nullable: true),
+                    Power = table.Column<string>(nullable: true),
+                    Toughness = table.Column<string>(nullable: true),
+                    OracleText = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,12 +43,12 @@ namespace MtgCoreLib.Migrations
                 name: "Collections",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsPublic = table.Column<bool>(type: "bit", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OwnerUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ParentId = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: false),
+                    ParentId = table.Column<int>(nullable: true),
+                    IsPublic = table.Column<bool>(nullable: false),
+                    OwnerUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,9 +65,9 @@ namespace MtgCoreLib.Migrations
                 name: "Formats",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,10 +78,10 @@ namespace MtgCoreLib.Migrations
                 name: "Sets",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: false),
+                    Code = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,9 +92,9 @@ namespace MtgCoreLib.Migrations
                 name: "CollectionUserLinks",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CollectionId = table.Column<int>(type: "int", nullable: false),
-                    Permission = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<string>(nullable: false),
+                    CollectionId = table.Column<int>(nullable: false),
+                    Permission = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,14 +112,14 @@ namespace MtgCoreLib.Migrations
                 name: "CardSetInfos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Artist = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CardId = table.Column<int>(type: "int", nullable: false),
-                    MultiverseId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Num = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rarity = table.Column<int>(type: "int", nullable: false),
-                    SetId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CardId = table.Column<int>(nullable: false),
+                    Artist = table.Column<string>(nullable: false),
+                    Num = table.Column<string>(nullable: true),
+                    Rarity = table.Column<int>(nullable: false),
+                    SetId = table.Column<int>(nullable: false),
+                    MultiverseId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -145,11 +142,11 @@ namespace MtgCoreLib.Migrations
                 name: "CollectionCardLinks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CardOtherInfoId = table.Column<int>(type: "int", nullable: false),
-                    CardSetInfoId = table.Column<int>(type: "int", nullable: false),
-                    CollectionId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CollectionId = table.Column<int>(nullable: false),
+                    CardSetInfoId = table.Column<int>(nullable: false),
+                    CardOtherInfoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

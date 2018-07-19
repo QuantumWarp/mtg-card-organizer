@@ -3,20 +3,13 @@ import { RouterModule } from '@angular/router';
 
 import { navModel } from '../core/navigation/nav-model';
 import { SharedModule } from '../shared/shared.module';
-import { ApiTesterComponent } from './api-tester/api-tester.component';
 
 @NgModule({
   declarations: [
-    ApiTesterComponent,
   ],
   imports: [
     SharedModule,
-    RouterModule.forChild([
-      {
-        path: 'api-tester',
-        component: ApiTesterComponent,
-      }
-    ])
+    RouterModule.forChild([])
   ]
 })
 export class TestModule {

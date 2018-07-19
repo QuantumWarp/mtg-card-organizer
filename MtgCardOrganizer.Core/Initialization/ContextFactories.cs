@@ -8,7 +8,7 @@ namespace MtgCoreLib.Initialization
         public MtgCoreLibContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<MtgCoreLibContext>();
-            builder.UseSqlServer(Configuration.ConnectionStrings.Default);
+            builder.UseSqlite(Configuration.ConnectionStrings.Default);
             return new MtgCoreLibContext(builder.Options);
         }
     }

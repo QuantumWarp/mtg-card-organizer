@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { OAuthService, UrlHelperService, OAuthModule, ValidationHandler, AuthConfig } from 'angular-oauth2-oidc';
 
-import { AuthApiService } from '../authentication/services/auth-api.service';
 import { AuthGuard } from '../authentication/services/auth.guard';
 import { AuthenticationService } from '../authentication/services/authentication.service';
 import { HomeComponent } from '../home/home.component';
@@ -24,6 +22,8 @@ import { LoadingComponent } from './loading/loading.component';
 import { LoadingService } from './loading/loading.service';
 import { UserService } from '../authentication/services/user.service';
 import { SharedModule } from '../shared/shared.module';
+import { JwtModule } from '../../../node_modules/@auth0/angular-jwt';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,16 @@ import { SharedModule } from '../shared/shared.module';
     LoadingComponent,
   ],
   imports: [
-    OAuthModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('mtg_access_token'),
+        whitelistedDomains: [environment.apiBaseUrl.replace('http://', '')],
+        blacklistedRoutes: [
+          environment.apiBaseUrl + 'api/auth/login',
+          environment.apiBaseUrl + 'api/auth/register',
+        ]
+      }
+    }),
     RouterModule.forChild([]),
     SharedModule,
   ],
@@ -59,7 +68,6 @@ import { SharedModule } from '../shared/shared.module';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    AuthApiService,
     AuthenticationService,
     AuthGuard,
     ApiService,

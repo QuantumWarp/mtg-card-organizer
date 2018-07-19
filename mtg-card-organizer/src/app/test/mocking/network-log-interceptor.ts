@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 
 export abstract class NetworkLogInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!req.url.startsWith(environment.apiBaseUrl) && !req.url.startsWith(environment.identityServerUrl)) {
+    if (!req.url.startsWith(environment.apiBaseUrl)) {
       return next.handle(req);
     }
 

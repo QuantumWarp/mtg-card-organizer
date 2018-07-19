@@ -19,7 +19,7 @@ export class RegisterComponent {
     private router: Router) { }
 
   register(): void {
-    this.authenticationService.register(this.username, this.email, this.password, this.confirmPassword)
+    this.authenticationService.register(this.username, this.email, this.password, this.confirmPassword).toPromise()
       .then(() => this.router.navigateByUrl('/auth/login'));
   }
 }

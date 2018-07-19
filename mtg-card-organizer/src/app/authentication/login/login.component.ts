@@ -21,7 +21,7 @@ export class LoginComponent {
 
   login(): void {
     this.loading = true;
-    this.authenticationService.login(this.username, this.password)
+    this.authenticationService.login(this.username, this.password).toPromise()
       .then(() => this.loginSuccess())
       .catch((erRes) => this.processErrorResponse(erRes));
   }

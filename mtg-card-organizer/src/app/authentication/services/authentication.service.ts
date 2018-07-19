@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { OAuthService } from 'angular-oauth2-oidc';
 
-import { environment } from '../../../environments/environment';
 import { RegisterModel } from '../models/register.model';
-import { AuthApiService } from './auth-api.service';
+import { ApiService } from '../../core/communication/api.service';
+import { Observable } from '../../../../node_modules/rxjs';
+import { tap } from 'rxjs/internal/operators';
 
 @Injectable()
 export class AuthenticationService {
@@ -18,61 +18,45 @@ export class AuthenticationService {
     return this.tokenInfo.email;
   }
 
-  get hasValidToken(): boolean {
-    return this.oauthService.hasValidAccessToken() && this.tokenInfo;
-  }
-
-  get accessToken(): any {
-    return this.oauthService.getAccessToken();
-  }
-
   constructor(
-    private oauthService: OAuthService,
-    private authApiService: AuthApiService
+    private apiService: ApiService,
+    private jwtHelperService: JwtHelperService
   ) { }
 
-  configure(): void {
-    this.oauthService.skipIssuerCheck = true;
-    this.oauthService.requireHttps = false;
-    this.oauthService.issuer = environment.identityServerUrl;
-    this.oauthService.clientId = 'mtg-card-organiser-client';
-    this.oauthService.scope = 'openid profile mtg-card-organiser';
-    this.oauthService.setStorage(sessionStorage);
-    this.oauthService.dummyClientSecret = 'dummysecret';
-    const uri = environment.identityServerUrl + '/.well-known/openid-configuration';
-    if (this.oauthService.hasValidAccessToken()) {
-      this.parseToken(this.oauthService.getAccessToken());
-    }
-    this.oauthService.loadDiscoveryDocument(uri);
-  }
-
-  register(
-    username: string,
-    email: string,
-    password: string,
-    confirmPassword: string
-  ): Promise<{}> {
+  register(username: string, email: string, password: string, confirmPassword: string): Observable<void> {
     const registerModel: RegisterModel = {
       username: username,
       email: email,
       password: password,
       confirmPassword: confirmPassword
     };
-    return this.authApiService
-      .post('api/auth/register', registerModel)
-      .toPromise();
+    return this.apiService.post<void>('api/auth/register', registerModel);
   }
 
-  login(username: string, password: string): Promise<void> {
-    return this.oauthService.fetchTokenUsingPasswordFlow(username, password)
-      .then((token: any) => this.parseToken(token.access_token));
+  login(username: string, password: string): Observable<string> {
+    return this.apiService.post<string>('api/auth/login', {
+      username: username,
+      password: password
+    }).pipe(
+      tap((token) => this.parseToken(token))
+    );
   }
 
   logout(): void {
-    this.oauthService.logOut();
+    this.tokenInfo = undefined;
+    localStorage.removeItem('mtg_access_token');
   }
 
-  private parseToken(token: any): void {
-    this.tokenInfo =  new JwtHelperService().decodeToken(token);
+  hasValidToken(): boolean {
+    const accessToken = localStorage.getItem('mtg_access_token');
+    this.parseToken(accessToken);
+    return accessToken && !this.jwtHelperService.isTokenExpired(accessToken);
+  }
+
+  private parseToken(token: string): void {
+    this.tokenInfo = this.jwtHelperService.decodeToken(token);
+    if (this.tokenInfo) {
+      localStorage.setItem('mtg_access_token', token);
+    }
   }
 }

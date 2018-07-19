@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using AutoMapper;
-using IdentityServer4.AccessTokenValidation;
+using MtgCardOrganizer.Api.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MtgCardOrganizer.Identity.Initialization;
 
 namespace MtgCardOrganizer.Api
 {
@@ -29,30 +29,22 @@ namespace MtgCardOrganizer.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.AddProfile(new AutoMapperConfig());
-            });
-
+            services.AddLogging(ctg => ctg.AddConsole());
+            Mapper.Initialize(cfg => cfg.AddProfiles(new [] { typeof(CoreInitializer) }));
             services.AddSingleton(_ => Configuration);
 
             // Add framework services.
             services.AddCors();
-            services.AddMvc(config =>
-		        config.ModelBinderProviders.Insert(0, new PageSortFilterProvider()));
+            services.AddMvc(config => {
+                config.Filters.Add(new GlobalExceptionFilter());
+		        config.ModelBinderProviders.Insert(0, new PageSortFilterProvider());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddAuth();
-            services.AddManagers();
-            services.AddContexts(Configuration);
+            services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddTransient<UserService>();
 
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options => {
-                    options.Authority = Configuration["IdentityServerUrl"];
-                    options.ApiName = "mtg-card-organiser";
-                    options.ApiSecret = "4ef65ea8-0d55-4f62-8354-efa6332a6b54";
-                    options.RequireHttpsMetadata = false;
-                    options.EnableCaching = true;
-                });
+            new IdentityInitializer(services, Configuration).AddServices();
+            new CoreInitializer(services, Configuration).AddServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

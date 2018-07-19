@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { AuthApiService } from './services/auth-api.service';
 
 @NgModule({
   declarations: [
