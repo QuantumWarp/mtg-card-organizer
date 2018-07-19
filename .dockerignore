@@ -1,7 +1,0 @@
-**
-!MtgCardOrganizer.Api/**
-!MtgCoreLib/**
-
-**/.git
-**/bin
-**/obj

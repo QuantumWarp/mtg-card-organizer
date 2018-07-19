@@ -1,0 +1,26 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+
+        // C#
+        "**/bin": true,
+        "**/obj": true,
+
+        // Angular
+        "**/node_modules": true,
+        "**/karma.conf.js": true,
+        "**/protractor.conf.js": true,
+        "**/tsconfig.json": true,
+        "**/tslint.json": true,
+        "**/package-lock.json": true,
+        "**/.editorconfig": true,
+        
+        // Other
+        "**/.vscode": true,
+        "**/.gitignore": true
+    }
+}

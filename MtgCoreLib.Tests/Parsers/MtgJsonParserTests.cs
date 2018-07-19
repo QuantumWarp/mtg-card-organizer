@@ -11,10 +11,10 @@ namespace MtgCoreLib.Tests.Parsers
         //[TestMethod]
         public void TestParsing()
         {
-            var parser = new MtgJsonParser();
-            parser.Parse(TestJson);
-            var cards = parser.CardDtos;
-            Assert.IsTrue(cards.Count() > 0, "No cards parsed");
+            // var parser = new MtgJsonParser();
+            // parser.Parse(TestJson);
+            // var cards = parser.CardDtos;
+            // Assert.IsTrue(cards.Count() > 0, "No cards parsed");
         }
 
         [TestMethod]
