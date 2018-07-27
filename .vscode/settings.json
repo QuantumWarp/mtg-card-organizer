@@ -21,6 +21,8 @@
         
         // Other
         "**/.vscode": true,
-        "**/.gitignore": true
+        "**/.gitignore": true,
+        "AllSets-x.json*": true,
+        "*.db.bak": true
     }
 }
