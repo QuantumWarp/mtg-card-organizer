@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material';
 
-import { Filterer } from '../../shared/filtering/filterer';
-import { GridDataSource } from '../../shared/grid/grid-data-source';
 import { Card } from '../models/card';
+import { Set } from '../models/set';
 import { CardService } from '../services/card.service';
-import { CardSearchGridComponent } from './card-search-grid.component';
+import { SetService } from '../services/set.service';
 
 @Component({
   selector: 'app-card-search',
@@ -13,22 +11,19 @@ import { CardSearchGridComponent } from './card-search-grid.component';
   styleUrls: ['../card.scss']
 })
 export class CardSearchComponent implements OnInit {
-  @ViewChild('paginator') paginator: MatPaginator;
-  @ViewChild('searchGrid') searchGrid: CardSearchGridComponent;
-
   @Output() cardSelected = new EventEmitter<Card>();
+  @Input() sets: Set[];
 
   @Input() displayedColumns = ['name', 'setSymbol', 'manaCost'];
   @Input() cardService: CardService;
 
-  filterer = new Filterer();
-  cardDataSource: GridDataSource<Card>;
-
-  constructor(private defaultCardService: CardService) {
+  constructor(
+    public defaultCardService: CardService,
+    private setService: SetService) {
     this.cardService = defaultCardService;
   }
 
   ngOnInit(): void {
-    this.cardDataSource = new GridDataSource<Card>(this.cardService, this.paginator, this.searchGrid.sort, this.filterer);
+    this.setService.query().subscribe(results => this.sets = results.data);
   }
 }

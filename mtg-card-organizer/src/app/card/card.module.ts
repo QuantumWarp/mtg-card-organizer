@@ -8,7 +8,6 @@ import { CardRapidEntryComponent } from './card-rapid-entry/card-rapid-entry.com
 import { RapidEntryResultGridComponent } from './card-rapid-entry/rapid-entry-result-grid.component';
 import { CardSearchPageComponent } from './card-search-page/card-search-page.component';
 import { CardSearchBarComponent } from './card-search/card-search-bar.component';
-import { CardSearchGridComponent } from './card-search/card-search-grid.component';
 import { CardSearchComponent } from './card-search/card-search.component';
 import { CardService } from './services/card.service';
 import { RapidEntrySingleViewComponent } from './card-rapid-entry/rapid-entry-single-view.component';
@@ -26,7 +25,6 @@ import { CardImageComponent } from './card-image/card-image.component';
     CardDetailsComponent,
     CardSearchComponent,
     CardSearchBarComponent,
-    CardSearchGridComponent,
     CardFilterComponent,
     CardSearchPageComponent,
     CardRapidEntryComponent,

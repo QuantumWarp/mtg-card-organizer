@@ -111,7 +111,7 @@ export class CardRapidEntryComponent implements OnInit {
       operator: PropertyFilterOperator.Contains,
       value: this.searchText === '' ? this.lastSearchText : this.searchText,
     }));
-    psFilter.limit = 11;
+    psFilter.paging.limit = 11;
 
     if (this.searchText === '') {
       this.triggerSearch(this.lastSearchText, psFilter);
@@ -134,7 +134,7 @@ export class CardRapidEntryComponent implements OnInit {
         cardOtherInfo: new CardOtherInfo()
        };
        this.rapidEntryResultStore.rapidEntryResults.splice(0, 0, rpr);
-       this.rapidEntryResultDataSource.reloadData();
+       this.rapidEntryResultDataSource.refresh();
     });
   }
 }

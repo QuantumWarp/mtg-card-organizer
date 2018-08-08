@@ -1,11 +1,12 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
-import { AuthenticationService } from '../../authentication/services/authentication.service';
-import { GravatarService } from '../../core/gravatar/gravatar.service';
+import { AuthenticationService } from '../../../authentication/services/authentication.service';
+import { GravatarService } from '../../../core/gravatar/gravatar.service';
 
 @Component({
   selector: 'app-gravatar-icon',
-  templateUrl: './gravatar-icon.component.html'
+  templateUrl: './gravatar-icon.component.html',
+  styleUrls: ['./gravatar-icon.component.scss'],
 })
 export class GravatarIconComponent implements OnChanges, OnInit {
   @Input() email?: string;

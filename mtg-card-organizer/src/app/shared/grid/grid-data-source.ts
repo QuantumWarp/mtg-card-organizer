@@ -1,55 +1,65 @@
-import { DataSource } from '@angular/cdk/collections';
 import { EventEmitter } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { BehaviorSubject ,  Observable } from 'rxjs';
+import { merge } from 'rxjs';
 
-import { Filterer } from '../filtering/filterer';
-import { DataService } from './grid-data-source.interfaces';
 import { PageSortFilter } from '../filtering/page-sort-filter';
+import { Paging } from '../filtering/paging';
+import { PropertyFilter } from '../filtering/property-filter';
 import { PropertySort } from '../filtering/property-sort';
+import { CustomDataSource } from '../utils/custom-data-source';
+import { DataService } from '../utils/data-service.interface';
 
-export class GridDataSource<T> extends DataSource<T> {
-  private currentData: T[] = [];
-  private subject: BehaviorSubject<T[]>;
-  private localDataChange = new EventEmitter();
-  private currentPageSortFilter = new PageSortFilter();
+export class GridDataSource<T> extends CustomDataSource<T> {
 
   constructor(
-    public dataService: DataService<T>,
-    protected paginator: MatPaginator,
-    protected sort: MatSort,
-    protected filterer: Filterer = new Filterer()) {
-    super();
-    this.subject = new BehaviorSubject<T[]>(this.currentData);
-    this.localDataChange.subscribe(() => this.subject.next(this.currentData));
-
-    const reloadEvents = [ this.paginator.page, this.sort.sortChange, this.filterer.filterChange ];
-    reloadEvents.forEach(ee => ee.subscribe(() => this.reloadData()));
-
-    this.reloadData();
+    dataService: DataService<T>,
+    private paginator?: MatPaginator,
+    private sort?: MatSort) {
+    super(dataService);
+    this.setupGridUpdates();
+    this.setupRefreshTriggers();
   }
 
-  reloadData(): void {
-    this.currentPageSortFilter.sort = PropertySort.parseSort(this.sort);
-    this.currentPageSortFilter.filters = this.filterer.filters;
-    this.currentPageSortFilter.offset = this.paginator.pageIndex * (this.paginator.pageSize || 10);
-    this.currentPageSortFilter.limit = this.paginator.pageSize || 10;
+  refreshGrid(filters?: Array<PropertyFilter>): void {
+    const newPageSortFilter = new PageSortFilter(this.currentQuery);
 
-    if (!this.dataService) {
-      return;
+    if (this.paginator) {
+      newPageSortFilter.paging = new Paging({
+        limit: this.paginator.pageSize || 10,
+        offset:  this.paginator.pageIndex * (this.paginator.pageSize || 10),
+      });
     }
 
-    this.dataService.query(this.currentPageSortFilter).subscribe(result => {
-      this.currentData = result.data;
-      this.paginator.length = result.totalCount;
-      this.localDataChange.emit();
+    if (this.sort) {
+      newPageSortFilter.sort = PropertySort.parseSort(this.sort);
+    }
+
+    if (filters) {
+      newPageSortFilter.filters = filters;
+    }
+
+    this.refresh(newPageSortFilter);
+  }
+
+  private setupGridUpdates(): void {
+    this.connectToResult().subscribe(result => {
+      if (this.paginator) {
+        this.paginator.length = result.totalCount;
+      }
     });
   }
 
-  connect(): Observable<T[]> {
-    return this.subject;
-  }
+  private setupRefreshTriggers(): void {
+    const reloadEvents = new Array<EventEmitter<any>>();
 
-  disconnect(): void {
+    if (this.paginator) {
+      reloadEvents.push(this.paginator.page);
+    }
+
+    if (this.sort) {
+      reloadEvents.push(this.sort.sortChange);
+    }
+
+    merge(...reloadEvents).subscribe(() => this.refreshGrid());
   }
 }

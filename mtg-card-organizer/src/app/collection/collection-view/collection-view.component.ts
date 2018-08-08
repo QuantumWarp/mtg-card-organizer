@@ -9,7 +9,6 @@ import { CardOtherInfo } from '../../card/models/card-other-info';
 import { LoadingService } from '../../core/loading/loading.service';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
-import { ConfirmComponent } from '../../shared/components/confirm.component';
 import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
 import { PropertyFilter } from '../../shared/filtering/property-filter';
 import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
@@ -20,6 +19,8 @@ import { CollectionService } from '../services/collection.service';
 import { CollectionCardsComponent } from './collection-cards.component';
 import { CreateCollectionComponent } from './create-collection.component';
 import { SubCollectionsComponent } from './sub-collections.component';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
 
 @Component({
   selector: 'app-collection-view',
@@ -85,9 +86,12 @@ export class CollectionViewComponent implements OnInit {
   }
 
   deleteCollection(): void {
-    const dialogRef = this.dialog.open(ConfirmComponent);
-    dialogRef.componentInstance.title = 'Delete Collection';
-    dialogRef.componentInstance.description = 'Are you sure?';
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: new ConfirmDialogData({
+        title: 'Delete Collection',
+        description: 'Are you sure?',
+      })
+    });
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         const deletePromise = this.collectionService.deleteCollection(this.collection.id).toPromise();
@@ -134,7 +138,7 @@ export class CollectionViewComponent implements OnInit {
 
   private refreshCards(): void {
     if (this.collectionCardsComponent) {
-      this.collectionCardsComponent.refresh();
+     // this.collectionCardsComponent.refresh();
     }
   }
 }

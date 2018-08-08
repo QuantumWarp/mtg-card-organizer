@@ -66,7 +66,7 @@ export class RapidEntrySingleViewComponent implements OnInit {
       operator: PropertyFilterOperator.Contains,
       value: searchText,
     }));
-    psFilter.limit = 11;
+    psFilter.paging.limit = 11;
 
     this.cardService.query(psFilter).subscribe(result => {
       this.rapidEntryResult.entryText = searchText;

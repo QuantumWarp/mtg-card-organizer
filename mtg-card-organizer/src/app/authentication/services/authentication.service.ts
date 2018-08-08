@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { RegisterModel } from '../models/register.model';
 import { ApiService } from '../../core/communication/api.service';
-import { Observable } from '../../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/internal/operators';
 
 @Injectable()

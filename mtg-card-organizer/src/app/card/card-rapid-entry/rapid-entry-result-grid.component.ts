@@ -31,6 +31,6 @@ export class RapidEntryResultGridComponent {
     if (index > -1) {
       (<RapidEntryResultStore>this.rapidEntryResultDataSource.dataService).rapidEntryResults.splice(index, 1);
     }
-    this.rapidEntryResultDataSource.reloadData();
+    this.rapidEntryResultDataSource.refresh();
   }
 }

@@ -1,0 +1,34 @@
+.page-header-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 200px;
+  z-index: -2;
+  background-image: url('/assets/page-header.jpg');
+  background-size: cover;
+  background-position: center bottom;
+}
+
+.page-header-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0px 20px 0px;
+
+  > .page-header-title {
+    font-size: 25px;
+    font-weight: 500;
+    color: white;
+  }
+
+  > ng-content {
+    flex: 1;
+  }
+
+  > .page-header-trail {
+    font-size: 20px;
+    color: white;
+  }
+}

@@ -1,7 +1,6 @@
-import { browser } from 'protractor';
-import { LayoutContainer } from '../layout-container/layout-container.po';
-import { LoginPage } from '../login/login.po';
 import { CardSearchPage } from '../card-search/card-search.po';
+import { LoginPage } from '../login/login.po';
+import { LayoutContainer } from './layout-container.po';
 
 describe('Layout Container Tests', () => {
   let layoutContainer: LayoutContainer;

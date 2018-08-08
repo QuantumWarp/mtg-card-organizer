@@ -13,8 +13,8 @@ export class PagedDataHelper {
       data = PropertySortHelper.applySort(pageSortFilter.sort, data);
     }
 
-    const startIndex = pageSortFilter.offset;
-    const endIndex = pageSortFilter.limit || data.length - 1;
+    const startIndex = pageSortFilter.paging.offset;
+    const endIndex = pageSortFilter.paging.limit || data.length - 1;
     const resultData = data.slice(startIndex, endIndex);
 
     const pagedData = new PagedData<T>();

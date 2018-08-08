@@ -1,13 +1,48 @@
 <div class="card-search mat-elevation-z8">
-  <app-card-search-bar [filterer]="filterer" [cardDataSource]="cardDataSource"></app-card-search-bar>
-  <app-card-search-grid #searchGrid
-    (cardSelected)="cardSelected.emit($event)"
-    [cardDataSource]="cardDataSource"
-    [displayedColumns]="displayedColumns">
-  </app-card-search-grid>
-  <mat-paginator #paginator
-    [pageIndex]="0"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 20, 50]">
-  </mat-paginator>
+  <!-- <app-card-search-bar [cardDataSource]="cardDataSource"></app-card-search-bar> -->
+
+  <app-basic-grid [service]="cardService" matSort>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-cell *matCellDef="let card">{{card.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="setSymbol">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Set</mat-header-cell>
+      <mat-cell *matCellDef="let card"><app-ss [card]="card" [sets]="sets"></app-ss></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="setNum">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Num</mat-header-cell>
+      <mat-cell *matCellDef="let card">{{card.num}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="manaCost">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Mana Cost</mat-header-cell>
+      <mat-cell *matCellDef="let card"><app-mc [card]="card"></app-mc></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="power">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Power</mat-header-cell>
+      <mat-cell *matCellDef="let card">{{card.power}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="toughness">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Toughness</mat-header-cell>
+      <mat-cell *matCellDef="let card">{{card.toughness}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="foil">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Foil</mat-header-cell>
+      <mat-cell *matCellDef="let card"><mat-checkbox disabled [(ngModel)]="card.foil"></mat-checkbox></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="promo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Promo</mat-header-cell>
+      <mat-cell *matCellDef="let card"><mat-checkbox disabled [(ngModel)]="card.promo"></mat-checkbox></mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let card; columns: displayedColumns;" (click)="cardSelected.emit(card);"></mat-row>
+  </app-basic-grid>
 </div>

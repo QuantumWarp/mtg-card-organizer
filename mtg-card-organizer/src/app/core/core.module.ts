@@ -22,7 +22,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { LoadingService } from './loading/loading.service';
 import { UserService } from '../authentication/services/user.service';
 import { SharedModule } from '../shared/shared.module';
-import { JwtModule } from '../../../node_modules/@auth0/angular-jwt';
+import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
 
 @NgModule({

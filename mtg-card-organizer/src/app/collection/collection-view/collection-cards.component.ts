@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
@@ -6,13 +6,14 @@ import { CardSearchComponent } from '../../card/card-search/card-search.componen
 import { Card } from '../../card/models/card';
 import { Collection } from '../models/collection';
 import { CollectionCardServiceWrapper, CollectionService } from '../services/collection.service';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-collection-cards',
   templateUrl: './collection-cards.component.html',
   styleUrls: ['../collection.scss']
 })
-export class CollectionCardsComponent {
+export class CollectionCardsComponent implements OnChanges {
   @Input() collection: Collection;
   @ViewChild(CardSearchComponent) cardSearchComponent: CardSearchComponent;
   collectionCardServiceWrapper: CollectionCardServiceWrapper;
@@ -21,10 +22,8 @@ export class CollectionCardsComponent {
     private dialog: MatDialog,
     private collectionService: CollectionService) { }
 
-  refresh(): void {
+  ngOnChanges(): void {
     this.collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionService);
-    this.cardSearchComponent.cardDataSource.dataService = this.collectionCardServiceWrapper;
-    this.cardSearchComponent.cardDataSource.reloadData();
   }
 
   cardSelected(card: Card): void {

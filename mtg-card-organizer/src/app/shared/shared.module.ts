@@ -3,18 +3,16 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ComponentModule } from './components/component.module';
 import { AutofocusDirective } from './directives/autofocus.directive';
 import { MaterialModule } from './material.module';
-import { GravatarIconComponent } from './components/gravatar-icon.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { TitleAndTrailComponent } from './page-header/title-and-trail.component';
-import { ConfirmComponent } from './components/confirm.component';
+import { GridModule } from './grid/grid.module';
 
 @NgModule({
   declarations: [
     AutofocusDirective,
-    GravatarIconComponent,
-    ConfirmComponent,
     PageHeaderComponent,
     TitleAndTrailComponent,
   ],
@@ -24,11 +22,11 @@ import { ConfirmComponent } from './components/confirm.component';
     CommonModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    ComponentModule,
+    GridModule,
 
     AutofocusDirective,
 
-    GravatarIconComponent,
-    ConfirmComponent,
     PageHeaderComponent,
     TitleAndTrailComponent,
   ]
