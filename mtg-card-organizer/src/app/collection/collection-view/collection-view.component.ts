@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { CardRapidEntryComponent } from '../../card/card-rapid-entry/card-rapid-entry.component';
-import { CardOtherInfo } from '../../card/models/card-other-info';
 import { LoadingService } from '../../core/loading/loading.service';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
@@ -21,6 +20,7 @@ import { CreateCollectionComponent } from './create-collection.component';
 import { SubCollectionsComponent } from './sub-collections.component';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
+import { CardInstance } from '../../card/models/card-instance';
 
 @Component({
   selector: 'app-collection-view',
@@ -59,7 +59,7 @@ export class CollectionViewComponent implements OnInit {
     const dialogRef = this.dialog.open(CardRapidEntryComponent, {
       disableClose: true,
       minWidth: '600px',
-      data: (cio: CardOtherInfo[]) => this.collectionService.addCards(this.collection.id, cio).toPromise()
+      data: (cio: CardInstance[]) => this.collectionService.addCards(this.collection.id, cio).toPromise()
     });
 
     dialogRef.afterClosed().subscribe(results => {

@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using MtgCardOrganizer.Core.Requests.Generic;
 
-namespace MtgCoreLib.Utilities.General
+namespace MtgCardOrganizer.Core.Utilities.General
 {
     public static class ExpressionHelper 
     {

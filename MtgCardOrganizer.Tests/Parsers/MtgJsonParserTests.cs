@@ -1,9 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MtgCoreLib.Utilities.Parsers;
+using MtgCardOrganizer.Core.Utilities.Parsers;
 using System.Linq;
 using System.IO;
 
-namespace MtgCoreLib.Tests.Parsers
+namespace MtgCardOrganizer.Core.Tests.Parsers
 {
     [TestClass]
     public class MtgJsonParserTests
@@ -24,7 +24,7 @@ namespace MtgCoreLib.Tests.Parsers
           var zipString = File.ReadAllText(@"C:\Users\jwlow\Documents\Git\mtg-card-organizer\AllSets-x.json\AllSets-x.json");
           Assert.IsTrue(zipString != null && zipString.Length > 0);
           parser.Parse(zipString);
-          Assert.IsTrue(parser.CardDtos.Count() > 0);
+          Assert.IsTrue(parser.Cards.Count() > 0);
         }
     }
 }

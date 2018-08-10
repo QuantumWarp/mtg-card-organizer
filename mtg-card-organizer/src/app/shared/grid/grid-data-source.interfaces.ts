@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 
-import { PageSortFilter } from '../filtering/page-sort-filter';
 import { PagedData } from '../filtering/paged-data';
+import { QueryStringGenerator } from '../utils/query-string-generator.interface';
 
 export interface DataService<T> {
-  query(pageSortFilter: PageSortFilter): Observable<PagedData<T>>;
+  query(queryStringGenerator?: QueryStringGenerator): Observable<PagedData<T>>;
 }

@@ -1,8 +1,8 @@
-import { Component, Input, ElementRef, OnInit, ViewChild, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 
-import { Card } from '../models/card';
-import { Set } from '../models/set';
+import { CardSet } from '../models/card-set';
 import { Rarity } from '../models/rarity';
+import { Set } from '../models/set';
 
 @Component({
   selector: 'app-ss',
@@ -10,7 +10,7 @@ import { Rarity } from '../models/rarity';
 })
 export class SetSymbolComponent implements OnChanges {
   @ViewChild('ssField') ssField: ElementRef;
-  @Input() card: Card;
+  @Input() cardSet: CardSet;
   @Input() setId: number;
   @Input() rarity: Rarity;
 
@@ -29,10 +29,10 @@ export class SetSymbolComponent implements OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.card) {
-      this.setId = this.card.setId;
-      this.rarity = this.card.rarity;
+  ngOnChanges(): void {
+    if (this.cardSet) {
+      this.setId = this.cardSet.setId;
+      this.rarity = this.cardSet.rarity;
     }
     if (this.sets) {
       const set = this.sets.find(x => x.id === this.setId);

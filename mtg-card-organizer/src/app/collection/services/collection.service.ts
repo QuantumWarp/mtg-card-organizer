@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Card } from '../../card/models/card';
-import { CardOtherInfo } from '../../card/models/card-other-info';
+import { CardInstance } from '../../card/models/card-instance';
+import { CardQuery } from '../../card/models/card-query';
 import { ApiService } from '../../core/communication/api.service';
 import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
 import { PagedData } from '../../shared/filtering/paged-data';
@@ -29,12 +29,12 @@ export class CollectionService implements DataService<Collection> {
     return this.apiService.get<PagedData<Collection>>('api/collections', pageSortFilter);
   }
 
-  queryCards(collectionId: number, pageSortFilter: PageSortFilter): Observable<PagedData<Card>> {
-    return this.apiService.get<PagedData<Card>>('api/collections/' + collectionId + '/cards', pageSortFilter);
+  queryCards(collectionId: number, cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
+    return this.apiService.get<PagedData<CardInstance>>('api/collections/' + collectionId + '/cards', cardQuery);
   }
 
-  addCards(collectionId: number, cardOtherInfos: CardOtherInfo[]): Observable<boolean> {
-    return this.apiService.post<boolean>('api/collections/' + collectionId + '/cards', cardOtherInfos);
+  addCards(collectionId: number, cardInstances: CardInstance[]): Observable<boolean> {
+    return this.apiService.post<boolean>('api/collections/' + collectionId + '/cards', cardInstances);
   }
 
   importCards(collectionId: number, importString: string): Observable<boolean> {
@@ -62,10 +62,10 @@ export class CollectionService implements DataService<Collection> {
   }
 }
 
-export class CollectionCardServiceWrapper implements DataService<Card> {
+export class CollectionCardServiceWrapper implements DataService<CardInstance> {
   constructor(public collectionId: number, private collectionService: CollectionService) { }
 
-  query(pageSortFilter: PageSortFilter): Observable<PagedData<Card>> {
-    return this.collectionService.queryCards(this.collectionId, pageSortFilter);
+  query(cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
+    return this.collectionService.queryCards(this.collectionId, cardQuery);
   }
 }

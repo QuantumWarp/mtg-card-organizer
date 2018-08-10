@@ -3,10 +3,10 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MtgCoreLib.Initialization;
-using MtgCoreLib.Managers;
+using MtgCardOrganizer.Core.Initialization;
+using MtgCardOrganizer.Core.Repositories;
 
-namespace MtgCardOrganizer.Identity.Initialization
+namespace MtgCardOrganizer.Core.Initialization
 {
     public class CoreInitializer
     {
@@ -28,15 +28,15 @@ namespace MtgCardOrganizer.Identity.Initialization
 
         public void AddRepositories(IServiceCollection services, IConfigurationRoot configuration)
         {
-            services.AddTransient<IAdminCardManager, AdminCardManager>();
-            services.AddTransient<ICardManager, CardManager>();
-            services.AddTransient<ISetManager, SetManager>();
-            services.AddTransient<ICollectionManager, CollectionManager>();
+            services.AddTransient<IAdminCardRepository, AdminCardRepository>();
+            services.AddTransient<ICardRepository, CardRepository>();
+            services.AddTransient<ISetRepository, SetRepository>();
+            services.AddTransient<ICollectionRepository, CollectionRepository>();
         }
 
         public void AddContexts(IServiceCollection services, IConfigurationRoot configuration)
         {
-            services.AddDbContext<MtgCoreLibContext>(options =>
+            services.AddDbContext<MtgCardOrganizerContext>(options =>
                 options.UseSqlite(configuration["ConnectionString"]));
         }
         

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using MtgCoreLib.Utilities.General;
+using MtgCardOrganizer.Core.Utilities.General;
 
-namespace MtgCoreLib.Utilities.PriceConnectors
+namespace MtgCardOrganizer.Core.Utilities.PriceConnectors
 {
     public class MagicMadhouseConnector
     {

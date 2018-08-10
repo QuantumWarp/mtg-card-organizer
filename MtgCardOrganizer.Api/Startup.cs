@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using AutoMapper;
 using MtgCardOrganizer.Api.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MtgCardOrganizer.Identity.Initialization;
+using MtgCardOrganizer.Core.Initialization;
+using MtgCardOrganizer.Core.Utilities.General;
+using MtgCardOrganizer.Api.Helpers;
 
 namespace MtgCardOrganizer.Api
 {
@@ -30,13 +32,12 @@ namespace MtgCardOrganizer.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging(ctg => ctg.AddConsole());
-            Mapper.Initialize(cfg => cfg.AddProfiles(new [] { typeof(CoreInitializer) }));
             services.AddSingleton(_ => Configuration);
 
             // Add framework services.
             services.AddCors();
             services.AddMvc(config => {
-                config.Filters.Add(new GlobalExceptionFilter());
+                config.Filters.Add<GlobalExceptionFilter>();
 		        config.ModelBinderProviders.Insert(0, new PageSortFilterProvider());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

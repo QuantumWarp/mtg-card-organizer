@@ -1,16 +1,16 @@
-using MtgCoreLib.Dtos.Cards;
+using MtgCardOrganizer.Core.Entities.Cards;
 using System.Collections.Generic;
 
-namespace  MtgCoreLib.Utilities.Parsers
+namespace MtgCardOrganizer.Core.Utilities.Parsers
 {
     public interface IParser
     {
-        List<SetDto> SetDtos { get; }
-        List<CardDto> CardDtos { get; }
-        List<CardSetInfoDto> CardSetInfoDtos { get; }
+        List<Set> Sets { get; }
+        List<Card> Cards { get; }
+        List<CardSet> CardSetInfos { get; }
         
-        Dictionary<CardSetInfoDto, SetDto> SetRelationship { get; } 
-        Dictionary<CardSetInfoDto, CardDto> CardRelationship { get; } 
+        Dictionary<CardSet, Set> SetRelationship { get; } 
+        Dictionary<CardSet, Card> CardRelationship { get; } 
         
         string Retrieve();
         void Parse(string text);

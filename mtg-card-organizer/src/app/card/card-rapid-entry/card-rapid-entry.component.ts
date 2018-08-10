@@ -7,13 +7,15 @@ import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
 import { PropertyFilter } from '../../shared/filtering/property-filter';
 import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
 import { GridDataSource } from '../../shared/grid/grid-data-source';
-import { CardOtherInfo } from '../models/card-other-info';
 import { Set } from '../models/set';
 import { CardService } from '../services/card.service';
 import { SetService } from '../services/set.service';
 import { RapidEntryResult } from './rapid-entry-result';
 import { RapidEntryResultGridComponent } from './rapid-entry-result-grid.component';
 import { RapidEntryResultStore } from './rapid-entry-result.store';
+import { CardInstance } from '../models/card-instance';
+import { CardQuery } from '../models/card-query';
+import { Paging } from '../../shared/filtering/paging';
 
 @Component({
   selector: 'app-card-rapid-entry',
@@ -40,7 +42,7 @@ export class CardRapidEntryComponent implements OnInit {
     private cardService: CardService,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<CardRapidEntryComponent>,
-    @Inject(MAT_DIALOG_DATA) private processPromise: (coi: CardOtherInfo[]) => Promise<boolean>) { }
+    @Inject(MAT_DIALOG_DATA) private processPromise: (coi: CardInstance[]) => Promise<boolean>) { }
 
   ngOnInit(): void {
     this.processPromise = this.processPromise ? this.processPromise : () => Promise.resolve(true);
@@ -70,10 +72,10 @@ export class CardRapidEntryComponent implements OnInit {
   apply(): void {
     if (!this.rapidEntryResultStore.rapidEntryResults.find(x => x.hasError)) {
       const cardOtherInfos = this.rapidEntryResultStore.rapidEntryResults.map(x => {
-        const command = new CardOtherInfo();
-        command.cardSetInfoId = x.results[0].cardId;
-        command.foil = x.cardOtherInfo.foil;
-        command.promo = x.cardOtherInfo.promo;
+        const command = new CardInstance();
+        command.cardSetId = x.results[0].id;
+        command.foil = x.cardInstance.foil;
+        command.promo = x.cardInstance.promo;
         return command;
       });
       const processPromise = this.processPromise(cardOtherInfos);
@@ -98,40 +100,33 @@ export class CardRapidEntryComponent implements OnInit {
       default: return;
     }
 
-    const psFilter = new PageSortFilter();
-    if (this.selectedSetIds.length !== 0) {
-      psFilter.addSubFilter(new PropertyFilter({
-        property: 'setId',
-        operator: PropertyFilterOperator.IsContainedIn,
-        value: this.selectedSetIds,
-      }));
-    }
-    psFilter.addSubFilter(new PropertyFilter({
-      property: 'name',
-      operator: PropertyFilterOperator.Contains,
-      value: this.searchText === '' ? this.lastSearchText : this.searchText,
-    }));
-    psFilter.paging.limit = 11;
+    const cardQuery = new CardQuery({
+      setIds: this.selectedSetIds,
+      name: this.searchText === '' ? this.lastSearchText : this.searchText,
+      paging: new Paging({
+        limit: 11,
+      })
+    });
 
     if (this.searchText === '') {
-      this.triggerSearch(this.lastSearchText, psFilter);
+      this.triggerSearch(this.lastSearchText, cardQuery);
       return;
     }
 
-    this.triggerSearch(this.searchText, psFilter);
+    this.triggerSearch(this.searchText, cardQuery);
 
     this.lastSearchText = this.searchText;
     this.searchText = '';
   }
 
-  private triggerSearch(searchText: string, psFilter: PageSortFilter): void {
-    this.cardService.query(psFilter).subscribe(result => {
+  private triggerSearch(searchText: string, cardQuery: CardQuery): void {
+    this.cardService.query(cardQuery).subscribe(result => {
       const rpr: RapidEntryResult = {
         entryText: searchText,
         selectedSetIds: this.selectedSetIds,
         hasError: result.data.length !== 1,
         results: result.data,
-        cardOtherInfo: new CardOtherInfo()
+        cardInstance: new CardInstance()
        };
        this.rapidEntryResultStore.rapidEntryResults.splice(0, 0, rpr);
        this.rapidEntryResultDataSource.refresh();

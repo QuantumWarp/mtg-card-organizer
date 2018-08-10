@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Identity.Managers;
 using MtgCardOrganizer.Identity.Requests;
-using MtgCoreLib;
-using MtgCoreLib.Dtos.Admin;
-using MtgCoreLib.Dtos.Cards;
-using MtgCoreLib.Entities.Cards;
-using MtgCoreLib.Managers;
-using MtgCoreLib.Utilities.Parsers;
 
 namespace MtgCardOrganizer.Api.Controllers
 {

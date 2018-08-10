@@ -2,7 +2,7 @@ using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace  MtgCardOrganizer.Seeding.Utilities
+namespace MtgCardOrganizer.Seeding.Utilities
 {
     public class ClassActivator<T> where T : class
     {

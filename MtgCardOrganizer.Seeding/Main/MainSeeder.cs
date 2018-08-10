@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using MtgCardOrganizer.Seeding.FeatureSeeding.Core;
-using MtgCardOrganizer.Seeding.FeatureSeeding.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MtgCardOrganizer.Core.Initialization;
 using MtgCardOrganizer.Identity.Initialization;
+using MtgCardOrganizer.Seeding.Seeders;
 
 namespace MtgCardOrganizer.Seeding.Main
 {

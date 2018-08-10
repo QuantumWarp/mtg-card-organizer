@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MtgCoreLib.Dtos.Cards;
-using MtgCoreLib.Entities.Cards;
-using MtgCoreLib.Managers;
+using MtgCardOrganizer.Core.Entities.Cards;
+using MtgCardOrganizer.Core.Repositories;
+using MtgCardOrganizer.Core.Requests.Generic;
+using MtgCardOrganizer.Core.Responses;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
@@ -14,17 +12,17 @@ namespace MtgCardOrganizer.Api.Controllers
     [Route("api/sets")]
     public class SetController : Controller
     {
-        public ISetManager _setManager;
+        public ISetRepository _setRepository;
 
-        public SetController(ISetManager setManager) 
+        public SetController(ISetRepository setRepository) 
         {
-            _setManager = setManager;
+            _setRepository = setRepository;
         }
 
         [HttpGet, Route("")]
-        public PagedData<SetDto> Query(QueryModel<SetDto> queryModel)
+        public async Task<PagedData<Set>> Query([FromQuery] QueryModel<Set> queryModel)
         {
-            return _setManager.GetSets(queryModel);
+            return await _setRepository.GetSetsAsync(queryModel);
         }
     }
 }

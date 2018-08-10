@@ -6,7 +6,7 @@ using MtgCardOrganizer.Identity.Initialization;
 using MtgCardOrganizer.Identity.Managers;
 using MtgCardOrganizer.Identity.Requests;
 
-namespace MtgCardOrganizer.Seeding.FeatureSeeding.Identity
+namespace MtgCardOrganizer.Seeding.Seeders
 {
     public class IdentitySeeder : SectionSeeder<IdentityContext>
     {

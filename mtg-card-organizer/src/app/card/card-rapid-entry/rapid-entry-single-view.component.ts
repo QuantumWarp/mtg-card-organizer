@@ -1,13 +1,15 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
 import { PropertyFilter } from '../../shared/filtering/property-filter';
 import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
-import { Card } from '../models/card';
+import { CardSet } from '../models/card-set';
 import { Set } from '../models/set';
 import { CardService } from '../services/card.service';
 import { RapidEntryResult } from './rapid-entry-result';
+import { Paging } from '../../shared/filtering/paging';
+import { CardQuery } from '../models/card-query';
 
 @Component({
   selector: 'app-rapid-entry-single-view',
@@ -26,7 +28,6 @@ export class RapidEntrySingleViewComponent implements OnInit {
 
   constructor(
     private cardService: CardService,
-    private dialog: MatDialog,
     private dialogRef: MatDialogRef<RapidEntrySingleViewComponent>) { }
 
   ngOnInit() {
@@ -53,22 +54,16 @@ export class RapidEntrySingleViewComponent implements OnInit {
       return;
     }
 
-    const psFilter = new PageSortFilter();
-    psFilter.addSubFilter(new PropertyFilter({
-      property: 'setId',
-      operator: PropertyFilterOperator.IsContainedIn,
-      value: this.selectedSetIds,
-    }));
     const searchText = this.searchText;
-    this.searchText = '';
-    psFilter.addSubFilter(new PropertyFilter({
-      property: 'name',
-      operator: PropertyFilterOperator.Contains,
-      value: searchText,
-    }));
-    psFilter.paging.limit = 11;
+    const cardQuery = new CardQuery({
+      setIds: this.selectedSetIds,
+      name: searchText,
+      paging: new Paging({
+        limit: 11,
+      })
+    });
 
-    this.cardService.query(psFilter).subscribe(result => {
+    this.cardService.query(cardQuery).subscribe(result => {
       this.rapidEntryResult.entryText = searchText;
       this.rapidEntryResult.selectedSetIds = this.selectedSetIds;
       this.rapidEntryResult.hasError = result.data.length !== 1;
@@ -80,11 +75,11 @@ export class RapidEntrySingleViewComponent implements OnInit {
     });
   }
 
-  optionClicked(card: Card) {
-    this.rapidEntryResult.entryText = card.name;
+  optionClicked(cardSet: CardSet) {
+    this.rapidEntryResult.entryText = cardSet.card.name;
     this.rapidEntryResult.selectedSetIds = new Array<number>();
     this.rapidEntryResult.hasError = false;
-    this.rapidEntryResult.results = [ card ];
+    this.rapidEntryResult.results = [ cardSet ];
     this.dialogRef.close();
   }
 

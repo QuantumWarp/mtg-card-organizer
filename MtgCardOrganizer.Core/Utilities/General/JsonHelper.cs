@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Newtonsoft.Json.Linq;
 
-namespace MtgCoreLib.Utilities.General
+namespace MtgCardOrganizer.Core.Utilities.General
 {
     public static class JsonHelper
     {

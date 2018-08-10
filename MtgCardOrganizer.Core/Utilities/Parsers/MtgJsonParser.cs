@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
-using MtgCoreLib.Dtos.Cards;
-using Newtonsoft.Json;
-using MtgCoreLib.Utilities.General;
-using MtgCoreLib.Dtos.Enums;
-using System.Linq;
+using MtgCardOrganizer.Core.Utilities.General;
+using MtgCardOrganizer.Core.Entities.Cards;
+using MtgCardOrganizer.Core.Enums;
 
-namespace MtgCoreLib.Utilities.Parsers
+namespace MtgCardOrganizer.Core.Utilities.Parsers
 {
     public class MtgJsonParser : IParser
     {
@@ -18,12 +16,12 @@ namespace MtgCoreLib.Utilities.Parsers
         private readonly Uri AllCardsUri = new Uri("https://mtgjson.com/json/AllSets.json.zip");
         private readonly Uri AllCardsAndExtrasUri = new Uri("https://mtgjson.com/json/AllSets-x.json.zip");
 
-        public List<SetDto> SetDtos { get; } = new List<SetDto>();
-        public List<CardDto> CardDtos { get; } = new List<CardDto>();
-        public List<CardSetInfoDto> CardSetInfoDtos { get; } = new List<CardSetInfoDto>();
+        public List<Set> Sets { get; } = new List<Set>();
+        public List<Card> Cards { get; } = new List<Card>();
+        public List<CardSet> CardSetInfos { get; } = new List<CardSet>();
 
-        public Dictionary<CardSetInfoDto, SetDto> SetRelationship { get; }  = new Dictionary<CardSetInfoDto, SetDto>();
-        public Dictionary<CardSetInfoDto, CardDto> CardRelationship { get; } = new Dictionary<CardSetInfoDto, CardDto>();
+        public Dictionary<CardSet, Set> SetRelationship { get; }  = new Dictionary<CardSet, Set>();
+        public Dictionary<CardSet, Card> CardRelationship { get; } = new Dictionary<CardSet, Card>();
 
         public void Parse(string mtgJsonText) 
         {
@@ -36,11 +34,11 @@ namespace MtgCoreLib.Utilities.Parsers
 
         private void ParseSingleSet(Dictionary<string, dynamic> setObj)
         {
-            var newSet = new SetDto {
+            var newSet = new Set {
                 Code = setObj["code"].ToString(),
                 Name = setObj["name"].ToString(),
             };
-            SetDtos.Add(newSet);
+            Sets.Add(newSet);
 
             foreach (var cardObj in setObj["cards"])
             {
@@ -48,27 +46,27 @@ namespace MtgCoreLib.Utilities.Parsers
             }
         }
 
-        private void ParseSingleCard(Dictionary<string, dynamic> cardObj, SetDto setDto)
+        private void ParseSingleCard(Dictionary<string, dynamic> cardObj, Set set)
         {
-            var cardDto = new CardDto();
+            var card = new Card();
 
-            cardDto.Name = cardObj["name"].ToString();
-            if (cardObj.ContainsKey("manaCost")) cardDto.ManaCost = cardObj["manaCost"].ToString();
-            cardDto.ConvertedManaCost = cardObj["cmc"].ToString();
-            if (cardObj.ContainsKey("power")) cardDto.Power = cardObj["power"].ToString();
-            if (cardObj.ContainsKey("toughness")) cardDto.Toughness = cardObj["toughness"].ToString();
+            card.Name = cardObj["name"].ToString();
+            if (cardObj.ContainsKey("manaCost")) card.ManaCost = cardObj["manaCost"].ToString();
+            card.ConvertedManaCost = cardObj["cmc"].ToString();
+            if (cardObj.ContainsKey("power")) card.Power = cardObj["power"].ToString();
+            if (cardObj.ContainsKey("toughness")) card.Toughness = cardObj["toughness"].ToString();
 
-            var cardSetInfoDto = new CardSetInfoDto();
-            cardSetInfoDto.Artist = cardObj["artist"].ToString();
-            if (cardObj.ContainsKey("number")) cardSetInfoDto.Num = cardObj["number"].ToString();
-            cardSetInfoDto.Rarity = ParseRarity(cardObj["rarity"].ToString());
-            if (cardObj.ContainsKey("multiverseid")) cardSetInfoDto.MultiverseId = cardObj["multiverseid"].ToString();
+            var cardSetInfo = new CardSet();
+            cardSetInfo.Artist = cardObj["artist"].ToString();
+            if (cardObj.ContainsKey("number")) cardSetInfo.Num = cardObj["number"].ToString();
+            cardSetInfo.Rarity = ParseRarity(cardObj["rarity"].ToString());
+            if (cardObj.ContainsKey("multiverseid")) cardSetInfo.MultiverseId = cardObj["multiverseid"].ToString();
 
-            CardDtos.Add(cardDto);
-            CardSetInfoDtos.Add(cardSetInfoDto);
+            Cards.Add(card);
+            CardSetInfos.Add(cardSetInfo);
 
-            SetRelationship.Add(cardSetInfoDto, setDto);
-            CardRelationship.Add(cardSetInfoDto, cardDto);
+            SetRelationship.Add(cardSetInfo, set);
+            CardRelationship.Add(cardSetInfo, card);
         }
         
         public Rarity ParseRarity(string rarityString) {

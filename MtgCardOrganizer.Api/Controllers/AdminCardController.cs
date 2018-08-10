@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MtgCoreLib;
-using MtgCoreLib.Dtos.Admin;
-using MtgCoreLib.Dtos.Cards;
-using MtgCoreLib.Entities.Cards;
-using MtgCoreLib.Managers;
-using MtgCoreLib.Utilities.Parsers;
+using MtgCardOrganizer.Core.Repositories;
+using MtgCardOrganizer.Core.Requests;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
@@ -19,24 +11,24 @@ namespace MtgCardOrganizer.Api.Controllers
     [Route("api/[controller]")]
     public class AdminCardController : Controller
     {
-        private IAdminCardManager _adminCardsManager;
+        private IAdminCardRepository _adminCardsRepository;
 
-        public AdminCardController(IAdminCardManager adminCardsManager)
+        public AdminCardController(IAdminCardRepository adminCardsRepository)
         {
-            _adminCardsManager = adminCardsManager;
+            _adminCardsRepository = adminCardsRepository;
         }
 
         [HttpPost("import-cards")]
-        public HttpResponseMessage ImportCards(ImportCommand importCommand) 
+        public HttpResponseMessage ImportCards([FromBody] ImportRequest importRequest) 
         {
-            _adminCardsManager.ImportCards(importCommand);
+            _adminCardsRepository.ImportCards(importRequest);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPost("clear-cards")]
         public HttpResponseMessage ClearCards() 
         {
-            _adminCardsManager.ClearCards();
+            _adminCardsRepository.ClearCards();
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }

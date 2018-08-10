@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace MtgCoreLib.Initialization
+namespace MtgCardOrganizer.Core.Initialization
 {
     public static class Configuration
     {

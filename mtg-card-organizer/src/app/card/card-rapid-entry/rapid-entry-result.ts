@@ -1,10 +1,10 @@
-import { Card } from '../models/card';
-import { CardOtherInfo } from '../models/card-other-info';
+import { CardInstance } from '../models/card-instance';
+import { CardSet } from '../models/card-set';
 
 export class RapidEntryResult {
   entryText: string;
   selectedSetIds: number[];
-  results: Card[];
+  results: CardSet[];
   hasError: boolean;
-  cardOtherInfo: CardOtherInfo;
+  cardInstance: CardInstance;
 }

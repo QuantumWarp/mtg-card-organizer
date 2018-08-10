@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace MtgCoreLib.Initialization
+namespace MtgCardOrganizer.Core.Initialization
 {
-    public class MtgCoreLibContextFactory : IDesignTimeDbContextFactory<MtgCoreLibContext>
+    public class MtgCoreLibContextFactory : IDesignTimeDbContextFactory<MtgCardOrganizerContext>
     {
-        public MtgCoreLibContext CreateDbContext(string[] args)
+        public MtgCardOrganizerContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<MtgCoreLibContext>();
+            var builder = new DbContextOptionsBuilder<MtgCardOrganizerContext>();
             builder.UseSqlite(Configuration.ConnectionStrings.Default);
-            return new MtgCoreLibContext(builder.Options);
+            return new MtgCardOrganizerContext(builder.Options);
         }
     }
 }

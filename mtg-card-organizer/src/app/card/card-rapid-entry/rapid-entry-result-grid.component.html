@@ -9,7 +9,7 @@
   <ng-container matColumnDef="set">
     <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header> Set </mat-header-cell>
     <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">
-      <app-ss *ngIf="rapidEntryResult.results.length === 1" [card]="rapidEntryResult.results[0]" [sets]="sets"></app-ss>
+      <app-ss *ngIf="rapidEntryResult.results.length === 1" [cardSet]="rapidEntryResult.results[0]" [sets]="sets"></app-ss>
     </mat-cell>
   </ng-container>
 

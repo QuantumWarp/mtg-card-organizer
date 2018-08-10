@@ -2,12 +2,11 @@ import { EventEmitter } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { merge } from 'rxjs';
 
-import { PageSortFilter } from '../filtering/page-sort-filter';
 import { Paging } from '../filtering/paging';
-import { PropertyFilter } from '../filtering/property-filter';
-import { PropertySort } from '../filtering/property-sort';
+import { isPageable, isSortable } from '../utils/apply-data-query.interface';
 import { CustomDataSource } from '../utils/custom-data-source';
 import { DataService } from '../utils/data-service.interface';
+import { QueryStringGenerator } from '../utils/query-string-generator.interface';
 
 export class GridDataSource<T> extends CustomDataSource<T> {
 
@@ -20,25 +19,21 @@ export class GridDataSource<T> extends CustomDataSource<T> {
     this.setupRefreshTriggers();
   }
 
-  refreshGrid(filters?: Array<PropertyFilter>): void {
-    const newPageSortFilter = new PageSortFilter(this.currentQuery);
+  refreshGrid(query?: QueryStringGenerator): void {
+    query = query ? query : this.currentQuery;
 
-    if (this.paginator) {
-      newPageSortFilter.paging = new Paging({
+    if (isPageable(query)) {
+      query.applyPaging(new Paging({
         limit: this.paginator.pageSize || 10,
         offset:  this.paginator.pageIndex * (this.paginator.pageSize || 10),
-      });
+      }));
     }
 
-    if (this.sort) {
-      newPageSortFilter.sort = PropertySort.parseSort(this.sort);
+    if (isSortable(query)) {
+      query.applySorting(this.sort);
     }
 
-    if (filters) {
-      newPageSortFilter.filters = filters;
-    }
-
-    this.refresh(newPageSortFilter);
+    this.refresh(query);
   }
 
   private setupGridUpdates(): void {

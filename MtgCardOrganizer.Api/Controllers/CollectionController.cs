@@ -1,18 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MtgCoreLib.Dtos.Cards;
-using MtgCoreLib.Dtos.Collections;
-using MtgCoreLib.Dtos.Enums;
-using MtgCoreLib.Entities.Cards;
-using MtgCoreLib.Managers;
+using MtgCardOrganizer.Api.Helpers;
+using MtgCardOrganizer.Core.Entities.Cards;
+using MtgCardOrganizer.Core.Entities.Collections;
+using MtgCardOrganizer.Core.Enums;
+using MtgCardOrganizer.Core.Repositories;
+using MtgCardOrganizer.Core.Requests;
+using MtgCardOrganizer.Core.Requests.Generic;
+using MtgCardOrganizer.Core.Responses;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
@@ -20,70 +18,69 @@ namespace MtgCardOrganizer.Api.Controllers
     [Route("api/collections")]
     public class CollectionController : Controller
     {
-        public ICollectionManager _collectionManager;
+        public ICollectionRepository _collectionRepository;
 
-        public CollectionController(ICollectionManager collectionManager)
+        public CollectionController(ICollectionRepository collectionRepository)
         {
-            _collectionManager = collectionManager;
+            _collectionRepository = collectionRepository;
         }
 
         [HttpGet]
         [Route("")]
-        public PagedData<CollectionDto> Query(QueryModel<CollectionDto> queryModel)
+        public async Task<PagedData<Collection>> Query([FromQuery] QueryModel<Collection> queryModel)
         {
-            return _collectionManager.GetCollections(queryModel);
+            return await _collectionRepository.GetCollectionsAsync(queryModel);
         }
 
         [HttpPost]
         [Route("")]
-        public bool Create([FromBody] CollectionDto collectionDto)
+        public async Task<bool> Create([FromBody] Collection collection)
         {
-            return _collectionManager.CreateCollection(collectionDto);
+            return await _collectionRepository.CreateCollectionAsync(collection);
         }
         
         [HttpDelete]
         [Route("{collectionId}")]
-        public IActionResult Delete(int collectionId)
+        public async Task<IActionResult> Delete(int collectionId)
         {
-            if (_collectionManager.UserHasPermission(Permission.Owner, collectionId)) return Unauthorized();
-            _collectionManager.DeleteCollection(collectionId);
+            if (_collectionRepository.UserHasPermission(Permission.Owner, collectionId)) return Unauthorized();
+            await _collectionRepository.DeleteCollectionAsync(collectionId);
             return NoContent();
         }
         
         [HttpGet]
         [Route("{collectionId}/cards")]
-        public IActionResult GetCards(int collectionId, QueryModel<CardInstanceDto> queryModel)
+        public async Task<IActionResult> GetCards(int collectionId, [Base64Binder] CardQuery query)
         {
-            if (_collectionManager.UserHasPermission(Permission.Read, collectionId)) return Unauthorized();
-            return Ok(_collectionManager.GetCards(collectionId, queryModel));
+            if (_collectionRepository.UserHasPermission(Permission.Read, collectionId)) return Unauthorized();
+            return Ok(await _collectionRepository.GetCardsAsync(collectionId, query));
         }
         
         [HttpPost]
         [Route("{collectionId}/cards")]
-        public IActionResult AddCards(int collectionId, [FromBody] List<AddCollectionCardCommand> cardSetInfoOtherInfoDict)
+        public IActionResult AddCards(int collectionId, [FromBody] List<CardInstance> cardInstances)
         {
-            if (_collectionManager.UserHasPermission(Permission.Write, collectionId)) return Unauthorized();
-            _collectionManager.AddCards(collectionId, cardSetInfoOtherInfoDict);
+            if (_collectionRepository.UserHasPermission(Permission.Write, collectionId)) return Unauthorized();
+            _collectionRepository.AddCardsAsync(collectionId, cardInstances);
             return NoContent();
         }
 
         [HttpPatch]
         [Route("{collectionId}/cards")]
-        public IActionResult DeleteCards(int collectionId, List<int> cardSetInfoIds)
+        public IActionResult DeleteCards(int collectionId, [FromBody] List<int> cardInstanceIds)
         {
-            if (_collectionManager.UserHasPermission(Permission.Write, collectionId)) return Unauthorized();
-            _collectionManager.DeleteCards(collectionId, cardSetInfoIds);
+            if (_collectionRepository.UserHasPermission(Permission.Write, collectionId)) return Unauthorized();
+            _collectionRepository.DeleteCardsAsync(collectionId, cardInstanceIds);
             return NoContent();
         }
 
         [HttpGet]
         [Route("{collectionId}/download")]
         public IActionResult Download(int collectionId) {
-            if (_collectionManager.UserHasPermission(Permission.Read, collectionId)) return Unauthorized();
+            if (_collectionRepository.UserHasPermission(Permission.Read, collectionId)) return Unauthorized();
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
-            _collectionManager.Export(collectionId);
-            writer.Write(_collectionManager.Export(collectionId));
+            writer.Write(_collectionRepository.ExportAsync(collectionId));
             writer.Flush();
             stream.Position = 0;
             var response = File(stream, "application/octet-stream", "collection-export.json"); // FileStreamResult
@@ -94,8 +91,8 @@ namespace MtgCardOrganizer.Api.Controllers
         [Route("{collectionId}/import")]
         [Route("import")]
         public IActionResult Import(int? collectionId, [FromBody] string importString) {
-            if (collectionId.HasValue && _collectionManager.UserHasPermission(Permission.Write, collectionId.Value)) return Unauthorized();
-            _collectionManager.Import(collectionId, importString);
+            if (collectionId.HasValue && _collectionRepository.UserHasPermission(Permission.Write, collectionId.Value)) return Unauthorized();
+            _collectionRepository.Import(collectionId, importString);
             return NoContent();
         }
     }

@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MtgCoreLib.Entities.Other
+namespace MtgCardOrganizer.Core.Entities.Other
 {
     public class Format : Entity
     {
-        [Required]
-        public string Name { get; private set; }
+        public string Name { get; set; }
     }
 }

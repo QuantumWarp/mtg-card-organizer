@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MtgCoreLib.Dtos.Cards;
-using MtgCoreLib.Entities.Cards;
-using MtgCoreLib.Managers;
+using MtgCardOrganizer.Api.Helpers;
+using MtgCardOrganizer.Core.Entities.Cards;
+using MtgCardOrganizer.Core.Repositories;
+using MtgCardOrganizer.Core.Requests;
+using MtgCardOrganizer.Core.Responses;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
@@ -14,17 +13,17 @@ namespace MtgCardOrganizer.Api.Controllers
     [Route("api/cards")]
     public class CardController : Controller
     {
-        public ICardManager _cardManager;
+        public ICardRepository _cardRepository;
 
-        public CardController(ICardManager cardManager) 
+        public CardController(ICardRepository cardRepository) 
         {
-            _cardManager = cardManager;
+            _cardRepository = cardRepository;
         }
 
         [HttpGet, Route("")]
-        public PagedData<CardDetailsDto> Query(QueryModel<CardDetailsDto> queryModel)
+        public async Task<PagedData<CardSet>> Query([Base64Binder] CardQuery query)
         {
-            return _cardManager.GetCards(queryModel);
+            return await _cardRepository.GetCardsAsync(query);
         }
     }
 }
