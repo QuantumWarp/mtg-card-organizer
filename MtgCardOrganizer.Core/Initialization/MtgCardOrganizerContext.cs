@@ -4,7 +4,6 @@ using MtgCardOrganizer.Core.Entities.Collections;
 using MtgCardOrganizer.Core.Entities.Other;
 using MtgCardOrganizer.Core.EntityConfigurations.Cards;
 using MtgCardOrganizer.Core.EntityConfigurations.Collections;
-using MtgCardOrganizer.Core.EntityConfigurations.Decks;
 using MtgCardOrganizer.Core.EntityConfigurations.Other;
 
 namespace MtgCardOrganizer.Core.Initialization
@@ -12,7 +11,8 @@ namespace MtgCardOrganizer.Core.Initialization
     public class MtgCardOrganizerContext : DbContext
     {
         public DbSet<Collection> Collections { get; set; }
-        public DbSet<CollectionUserLink> CollectionUserLinks { get; set; }
+        public DbSet<Container> Containers { get; set; }
+        public DbSet<ContainerUserLink> ContainerUserLinks { get; set; }
         public DbSet<Deck> Decks { get; set; }
 
         public DbSet<Card> Cards { get; set; }
@@ -27,7 +27,8 @@ namespace MtgCardOrganizer.Core.Initialization
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CollectionConfiguration());
-            modelBuilder.ApplyConfiguration(new CollectionUserLinkConfiguration());
+            modelBuilder.ApplyConfiguration(new ContainerConfiguration());
+            modelBuilder.ApplyConfiguration(new ContainerUserLinkConfiguration());
             modelBuilder.ApplyConfiguration(new DeckConfiguration());
             
             modelBuilder.ApplyConfiguration(new CardConfiguration());

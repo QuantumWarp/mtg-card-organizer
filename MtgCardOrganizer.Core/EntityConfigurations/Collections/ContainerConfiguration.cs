@@ -3,14 +3,14 @@ using MtgCardOrganizer.Core.Entities.Collections;
 
 namespace MtgCardOrganizer.Core.EntityConfigurations.Collections
 {
-    public class CollectionConfiguration : EntityConfiguration<Collection>
+    public class ContainerConfiguration : EntityConfiguration<Container>
     {
-        public override void Configure(EntityTypeBuilder<Collection> builder)
+        public override void Configure(EntityTypeBuilder<Container> builder)
         {
             base.Configure(builder);
 
             builder.Property(x => x.Name).IsRequired();
-            builder.HasOne(x => x.Container).WithMany(x => x.Collections).HasForeignKey(x => x.ContainerId);
+            builder.HasOne(x => x.Parent).WithMany(x => x.SubContainers).HasForeignKey(x => x.ParentId);
         }
     }
 }

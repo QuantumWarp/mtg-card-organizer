@@ -16,20 +16,14 @@ namespace MtgCardOrganizer.Core.Repositories
 {
     public interface ICollectionRepository
     {
-        bool UserHasPermission(Permission permission, params int[] collectionIds);
-
-        Task<Collection> GetCollectionAsync(int id);
-        Task<PagedData<Collection>> GetCollectionsAsync(QueryModel<Collection> queryModel);
-        Task<bool> CreateCollectionAsync(Collection collection);
-        Task<bool> DeleteCollectionAsync(int collectionId);
+        Task<Collection> GetAsync(int collectionId);
+        Task<Collection> CreateAsync(Collection collection);
+        Task DeleteAsync(int collectionId);
 
 
         Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardQuery query);
-        Task AddCardsAsync(int collectionId, List<CardInstance> cardInstances);
+        Task<List<CardInstance>> AddCardsAsync(int collectionId, List<CardInstance> cardInstances);
         Task DeleteCardsAsync(int collectionId, List<int> cardInstanceIds);
-
-        Task<string> ExportAsync(int collectionId);
-        Task Import(int? collectionId, string importString);
     }
 
     public class CollectionRepository : ICollectionRepository
@@ -43,43 +37,26 @@ namespace MtgCardOrganizer.Core.Repositories
             _dbContext = dbContext;
         }
 
-        public bool UserHasPermission(Permission permission, params int[] collectionIds) {
-            var validPermissions = PermissionExtensions.ValidPermissions(permission);
-            var collectionUserLinks = _dbContext.CollectionUserLinks
-                .Where(x => collectionIds.Contains(x.CollectionId))
-                .Where(x => validPermissions.Contains(x.Permission));
-            return collectionIds.All(id => 
-                collectionUserLinks.SingleOrDefault(x => x.CollectionId == id) != null);
-        }
-
-        public async Task<Collection> GetCollectionAsync(int id)
+        public async Task<Collection> GetAsync(int id)
         {
             return await _dbContext.Collections.FindAsync(id);
         }
 
-        public async Task<PagedData<Collection>> GetCollectionsAsync(QueryModel<Collection> queryModel)
+        public async Task<Collection> CreateAsync(Collection collection)
         {
-            return await _dbContext.Collections
-                .Where(x => x.OwnerUserId == _user.Id)
-                .ApplyQueryModelAsync(queryModel);
-        }
-
-        public async Task<bool> CreateCollectionAsync(Collection collection)
-        {
-            collection.OwnerUserId = _user.Id;
             await _dbContext.Collections.AddAsync(collection);
             await _dbContext.SaveChangesAsync();
-            return true;
+            return collection;
         }
 
-        public async Task<bool> DeleteCollectionAsync(int collectionId)
+        public async Task DeleteAsync(int collectionId)
         {
-            var collection = _dbContext.Collections.SingleOrDefault(x => x.Id == collectionId);
-            if (collection == null) return false;
+            var collection = await _dbContext.Collections.FindAsync(collectionId);
             _dbContext.Collections.Remove(collection);
             await _dbContext.SaveChangesAsync();
-            return true;
         }
+
+        // Card Management
 
         public async Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardQuery query)
         {
@@ -91,10 +68,11 @@ namespace MtgCardOrganizer.Core.Repositories
                 .ApplyPagingAsync(query?.Paging);
         }
 
-        public async Task AddCardsAsync(int collectionId, List<CardInstance> cardInstances)
+        public async Task<List<CardInstance>> AddCardsAsync(int collectionId, List<CardInstance> cardInstances)
         {
             await _dbContext.CardInstances.AddRangeAsync(cardInstances);
             await _dbContext.SaveChangesAsync();
+            return cardInstances;
         }
         
         public async Task DeleteCardsAsync(int collectionId, List<int> cardInstanceIds)
@@ -104,12 +82,12 @@ namespace MtgCardOrganizer.Core.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<string> ExportAsync(int collectionId) {
-            return await new Exporter(this, new SetRepository(_dbContext)).ConstructExport(collectionId);
-        }
+        // public async Task<string> ExportAsync(int collectionId) {
+        //     return await new Exporter(this, new SetRepository(_dbContext)).ConstructExport(collectionId);
+        // }
 
-        public async Task Import(int? collectionId, string importString) {
-            await new Importer(_dbContext).ProcessImportAsync(importString, null, _user.Id);
-        }
+        // public async Task Import(int? collectionId, string importString) {
+        //     await new Importer(_dbContext).ProcessImportAsync(importString, null, _user.Id);
+        // }
     }
 }
