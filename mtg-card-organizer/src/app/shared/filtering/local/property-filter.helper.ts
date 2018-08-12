@@ -1,5 +1,5 @@
-import { PropertyFilter } from '../../shared/filtering/property-filter';
-import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
+import { PropertyFilter } from '../property-filter';
+import { PropertyFilterOperator } from '../property-filter-operator';
 
 export class PropertyFilterHelper {
   static applyFilters<T>(propertyFilters: PropertyFilter[], data: T[]): T[] {

@@ -3,13 +3,20 @@ import { RouterModule } from '@angular/router';
 
 import { navModel } from '../core/navigation/nav-model';
 import { SharedModule } from '../shared/shared.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NetworkLogInterceptor } from './logging/network-log-interceptor';
 
 @NgModule({
-  declarations: [
-  ],
   imports: [
     SharedModule,
     RouterModule.forChild([])
+  ],
+  providers: [
+    [{
+      provide: HTTP_INTERCEPTORS,
+      useClass: NetworkLogInterceptor,
+      multi: true
+    }]
   ]
 })
 export class TestModule {

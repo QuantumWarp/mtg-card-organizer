@@ -1,5 +1,5 @@
-import { PagedData } from '../../shared/filtering/paged-data';
-import { Paging } from '../../shared/filtering/paging';
+import { PagedData } from '../paged-data';
+import { Paging } from '../paging';
 
 export class PagedDataHelper {
   static createPagedData<T>(paging: Paging, data: T[]): PagedData<T> {

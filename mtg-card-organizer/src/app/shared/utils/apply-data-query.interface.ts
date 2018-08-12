@@ -1,5 +1,5 @@
 import { Paging } from '../filtering/paging';
-import { MatSort } from '../../../../node_modules/@angular/material';
+import { MatSort } from '@angular/material';
 
 export const isPageable = (obj: any): obj is IPageable => Boolean(obj && obj['applyPaging']);
 export interface IPageable {
