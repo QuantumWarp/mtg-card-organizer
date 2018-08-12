@@ -10,7 +10,7 @@ namespace MtgCardOrganizer.Core.Repositories
 {
     public interface ICardRepository
     {
-        Task<PagedData<CardSet>> GetCardsAsync(CardQuery query);
+        Task<PagedData<CardSet>> GetCardSetsAsync(CardQuery query);
     }
 
     public class CardRepository : ICardRepository
@@ -22,7 +22,7 @@ namespace MtgCardOrganizer.Core.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PagedData<CardSet>> GetCardsAsync(CardQuery query)
+        public async Task<PagedData<CardSet>> GetCardSetsAsync(CardQuery query)
         {
             var test = await _dbContext.CardSets.Include(x => x.Card).FirstAsync();
             return await _dbContext.CardSets

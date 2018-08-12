@@ -96,10 +96,6 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
             };
 
             _dbContext.CardInstances.Add(cardInstance);
-            _dbContext.CollectionCardLinks.Add(new CollectionCardLink() { 
-                Collection = collection,
-                CardInstance = cardInstance,
-            });
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MtgCardOrganizer.Core.Initialization;
+﻿using System.Threading.Tasks;
+using MtgCardOrganizer.Core.Initialization;
 using MtgCardOrganizer.Core.Requests;
 using MtgCardOrganizer.Core.Utilities.Parsers;
 
@@ -6,7 +7,7 @@ namespace MtgCardOrganizer.Core.Repositories
 {
     public interface IAdminCardRepository
     {
-        void ImportCards(ImportRequest importRequest);
+        Task ImportCardsAsync(ImportRequest importRequest);
         void ClearCards();
     }
 
@@ -19,7 +20,7 @@ namespace MtgCardOrganizer.Core.Repositories
             _dbContext = dbContext;
         }
 
-        public void ImportCards(ImportRequest importRequest)
+        public async Task ImportCardsAsync(ImportRequest importRequest)
         {
             var parser = importRequest.ParseType.GetParser();
             if (string.IsNullOrEmpty(importRequest.ImportString)) {
@@ -27,15 +28,15 @@ namespace MtgCardOrganizer.Core.Repositories
             }
             parser.Parse(importRequest.ImportString);
 
-            using (var transaction = _dbContext.Database.BeginTransaction()) {
-                _dbContext.Sets.AddRange(parser.Sets);
-                _dbContext.SaveChanges();
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync()) {
+                await _dbContext.Sets.AddRangeAsync(parser.Sets);
+                await _dbContext.SaveChangesAsync();
 
-                _dbContext.Cards.AddRange(parser.Cards);
-                _dbContext.SaveChanges();
+                await _dbContext.Cards.AddRangeAsync(parser.Cards);
+                await _dbContext.SaveChangesAsync();
 
-                _dbContext.CardSets.AddRange(parser.CardSets);
-                _dbContext.SaveChanges();
+                await _dbContext.CardSets.AddRangeAsync(parser.CardSets);
+                await _dbContext.SaveChangesAsync();
                 
                 transaction.Commit();
             }

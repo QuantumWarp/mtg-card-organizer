@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Core.Repositories;
@@ -19,17 +20,17 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpPost("import-cards")]
-        public HttpResponseMessage ImportCards([FromBody] ImportRequest importRequest) 
+        public async Task<IActionResult> ImportCards([FromBody] ImportRequest importRequest) 
         {
-            _adminCardsRepository.ImportCards(importRequest);
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            await _adminCardsRepository.ImportCardsAsync(importRequest);
+            return new OkResult();
         }
 
         [HttpPost("clear-cards")]
-        public HttpResponseMessage ClearCards() 
+        public IActionResult ClearCards() 
         {
             _adminCardsRepository.ClearCards();
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return new OkResult();
         }
     }
 }

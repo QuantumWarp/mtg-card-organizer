@@ -25,8 +25,8 @@ namespace MtgCardOrganizer.Core.Repositories
 
 
         Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardQuery query);
-        bool AddCardsAsync(int collectionId, List<CardInstance> cardInstances);
-        bool DeleteCardsAsync(int collectionId, List<int> cardInstanceIds);
+        Task AddCardsAsync(int collectionId, List<CardInstance> cardInstances);
+        Task DeleteCardsAsync(int collectionId, List<int> cardInstanceIds);
 
         Task<string> ExportAsync(int collectionId);
         Task Import(int? collectionId, string importString);
@@ -84,36 +84,24 @@ namespace MtgCardOrganizer.Core.Repositories
         public async Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardQuery query)
         {
             return await _dbContext.CardInstances
-                .Include(x => x.CollectionCardLink)
                 .Include(x => x.CardSet)
                     .Include(x => x.CardSet.Card)
-                .Where(x => x.CollectionCardLink.CollectionId == collectionId)
+                .Where(x => x.CollectionId == collectionId)
                 .ApplyQuery(query, x => x.CardSet)
                 .ApplyPagingAsync(query?.Paging);
         }
 
-        public bool AddCardsAsync(int collectionId, List<CardInstance> cardInstances)
+        public async Task AddCardsAsync(int collectionId, List<CardInstance> cardInstances)
         {
-            using(var transaction = _dbContext.Database.BeginTransaction()) {
-                _dbContext.CardInstances.AddRange(cardInstances);
-                _dbContext.SaveChanges();
-                var cardLinks = cardInstances.Select(x => new CollectionCardLink() {
-                    CollectionId = collectionId,
-                    CardInstanceId = x.Id,
-                });
-                _dbContext.CollectionCardLinks.AddRange(cardLinks);
-                _dbContext.SaveChanges();
-                transaction.Commit();
-                return true;
-            }
+            await _dbContext.CardInstances.AddRangeAsync(cardInstances);
+            await _dbContext.SaveChangesAsync();
         }
         
-        public bool DeleteCardsAsync(int collectionId, List<int> cardCollectionLinkIds)
+        public async Task DeleteCardsAsync(int collectionId, List<int> cardInstanceIds)
         {
-            var cardLinks = _dbContext.CollectionCardLinks.Where(x => cardCollectionLinkIds.Contains(x.Id));
-            _dbContext.CollectionCardLinks.RemoveRange(cardLinks);
-            _dbContext.SaveChanges();
-            return true;
+            var cardInstances = await _dbContext.CardInstances.FindAsync(cardInstanceIds);
+            _dbContext.CardInstances.RemoveRange(cardInstances);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<string> ExportAsync(int collectionId) {

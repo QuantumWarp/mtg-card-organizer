@@ -10,7 +10,7 @@ namespace MtgCardOrganizer.Core.EntityConfigurations.Cards
             base.Configure(builder);
 
             builder.HasOne(x => x.CardSet).WithMany(x => x.CardInstances).HasForeignKey(x => x.CardSetId).IsRequired();
-            builder.HasOne(x => x.CollectionCardLink).WithOne(x => x.CardInstance);
+            builder.HasOne(x => x.Collection).WithMany(x => x.CardInstances).HasForeignKey(x => x.CollectionId).IsRequired();;
         }
     }
 }
