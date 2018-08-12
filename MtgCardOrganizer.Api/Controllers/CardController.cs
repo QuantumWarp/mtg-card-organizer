@@ -21,9 +21,9 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpGet, Route("")]
-        public async Task<PagedData<CardSet>> Query([Base64Binder] CardQuery query)
+        public async Task<PagedData<CardSet>> Query([Base64Binder] CardQuery cardQuery)
         {
-            return await _cardRepository.GetCardsAsync(query);
+            return await _cardRepository.GetCardsAsync(cardQuery);
         }
     }
 }

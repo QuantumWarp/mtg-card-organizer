@@ -7,10 +7,7 @@ namespace MtgCardOrganizer.Core.Utilities.Parsers
     {
         List<Set> Sets { get; }
         List<Card> Cards { get; }
-        List<CardSet> CardSetInfos { get; }
-        
-        Dictionary<CardSet, Set> SetRelationship { get; } 
-        Dictionary<CardSet, Card> CardRelationship { get; } 
+        List<CardSet> CardSets { get; }
         
         string Retrieve();
         void Parse(string text);

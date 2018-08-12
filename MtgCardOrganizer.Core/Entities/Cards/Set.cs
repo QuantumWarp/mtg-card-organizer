@@ -7,6 +7,6 @@ namespace MtgCardOrganizer.Core.Entities.Cards
         public string Name { get; set; }
         public string Code { get; set; }
 
-        public ICollection<CardSet> CardSetInfos { get; set; }
+        public ICollection<CardSet> CardSets { get; set; }
     }
 }

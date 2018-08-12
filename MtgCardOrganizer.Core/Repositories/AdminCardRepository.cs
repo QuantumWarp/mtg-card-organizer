@@ -34,7 +34,7 @@ namespace MtgCardOrganizer.Core.Repositories
                 _dbContext.Cards.AddRange(parser.Cards);
                 _dbContext.SaveChanges();
 
-                _dbContext.CardSets.AddRange(parser.CardSetInfos);
+                _dbContext.CardSets.AddRange(parser.CardSets);
                 _dbContext.SaveChanges();
                 
                 transaction.Commit();

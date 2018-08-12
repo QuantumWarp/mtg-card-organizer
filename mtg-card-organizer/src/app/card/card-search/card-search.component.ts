@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 
 import { Card } from '../models/card';
 import { Set } from '../models/set';
-import { CardService } from '../services/card.service';
+import { CardService, CardServiceInstanceWrapper } from '../services/card.service';
 import { SetService } from '../services/set.service';
 import { CardSet } from '../models/card-set';
 import { CardInstance } from '../models/card-instance';
 import { CardQuery } from '../models/card-query';
+import { DataService } from '../../shared/utils/data-service.interface';
 
 @Component({
   selector: 'app-card-search',
@@ -19,12 +20,12 @@ export class CardSearchComponent implements OnInit {
   @Input() filter = new CardQuery();
 
   @Input() displayedColumns = ['name', 'setSymbol', 'manaCost'];
-  @Input() cardService: CardService;
+  @Input() cardService: DataService<CardInstance>;
 
   constructor(
     public defaultCardService: CardService,
     private setService: SetService) {
-    this.cardService = defaultCardService;
+    this.cardService = new CardServiceInstanceWrapper(defaultCardService);
   }
 
   ngOnInit(): void {

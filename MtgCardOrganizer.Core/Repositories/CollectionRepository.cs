@@ -85,6 +85,8 @@ namespace MtgCardOrganizer.Core.Repositories
         {
             var defaultSort = new PropertySort<CardInstance>(nameof(Card.Name));
             return await _dbContext.CardInstances
+                .Include(x => x.CardSet)
+                    .ThenInclude(x => x.Card)
                 .Where(x => x.CollectionCardLink.CollectionId == collectionId)
                 .ApplyQuery(query, x => x.CardSet)
                 .ApplyPagingAsync(query?.Paging);

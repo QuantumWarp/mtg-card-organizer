@@ -18,7 +18,7 @@ namespace MtgCardOrganizer.Core.Utilities.General
 
         public static async Task<PagedData<T>> ApplyPagingAsync<T>(this IQueryable<T> queryable, Paging paging)
         {
-            paging = paging != null ? paging : new Paging();
+            paging = paging != null ? paging : new Paging() { Limit = 10 };
             var totalCount = queryable.Count();
             queryable = queryable.ApplyOffset(paging.Offset);
             queryable = queryable.ApplyLimit(paging.Limit);

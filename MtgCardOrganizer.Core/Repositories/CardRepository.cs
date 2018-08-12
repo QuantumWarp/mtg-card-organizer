@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Initialization;
 using MtgCardOrganizer.Core.Requests;
@@ -23,7 +24,9 @@ namespace MtgCardOrganizer.Core.Repositories
 
         public async Task<PagedData<CardSet>> GetCardsAsync(CardQuery query)
         {
+            var test = await _dbContext.CardSets.Include(x => x.Card).FirstAsync();
             return await _dbContext.CardSets
+                .Include(x => x.Card)
                 .ApplyQuery(query)
                 .ApplyPagingAsync(query?.Paging);
         }

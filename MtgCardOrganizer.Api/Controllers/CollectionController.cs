@@ -50,10 +50,10 @@ namespace MtgCardOrganizer.Api.Controllers
         
         [HttpGet]
         [Route("{collectionId}/cards")]
-        public async Task<IActionResult> GetCards(int collectionId, [Base64Binder] CardQuery query)
+        public async Task<IActionResult> GetCards(int collectionId, [Base64Binder] CardQuery cardQuery)
         {
             if (_collectionRepository.UserHasPermission(Permission.Read, collectionId)) return Unauthorized();
-            return Ok(await _collectionRepository.GetCardsAsync(collectionId, query));
+            return Ok(await _collectionRepository.GetCardsAsync(collectionId, cardQuery));
         }
         
         [HttpPost]

@@ -11,6 +11,7 @@ using MtgCardOrganizer.Identity.Initialization;
 using MtgCardOrganizer.Core.Initialization;
 using MtgCardOrganizer.Core.Utilities.General;
 using MtgCardOrganizer.Api.Helpers;
+using Newtonsoft.Json;
 
 namespace MtgCardOrganizer.Api
 {
@@ -39,7 +40,11 @@ namespace MtgCardOrganizer.Api
             services.AddMvc(config => {
                 config.Filters.Add<GlobalExceptionFilter>();
 		        config.ModelBinderProviders.Insert(0, new PageSortFilterProvider());
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            .AddJsonOptions(options => {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
             services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddTransient<UserService>();

@@ -18,10 +18,7 @@ namespace MtgCardOrganizer.Core.Utilities.Parsers
 
         public List<Set> Sets { get; } = new List<Set>();
         public List<Card> Cards { get; } = new List<Card>();
-        public List<CardSet> CardSetInfos { get; } = new List<CardSet>();
-
-        public Dictionary<CardSet, Set> SetRelationship { get; }  = new Dictionary<CardSet, Set>();
-        public Dictionary<CardSet, Card> CardRelationship { get; } = new Dictionary<CardSet, Card>();
+        public List<CardSet> CardSets { get; } = new List<CardSet>();
 
         public void Parse(string mtgJsonText) 
         {
@@ -56,17 +53,16 @@ namespace MtgCardOrganizer.Core.Utilities.Parsers
             if (cardObj.ContainsKey("power")) card.Power = cardObj["power"].ToString();
             if (cardObj.ContainsKey("toughness")) card.Toughness = cardObj["toughness"].ToString();
 
-            var cardSetInfo = new CardSet();
-            cardSetInfo.Artist = cardObj["artist"].ToString();
-            if (cardObj.ContainsKey("number")) cardSetInfo.Num = cardObj["number"].ToString();
-            cardSetInfo.Rarity = ParseRarity(cardObj["rarity"].ToString());
-            if (cardObj.ContainsKey("multiverseid")) cardSetInfo.MultiverseId = cardObj["multiverseid"].ToString();
+            var cardSet = new CardSet();
+            cardSet.Artist = cardObj["artist"].ToString();
+            if (cardObj.ContainsKey("number")) cardSet.Num = cardObj["number"].ToString();
+            cardSet.Rarity = ParseRarity(cardObj["rarity"].ToString());
+            if (cardObj.ContainsKey("multiverseid")) cardSet.MultiverseId = cardObj["multiverseid"].ToString();
+            cardSet.Card = card;
+            cardSet.Set = set;
 
             Cards.Add(card);
-            CardSetInfos.Add(cardSetInfo);
-
-            SetRelationship.Add(cardSetInfo, set);
-            CardRelationship.Add(cardSetInfo, card);
+            CardSets.Add(cardSet);
         }
         
         public Rarity ParseRarity(string rarityString) {

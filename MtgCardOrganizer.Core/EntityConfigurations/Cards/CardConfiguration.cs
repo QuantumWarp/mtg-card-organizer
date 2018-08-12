@@ -10,6 +10,7 @@ namespace MtgCardOrganizer.Core.EntityConfigurations.Cards
             base.Configure(builder);
 
             builder.Property(x => x.Name).IsRequired();
+            builder.HasMany(x => x.CardSets).WithOne(x => x.Card);
         }
     }
 }
