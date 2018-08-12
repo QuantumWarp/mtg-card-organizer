@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Core.Requests.Generic;
@@ -32,7 +33,7 @@ namespace MtgCardOrganizer.Core.Utilities.General
             return query.ApplyQuery(queryable, x => x);
         }
 
-        public static IQueryable<T> ApplyQuery<T, TFilterType>(this IQueryable<T> queryable, IQuery<TFilterType> query, Func<T, TFilterType> transform)
+        public static IQueryable<T> ApplyQuery<T, TFilterType>(this IQueryable<T> queryable, IQuery<TFilterType> query, Expression<Func<T, TFilterType>> transform)
         {
             if (query == null) return queryable;
             return query.ApplyQuery(queryable, transform);

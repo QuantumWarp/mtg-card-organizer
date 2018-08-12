@@ -10,6 +10,7 @@ import { PropertyFilter } from '../../shared/filtering/property-filter';
 import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
 import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 import { Collection } from '../models/collection';
+import { map } from '../../../../node_modules/rxjs/internal/operators';
 
 @Injectable()
 export class CollectionService implements DataService<Collection> {

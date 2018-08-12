@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Entities.Collections;
@@ -12,20 +13,57 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
     public class Importer
     {
         private MtgCardOrganizerContext _dbContext;
+
         private List<Set> _sets;
+        private List<CardSet> _cardSets;
         
         public Importer(MtgCardOrganizerContext dbContext) {
             _dbContext = dbContext;
         }
 
-        public void ProcessImport(string serializedExport, Collection parentCollection, string userId) {
-            using (var transaction = _dbContext.Database.BeginTransaction()) {
-                _sets = _dbContext.Sets.ToList();
-                var model = JsonConvert.DeserializeObject<CollectionExportModel>(serializedExport);
-                ProcessCollection(model, parentCollection, userId);
-                _dbContext.SaveChanges();
-                transaction.Commit();
+        public async Task ProcessImportAsync(string serializedExport, Collection parentCollection, string userId)
+        {
+            _sets = await _dbContext.Sets.ToListAsync();
+            var model = JsonConvert.DeserializeObject<CollectionExportModel>(serializedExport);
+            _cardSets = await GetRelevantCardSetsAsync(model);
+
+            ProcessCollection(model, parentCollection, userId);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        private async Task<List<CardSet>> GetRelevantCardSetsAsync(CollectionExportModel model)
+        {
+            var names = GetFlattenedImportableCards(model).Select(x => x.Name).ToList();
+
+            return await _dbContext.CardSets
+                .Include(x => x.Card)
+                .Where(x => names.Contains(x.Card.Name))
+                .ToListAsync();
+        }
+
+        private List<CardInstanceExportModel> GetFlattenedImportableCards(CollectionExportModel collection)
+        {
+            var list = new List<CardInstanceExportModel>();
+            
+            list.AddRange(collection.Cards);
+
+            if (collection.SubCollections != null && collection.SubCollections.Any())
+            {
+                foreach (var subCollection in collection.SubCollections)
+                {
+                    list.AddRange(GetFlattenedImportableCards(subCollection));
+                }
             }
+
+            return list;
+        }
+
+        private Func<CardSet, Boolean> GetCondition(CardInstanceExportModel cardInstanceExportModel)
+        {
+            var possibleSets = _sets.Where(set => set.Name.ToLower() == cardInstanceExportModel.SetName.ToLower());
+            return x => x.Card.Name.ToLower() == cardInstanceExportModel.Name.ToLower() &&
+                possibleSets.Contains(x.Set) &&
+                (x.Num == null || x.Num == cardInstanceExportModel.Num || x.Num == cardInstanceExportModel.Num + "a");
         }
 
         private void ProcessCollection(CollectionExportModel collection, Collection parentCollection, string userId) {
@@ -36,7 +74,6 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
             };
 
             _dbContext.Collections.Add(collectionEntity);
-            _dbContext.SaveChanges();
 
             foreach (var card in collection.Cards) {
                 ProcessCard(card, collectionEntity);
@@ -47,37 +84,18 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
             }
         }
 
-        private void ProcessCard(CardInstanceExportModel card, Collection collection) {
+        private void ProcessCard(CardInstanceExportModel cardInstanceExportModel, Collection collection) {
 
-            var possibleSets = _sets.Where(set => set.Name.ToLower() == card.SetName.ToLower());
-
-            var cardSetInfoQueryable = _dbContext.CardSets
-                .Include(x => x.Card)
-                .Where(x => x.Card.Name.ToLower() == card.Name.ToLower())
-                .Where(x => possibleSets.Contains(x.Set));
-
-            CardSet cardSetInfo;
-            if (!string.IsNullOrEmpty(card.Num)) {
-                cardSetInfo = cardSetInfoQueryable.Where(x => x.Num == card.Num).FirstOrDefault();
-                if (cardSetInfo == null) {
-                    cardSetInfo = cardSetInfoQueryable.Where(x => x.Num == card.Num + "a").FirstOrDefault();
-                }
-            } else {
-                cardSetInfo = cardSetInfoQueryable.SingleOrDefault();
-            }
-
-            if (cardSetInfo == null) {
-                cardSetInfo = cardSetInfoQueryable.FirstOrDefault();
-            }
+            var possibleCardSets = _cardSets.Where(GetCondition(cardInstanceExportModel));
+            var cardSet = possibleCardSets.FirstOrDefault();
 
             var cardInstance = new CardInstance() {
-                Foil = card.Foil,
-                Promo = card.Promo
+                Foil = cardInstanceExportModel.Foil,
+                Promo = cardInstanceExportModel.Promo,
+                CardSet = cardSet,
             };
 
             _dbContext.CardInstances.Add(cardInstance);
-            _dbContext.SaveChanges();
-
             _dbContext.CollectionCardLinks.Add(new CollectionCardLink() { 
                 Collection = collection,
                 CardInstance = cardInstance,

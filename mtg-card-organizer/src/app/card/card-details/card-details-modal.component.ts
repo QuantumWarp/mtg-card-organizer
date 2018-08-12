@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
-
-import { Card } from '../models/card';
 import { MatDialogRef } from '@angular/material';
+
+import { CardInstance } from '../models/card-instance';
 
 @Component({
   templateUrl: './card-details-modal.component.html',
 })
 export class CardDetailsModalComponent {
-  @Input() card: Card;
+  @Input() cardInstance: CardInstance;
 
   constructor(private dialogRef: MatDialogRef<CardDetailsModalComponent>) { }
 

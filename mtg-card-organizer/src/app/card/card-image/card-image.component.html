@@ -1,4 +1,4 @@
 <div class="card-image-area" [class.card-image-area-loading]="!loaded">
   <mat-spinner *ngIf="!loaded" [diameter]="100"></mat-spinner>
-  <img [src]="card | toCardImageUrl" #test [hidden]="!loaded" (load)="loaded = true">
+  <img [src]="cardSet | toCardImageUrl" #test [hidden]="!loaded" (load)="loaded = true">
 </div>

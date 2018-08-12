@@ -29,7 +29,7 @@ namespace MtgCardOrganizer.Core.Repositories
         bool DeleteCardsAsync(int collectionId, List<int> cardInstanceIds);
 
         Task<string> ExportAsync(int collectionId);
-        bool Import(int? collectionId, string importString);
+        Task Import(int? collectionId, string importString);
     }
 
     public class CollectionRepository : ICollectionRepository
@@ -83,10 +83,10 @@ namespace MtgCardOrganizer.Core.Repositories
 
         public async Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardQuery query)
         {
-            var defaultSort = new PropertySort<CardInstance>(nameof(Card.Name));
             return await _dbContext.CardInstances
+                .Include(x => x.CollectionCardLink)
                 .Include(x => x.CardSet)
-                    .ThenInclude(x => x.Card)
+                    .Include(x => x.CardSet.Card)
                 .Where(x => x.CollectionCardLink.CollectionId == collectionId)
                 .ApplyQuery(query, x => x.CardSet)
                 .ApplyPagingAsync(query?.Paging);
@@ -120,10 +120,8 @@ namespace MtgCardOrganizer.Core.Repositories
             return await new Exporter(this, new SetRepository(_dbContext)).ConstructExport(collectionId);
         }
 
-        public bool Import(int? collectionId, string importString) {
-            // Get the collection
-            new Importer(_dbContext).ProcessImport(importString, null, _user.Id);
-            return true;
+        public async Task Import(int? collectionId, string importString) {
+            await new Importer(_dbContext).ProcessImportAsync(importString, null, _user.Id);
         }
     }
 }

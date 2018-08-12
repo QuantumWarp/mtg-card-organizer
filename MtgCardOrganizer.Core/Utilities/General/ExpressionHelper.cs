@@ -58,5 +58,13 @@ namespace MtgCardOrganizer.Core.Utilities.General
                     throw new ArgumentOutOfRangeException("filterOperator");
             }
         }
+
+        public static Expression<Func<TOuter, TInner>> Combine<TOuter, TMiddle, TInner>(Expression<Func<TOuter, TMiddle>> first, Expression<Func<TMiddle, TInner>> second)
+        {
+            var parameter = Expression.Parameter(typeof(TOuter), "x");
+            var firstInvoke = Expression.Invoke(first, new[] { parameter });
+            var secondInvoke = Expression.Invoke(second, new[] { firstInvoke} );
+            return Expression.Lambda<Func<TOuter, TInner>>(secondInvoke, parameter);
+        }
     }
 }

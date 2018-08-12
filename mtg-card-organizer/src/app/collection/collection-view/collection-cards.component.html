@@ -1,5 +1,5 @@
 <app-card-search fxFlex
   [displayedColumns]="['name', 'setSymbol', 'manaCost', 'foil', 'promo']"
   [cardService]="collectionCardServiceWrapper"
-  (cardSelected)="cardSelected($event)">
+  (cardInstanceSelected)="cardInstanceSelected($event)">
 </app-card-search>

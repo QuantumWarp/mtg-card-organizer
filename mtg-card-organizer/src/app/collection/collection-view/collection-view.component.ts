@@ -76,7 +76,7 @@ export class CollectionViewComponent implements OnInit {
   openImport(): void {
     const dialogRef = this.dialog.open(CollectionImportComponent);
     dialogRef.componentInstance.collection = this.collection;
-    dialogRef.afterClosed().subscribe(success => success ? this.refreshCards() : null);
+    dialogRef.afterClosed().subscribe(success => success ? this.refreshSubCollections() : null);
   }
 
   createCollection(): void {

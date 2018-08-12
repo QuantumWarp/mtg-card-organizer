@@ -90,9 +90,9 @@ namespace MtgCardOrganizer.Api.Controllers
         [HttpPost]
         [Route("{collectionId}/import")]
         [Route("import")]
-        public IActionResult Import(int? collectionId, [FromBody] string importString) {
+        public async Task<IActionResult> Import(int? collectionId, [FromBody] string importString) {
             if (collectionId.HasValue && _collectionRepository.UserHasPermission(Permission.Write, collectionId.Value)) return Unauthorized();
-            _collectionRepository.Import(collectionId, importString);
+            await _collectionRepository.Import(collectionId, importString);
             return NoContent();
         }
     }

@@ -1,10 +1,10 @@
 <div class="modal" style="min-width:500px">
   <div class="modal-header">
-    <div class="modal-title">{{ card.name }}</div>
+    <div class="modal-title">{{ cardInstance.cardSet.card.name }}</div>
   </div>
 
   <div class="modal-content">
-    <app-card-details [card]="card"></app-card-details>
+    <app-card-details [cardInstance]="cardInstance"></app-card-details>
   </div>
 
   <div class="modal-actions">

@@ -1,17 +1,18 @@
-import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ViewChild, SimpleChanges } from '@angular/core';
 import { MatPaginator, MatTable } from '@angular/material';
 
 import { DataService } from '../../utils/data-service.interface';
 import { AbstractGridComponent } from '../abstract-grid.component.html';
 import { GridDataSource } from '../grid-data-source';
 import { QueryStringGenerator } from '../../utils/query-string-generator.interface';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-basic-grid',
   templateUrl: './basic-grid.component.html',
   styleUrls: ['./basic-grid.component.scss'],
 })
-export class BasicGridComponent<T> extends AbstractGridComponent<T> implements OnInit, AfterContentInit {
+export class BasicGridComponent<T> extends AbstractGridComponent<T> implements OnChanges, AfterContentInit {
   @Output() rowSelected = new EventEmitter<T>();
 
   @Input() service: DataService<T>;
@@ -27,9 +28,12 @@ export class BasicGridComponent<T> extends AbstractGridComponent<T> implements O
     return this.columns;
   }
 
-  ngOnInit(): void {
-    this.dataSource = new GridDataSource(this.service, this.matPaginator, this.matSort);
-    this.dataSource.refreshGrid(this.filter);
+  ngOnChanges(): void {
+    if (!this.dataSource) {
+      this.dataSource = new GridDataSource(this.service, this.matPaginator, this.matSort);
+    }
+
+    this.dataSource.refresh(this.filter);
   }
 
   ngAfterContentInit() {

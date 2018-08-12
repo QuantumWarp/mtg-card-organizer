@@ -1,6 +1,6 @@
-import { Input, Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-import { Card } from '../models/card';
+import { CardSet } from '../models/card-set';
 
 @Component({
   selector: 'app-card-image',
@@ -8,6 +8,6 @@ import { Card } from '../models/card';
   styleUrls: ['./card-image.scss']
 })
 export class CardImageComponent {
-  @Input() card: Card;
+  @Input() cardSet: CardSet;
   loaded = false;
 }

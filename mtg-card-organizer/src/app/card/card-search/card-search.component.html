@@ -1,7 +1,7 @@
 <div class="card-search mat-elevation-z8">
-  <!-- <app-card-search-bar [cardDataSource]="cardDataSource"></app-card-search-bar> -->
+  <app-card-search-bar (newCardQuery)="filter = $event"></app-card-search-bar>
 
-  <app-basic-grid [service]="cardService" [filter]="filter" matSort>
+  <app-basic-grid [service]="cardService" (rowSelected)="cardInstanceSelected.emit($event)" [filter]="filter" matSort>
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
       <mat-cell *matCellDef="let cardInstance">{{cardInstance.cardSet.card.name}}</mat-cell>
@@ -41,8 +41,5 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header>Promo</mat-header-cell>
       <mat-cell *matCellDef="let cardInstance"><mat-checkbox disabled [(ngModel)]="cardInstance.promo"></mat-checkbox></mat-cell>
     </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let cardInstance; columns: displayedColumns;" (click)="cardInstanceSelected.emit(cardInstance);"></mat-row>
   </app-basic-grid>
 </div>

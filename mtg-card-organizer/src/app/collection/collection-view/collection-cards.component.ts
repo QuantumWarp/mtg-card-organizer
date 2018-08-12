@@ -1,12 +1,12 @@
-import { Component, Input, ViewChild, OnInit } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatDialog } from '@angular/material';
 
 import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
 import { CardSearchComponent } from '../../card/card-search/card-search.component';
-import { Card } from '../../card/models/card';
+import { CardInstance } from '../../card/models/card-instance';
 import { Collection } from '../models/collection';
 import { CollectionCardServiceWrapper, CollectionService } from '../services/collection.service';
-import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-collection-cards',
@@ -26,8 +26,8 @@ export class CollectionCardsComponent implements OnChanges {
     this.collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionService);
   }
 
-  cardSelected(card: Card): void {
+  cardInstanceSelected(cardInstance: CardInstance): void {
     const dialogRef = this.dialog.open(CardDetailsModalComponent);
-    dialogRef.componentInstance.card = card;
+    dialogRef.componentInstance.cardInstance = cardInstance;
   }
 }
