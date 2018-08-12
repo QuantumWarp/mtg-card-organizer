@@ -52,6 +52,7 @@ export class CardRapidEntryComponent implements OnInit {
 
     this.dialogRef.afterOpen().subscribe(() => setTimeout(() => this.searchTextBox.nativeElement.focus(), 0));
     this.rapidEntryResultDataSource = new GridDataSource<RapidEntryResult>(this.rapidEntryResultStore, this.paginator, this.resultGrid.sort);
+    this.rapidEntryResultDataSource.refresh(new Paging({ limit: 10 }));
   }
 
   applySetFilter(selectedSetIds: number[]): void {

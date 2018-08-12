@@ -5,9 +5,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { CardRapidEntryComponent } from '../../card/card-rapid-entry/card-rapid-entry.component';
+import { CardInstance } from '../../card/models/card-instance';
 import { LoadingService } from '../../core/loading/loading.service';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
 import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
 import { PropertyFilter } from '../../shared/filtering/property-filter';
 import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
@@ -18,9 +21,6 @@ import { CollectionService } from '../services/collection.service';
 import { CollectionCardsComponent } from './collection-cards.component';
 import { CreateCollectionComponent } from './create-collection.component';
 import { SubCollectionsComponent } from './sub-collections.component';
-import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
-import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
-import { CardInstance } from '../../card/models/card-instance';
 
 @Component({
   selector: 'app-collection-view',
@@ -49,9 +49,6 @@ export class CollectionViewComponent implements OnInit {
       this.collection = this.route.snapshot.data['collection'];
       this.changeDetector.detectChanges();
       this.refreshSubCollections();
-      if (this.collection) {
-        this.refreshCards();
-      }
     });
   }
 
@@ -64,7 +61,8 @@ export class CollectionViewComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(results => {
       this.notificationService.notify({ message: 'Added Cards', type: SnackNotificationType.Success });
-      this.refreshCards();
+      // TODO: dont reload
+      location.reload();
     });
   }
 
@@ -134,11 +132,5 @@ export class CollectionViewComponent implements OnInit {
     this.collectionService.queryBaseCollections(new PageSortFilter()).subscribe(result => {
       this.subCollections = result.data;
     });
-  }
-
-  private refreshCards(): void {
-    if (this.collectionCardsComponent) {
-     // this.collectionCardsComponent.refresh();
-    }
   }
 }

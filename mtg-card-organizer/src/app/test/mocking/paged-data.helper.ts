@@ -1,21 +1,16 @@
-import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
 import { PagedData } from '../../shared/filtering/paged-data';
-import { PropertyFilterHelper } from './property-filter.helper';
-import { PropertySortHelper } from './property-sort.helper';
+import { Paging } from '../../shared/filtering/paging';
 
 export class PagedDataHelper {
-  static createPagedData<T>(pageSortFilter: PageSortFilter, data: T[]): PagedData<T> {
+  static createPagedData<T>(paging: Paging, data: T[]): PagedData<T> {
     const totalCount = data.length;
-    if (pageSortFilter.filters) {
-      data = PropertyFilterHelper.applyFilters(pageSortFilter.filters, data);
-    }
-    if (pageSortFilter.sort) {
-      data = PropertySortHelper.applySort(pageSortFilter.sort, data);
-    }
+    let resultData = data;
 
-    const startIndex = pageSortFilter.paging.offset;
-    const endIndex = pageSortFilter.paging.limit || data.length - 1;
-    const resultData = data.slice(startIndex, endIndex);
+    if (paging) {
+      const startIndex = paging.offset;
+      const endIndex = paging.limit || data.length - 1;
+      resultData = data.slice(startIndex, endIndex);
+    }
 
     const pagedData = new PagedData<T>();
     pagedData.data = resultData;

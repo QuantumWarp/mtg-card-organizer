@@ -2,7 +2,7 @@
   <ng-container matColumnDef="text">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
     <mat-cell *matCellDef="let rapidEntryResult">
-      {{ rapidEntryResult.results.length === 1 ? rapidEntryResult.results[0].name : rapidEntryResult.entryText }}
+      {{ rapidEntryResult.results.length === 1 ? rapidEntryResult.results[0].card.name : rapidEntryResult.entryText }}
     </mat-cell>
   </ng-container>
 
@@ -16,14 +16,14 @@
   <ng-container matColumnDef="foil">
     <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header> Foil </mat-header-cell>
     <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">
-      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="rapidEntryResult.cardOtherInfo.foil"></mat-checkbox>
+      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="rapidEntryResult.cardInstance.foil"></mat-checkbox>
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="promo">
     <mat-header-cell class="thin-width-column" *matHeaderCellDef mat-sort-header> Promo </mat-header-cell>
     <mat-cell class="thin-width-column" *matCellDef="let rapidEntryResult">
-      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="rapidEntryResult.cardOtherInfo.promo"></mat-checkbox>
+      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="rapidEntryResult.cardInstance.promo"></mat-checkbox>
     </mat-cell>
   </ng-container>
 
