@@ -5,7 +5,7 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
 {
     public class CollectionExportModel {
         public string Name { get; set; }
-        public List<CollectionExportModel> SubCollections { get; set; }
+        
         public List<CardInstanceExportModel> Cards { get; set; }
     }
 

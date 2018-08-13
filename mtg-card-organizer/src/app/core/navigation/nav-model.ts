@@ -13,20 +13,9 @@ export const navModel: NavNode[] = [
     ]
   },
   {
-    text: 'Collections',
+    text: 'My Containers',
     icon: 'view_list',
-    children: [
-      {
-        text: 'My Collections',
-        icon: 'view_list',
-        routerLink: '/collections',
-      },
-      {
-        text: 'Search',
-        icon: 'search',
-        routerLink: '/collections',
-      },
-    ]
+    routerLink: '/containers',
   },
   {
     text: 'Tools',

@@ -18,7 +18,7 @@ namespace MtgCardOrganizer.Core.Repositories
     {
         Task<bool> UserHasPermission(Permission permission, int containerId);
 
-        Task<Container> GetAsync(int containerId);
+        Task<Container> GetAsync(int? containerId);
         Task<PagedData<Container>> GetManyAsync(QueryModel<Container> queryModel);
         Task<Container> CreateAsync(Container container);
         Task DeleteAsync(int containerId);
@@ -44,14 +44,39 @@ namespace MtgCardOrganizer.Core.Repositories
             return containerUserLink != null;
         }
 
-        public async Task<Container> GetAsync(int id)
+        public async Task<Container> GetAsync(int? containerId)
         {
-            return await _dbContext.Containers.FindAsync(id);
+            var baseQueryable = _dbContext.Containers
+                .Include(x => x.SubContainers)
+                .Include(x => x.Collections)
+                .Include(x => x.Decks);
+
+            Container result;
+            if (containerId != null)
+            {
+                result = await baseQueryable.SingleAsync(x => x.Id == containerId);
+            }
+            else
+            {
+                result = await baseQueryable.SingleOrDefaultAsync(x => 
+                    x.ParentId == null && x.OwnerUserId == _user.Id);   
+
+                if (result == null) {
+                    result = await CreateAsync(new Container() {
+                        Name = "Base Container"
+                    });
+                }
+            }
+            
+            return result;
         }
 
         public async Task<PagedData<Container>> GetManyAsync(QueryModel<Container> queryModel)
         {
             return await _dbContext.Containers
+                .Include(x => x.SubContainers)
+                .Include(x => x.Collections)
+                .Include(x => x.Decks)
                 .Where(x => x.OwnerUserId == _user.Id)
                 .ApplyQueryModelAsync(queryModel);
         }

@@ -30,6 +30,7 @@ namespace MtgCardOrganizer.Core.Initialization
         {
             services.AddTransient<IAdminCardRepository, AdminCardRepository>();
             services.AddTransient<ICardRepository, CardRepository>();
+            services.AddTransient<IContainerRepository, ContainerRepository>();
             services.AddTransient<ISetRepository, SetRepository>();
             services.AddTransient<ICollectionRepository, CollectionRepository>();
         }

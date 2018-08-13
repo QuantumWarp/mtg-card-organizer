@@ -24,7 +24,7 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
 
         public async Task<string> ConstructExport(int collectionId) {
             _sets = (await _setRepository.GetSetsAsync(new QueryModel<Set>())).Data;
-            var collection = await _collectionRepository.GetCollectionAsync(collectionId);       
+            var collection = await _collectionRepository.GetAsync(collectionId);       
             return JsonConvert.SerializeObject(this.ConstructExportModel(collection), Formatting.Indented);        
         }
 
@@ -42,18 +42,7 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
                 card.Promo = x.Promo;
                 return card;
             }).ToList();
-
-            // TODO should be subcollections
-            var subCollections = await _collectionRepository.GetCollectionsAsync(new QueryModel<Collection> {
-                Filters = new List<PropertyFilter<Collection>> {
-                    new PropertyFilter<Collection> {
-                        Property = nameof(Collection.ParentId),
-                        Operator = PropertyFilterOperator.IsEqual,
-                        Value = collection.Id,
-                    }
-                }
-            });       
-            model.SubCollections = subCollections.Data.Select(x => ConstructExportModel(x).GetAwaiter().GetResult()).ToList();        
+      
             return model;
         }
     }

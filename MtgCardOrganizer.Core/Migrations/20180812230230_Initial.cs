@@ -26,7 +26,7 @@ namespace MtgCardOrganizer.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Collections",
+                name: "Containers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -38,11 +38,11 @@ namespace MtgCardOrganizer.Core.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Collections", x => x.Id);
+                    table.PrimaryKey("PK_Containers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Collections_Collections_ParentId",
+                        name: "FK_Containers_Containers_ParentId",
                         column: x => x.ParentId,
-                        principalTable: "Collections",
+                        principalTable: "Containers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -75,22 +75,62 @@ namespace MtgCardOrganizer.Core.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CollectionUserLinks",
+                name: "Collections",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: false),
+                    ContainerId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Collections", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Collections_Containers_ContainerId",
+                        column: x => x.ContainerId,
+                        principalTable: "Containers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ContainerUserLinks",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
                     Permission = table.Column<int>(nullable: false),
-                    CollectionId = table.Column<int>(nullable: false)
+                    ContainerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CollectionUserLinks", x => new { x.UserId, x.CollectionId });
+                    table.PrimaryKey("PK_ContainerUserLinks", x => new { x.UserId, x.ContainerId });
                     table.ForeignKey(
-                        name: "FK_CollectionUserLinks_Collections_CollectionId",
-                        column: x => x.CollectionId,
-                        principalTable: "Collections",
+                        name: "FK_ContainerUserLinks_Containers_ContainerId",
+                        column: x => x.ContainerId,
+                        principalTable: "Containers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Decks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: false),
+                    ContainerId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Decks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Decks_Containers_ContainerId",
+                        column: x => x.ContainerId,
+                        principalTable: "Containers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,8 +143,10 @@ namespace MtgCardOrganizer.Core.Migrations
                     Artist = table.Column<string>(nullable: false),
                     Num = table.Column<string>(nullable: true),
                     Rarity = table.Column<int>(nullable: false),
-                    CardId = table.Column<int>(nullable: true),
-                    SetId = table.Column<int>(nullable: true)
+                    SetId = table.Column<int>(nullable: false),
+                    CardId = table.Column<int>(nullable: false),
+                    DeckId = table.Column<int>(nullable: true),
+                    DeckId1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -114,13 +156,25 @@ namespace MtgCardOrganizer.Core.Migrations
                         column: x => x.CardId,
                         principalTable: "Cards",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CardSets_Decks_DeckId",
+                        column: x => x.DeckId,
+                        principalTable: "Decks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CardSets_Decks_DeckId1",
+                        column: x => x.DeckId1,
+                        principalTable: "Decks",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CardSets_Sets_SetId",
                         column: x => x.SetId,
                         principalTable: "Sets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,7 +185,8 @@ namespace MtgCardOrganizer.Core.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Foil = table.Column<bool>(nullable: false),
                     Promo = table.Column<bool>(nullable: false),
-                    CardSetId = table.Column<int>(nullable: true)
+                    CardSetId = table.Column<int>(nullable: false),
+                    CollectionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,29 +196,9 @@ namespace MtgCardOrganizer.Core.Migrations
                         column: x => x.CardSetId,
                         principalTable: "CardSets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CollectionCardLinks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CollectionId = table.Column<int>(nullable: false),
-                    CardInstanceId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CollectionCardLinks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CollectionCardLinks_CardInstances_CardInstanceId",
-                        column: x => x.CardInstanceId,
-                        principalTable: "CardInstances",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CollectionCardLinks_Collections_CollectionId",
+                        name: "FK_CardInstances_Collections_CollectionId",
                         column: x => x.CollectionId,
                         principalTable: "Collections",
                         principalColumn: "Id",
@@ -176,9 +211,24 @@ namespace MtgCardOrganizer.Core.Migrations
                 column: "CardSetId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CardInstances_CollectionId",
+                table: "CardInstances",
+                column: "CollectionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CardSets_CardId",
                 table: "CardSets",
                 column: "CardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CardSets_DeckId",
+                table: "CardSets",
+                column: "DeckId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CardSets_DeckId1",
+                table: "CardSets",
+                column: "DeckId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CardSets_SetId",
@@ -186,52 +236,54 @@ namespace MtgCardOrganizer.Core.Migrations
                 column: "SetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollectionCardLinks_CardInstanceId",
-                table: "CollectionCardLinks",
-                column: "CardInstanceId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CollectionCardLinks_CollectionId",
-                table: "CollectionCardLinks",
-                column: "CollectionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Collections_ParentId",
+                name: "IX_Collections_ContainerId",
                 table: "Collections",
+                column: "ContainerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Containers_ParentId",
+                table: "Containers",
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollectionUserLinks_CollectionId",
-                table: "CollectionUserLinks",
-                column: "CollectionId");
+                name: "IX_ContainerUserLinks_ContainerId",
+                table: "ContainerUserLinks",
+                column: "ContainerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Decks_ContainerId",
+                table: "Decks",
+                column: "ContainerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CollectionCardLinks");
+                name: "CardInstances");
 
             migrationBuilder.DropTable(
-                name: "CollectionUserLinks");
+                name: "ContainerUserLinks");
 
             migrationBuilder.DropTable(
                 name: "Formats");
 
             migrationBuilder.DropTable(
-                name: "CardInstances");
+                name: "CardSets");
 
             migrationBuilder.DropTable(
                 name: "Collections");
 
             migrationBuilder.DropTable(
-                name: "CardSets");
-
-            migrationBuilder.DropTable(
                 name: "Cards");
 
             migrationBuilder.DropTable(
+                name: "Decks");
+
+            migrationBuilder.DropTable(
                 name: "Sets");
+
+            migrationBuilder.DropTable(
+                name: "Containers");
         }
     }
 }

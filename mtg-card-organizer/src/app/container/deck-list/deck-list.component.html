@@ -1,0 +1,5 @@
+<mat-card *ngFor="let deck of decks" (click)="itemSelected(deck)">
+  <mat-card-header>
+    {{ deck.name }}
+  </mat-card-header>
+</mat-card>

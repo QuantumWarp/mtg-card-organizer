@@ -21,41 +21,24 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
             _dbContext = dbContext;
         }
 
-        public async Task ProcessImportAsync(string serializedExport, Collection parentCollection, string userId)
+        public async Task ProcessImportAsync(string serializedExport, Container container)
         {
             _sets = await _dbContext.Sets.ToListAsync();
             var model = JsonConvert.DeserializeObject<CollectionExportModel>(serializedExport);
             _cardSets = await GetRelevantCardSetsAsync(model);
 
-            ProcessCollection(model, parentCollection, userId);
+            ProcessCollection(model, container);
             await _dbContext.SaveChangesAsync();
         }
 
         private async Task<List<CardSet>> GetRelevantCardSetsAsync(CollectionExportModel model)
         {
-            var names = GetFlattenedImportableCards(model).Select(x => x.Name).ToList();
+            var names = model.Cards.Select(x => x.Name).ToList();
 
             return await _dbContext.CardSets
                 .Include(x => x.Card)
                 .Where(x => names.Contains(x.Card.Name))
                 .ToListAsync();
-        }
-
-        private List<CardInstanceExportModel> GetFlattenedImportableCards(CollectionExportModel collection)
-        {
-            var list = new List<CardInstanceExportModel>();
-            
-            list.AddRange(collection.Cards);
-
-            if (collection.SubCollections != null && collection.SubCollections.Any())
-            {
-                foreach (var subCollection in collection.SubCollections)
-                {
-                    list.AddRange(GetFlattenedImportableCards(subCollection));
-                }
-            }
-
-            return list;
         }
 
         private Func<CardSet, Boolean> GetCondition(CardInstanceExportModel cardInstanceExportModel)
@@ -66,21 +49,16 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
                 (x.Num == null || x.Num == cardInstanceExportModel.Num || x.Num == cardInstanceExportModel.Num + "a");
         }
 
-        private void ProcessCollection(CollectionExportModel collection, Collection parentCollection, string userId) {
+        private void ProcessCollection(CollectionExportModel collection, Container container) {
             var collectionEntity = new Collection() {
                 Name = collection.Name,
-                Parent = parentCollection,
-                OwnerUserId = userId,
+                Container = container,
             };
 
             _dbContext.Collections.Add(collectionEntity);
 
             foreach (var card in collection.Cards) {
                 ProcessCard(card, collectionEntity);
-            }
-
-            foreach (var subCollection in collection.SubCollections) {
-                ProcessCollection(subCollection, collectionEntity, userId);
             }
         }
 

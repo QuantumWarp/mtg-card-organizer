@@ -9,7 +9,7 @@ using MtgCardOrganizer.Core.Responses;
 namespace MtgCardOrganizer.Api.Controllers
 {
     [Authorize]
-    [Route("api/collections")]
+    [Route("api/containers")]
     public class ContainerRepository : Controller
     {
         public IContainerRepository _containerRepository;
@@ -21,7 +21,7 @@ namespace MtgCardOrganizer.Api.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<Container> Get(int containerId)
+        public async Task<Container> Get(int? containerId)
         {
             return await _containerRepository.GetAsync(containerId);
         }

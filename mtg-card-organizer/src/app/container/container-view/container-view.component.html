@@ -1,0 +1,14 @@
+<div class="padded-page">
+  <app-page-header></app-page-header>
+  <app-title-and-trail [title]="container ? container.name : authService.username + '\'s Collections'">
+    <button [matMenuTriggerFor]="collectionMenu" class="options-button mat-elevation-z4" mat-icon-button>
+      <mat-icon>settings</mat-icon>
+    </button>
+  </app-title-and-trail>
+
+  <mat-menu #collectionMenu="matMenu">
+    <button mat-menu-item (click)="createContainer()">Add Container</button>
+    <button mat-menu-item (click)="createCollection()">Add Collection</button>
+    <button mat-menu-item (click)="createDeck()">Add Deck</button>
+  </mat-menu>
+</div>
