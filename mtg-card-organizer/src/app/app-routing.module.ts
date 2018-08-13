@@ -51,6 +51,10 @@ const testRoutes: Route[] = environment.testSettings && environment.testSettings
             loadChildren: 'app/life-counter/life-counter.module#LifeCounterModule',
           },
           {
+            path: 'collections',
+            loadChildren: 'app/collection/collection.module#CollectionModule',
+          },
+          {
             path: 'containers',
             loadChildren: 'app/container/container.module#ContainerModule',
           },

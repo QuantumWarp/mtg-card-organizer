@@ -21,16 +21,10 @@ namespace MtgCardOrganizer.Api.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<Container> Get(int? containerId)
+        [Route("{id}")]
+        public async Task<Container> Get(int? id)
         {
-            return await _containerRepository.GetAsync(containerId);
-        }
-
-        [HttpPost]
-        [Route("")]
-        public async Task<PagedData<Container>> Query([FromBody] QueryModel<Container> queryModel)
-        {
-            return await _containerRepository.GetManyAsync(queryModel);
+            return await _containerRepository.GetAsync(id);
         }
 
         [HttpPost]

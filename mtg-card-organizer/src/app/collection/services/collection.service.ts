@@ -13,21 +13,12 @@ import { Collection } from '../models/collection';
 import { map } from 'rxjs/internal/operators';
 
 @Injectable()
-export class CollectionService implements DataService<Collection> {
+export class CollectionService {
 
   constructor(private apiService: ApiService) { }
 
-  query(pageSortFilter: PageSortFilter): Observable<PagedData<Collection>> {
-    return this.apiService.get<PagedData<Collection>>('api/collections', pageSortFilter);
-  }
-
-  queryBaseCollections(pageSortFilter: PageSortFilter): Observable<PagedData<Collection>> {
-    pageSortFilter.addSubFilter(new PropertyFilter({
-      property: 'parentId',
-      operator: PropertyFilterOperator.IsEqual,
-      value: null,
-    }));
-    return this.apiService.get<PagedData<Collection>>('api/collections', pageSortFilter);
+  get(collectionId: number): Observable<Collection> {
+    return this.apiService.get<Collection>('api/collections/' + collectionId);
   }
 
   queryCards(collectionId: number, cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
@@ -42,11 +33,11 @@ export class CollectionService implements DataService<Collection> {
     return this.apiService.post<boolean>('api/collections/' + collectionId + '/import', importString);
   }
 
-  createCollection(collectionName: string, parentCollectionId?: number) {
-    return this.apiService.post<boolean>('api/collections', new Collection({ name: collectionName, parentId: parentCollectionId }));
+  create(collectionName: string, containerId: number) {
+    return this.apiService.post<Collection>('api/collections', new Collection({ name: collectionName, containerId: containerId }));
   }
 
-  deleteCollection(collectionId: number) {
+  delete(collectionId: number) {
     return this.apiService.delete<boolean>('api/collections/' + collectionId);
   }
 

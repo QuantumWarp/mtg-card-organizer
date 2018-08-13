@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { CollectionService } from '../collection/services/collection.service';
+import { DeckService } from '../deck/services/deck.service';
 import { SharedModule } from '../shared/shared.module';
+import { AddCollectionModalComponent } from './add-modals/add-collection-modal.component';
+import { AddContainerModalComponent } from './add-modals/add-container-modal.component';
+import { AddDeckModalComponent } from './add-modals/add-deck-modal.component';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { ContainerViewComponent } from './container-view/container-view.component';
 import { DeckListComponent } from './deck-list/deck-list.component';
@@ -15,6 +20,14 @@ import { SubContainerListComponent } from './sub-container-list/sub-container-li
     SubContainerListComponent,
     CollectionListComponent,
     DeckListComponent,
+    AddContainerModalComponent,
+    AddCollectionModalComponent,
+    AddDeckModalComponent,
+  ],
+  entryComponents: [
+    AddContainerModalComponent,
+    AddCollectionModalComponent,
+    AddDeckModalComponent,
   ],
   imports: [
     SharedModule,
@@ -27,6 +40,8 @@ import { SubContainerListComponent } from './sub-container-list/sub-container-li
   providers: [
     ContainerService,
     ContainerResolver,
+    CollectionService,
+    DeckService,
   ]
 })
 export class ContainerModule {}

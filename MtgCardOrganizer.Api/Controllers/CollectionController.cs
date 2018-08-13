@@ -23,7 +23,7 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("{id}")]
         public async Task<Collection> Get(int collectionId)
         {
             return await _collectionRepository.GetAsync(collectionId);

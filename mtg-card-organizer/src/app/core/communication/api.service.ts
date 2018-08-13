@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { QueryStringGenerator } from '../../shared/utils/query-string-generator.interface';
-import { saveFile } from '../../collection/services/download-helper';
+import { saveFile } from '../../shared/utils/download-helper';
 
 @Injectable()
 export class ApiService {

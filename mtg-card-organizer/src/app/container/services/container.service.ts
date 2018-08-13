@@ -21,11 +21,11 @@ export class ContainerService implements DataService<Container> {
     return this.apiService.get<Container>(url);
   }
 
-  create(collectionName: string, parentCollectionId?: number) {
-    return this.apiService.post<Container>('api/collections', new Container({ name: collectionName, parentId: parentCollectionId }));
+  create(containerName: string, parentId: number) {
+    return this.apiService.post<Container>('api/containers', new Container({ name: containerName, parentId: parentId }));
   }
 
-  delete(collectionId: number) {
-    return this.apiService.delete('api/collections/' + collectionId);
+  delete(containerId: number) {
+    return this.apiService.delete('api/containers/' + containerId);
   }
 }

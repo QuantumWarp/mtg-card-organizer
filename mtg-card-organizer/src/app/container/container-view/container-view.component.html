@@ -11,4 +11,10 @@
     <button mat-menu-item (click)="createCollection()">Add Collection</button>
     <button mat-menu-item (click)="createDeck()">Add Deck</button>
   </mat-menu>
+
+  <div class="item-lists">
+    <app-sub-container-list [containers]="container.subContainers"></app-sub-container-list>
+    <app-collection-list [collections]="container.collections"></app-collection-list>
+    <app-deck-list [decks]="container.decks"></app-deck-list>
+  </div>
 </div>

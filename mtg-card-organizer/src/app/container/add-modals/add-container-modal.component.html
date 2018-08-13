@@ -1,0 +1,12 @@
+<mat-toolbar>Add Container</mat-toolbar>
+
+<div class="confirm-dialog-content">
+  <mat-form-field>
+    <input matInput [(ngModel)]="name" placeholder="Name">
+  </mat-form-field>
+</div>
+
+<mat-toolbar>
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button (click)="confirm()" mat-raised-button color="primary" [disabled]="!name">Confirm</button>
+</mat-toolbar>

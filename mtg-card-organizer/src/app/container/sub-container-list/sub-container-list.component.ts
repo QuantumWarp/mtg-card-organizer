@@ -9,7 +9,7 @@ import { Container } from '../models/container';
   styleUrls: ['./sub-container-list.component.scss']
 })
 export class SubContainerListComponent {
-  @Input() container: Container[];
+  @Input() containers: Container[];
 
   constructor(private router: Router) { }
 

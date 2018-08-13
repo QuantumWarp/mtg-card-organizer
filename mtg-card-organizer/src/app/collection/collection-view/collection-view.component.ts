@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,21 +6,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { CardRapidEntryComponent } from '../../card/card-rapid-entry/card-rapid-entry.component';
 import { CardInstance } from '../../card/models/card-instance';
-import { LoadingService } from '../../core/loading/loading.service';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
-import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
-import { PropertyFilter } from '../../shared/filtering/property-filter';
-import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
 import { CollectionExportComponent } from '../collection-export/collection-export.component';
-import { CollectionImportComponent } from '../collection-import/collection-import.component';
 import { Collection } from '../models/collection';
 import { CollectionService } from '../services/collection.service';
 import { CollectionCardsComponent } from './collection-cards.component';
-import { CreateCollectionComponent } from './create-collection.component';
-import { SubCollectionsComponent } from './sub-collections.component';
 
 @Component({
   selector: 'app-collection-view',
@@ -28,27 +21,19 @@ import { SubCollectionsComponent } from './sub-collections.component';
   styleUrls: ['../collection.scss']
 })
 export class CollectionViewComponent implements OnInit {
-  @ViewChild(SubCollectionsComponent) subCollectionsComponent: SubCollectionsComponent;
-  @ViewChild(CollectionCardsComponent) collectionCardsComponent: CollectionCardsComponent;
-
   collection: Collection;
-  subCollections = new Array<Collection>();
 
   constructor(
     public collectionService: CollectionService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private loadingService: LoadingService,
     private notificationService: SnackNotificationService,
-    public authService: AuthenticationService,
-    private changeDetector: ChangeDetectorRef) { }
+    public authService: AuthenticationService) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe(() => {
       this.collection = this.route.snapshot.data['collection'];
-      this.changeDetector.detectChanges();
-      this.refreshSubCollections();
     });
   }
 
@@ -71,18 +56,6 @@ export class CollectionViewComponent implements OnInit {
     dialogRef.componentInstance.collection = this.collection;
   }
 
-  openImport(): void {
-    const dialogRef = this.dialog.open(CollectionImportComponent);
-    dialogRef.componentInstance.collection = this.collection;
-    dialogRef.afterClosed().subscribe(success => success ? this.refreshSubCollections() : null);
-  }
-
-  createCollection(): void {
-    const dialogRef = this.dialog.open(CreateCollectionComponent);
-    dialogRef.componentInstance.parentCollection = this.collection;
-    dialogRef.afterClosed().subscribe(success => success ? this.refreshSubCollections() : null);
-  }
-
   deleteCollection(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: new ConfirmDialogData({
@@ -92,45 +65,17 @@ export class CollectionViewComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        const deletePromise = this.collectionService.deleteCollection(this.collection.id).toPromise();
+        // const deletePromise = this.collectionService.deleteCollection(this.collection.id).toPromise();
         const navPromise = () => {
-          if (this.collection.parentId) {
-            return this.router.navigate([this.collection ? '../' : './', this.collection.parentId], { relativeTo: this.route });
+          if (this.collection.containerId) {
+            return this.router.navigate([this.collection ? '../' : './', this.collection.containerId], { relativeTo: this.route });
           } else {
             return this.router.navigate(['../'], { relativeTo: this.route });
           }
         };
-        this.loadingService.load('Deleting...', deletePromise.then(navPromise));
-        deletePromise.then(() => this.notificationService.notify({ message: 'Collection Deleted', type: SnackNotificationType.Success }));
+        // this.loadingService.load('Deleting...', deletePromise.then(navPromise));
+        // deletePromise.then(() => this.notificationService.notify({ message: 'Collection Deleted', type: SnackNotificationType.Success }));
       }
-    });
-  }
-
-  private refreshSubCollections(): void {
-    this.subCollections = new Array<Collection>();
-
-    if (!this.collection) {
-      this.refreshAsBase();
-    } else {
-      this.refresh();
-    }
-  }
-
-  private refresh(): void {
-    const pageSortFilter = new PageSortFilter();
-    pageSortFilter.addSubFilter(new PropertyFilter({
-      property: 'parentId',
-      operator: PropertyFilterOperator.IsEqual,
-      value: this.collection.id
-    }));
-    this.collectionService.query(pageSortFilter).subscribe(result => {
-      this.subCollections = result.data;
-    });
-  }
-
-  private refreshAsBase(): void {
-    this.collectionService.queryBaseCollections(new PageSortFilter()).subscribe(result => {
-      this.subCollections = result.data;
     });
   }
 }

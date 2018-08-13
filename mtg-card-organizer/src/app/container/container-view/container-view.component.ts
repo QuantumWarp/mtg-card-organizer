@@ -1,19 +1,12 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatDialog } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
-import { CardRapidEntryComponent } from '../../card/card-rapid-entry/card-rapid-entry.component';
-import { CardInstance } from '../../card/models/card-instance';
-import { LoadingService } from '../../core/loading/loading.service';
-import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
-import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
-import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
-import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
-import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
-import { PropertyFilter } from '../../shared/filtering/property-filter';
-import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
+import { AddCollectionModalComponent } from '../add-modals/add-collection-modal.component';
+import { AddContainerModalComponent } from '../add-modals/add-container-modal.component';
+import { AddDeckModalComponent } from '../add-modals/add-deck-modal.component';
 import { Container } from '../models/container';
 import { ContainerService } from '../services/container.service';
 
@@ -28,7 +21,7 @@ export class ContainerViewComponent implements OnInit {
   constructor(
     public containerService: ContainerService,
     private route: ActivatedRoute,
-
+    private dialog: MatDialog,
     public authService: AuthenticationService,
     private changeDetector: ChangeDetectorRef) { }
 
@@ -40,14 +33,20 @@ export class ContainerViewComponent implements OnInit {
   }
 
   createContainer(): void {
-
+    this.dialog.open(AddContainerModalComponent, { data: this.container });
   }
 
   createCollection(): void {
-
+    this.dialog.open(AddCollectionModalComponent, { data: this.container });
   }
 
   createDeck(): void {
+    this.dialog.open(AddDeckModalComponent, { data: this.container });
+  }
 
+  openImport(): void {
+    // const dialogRef = this.dialog.open(CollectionImportComponent);
+    // dialogRef.componentInstance.collection = this.collection;
+    // dialogRef.afterClosed().subscribe(success => success ? this.refreshSubCollections() : null);
   }
 }
