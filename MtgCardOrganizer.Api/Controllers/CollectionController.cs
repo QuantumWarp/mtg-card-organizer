@@ -22,68 +22,44 @@ namespace MtgCardOrganizer.Api.Controllers
             _collectionRepository = collectionRepository;
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<Collection> Get(int collectionId)
+        [HttpGet("{id}")]
+        public async Task<Collection> Get(int id)
         {
-            return await _collectionRepository.GetAsync(collectionId);
+            return await _collectionRepository.GetAsync(id);
         }
 
         [HttpPost]
-        [Route("")]
         public async Task<Collection> Create([FromBody] Collection collection)
         {
             return await _collectionRepository.CreateAsync(collection);
         }
         
-        [HttpDelete]
-        [Route("{collectionId}")]
-        public async Task<IActionResult> Delete(int collectionId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            await _collectionRepository.DeleteAsync(collectionId);
+            await _collectionRepository.DeleteAsync(id);
             return NoContent();
         }
         
-        [HttpGet]
-        [Route("{collectionId}/cards")]
-        public async Task<PagedData<CardInstance>> GetCards(int collectionId, [Base64Binder] CardQuery cardQuery)
+        // Card Tasks
+
+        [HttpGet("{id}/cards")]
+        public async Task<PagedData<CardInstance>> GetCards(int id, [Base64Binder] CardQuery cardQuery)
         {
-            return await _collectionRepository.GetCardsAsync(collectionId, cardQuery);
+            return await _collectionRepository.GetCardsAsync(id, cardQuery);
         }
         
-        [HttpPost]
-        [Route("{collectionId}/cards")]
-        public async Task<List<CardInstance>> AddCards(int collectionId, [FromBody] List<CardInstance> cardInstances)
+        [HttpPost("{id}/cards")]
+        public async Task<List<CardInstance>> AddCards(int id, [FromBody] List<CardInstance> cardInstances)
         {
-            return await _collectionRepository.AddCardsAsync(collectionId, cardInstances);
+            return await _collectionRepository.AddCardsAsync(id, cardInstances);
         }
 
-        [HttpPatch]
-        [Route("{collectionId}/cards")]
-        public IActionResult DeleteCards(int collectionId, [FromBody] List<int> cardInstanceIds)
+        [HttpPatch("{id}/cards")]
+        public IActionResult DeleteCards(int id, [FromBody] List<int> cardInstanceIds)
         {
-            _collectionRepository.DeleteCardsAsync(collectionId, cardInstanceIds);
+            _collectionRepository.DeleteCardsAsync(id, cardInstanceIds);
             return NoContent();
         }
-
-        // [HttpGet]
-        // [Route("{collectionId}/download")]
-        // public async Task<IActionResult> Download(int collectionId) {
-        //     var stream = new MemoryStream();
-        //     var writer = new StreamWriter(stream);
-        //     writer.Write(await _collectionRepository.ExportAsync(collectionId));
-        //     writer.Flush();
-        //     stream.Position = 0;
-        //     var response = File(stream, "application/octet-stream", "collection-export.json"); // FileStreamResult
-        //     return response;
-        // }
-        
-        // [HttpPost]
-        // [Route("{collectionId}/import")]
-        // [Route("import")]
-        // public async Task<IActionResult> Import(int? collectionId, [FromBody] string importString) {
-        //     await _collectionRepository.ImportAsync(collectionId, importString);
-        //     return NoContent();
-        // }
     }
 }

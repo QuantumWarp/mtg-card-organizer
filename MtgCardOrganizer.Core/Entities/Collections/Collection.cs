@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MtgCardOrganizer.Core.Entities.Cards;
+using MtgCardOrganizer.Core.Entities.Containers;
 
 namespace MtgCardOrganizer.Core.Entities.Collections
 {

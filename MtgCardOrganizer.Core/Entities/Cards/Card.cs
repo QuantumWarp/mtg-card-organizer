@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MtgCardOrganizer.Core.Entities.Decks;
 
 namespace MtgCardOrganizer.Core.Entities.Cards
 {
@@ -13,5 +14,6 @@ namespace MtgCardOrganizer.Core.Entities.Cards
         public string Type { get; set; }
 
         public ICollection<CardSet> CardSets { get; set; }
+        public ICollection<DeckCard> DeckCards { get; set; }
     }
 }

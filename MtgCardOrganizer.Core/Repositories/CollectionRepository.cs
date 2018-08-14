@@ -70,6 +70,7 @@ namespace MtgCardOrganizer.Core.Repositories
 
         public async Task<List<CardInstance>> AddCardsAsync(int collectionId, List<CardInstance> cardInstances)
         {
+            cardInstances.ForEach(x => x.CollectionId = collectionId);
             await _dbContext.CardInstances.AddRangeAsync(cardInstances);
             await _dbContext.SaveChangesAsync();
             return cardInstances;

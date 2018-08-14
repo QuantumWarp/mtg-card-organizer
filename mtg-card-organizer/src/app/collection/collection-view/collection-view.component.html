@@ -8,10 +8,14 @@
 
   <mat-menu #collectionMenu="matMenu">
     <button mat-menu-item *ngIf="collection" (click)="deleteCollection()">Delete Collection</button>
-    <button mat-menu-item (click)="openImport()">Import</button>
+    <!-- <button mat-menu-item (click)="openImport()">Import</button> -->
     <button mat-menu-item *ngIf="collection" (click)="openExport()">Export</button>
     <button mat-menu-item *ngIf="collection" (click)="openRapidEntry()">Fast Add</button>
   </mat-menu>
 
-  <app-collection-cards [collection]="collection"></app-collection-cards>
+  <app-card-search fxFlex
+    [displayedColumns]="['name', 'setSymbol', 'manaCost', 'foil', 'promo']"
+    [cardService]="collectionCardServiceWrapper"
+    (cardInstanceSelected)="cardInstanceSelected($event)">
+  </app-card-search>
 </div>

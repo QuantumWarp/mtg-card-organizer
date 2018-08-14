@@ -1,16 +1,12 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using MtgCardOrganizer.Core.Entities.Cards;
-using MtgCardOrganizer.Core.Entities.Collections;
+using MtgCardOrganizer.Core.Entities.Containers;
 using MtgCardOrganizer.Core.Enums;
 using MtgCardOrganizer.Core.Initialization;
-using MtgCardOrganizer.Core.Requests;
 using MtgCardOrganizer.Core.Requests.Generic;
 using MtgCardOrganizer.Core.Responses;
 using MtgCardOrganizer.Core.Utilities.General;
-using MtgCardOrganizer.Core.Utilities.ImportExport;
 
 namespace MtgCardOrganizer.Core.Repositories
 {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Entities.Collections;
+using MtgCardOrganizer.Core.Entities.Containers;
 using MtgCardOrganizer.Core.Initialization;
 using Newtonsoft.Json;
 

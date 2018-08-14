@@ -1,6 +1,6 @@
 using MtgCardOrganizer.Core.Enums;
 
-namespace MtgCardOrganizer.Core.Entities.Collections
+namespace MtgCardOrganizer.Core.Entities.Containers
 {
     public class ContainerUserLink
     {

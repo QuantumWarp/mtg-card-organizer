@@ -9,7 +9,7 @@ using MtgCardOrganizer.Core.Requests;
 namespace MtgCardOrganizer.Api.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/admin")]
     public class AdminCardController : Controller
     {
         private IAdminCardRepository _adminCardsRepository;

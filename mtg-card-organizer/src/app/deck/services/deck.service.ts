@@ -17,7 +17,7 @@ export class DeckService implements DataService<Deck> {
   }
 
   create(collectionName: string, containerId: number) {
-    return this.apiService.post<boolean>('api/decks', new Deck({ name: collectionName, parentId: containerId }));
+    return this.apiService.post<boolean>('api/decks', new Deck({ name: collectionName, containerId: containerId }));
   }
 
   delete(collectionId: number) {

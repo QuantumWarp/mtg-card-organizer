@@ -19,7 +19,7 @@ namespace MtgCardOrganizer.Api.Controllers
             _setRepository = setRepository;
         }
 
-        [HttpGet, Route("")]
+        [HttpGet]
         public async Task<PagedData<Set>> Query([FromQuery] QueryModel<Set> queryModel)
         {
             return await _setRepository.GetSetsAsync(queryModel);

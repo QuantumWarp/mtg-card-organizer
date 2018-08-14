@@ -20,7 +20,7 @@ namespace MtgCardOrganizer.Api.Controllers
             _cardRepository = cardRepository;
         }
 
-        [HttpGet, Route("")]
+        [HttpGet]
         public async Task<PagedData<CardSet>> Query([Base64Binder] CardQuery cardQuery)
         {
             return await _cardRepository.GetCardSetsAsync(cardQuery);

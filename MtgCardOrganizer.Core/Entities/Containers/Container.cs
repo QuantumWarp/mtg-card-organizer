@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using MtgCardOrganizer.Core.Entities.Cards;
+using MtgCardOrganizer.Core.Entities.Collections;
+using MtgCardOrganizer.Core.Entities.Decks;
 
-namespace MtgCardOrganizer.Core.Entities.Collections
+namespace MtgCardOrganizer.Core.Entities.Containers
 {
     public class Container : Entity
     {        

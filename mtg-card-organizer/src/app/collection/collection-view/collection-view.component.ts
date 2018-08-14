@@ -12,8 +12,8 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
 import { CollectionExportComponent } from '../collection-export/collection-export.component';
 import { Collection } from '../models/collection';
-import { CollectionService } from '../services/collection.service';
-import { CollectionCardsComponent } from './collection-cards.component';
+import { CollectionService, CollectionCardServiceWrapper } from '../services/collection.service';
+import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
 
 @Component({
   selector: 'app-collection-view',
@@ -22,6 +22,7 @@ import { CollectionCardsComponent } from './collection-cards.component';
 })
 export class CollectionViewComponent implements OnInit {
   collection: Collection;
+  collectionCardServiceWrapper: CollectionCardServiceWrapper;
 
   constructor(
     public collectionService: CollectionService,
@@ -34,7 +35,13 @@ export class CollectionViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(() => {
       this.collection = this.route.snapshot.data['collection'];
+      this.collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionService);
     });
+  }
+
+  cardInstanceSelected(cardInstance: CardInstance): void {
+    const dialogRef = this.dialog.open(CardDetailsModalComponent);
+    dialogRef.componentInstance.cardInstance = cardInstance;
   }
 
   openRapidEntry() {

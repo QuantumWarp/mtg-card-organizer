@@ -9,7 +9,7 @@ using MtgCardOrganizer.Core.Initialization;
 namespace MtgCardOrganizer.Core.Migrations
 {
     [DbContext(typeof(MtgCardOrganizerContext))]
-    [Migration("20180812230230_Initial")]
+    [Migration("20180814223030_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,28 +43,6 @@ namespace MtgCardOrganizer.Core.Migrations
                     b.ToTable("Cards");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Cards.CardInstance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CardSetId");
-
-                    b.Property<int>("CollectionId");
-
-                    b.Property<bool>("Foil");
-
-                    b.Property<bool>("Promo");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardSetId");
-
-                    b.HasIndex("CollectionId");
-
-                    b.ToTable("CardInstances");
-                });
-
             modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Cards.CardSet", b =>
                 {
                     b.Property<int>("Id")
@@ -75,10 +53,6 @@ namespace MtgCardOrganizer.Core.Migrations
 
                     b.Property<int?>("CardId")
                         .IsRequired();
-
-                    b.Property<int?>("DeckId");
-
-                    b.Property<int?>("DeckId1");
 
                     b.Property<string>("MultiverseId");
 
@@ -91,10 +65,6 @@ namespace MtgCardOrganizer.Core.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CardId");
-
-                    b.HasIndex("DeckId");
-
-                    b.HasIndex("DeckId1");
 
                     b.HasIndex("SetId");
 
@@ -117,6 +87,28 @@ namespace MtgCardOrganizer.Core.Migrations
                     b.ToTable("Sets");
                 });
 
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Collections.CardInstance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("CardSetId");
+
+                    b.Property<int>("CollectionId");
+
+                    b.Property<bool>("Foil");
+
+                    b.Property<bool>("Promo");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardSetId");
+
+                    b.HasIndex("CollectionId");
+
+                    b.ToTable("CardInstances");
+                });
+
             modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Collections.Collection", b =>
                 {
                     b.Property<int>("Id")
@@ -134,7 +126,7 @@ namespace MtgCardOrganizer.Core.Migrations
                     b.ToTable("Collections");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Collections.Container", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Containers.Container", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -155,7 +147,7 @@ namespace MtgCardOrganizer.Core.Migrations
                     b.ToTable("Containers");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Collections.ContainerUserLink", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Containers.ContainerUserLink", b =>
                 {
                     b.Property<string>("UserId");
 
@@ -170,7 +162,7 @@ namespace MtgCardOrganizer.Core.Migrations
                     b.ToTable("ContainerUserLinks");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Collections.Deck", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Decks.Deck", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -187,6 +179,28 @@ namespace MtgCardOrganizer.Core.Migrations
                     b.ToTable("Decks");
                 });
 
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Decks.DeckCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CardId");
+
+                    b.Property<int>("Count");
+
+                    b.Property<int?>("DeckId");
+
+                    b.Property<int>("Part");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.HasIndex("DeckId");
+
+                    b.ToTable("DeckCards");
+                });
+
             modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Other.Format", b =>
                 {
                     b.Property<int>("Id")
@@ -200,7 +214,20 @@ namespace MtgCardOrganizer.Core.Migrations
                     b.ToTable("Formats");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Cards.CardInstance", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Cards.CardSet", b =>
+                {
+                    b.HasOne("MtgCardOrganizer.Core.Entities.Cards.Card", "Card")
+                        .WithMany("CardSets")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MtgCardOrganizer.Core.Entities.Cards.Set", "Set")
+                        .WithMany("CardSets")
+                        .HasForeignKey("SetId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Collections.CardInstance", b =>
                 {
                     b.HasOne("MtgCardOrganizer.Core.Entities.Cards.CardSet", "CardSet")
                         .WithMany("CardInstances")
@@ -213,54 +240,44 @@ namespace MtgCardOrganizer.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Cards.CardSet", b =>
-                {
-                    b.HasOne("MtgCardOrganizer.Core.Entities.Cards.Card", "Card")
-                        .WithMany("CardSets")
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MtgCardOrganizer.Core.Entities.Collections.Deck")
-                        .WithMany("Main")
-                        .HasForeignKey("DeckId");
-
-                    b.HasOne("MtgCardOrganizer.Core.Entities.Collections.Deck")
-                        .WithMany("Sideboard")
-                        .HasForeignKey("DeckId1");
-
-                    b.HasOne("MtgCardOrganizer.Core.Entities.Cards.Set", "Set")
-                        .WithMany("CardSets")
-                        .HasForeignKey("SetId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Collections.Collection", b =>
                 {
-                    b.HasOne("MtgCardOrganizer.Core.Entities.Collections.Container", "Container")
+                    b.HasOne("MtgCardOrganizer.Core.Entities.Containers.Container", "Container")
                         .WithMany("Collections")
                         .HasForeignKey("ContainerId");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Collections.Container", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Containers.Container", b =>
                 {
-                    b.HasOne("MtgCardOrganizer.Core.Entities.Collections.Container", "Parent")
+                    b.HasOne("MtgCardOrganizer.Core.Entities.Containers.Container", "Parent")
                         .WithMany("SubContainers")
                         .HasForeignKey("ParentId");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Collections.ContainerUserLink", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Containers.ContainerUserLink", b =>
                 {
-                    b.HasOne("MtgCardOrganizer.Core.Entities.Collections.Container", "Container")
+                    b.HasOne("MtgCardOrganizer.Core.Entities.Containers.Container", "Container")
                         .WithMany("ContainerUserLinks")
                         .HasForeignKey("ContainerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Collections.Deck", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Decks.Deck", b =>
                 {
-                    b.HasOne("MtgCardOrganizer.Core.Entities.Collections.Container", "Container")
+                    b.HasOne("MtgCardOrganizer.Core.Entities.Containers.Container", "Container")
                         .WithMany("Decks")
                         .HasForeignKey("ContainerId");
+                });
+
+            modelBuilder.Entity("MtgCardOrganizer.Core.Entities.Decks.DeckCard", b =>
+                {
+                    b.HasOne("MtgCardOrganizer.Core.Entities.Cards.Card", "Card")
+                        .WithMany("DeckCards")
+                        .HasForeignKey("CardId");
+
+                    b.HasOne("MtgCardOrganizer.Core.Entities.Decks.Deck", "Deck")
+                        .WithMany("Cards")
+                        .HasForeignKey("DeckId");
                 });
 #pragma warning restore 612, 618
         }

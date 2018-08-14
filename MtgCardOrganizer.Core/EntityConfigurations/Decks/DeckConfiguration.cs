@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MtgCardOrganizer.Core.Entities.Collections;
+using MtgCardOrganizer.Core.Entities.Decks;
 
-namespace MtgCardOrganizer.Core.EntityConfigurations.Collections
+namespace MtgCardOrganizer.Core.EntityConfigurations.Decks
 {
     public class DeckConfiguration : EntityConfiguration<Deck>
     {

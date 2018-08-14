@@ -9,7 +9,7 @@ export class ImportService {
   constructor(private apiService: ApiService) { }
 
   import(importString: string): Observable<void> {
-    return this.apiService.post<any>('api/admincard/import-cards', { importString: importString });
+    return this.apiService.post<any>('api/admin/import-cards', { importString: importString });
   }
 }
 

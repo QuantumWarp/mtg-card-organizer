@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Entities.Collections;
 
-namespace MtgCardOrganizer.Core.Entities.Cards
+namespace MtgCardOrganizer.Core.Entities.Collections
 {
     public class CardInstance : Entity
     {

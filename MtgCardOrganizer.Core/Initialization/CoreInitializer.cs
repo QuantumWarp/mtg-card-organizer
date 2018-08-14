@@ -29,10 +29,11 @@ namespace MtgCardOrganizer.Core.Initialization
         public void AddRepositories(IServiceCollection services, IConfigurationRoot configuration)
         {
             services.AddTransient<IAdminCardRepository, AdminCardRepository>();
-            services.AddTransient<ICardRepository, CardRepository>();
             services.AddTransient<IContainerRepository, ContainerRepository>();
-            services.AddTransient<ISetRepository, SetRepository>();
             services.AddTransient<ICollectionRepository, CollectionRepository>();
+            services.AddTransient<IDeckRepository, DeckRepository>();
+            services.AddTransient<ICardRepository, CardRepository>();
+            services.AddTransient<ISetRepository, SetRepository>();
         }
 
         public void AddContexts(IServiceCollection services, IConfigurationRoot configuration)
