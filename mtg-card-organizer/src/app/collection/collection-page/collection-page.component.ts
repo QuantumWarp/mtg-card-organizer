@@ -12,20 +12,21 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
 import { CollectionExportComponent } from '../collection-export/collection-export.component';
 import { Collection } from '../models/collection';
-import { CollectionService, CollectionCardServiceWrapper } from '../services/collection.service';
+import { CollectionService } from '../services/collection.service';
 import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
+import { CollectionCardServiceWrapper, CollectionCardService } from '../services/collection-card.service';
 
 @Component({
-  selector: 'app-collection-view',
-  templateUrl: './collection-view.component.html',
+  selector: 'app-collection-page',
+  templateUrl: './collection-page.component.html',
   styleUrls: ['../collection.scss']
 })
-export class CollectionViewComponent implements OnInit {
+export class CollectionPageComponent implements OnInit {
   collection: Collection;
   collectionCardServiceWrapper: CollectionCardServiceWrapper;
 
   constructor(
-    public collectionService: CollectionService,
+    public collectionCardService: CollectionCardService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
@@ -35,7 +36,7 @@ export class CollectionViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(() => {
       this.collection = this.route.snapshot.data['collection'];
-      this.collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionService);
+      this.collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionCardService);
     });
   }
 
@@ -48,7 +49,7 @@ export class CollectionViewComponent implements OnInit {
     const dialogRef = this.dialog.open(CardRapidEntryComponent, {
       disableClose: true,
       minWidth: '600px',
-      data: (cio: CardInstance[]) => this.collectionService.addCards(this.collection.id, cio).toPromise()
+      data: (cio: CardInstance[]) => this.collectionCardService.addCards(this.collection.id, cio).toPromise()
     });
 
     dialogRef.afterClosed().subscribe(results => {

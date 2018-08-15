@@ -39,18 +39,18 @@ export class CollectionImportComponent {
     myReader.readAsText(file);
   }
 
-  import(): void {
-    const importPromise = this.collectionService.importCards(
-      this.collection ? this.collection.id : null, this.inputArea.nativeElement.value).toPromise();
-    this.loadingService.load('Importing...', importPromise);
-    importPromise.then(() => {
-      this.notificationService.notify({
-        message: 'Collection Imported',
-        type: SnackNotificationType.Success,
-      });
-      this.dialogRef.close(true);
-    });
-  }
+  // import(): void {
+  //   const importPromise = this.collectionService.importCards(
+  //     this.collection ? this.collection.id : null, this.inputArea.nativeElement.value).toPromise();
+  //   this.loadingService.load('Importing...', importPromise);
+  //   importPromise.then(() => {
+  //     this.notificationService.notify({
+  //       message: 'Collection Imported',
+  //       type: SnackNotificationType.Success,
+  //     });
+  //     this.dialogRef.close(true);
+  //   });
+  // }
 
   close(): void {
     this.dialogRef.close(false);

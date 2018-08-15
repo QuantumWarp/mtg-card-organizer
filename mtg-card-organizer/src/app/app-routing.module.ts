@@ -43,20 +43,24 @@ const testRoutes: Route[] = environment.testSettings && environment.testSettings
             loadChildren: 'app/admin/admin.module#AdminModule',
           },
           {
-            path: 'cards',
-            loadChildren: 'app/card/card.module#CardModule',
-          },
-          {
-            path: 'life-counter',
-            loadChildren: 'app/life-counter/life-counter.module#LifeCounterModule',
+            path: 'containers',
+            loadChildren: 'app/container/container.module#ContainerModule',
           },
           {
             path: 'collections',
             loadChildren: 'app/collection/collection.module#CollectionModule',
           },
           {
-            path: 'containers',
-            loadChildren: 'app/container/container.module#ContainerModule',
+            path: 'decks',
+            loadChildren: 'app/deck/deck.module#DeckModule',
+          },
+          {
+            path: 'cards',
+            loadChildren: 'app/card/card.module#CardModule',
+          },
+          {
+            path: 'life-counter',
+            loadChildren: 'app/life-counter/life-counter.module#LifeCounterModule',
           },
         ]
       },

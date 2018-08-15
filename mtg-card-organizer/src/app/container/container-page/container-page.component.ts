@@ -11,11 +11,11 @@ import { Container } from '../models/container';
 import { ContainerService } from '../services/container.service';
 
 @Component({
-  selector: 'app-container-view',
-  templateUrl: './container-view.component.html',
-  styleUrls: ['./container-view.component.scss']
+  selector: 'app-container-page',
+  templateUrl: './container-page.component.html',
+  styleUrls: ['./container-page.component.scss']
 })
-export class ContainerViewComponent implements OnInit {
+export class ContainerPageComponent implements OnInit {
   container: Container;
 
   constructor(

@@ -8,15 +8,15 @@ import { AddCollectionModalComponent } from './add-modals/add-collection-modal.c
 import { AddContainerModalComponent } from './add-modals/add-container-modal.component';
 import { AddDeckModalComponent } from './add-modals/add-deck-modal.component';
 import { CollectionListComponent } from './collection-list/collection-list.component';
-import { ContainerViewComponent } from './container-view/container-view.component';
 import { DeckListComponent } from './deck-list/deck-list.component';
 import { ContainerResolver } from './services/container.resolver';
 import { ContainerService } from './services/container.service';
 import { SubContainerListComponent } from './sub-container-list/sub-container-list.component';
+import { ContainerPageComponent } from './container-page/container-page.component';
 
 @NgModule({
   declarations: [
-    ContainerViewComponent,
+    ContainerPageComponent,
     SubContainerListComponent,
     CollectionListComponent,
     DeckListComponent,
@@ -32,8 +32,8 @@ import { SubContainerListComponent } from './sub-container-list/sub-container-li
   imports: [
     SharedModule,
     RouterModule.forChild([
-      { path: '', component: ContainerViewComponent, resolve: { container: ContainerResolver } },
-      { path: ':id', component: ContainerViewComponent, resolve: { container: ContainerResolver } },
+      { path: '', component: ContainerPageComponent, resolve: { container: ContainerResolver } },
+      { path: ':id', component: ContainerPageComponent, resolve: { container: ContainerResolver } },
     ]),
   ],
   exports: [],

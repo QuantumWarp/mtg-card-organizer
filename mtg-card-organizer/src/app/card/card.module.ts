@@ -7,8 +7,6 @@ import { CardFilterComponent } from './card-filter/card-filter.component';
 import { CardRapidEntryComponent } from './card-rapid-entry/card-rapid-entry.component';
 import { RapidEntryResultGridComponent } from './card-rapid-entry/rapid-entry-result-grid.component';
 import { CardSearchPageComponent } from './card-search-page/card-search-page.component';
-import { CardSearchBarComponent } from './card-search/card-search-bar.component';
-import { CardSearchComponent } from './card-search/card-search.component';
 import { CardService } from './services/card.service';
 import { RapidEntrySingleViewComponent } from './card-rapid-entry/rapid-entry-single-view.component';
 import { SetService } from './services/set.service';
@@ -19,11 +17,13 @@ import { ManaCostComponent } from './mana-symbol/mana-cost.component';
 import { CardDetailsModalComponent } from './card-details/card-details-modal.component';
 import { CardImagePipe } from './card-image/card-image.pipe';
 import { CardImageComponent } from './card-image/card-image.component';
+import { CardInstanceGridComponent } from './card-instance-grid/card-instance-grid.component';
+import { CardSearchBarComponent } from './card-search-bar/card-search-bar.component';
 
 @NgModule({
   declarations: [
     CardDetailsComponent,
-    CardSearchComponent,
+    CardInstanceGridComponent,
     CardSearchBarComponent,
     CardFilterComponent,
     CardSearchPageComponent,
@@ -50,7 +50,7 @@ import { CardImageComponent } from './card-image/card-image.component';
     ]),
   ],
   exports: [
-    CardSearchComponent,
+    CardInstanceGridComponent,
     CardDetailsComponent,
     CardRapidEntryComponent,
     CardDetailsModalComponent,

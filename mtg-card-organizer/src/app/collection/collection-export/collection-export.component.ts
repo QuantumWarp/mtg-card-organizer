@@ -16,7 +16,7 @@ export class CollectionExportComponent {
     private dialogRef: MatDialogRef<CollectionExportComponent>) { }
 
   download(): void {
-    this.collectionService.export(this.collection.id);
+    // this.collectionService.export(this.collection.id);
     this.dialogRef.close(true);
   }
 

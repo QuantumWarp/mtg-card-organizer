@@ -2,19 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from '../../core/communication/api.service';
-import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
-import { PagedData } from '../../shared/filtering/paged-data';
-import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 import { Container } from '../models/container';
 
 @Injectable()
-export class ContainerService implements DataService<Container> {
+export class ContainerService {
 
   constructor(private apiService: ApiService) { }
-
-  query(pageSortFilter: PageSortFilter): Observable<PagedData<Container>> {
-    return this.apiService.get<PagedData<Container>>('api/containers', pageSortFilter);
-  }
 
   get(containerId?: number): Observable<Container> {
     const url = containerId ? 'api/containers/' + containerId : 'api/containers';
@@ -27,5 +20,17 @@ export class ContainerService implements DataService<Container> {
 
   delete(containerId: number) {
     return this.apiService.delete('api/containers/' + containerId);
+  }
+
+  export(containerId: number): void {
+    this.apiService.download('api/containers/' + containerId + '/export');
+  }
+
+  import(containerId: number | undefined, importString: string): void {
+    if (containerId) {
+      this.apiService.post('api/collections/' + containerId + '/import', importString);
+    } else {
+      this.apiService.post('api/collections/import', importString);
+    }
   }
 }

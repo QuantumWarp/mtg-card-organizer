@@ -55,7 +55,7 @@ namespace MtgCardOrganizer.Api.Controllers
             return await _collectionRepository.AddCardsAsync(id, cardInstances);
         }
 
-        [HttpPatch("{id}/cards")]
+        [HttpPost("{id}/cards/delete")]
         public IActionResult DeleteCards(int id, [FromBody] List<int> cardInstanceIds)
         {
             _collectionRepository.DeleteCardsAsync(id, cardInstanceIds);
