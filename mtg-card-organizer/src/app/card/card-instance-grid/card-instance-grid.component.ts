@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 
 import { DataService } from '../../shared/utils/data-service.interface';
 import { CardInstance } from '../models/card-instance';
@@ -12,7 +12,7 @@ import { SetService } from '../services/set.service';
   templateUrl: './card-instance-grid.component.html',
   styleUrls: ['../card.scss']
 })
-export class CardInstanceGridComponent implements OnInit {
+export class CardInstanceGridComponent implements OnInit, OnChanges {
   @Output() cardInstanceSelected = new EventEmitter<CardInstance>();
   @Input() sets: Set[];
   @Input() filter = new CardQuery();
@@ -28,5 +28,10 @@ export class CardInstanceGridComponent implements OnInit {
 
   ngOnInit(): void {
     this.setService.query().subscribe(results => this.sets = results.data);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("test");
+
   }
 }

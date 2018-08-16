@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, OnInit, ViewChild, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 
 import { Card } from '../models/card';
 
@@ -16,7 +16,7 @@ export class ManaCostComponent implements OnChanges {
 
   symbolStringArray = new Array<string>();
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (this.card) {
       this.manaCost = this.card.manaCost;
     }

@@ -23,7 +23,7 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
         }
 
         public async Task<string> ConstructExport(int collectionId) {
-            _sets = (await _setRepository.GetSetsAsync(new QueryModel<Set>())).Data;
+            _sets = await _setRepository.GetSetsAsync();
             var collection = await _collectionRepository.GetAsync(collectionId);       
             return JsonConvert.SerializeObject(this.ConstructExportModel(collection), Formatting.Indented);        
         }

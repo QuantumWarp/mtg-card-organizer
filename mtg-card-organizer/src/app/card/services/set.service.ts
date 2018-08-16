@@ -1,21 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/internal/operators';
 
 import { ApiService } from '../../core/communication/api.service';
 import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
 import { PagedData } from '../../shared/filtering/paged-data';
 import { DataService } from '../../shared/grid/grid-data-source.interfaces';
-import { Cache } from '../../shared/utils/cache';
 import { Set } from '../models/set';
 
 @Injectable()
 export class SetService implements DataService<Set> {
-  private cache = new Cache();
+  private cachedSets: Set[];
 
   constructor(private apiService: ApiService) { }
 
   query(pageSortFilter?: PageSortFilter): Observable<PagedData<Set>> {
-    this.cache.cacheMethod(this.query, () => this.apiService.post<PagedData<Set>>('api/sets', pageSortFilter), !pageSortFilter);
-    return this.apiService.get<PagedData<Set>>('api/sets', pageSortFilter);
+    if (this.cachedSets) {
+      return of(this.applyFilter(this.cachedSets, pageSortFilter));
+    }
+
+    return this.apiService.get<Set[]>('api/sets').pipe(
+      tap(x => this.cachedSets = x),
+      map(x => this.applyFilter(x, pageSortFilter)),
+    );
+  }
+
+  private applyFilter(sets: Set[], pageSortFilter?: PageSortFilter): PagedData<Set> {
+    return new PagedData({
+      data: sets,
+      totalCount: sets.length,
+    });
   }
 }

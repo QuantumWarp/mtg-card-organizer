@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,9 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<PagedData<Set>> Query([FromQuery] QueryModel<Set> queryModel)
+        public async Task<List<Set>> Query()
         {
-            return await _setRepository.GetSetsAsync(queryModel);
+            return await _setRepository.GetSetsAsync();
         }
     }
 }

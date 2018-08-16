@@ -1,15 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Initialization;
-using MtgCardOrganizer.Core.Requests.Generic;
-using MtgCardOrganizer.Core.Responses;
-using MtgCardOrganizer.Core.Utilities.General;
 
 namespace MtgCardOrganizer.Core.Repositories
 {
     public interface ISetRepository
     {
-        Task<PagedData<Set>> GetSetsAsync(QueryModel<Set> queryModel);
+        Task<List<Set>> GetSetsAsync();
     }
 
     public class SetRepository : ISetRepository
@@ -21,10 +21,11 @@ namespace MtgCardOrganizer.Core.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PagedData<Set>> GetSetsAsync(QueryModel<Set> queryModel)
+        public async Task<List<Set>> GetSetsAsync()
         {
-            var defaultSort = new PropertySort<Set>(nameof(Set.Name));
-            return await _dbContext.Sets.ApplyQueryModelAsync(queryModel, defaultSort);
+            return await _dbContext.Sets
+                .OrderBy(x => x.Name)
+                .ToListAsync();
         }
     }
 }

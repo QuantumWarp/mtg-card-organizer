@@ -1,6 +1,4 @@
-import { Component, Input, ElementRef, OnInit, ViewChild, SimpleChanges } from '@angular/core';
-
-import { Card } from '../models/card';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
@@ -19,15 +17,15 @@ export class SingleManaSymbolComponent implements OnChanges {
     return 'ms-' + symbol;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (this.shadow) {
-        this.msField.nativeElement.classList.add('ms-shadow');
+      this.msField.nativeElement.classList.add('ms-shadow');
     }
 
     this.msField.nativeElement.classList.add(SingleManaSymbolComponent.symbolToClass(this.symbolString));
 
     if (this.size > 0) {
-        this.msField.nativeElement.classList.add('ms-' + this.size + 'x');
-      }
+      this.msField.nativeElement.classList.add('ms-' + this.size + 'x');
+    }
   }
 }

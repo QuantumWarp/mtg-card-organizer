@@ -57,7 +57,7 @@ export class RapidEntrySingleViewComponent implements OnInit {
     const searchText = this.searchText;
     const cardQuery = new CardQuery({
       setIds: this.selectedSetIds,
-      name: searchText,
+      name: [ searchText ],
       paging: new Paging({
         limit: 11,
       })

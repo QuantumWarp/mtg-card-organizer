@@ -1,8 +1,3 @@
-<div class="search-bar">
-  <mat-form-field class="search-field" >
-    <input matInput placeholder="Search" [(ngModel)]="nameFilterString" [formControl]="nameFilterControl">
-  </mat-form-field>
-  <div class="filter-button">
-    <button mat-raised-button color="primary" (click)="openFilterDialog()">Filter</button>
-  </div>
-</div>
+<mat-form-field class="search-field" >
+  <input matInput placeholder="Search" [formControl]="nameControl">
+</mat-form-field>

@@ -15,6 +15,7 @@ import { Collection } from '../models/collection';
 import { CollectionService } from '../services/collection.service';
 import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
 import { CollectionCardServiceWrapper, CollectionCardService } from '../services/collection-card.service';
+import { CardQuery } from '../../card/models/card-query';
 
 @Component({
   selector: 'app-collection-page',
@@ -22,6 +23,7 @@ import { CollectionCardServiceWrapper, CollectionCardService } from '../services
   styleUrls: ['../collection.scss']
 })
 export class CollectionPageComponent implements OnInit {
+  filter = new CardQuery();
   collection: Collection;
   collectionCardServiceWrapper: CollectionCardServiceWrapper;
 

@@ -39,24 +39,13 @@ export class CardRapidEntryComponent implements OnInit {
   constructor(
     private loadingService: LoadingService,
     private setService: SetService,
-    private cardService: CardService,
-    private dialog: MatDialog,
-    private dialogRef: MatDialogRef<CardRapidEntryComponent>,
-    @Inject(MAT_DIALOG_DATA) private processPromise: (coi: CardInstance[]) => Promise<boolean>) { }
+    private cardService: CardService) { }
 
   ngOnInit(): void {
-    this.processPromise = this.processPromise ? this.processPromise : () => Promise.resolve(true);
     this.setService.query().subscribe(results => {
       this.sets = results.data;
     });
-
-    this.dialogRef.afterOpen().subscribe(() => setTimeout(() => this.searchTextBox.nativeElement.focus(), 0));
-    this.rapidEntryResultDataSource = new GridDataSource<RapidEntryResult>(this.rapidEntryResultStore, this.paginator, this.resultGrid.sort);
-    this.rapidEntryResultDataSource.refresh(new Paging({ limit: 10 }));
-  }
-
-  applySetFilter(selectedSetIds: number[]): void {
-    this.selectedSetIds = selectedSetIds;
+    this.searchTextBox.nativeElement.focus();
   }
 
   openLatestError(): void {
@@ -66,30 +55,26 @@ export class CardRapidEntryComponent implements OnInit {
     }
   }
 
-  close(): void {
-    this.dialogRef.close();
-  }
-
   apply(): void {
-    if (!this.rapidEntryResultStore.rapidEntryResults.find(x => x.hasError)) {
-      const cardOtherInfos = this.rapidEntryResultStore.rapidEntryResults.map(x => {
-        const command = new CardInstance();
-        command.cardSetId = x.results[0].id;
-        command.foil = x.cardInstance.foil;
-        command.promo = x.cardInstance.promo;
-        return command;
-      });
-      const processPromise = this.processPromise(cardOtherInfos);
-      this.loadingService.load('Processing...', processPromise);
-      processPromise.then(success => {
-        if (success === false) {
-          return;
-        }
-        this.dialogRef.close(cardOtherInfos);
-      });
-    } else {
-      this.openLatestError();
-    }
+    // if (!this.rapidEntryResultStore.rapidEntryResults.find(x => x.hasError)) {
+    //   const cardOtherInfos = this.rapidEntryResultStore.rapidEntryResults.map(x => {
+    //     const command = new CardInstance();
+    //     command.cardSetId = x.results[0].id;
+    //     command.foil = x.cardInstance.foil;
+    //     command.promo = x.cardInstance.promo;
+    //     return command;
+    //   });
+    //   const processPromise = this.processPromise(cardOtherInfos);
+    //   this.loadingService.load('Processing...', processPromise);
+    //   processPromise.then(success => {
+    //     if (success === false) {
+    //       return;
+    //     }
+    //     this.dialogRef.close(cardOtherInfos);
+    //   });
+    // } else {
+    //   this.openLatestError();
+    // }
   }
 
   search(keyEvent: KeyboardEvent): void {
@@ -103,7 +88,7 @@ export class CardRapidEntryComponent implements OnInit {
 
     const cardQuery = new CardQuery({
       setIds: this.selectedSetIds,
-      name: this.searchText === '' ? this.lastSearchText : this.searchText,
+      name: [ this.searchText === '' ? this.lastSearchText : this.searchText ],
       paging: new Paging({
         limit: 11,
       })
