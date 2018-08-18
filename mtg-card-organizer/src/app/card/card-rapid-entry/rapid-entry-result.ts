@@ -3,8 +3,11 @@ import { CardSet } from '../models/card-set';
 
 export class RapidEntryResult {
   entryText: string;
-  selectedSetIds: number[];
   results: CardSet[];
-  hasError: boolean;
+  totalCount: number;
   cardInstance: CardInstance;
+
+  constructor(init?: Partial<RapidEntryResult>) {
+    Object.assign(this, init);
+  }
 }

@@ -41,6 +41,6 @@ export class CardFilterComponent implements OnInit {
     filter.text = filter.text ? [ filter.text ] : [];
     filter.type = filter.type ? [ filter.type ] : [];
 
-    this.filterChanged.emit(filter);
+    this.filterChanged.emit(<CardQuery>filter);
   }
 }

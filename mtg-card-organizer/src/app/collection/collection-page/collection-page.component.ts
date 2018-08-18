@@ -4,28 +4,32 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
+import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
 import { CardRapidEntryComponent } from '../../card/card-rapid-entry/card-rapid-entry.component';
 import { CardInstance } from '../../card/models/card-instance';
+import { CardQuery } from '../../card/models/card-query';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
 import { CollectionExportComponent } from '../collection-export/collection-export.component';
 import { Collection } from '../models/collection';
-import { CollectionService } from '../services/collection.service';
-import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
-import { CollectionCardServiceWrapper, CollectionCardService } from '../services/collection-card.service';
-import { CardQuery } from '../../card/models/card-query';
+import { CollectionCardService, CollectionCardServiceWrapper } from '../services/collection-card.service';
+import { CardInstanceGridComponent } from '../../card/card-instance-grid/card-instance-grid.component';
 
 @Component({
   selector: 'app-collection-page',
   templateUrl: './collection-page.component.html',
-  styleUrls: ['../collection.scss']
+  styleUrls: ['./collection-page.component.scss']
 })
 export class CollectionPageComponent implements OnInit {
+  @ViewChild(CardInstanceGridComponent) grid: CardInstanceGridComponent;
+
   filter = new CardQuery();
   collection: Collection;
   collectionCardServiceWrapper: CollectionCardServiceWrapper;
+
+  mode: 'view' | 'filter' | 'fastAdd' = 'view';
 
   constructor(
     public collectionCardService: CollectionCardService,

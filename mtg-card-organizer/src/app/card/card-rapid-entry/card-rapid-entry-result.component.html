@@ -1,0 +1,11 @@
+Entry - {{ rapidEntryResult?.results.length === 1 ? rapidEntryResult?.results[0].name : rapidEntryResult?.entryText }}
+
+<div>Last Search - {{ rapidEntryResult?.entryText }}</div>
+<div>{{ detailString }}</div>
+
+<div class="result-tiles-container" *ngIf="rapidEntryResult?.results.length > 1">
+  <div class="result-tile mat-elevation-z4" *ngFor="let cardSet of rapidEntryResult.results" (click)="optionClicked(cardSet)">
+    <div class="large-text">{{ cardSet.card.name }}</div>
+    <div><app-ss [cardSet]="cardSet" [sets]="sets"></app-ss> {{ setById(cardSet.setId).name }} - ({{cardSet.num}})</div>
+  </div>
+</div>

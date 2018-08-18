@@ -1,21 +1,16 @@
-import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatPaginator } from '@angular/material';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { LoadingService } from '../../core/loading/loading.service';
-import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
-import { PropertyFilter } from '../../shared/filtering/property-filter';
-import { PropertyFilterOperator } from '../../shared/filtering/property-filter-operator';
-import { GridDataSource } from '../../shared/grid/grid-data-source';
-import { Set } from '../models/set';
-import { CardService } from '../services/card.service';
-import { SetService } from '../services/set.service';
-import { RapidEntryResult } from './rapid-entry-result';
-import { RapidEntryResultGridComponent } from './rapid-entry-result-grid.component';
-import { RapidEntryResultStore } from './rapid-entry-result.store';
-import { CardInstance } from '../models/card-instance';
-import { CardQuery } from '../models/card-query';
 import { Paging } from '../../shared/filtering/paging';
+import { CardQuery } from '../models/card-query';
+import { Set } from '../models/set';
+import { CardSetService } from '../services/card.service';
+import { SetService } from '../services/set.service';
+import { Collection } from '../../collection/models/collection';
+import { CardRapidEntryResultComponent } from './card-rapid-entry-result.component';
+import { RapidEntryResult } from './rapid-entry-result';
+import { CardInstance } from '../models/card-instance';
 
 @Component({
   selector: 'app-card-rapid-entry',
@@ -23,9 +18,11 @@ import { Paging } from '../../shared/filtering/paging';
   styleUrls: ['./card-rapid-entry.scss']
 })
 export class CardRapidEntryComponent implements OnInit {
-  @ViewChild('paginator') paginator: MatPaginator;
-  @ViewChild('resultGrid') resultGrid: RapidEntryResultGridComponent;
-  @ViewChild('searchTextBox') searchTextBox: ElementRef;
+  @Output() searched = new EventEmitter();
+
+  @ViewChild(CardRapidEntryResultComponent) resultComponent: CardRapidEntryResultComponent;
+  @Input() collection: Collection;
+  form: FormGroup;
 
   sets: Set[];
   selectedSetIds = new Array<number>();
@@ -33,89 +30,39 @@ export class CardRapidEntryComponent implements OnInit {
   searchText: string;
   lastSearchText: string;
 
-  rapidEntryResultDataSource: GridDataSource<RapidEntryResult>;
-  rapidEntryResultStore = new RapidEntryResultStore();
-
   constructor(
-    private loadingService: LoadingService,
     private setService: SetService,
-    private cardService: CardService) { }
+    private cardSetService: CardSetService,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.setService.query().subscribe(results => {
-      this.sets = results.data;
+    this.setService.query().subscribe(results => this.sets = results.data);
+    this.form = this.formBuilder.group({
+      name: [, ],
+      setIds: [, ],
     });
-    this.searchTextBox.nativeElement.focus();
   }
 
-  openLatestError(): void {
-    const firstError = this.rapidEntryResultStore.rapidEntryResults.find(x => x.hasError);
-    if (firstError) {
-      this.resultGrid.singleEntryView(firstError, this.selectedSetIds);
+  keyPressed(keyEvent: KeyboardEvent): void {
+    switch (keyEvent.key) {
+      case 'Enter': this.search(); break;
     }
   }
 
-  apply(): void {
-    // if (!this.rapidEntryResultStore.rapidEntryResults.find(x => x.hasError)) {
-    //   const cardOtherInfos = this.rapidEntryResultStore.rapidEntryResults.map(x => {
-    //     const command = new CardInstance();
-    //     command.cardSetId = x.results[0].id;
-    //     command.foil = x.cardInstance.foil;
-    //     command.promo = x.cardInstance.promo;
-    //     return command;
-    //   });
-    //   const processPromise = this.processPromise(cardOtherInfos);
-    //   this.loadingService.load('Processing...', processPromise);
-    //   processPromise.then(success => {
-    //     if (success === false) {
-    //       return;
-    //     }
-    //     this.dialogRef.close(cardOtherInfos);
-    //   });
-    // } else {
-    //   this.openLatestError();
-    // }
-  }
-
-  search(keyEvent: KeyboardEvent): void {
-    switch (keyEvent.code) {
-      case 'ArrowDown':
-        this.openLatestError();
-        return;
-      case 'Enter': break;
-      default: return;
-    }
-
-    const cardQuery = new CardQuery({
-      setIds: this.selectedSetIds,
-      name: [ this.searchText === '' ? this.lastSearchText : this.searchText ],
-      paging: new Paging({
-        limit: 11,
-      })
-    });
-
-    if (this.searchText === '') {
-      this.triggerSearch(this.lastSearchText, cardQuery);
-      return;
-    }
-
-    this.triggerSearch(this.searchText, cardQuery);
-
-    this.lastSearchText = this.searchText;
-    this.searchText = '';
-  }
-
-  private triggerSearch(searchText: string, cardQuery: CardQuery): void {
-    this.cardService.query(cardQuery).subscribe(result => {
-      const rpr: RapidEntryResult = {
-        entryText: searchText,
-        selectedSetIds: this.selectedSetIds,
-        hasError: result.data.length !== 1,
-        results: result.data,
-        cardInstance: new CardInstance()
-       };
-       this.rapidEntryResultStore.rapidEntryResults.splice(0, 0, rpr);
-       this.rapidEntryResultDataSource.refresh();
+  private search(): void {
+    const cardQuery = Object.assign(new CardQuery(), this.form.value);
+    if (!cardQuery.name) { return; }
+    cardQuery.name = [ cardQuery.name ];
+    cardQuery.setIds = cardQuery.setIds ? cardQuery.setIds : [];
+    cardQuery.paging = new Paging({ limit: 10 });
+    this.cardSetService.query(cardQuery).subscribe(results => {
+      const newResult = new RapidEntryResult({
+        cardInstance: new CardInstance(),
+        entryText: cardQuery.name[0],
+        results: results.data,
+        totalCount: results.totalCount,
+      });
+      this.resultComponent.applyNewResult(newResult);
     });
   }
 }

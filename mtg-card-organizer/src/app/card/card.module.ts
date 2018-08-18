@@ -5,10 +5,8 @@ import { SharedModule } from '../shared/shared.module';
 import { CardDetailsComponent } from './card-details/card-details.component';
 import { CardFilterComponent } from './card-filter/card-filter.component';
 import { CardRapidEntryComponent } from './card-rapid-entry/card-rapid-entry.component';
-import { RapidEntryResultGridComponent } from './card-rapid-entry/rapid-entry-result-grid.component';
 import { CardSearchPageComponent } from './card-search-page/card-search-page.component';
-import { CardService } from './services/card.service';
-import { RapidEntrySingleViewComponent } from './card-rapid-entry/rapid-entry-single-view.component';
+import { CardSetService } from './services/card.service';
 import { SetService } from './services/set.service';
 import { SetSymbolComponent } from './set-symbol/set-symbol.component';
 import { SingleManaSymbolComponent } from './mana-symbol/single-mana-symbol.component';
@@ -18,6 +16,7 @@ import { CardImagePipe } from './card-image/card-image.pipe';
 import { CardImageComponent } from './card-image/card-image.component';
 import { CardInstanceGridComponent } from './card-instance-grid/card-instance-grid.component';
 import { CardSearchBarComponent } from './card-search-bar/card-search-bar.component';
+import { CardRapidEntryResultComponent } from './card-rapid-entry/card-rapid-entry-result.component';
 
 @NgModule({
   declarations: [
@@ -27,18 +26,16 @@ import { CardSearchBarComponent } from './card-search-bar/card-search-bar.compon
     CardFilterComponent,
     CardSearchPageComponent,
     CardRapidEntryComponent,
-    RapidEntryResultGridComponent,
-    RapidEntrySingleViewComponent,
     SetSymbolComponent,
     ManaCostComponent,
     SingleManaSymbolComponent,
     CardDetailsModalComponent,
     CardImageComponent,
     CardImagePipe,
+    CardRapidEntryResultComponent,
   ],
   entryComponents: [
     CardFilterComponent,
-    RapidEntrySingleViewComponent,
     CardDetailsModalComponent,
   ],
   imports: [
@@ -55,7 +52,7 @@ import { CardSearchBarComponent } from './card-search-bar/card-search-bar.compon
     CardFilterComponent,
   ],
   providers: [
-    CardService,
+    CardSetService,
     SetService,
     CardImagePipe,
   ]

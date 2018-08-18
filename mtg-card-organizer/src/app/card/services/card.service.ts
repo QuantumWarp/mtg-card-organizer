@@ -10,7 +10,7 @@ import { CardInstance } from '../models/card-instance';
 import { map } from 'rxjs/internal/operators';
 
 @Injectable()
-export class CardService implements DataService<CardSet> {
+export class CardSetService implements DataService<CardSet> {
 
   constructor(private apiService: ApiService) { }
 
@@ -21,10 +21,10 @@ export class CardService implements DataService<CardSet> {
 
 export class CardServiceInstanceWrapper implements DataService<CardInstance> {
 
-  constructor(private cardService: CardService) { }
+  constructor(private cardSetService: CardSetService) { }
 
   query(cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
-    return this.cardService.query(cardQuery).pipe(
+    return this.cardSetService.query(cardQuery).pipe(
       map(x => new PagedData<CardInstance>({
         data: x.data.map(cs => new CardInstance({ cardSet: cs })),
         totalCount: x.totalCount,
