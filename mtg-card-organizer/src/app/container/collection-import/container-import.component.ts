@@ -4,24 +4,22 @@ import { MatDialogRef } from '@angular/material';
 import { LoadingService } from '../../core/loading/loading.service';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
-import { Collection } from '../models/collection';
-import { CollectionService } from '../services/collection.service';
+import { Container } from '../models/container';
+import { ContainerService } from '../services/container.service';
 
 @Component({
-  selector: 'app-collection-import',
-  templateUrl: './collection-import.component.html',
-  styleUrls: ['../collection.scss']
+  templateUrl: './container-import.component.html'
 })
-export class CollectionImportComponent {
+export class ContainerImportComponent {
   @ViewChild('fileInput') fileInput: ElementRef;
   @ViewChild('inputArea') inputArea: ElementRef;
-  @Input() collection: Collection;
+  @Input() container: Container;
 
   constructor(
     private loadingService: LoadingService,
     private notificationService: SnackNotificationService,
-    private collectionService: CollectionService,
-    private dialogRef: MatDialogRef<CollectionImportComponent>) { }
+    private containerService: ContainerService,
+    private dialogRef: MatDialogRef<ContainerImportComponent>) { }
 
   openFileDialog(): void {
     const event = new MouseEvent('click', {bubbles: false});
@@ -39,18 +37,17 @@ export class CollectionImportComponent {
     myReader.readAsText(file);
   }
 
-  // import(): void {
-  //   const importPromise = this.collectionService.importCards(
-  //     this.collection ? this.collection.id : null, this.inputArea.nativeElement.value).toPromise();
-  //   this.loadingService.load('Importing...', importPromise);
-  //   importPromise.then(() => {
-  //     this.notificationService.notify({
-  //       message: 'Collection Imported',
-  //       type: SnackNotificationType.Success,
-  //     });
-  //     this.dialogRef.close(true);
-  //   });
-  // }
+  import(): void {
+    const importPromise = this.containerService.import(this.container.id, this.inputArea.nativeElement.value).toPromise();
+    this.loadingService.load('Importing...', importPromise);
+    importPromise.then(() => {
+      this.notificationService.notify({
+        message: 'Collection Imported',
+        type: SnackNotificationType.Success,
+      });
+      this.dialogRef.close(true);
+    });
+  }
 
   close(): void {
     this.dialogRef.close(false);

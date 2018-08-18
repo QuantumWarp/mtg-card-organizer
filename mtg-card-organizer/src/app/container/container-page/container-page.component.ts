@@ -9,6 +9,7 @@ import { AddContainerModalComponent } from '../add-modals/add-container-modal.co
 import { AddDeckModalComponent } from '../add-modals/add-deck-modal.component';
 import { Container } from '../models/container';
 import { ContainerService } from '../services/container.service';
+import { ContainerImportComponent } from '../collection-import/container-import.component';
 
 @Component({
   selector: 'app-container-page',
@@ -45,8 +46,7 @@ export class ContainerPageComponent implements OnInit {
   }
 
   openImport(): void {
-    // const dialogRef = this.dialog.open(CollectionImportComponent);
-    // dialogRef.componentInstance.collection = this.collection;
-    // dialogRef.afterClosed().subscribe(success => success ? this.refreshSubCollections() : null);
+    const dialogRef = this.dialog.open(ContainerImportComponent);
+    dialogRef.componentInstance.container = this.container;
   }
 }

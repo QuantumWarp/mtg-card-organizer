@@ -7,6 +7,7 @@ using MtgCardOrganizer.Core.Initialization;
 using MtgCardOrganizer.Core.Requests.Generic;
 using MtgCardOrganizer.Core.Responses;
 using MtgCardOrganizer.Core.Utilities.General;
+using MtgCardOrganizer.Core.Utilities.ImportExport;
 
 namespace MtgCardOrganizer.Core.Repositories
 {
@@ -18,6 +19,7 @@ namespace MtgCardOrganizer.Core.Repositories
         Task<PagedData<Container>> GetManyAsync(QueryModel<Container> queryModel);
         Task<Container> CreateAsync(Container container);
         Task DeleteAsync(int containerId);
+        Task ImportAsync(int containerId, string importString);
     }
 
     public class ContainerRepository : IContainerRepository
@@ -96,8 +98,8 @@ namespace MtgCardOrganizer.Core.Repositories
         //     return await new Exporter(this, new SetRepository(_dbContext)).ConstructExport(collectionId);
         // }
 
-        // public async Task Import(int? collectionId, string importString) {
-        //     await new Importer(_dbContext).ProcessImportAsync(importString, null, _user.Id);
-        // }
+        public async Task ImportAsync(int containerId, string importString) {
+            await new Importer(_dbContext).ProcessImportAsync(containerId, importString);
+        }
     }
 }

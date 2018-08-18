@@ -26,11 +26,7 @@ export class ContainerService {
     this.apiService.download('api/containers/' + containerId + '/export');
   }
 
-  import(containerId: number | undefined, importString: string): void {
-    if (containerId) {
-      this.apiService.post('api/collections/' + containerId + '/import', importString);
-    } else {
-      this.apiService.post('api/collections/import', importString);
-    }
+  import(containerId: number, importString: string): Observable<any> {
+    return this.apiService.post('api/containers/' + containerId + '/import', importString);
   }
 }

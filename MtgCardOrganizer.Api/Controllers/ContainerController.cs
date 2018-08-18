@@ -35,5 +35,12 @@ namespace MtgCardOrganizer.Api.Controllers
             await _containerRepository.DeleteAsync(id);
             return NoContent();
         }
+
+        [HttpPost("{id}/import")]
+        public async Task<IActionResult> Import(int id, [FromBody] string importString)
+        {
+            await _containerRepository.ImportAsync(id, importString);
+            return NoContent();
+        }
     }
 }

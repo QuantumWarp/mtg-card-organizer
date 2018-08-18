@@ -22,13 +22,13 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
             _dbContext = dbContext;
         }
 
-        public async Task ProcessImportAsync(string serializedExport, Container container)
+        public async Task ProcessImportAsync(int containerId, string serializedExport)
         {
             _sets = await _dbContext.Sets.ToListAsync();
             var model = JsonConvert.DeserializeObject<CollectionExportModel>(serializedExport);
             _cardSets = await GetRelevantCardSetsAsync(model);
 
-            ProcessCollection(model, container);
+            ProcessCollection(containerId, model);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -50,10 +50,10 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
                 (x.Num == null || x.Num == cardInstanceExportModel.Num || x.Num == cardInstanceExportModel.Num + "a");
         }
 
-        private void ProcessCollection(CollectionExportModel collection, Container container) {
+        private void ProcessCollection(int containerId, CollectionExportModel collection) {
             var collectionEntity = new Collection() {
                 Name = collection.Name,
-                Container = container,
+                ContainerId = containerId,
             };
 
             _dbContext.Collections.Add(collectionEntity);
@@ -72,6 +72,7 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
                 Foil = cardInstanceExportModel.Foil,
                 Promo = cardInstanceExportModel.Promo,
                 CardSet = cardSet,
+                Collection = collection,
             };
 
             _dbContext.CardInstances.Add(cardInstance);
