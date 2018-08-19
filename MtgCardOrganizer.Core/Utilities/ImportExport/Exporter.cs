@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Entities.Collections;
+using MtgCardOrganizer.Core.Entities.Containers;
 using MtgCardOrganizer.Core.Repositories;
 using MtgCardOrganizer.Core.Requests;
 using MtgCardOrganizer.Core.Requests.Generic;
@@ -12,38 +13,58 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
 {
     public class Exporter
     {
-        private CollectionRepository _collectionRepository;
-        private SetRepository _setRepository;
+        private ISetRepository _setRepository;
+        
+        private IContainerRepository _containerRepository;
+        private ICollectionRepository _collectionRepository;
+        private IDeckRepository _deckRepository;
 
         private List<Set> _sets;
 
-        public Exporter(CollectionRepository collectionRepository, SetRepository setRepository) {
-            _collectionRepository = collectionRepository;
+        public Exporter(
+            IContainerRepository containerRepository,
+            ICollectionRepository collectionRepository,
+            IDeckRepository deckRepository,
+            ISetRepository setRepository)
+        {
             _setRepository = setRepository;
+            _containerRepository = containerRepository;        
+            _collectionRepository = collectionRepository;
+            _deckRepository = deckRepository;
         }
 
-        public async Task<string> ConstructExport(int collectionId) {
+        public async Task<string> GetExportStringAsync(int containerId) {
             _sets = await _setRepository.GetSetsAsync();
-            var collection = await _collectionRepository.GetAsync(collectionId);       
-            return JsonConvert.SerializeObject(this.ConstructExportModel(collection), Formatting.Indented);        
+            var container = await _containerRepository.GetAsync(containerId);
+            var exportModel = await this.ConstructExportModelAsync(container, true);     
+            return JsonConvert.SerializeObject(exportModel, Formatting.Indented);        
         }
 
-        private async Task<CollectionExportModel> ConstructExportModel(Collection collection) {
-            var model = new CollectionExportModel();
-            model.Name = collection.Name;
+        private async Task<ContainerExportModel> ConstructExportModelAsync(Container container, bool firstIteration = false) {
+            var containerModel = firstIteration ? new ContainerExportModel() : new ContainerExportModel(container);
 
-            var cardDetailsDtos = await _collectionRepository.GetCardsAsync(collection.Id, new CardQuery());
-            model.Cards = cardDetailsDtos.Data.Select(x => {
-                var card = new CardInstanceExportModel();
-                card.Name = x.CardSet.Card.Name;
-                card.SetName = _sets.Single(set => set == x.CardSet.Set).Name;
-                card.Num = x.CardSet.Num;
-                card.Foil = x.Foil;
-                card.Promo = x.Promo;
-                return card;
-            }).ToList();
-      
-            return model;
+            foreach (var subContainer in container.SubContainers)
+            {
+                var fullSubContainer = await _containerRepository.GetAsync(subContainer.Id);
+                var subContainerModel = await ConstructExportModelAsync(fullSubContainer);
+                containerModel.SubContainers.Add(subContainerModel);
+            }
+
+            foreach (var collection in container.Collections)
+            {
+                var collectionModel = new CollectionExportModel(collection);
+                var cardInstances = await _collectionRepository.GetCardsAsync(collection.Id, new CardQuery { Paging = new Paging() });
+                collectionModel.Cards = cardInstances.Data.Select(x => new CardInstanceExportModel(x, _sets)).ToList();
+                containerModel.Collections.Add(collectionModel);
+            }
+            
+            foreach (var deck in container.Decks)
+            {
+                var deckModel = new DeckExportModel(deck);
+                containerModel.Decks.Add(deckModel);
+            }
+
+            return containerModel;
         }
     }
 }

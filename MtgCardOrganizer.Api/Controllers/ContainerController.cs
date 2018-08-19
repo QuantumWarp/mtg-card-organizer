@@ -10,11 +10,15 @@ namespace MtgCardOrganizer.Api.Controllers
     [Route("api/containers")]
     public class ContainerRepository : Controller
     {
-        public IContainerRepository _containerRepository;
+        private readonly IContainerRepository _containerRepository;
+        private readonly IImportExportService _importExportService;
 
-        public ContainerRepository(IContainerRepository containerRepository)
+        public ContainerRepository(
+            IContainerRepository containerRepository,
+            IImportExportService importExportService)
         {
             _containerRepository = containerRepository;
+            _importExportService = importExportService;
         }
 
         [HttpGet("{id?}")]
@@ -36,11 +40,18 @@ namespace MtgCardOrganizer.Api.Controllers
             return NoContent();
         }
 
+        [HttpGet("{id}/export")]
+        public async Task<string> Export(int id)
+        {
+            return await _importExportService.ExportAsync(id);
+        }
+
         [HttpPost("{id}/import")]
         public async Task<IActionResult> Import(int id, [FromBody] string importString)
         {
-            await _containerRepository.ImportAsync(id, importString);
+            await _importExportService.ImportAsync(id, importString);
             return NoContent();
         }
+
     }
 }

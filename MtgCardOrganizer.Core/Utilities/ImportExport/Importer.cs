@@ -16,66 +16,55 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
         private MtgCardOrganizerContext _dbContext;
 
         private List<Set> _sets;
-        private List<CardSet> _cardSets;
         
-        public Importer(MtgCardOrganizerContext dbContext) {
+        public Importer(MtgCardOrganizerContext dbContext)
+        {
             _dbContext = dbContext;
         }
 
         public async Task ProcessImportAsync(int containerId, string serializedExport)
         {
             _sets = await _dbContext.Sets.ToListAsync();
-            var model = JsonConvert.DeserializeObject<CollectionExportModel>(serializedExport);
-            _cardSets = await GetRelevantCardSetsAsync(model);
-
-            ProcessCollection(containerId, model);
+            var containerModel = JsonConvert.DeserializeObject<ContainerExportModel>(serializedExport);
+            var container = await _dbContext.Containers.FindAsync(containerId);
+            await DeconstructExportModelAsync(container, containerModel);
             await _dbContext.SaveChangesAsync();
         }
 
-        private async Task<List<CardSet>> GetRelevantCardSetsAsync(CollectionExportModel model)
+        private async Task DeconstructExportModelAsync(Container parentContainer, ContainerExportModel containerModel)
         {
-            var names = model.Cards.Select(x => x.Name).ToList();
+            foreach (var subContainerModel in containerModel.SubContainers)
+            {
+                var subContainer = subContainerModel.ToContainer(parentContainer);
+                await _dbContext.Containers.AddAsync(subContainer);
+                await DeconstructExportModelAsync(subContainer, subContainerModel);
+            }
+
+            foreach (var collectionModel in containerModel.Collections)
+            {
+                var collection = collectionModel.ToCollection();
+                await _dbContext.Collections.AddAsync(collection);
+
+                var relevantCardSets = await GetRelevantCardSetsAsync(collectionModel);
+                var cards = collectionModel.Cards.Select(x => x.ToCardInstance(collection, relevantCardSets, _sets));
+                await _dbContext.CardInstances.AddRangeAsync(cards);
+            }
+            
+            foreach (var deckModel in containerModel.Decks)
+            {
+                var deck = deckModel.ToDeck();
+                await _dbContext.Decks.AddAsync(deck);
+            }
+        }
+
+        private async Task<List<CardSet>> GetRelevantCardSetsAsync(CollectionExportModel collectionModel)
+        {
+            var names = collectionModel.Cards.Select(x => x.Name).ToList();
 
             return await _dbContext.CardSets
                 .Include(x => x.Card)
                 .Where(x => names.Contains(x.Card.Name))
                 .ToListAsync();
-        }
-
-        private Func<CardSet, Boolean> GetCondition(CardInstanceExportModel cardInstanceExportModel)
-        {
-            var possibleSets = _sets.Where(set => set.Name.ToLower() == cardInstanceExportModel.SetName.ToLower());
-            return x => x.Card.Name.ToLower() == cardInstanceExportModel.Name.ToLower() &&
-                possibleSets.Contains(x.Set) &&
-                (x.Num == null || x.Num == cardInstanceExportModel.Num || x.Num == cardInstanceExportModel.Num + "a");
-        }
-
-        private void ProcessCollection(int containerId, CollectionExportModel collection) {
-            var collectionEntity = new Collection() {
-                Name = collection.Name,
-                ContainerId = containerId,
-            };
-
-            _dbContext.Collections.Add(collectionEntity);
-
-            foreach (var card in collection.Cards) {
-                ProcessCard(card, collectionEntity);
-            }
-        }
-
-        private void ProcessCard(CardInstanceExportModel cardInstanceExportModel, Collection collection) {
-
-            var possibleCardSets = _cardSets.Where(GetCondition(cardInstanceExportModel));
-            var cardSet = possibleCardSets.FirstOrDefault();
-
-            var cardInstance = new CardInstance() {
-                Foil = cardInstanceExportModel.Foil,
-                Promo = cardInstanceExportModel.Promo,
-                CardSet = cardSet,
-                Collection = collection,
-            };
-
-            _dbContext.CardInstances.Add(cardInstance);
         }
     }
 }

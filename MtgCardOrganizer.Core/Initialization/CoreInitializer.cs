@@ -34,6 +34,8 @@ namespace MtgCardOrganizer.Core.Initialization
             services.AddTransient<IDeckRepository, DeckRepository>();
             services.AddTransient<ICardRepository, CardRepository>();
             services.AddTransient<ISetRepository, SetRepository>();
+
+            services.AddTransient<IImportExportService, ImportExportService>();
         }
 
         public void AddContexts(IServiceCollection services, IConfigurationRoot configuration)

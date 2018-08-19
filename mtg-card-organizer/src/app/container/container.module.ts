@@ -13,7 +13,8 @@ import { ContainerResolver } from './services/container.resolver';
 import { ContainerService } from './services/container.service';
 import { SubContainerListComponent } from './sub-container-list/sub-container-list.component';
 import { ContainerPageComponent } from './container-page/container-page.component';
-import { ContainerImportComponent } from './collection-import/container-import.component';
+import { ContainerExportComponent } from './container-export/container-export.component';
+import { ContainerImportComponent } from './container-import/container-import.component';
 
 @NgModule({
   declarations: [
@@ -25,12 +26,14 @@ import { ContainerImportComponent } from './collection-import/container-import.c
     AddCollectionModalComponent,
     AddDeckModalComponent,
     ContainerImportComponent,
+    ContainerExportComponent,
   ],
   entryComponents: [
     AddContainerModalComponent,
     AddCollectionModalComponent,
     AddDeckModalComponent,
     ContainerImportComponent,
+    ContainerExportComponent,
   ],
   imports: [
     SharedModule,

@@ -19,7 +19,6 @@ namespace MtgCardOrganizer.Core.Repositories
         Task<PagedData<Container>> GetManyAsync(QueryModel<Container> queryModel);
         Task<Container> CreateAsync(Container container);
         Task DeleteAsync(int containerId);
-        Task ImportAsync(int containerId, string importString);
     }
 
     public class ContainerRepository : IContainerRepository
@@ -92,14 +91,6 @@ namespace MtgCardOrganizer.Core.Repositories
             var container = await _dbContext.Containers.FindAsync(containerId);
             _dbContext.Containers.Remove(container);
             await _dbContext.SaveChangesAsync();
-        }
-
-        // public async Task<string> ExportAsync(int containerId) {
-        //     return await new Exporter(this, new SetRepository(_dbContext)).ConstructExport(collectionId);
-        // }
-
-        public async Task ImportAsync(int containerId, string importString) {
-            await new Importer(_dbContext).ProcessImportAsync(containerId, importString);
         }
     }
 }

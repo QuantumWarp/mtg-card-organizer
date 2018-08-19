@@ -12,7 +12,6 @@ import { SnackNotificationService } from '../../core/notifications/snack-notific
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
-import { CollectionExportComponent } from '../collection-export/collection-export.component';
 import { Collection } from '../models/collection';
 import { CollectionCardService, CollectionCardServiceWrapper } from '../services/collection-card.service';
 import { CardInstanceGridComponent } from '../../card/card-instance-grid/card-instance-grid.component';
@@ -63,11 +62,6 @@ export class CollectionPageComponent implements OnInit {
       // TODO: dont reload
       location.reload();
     });
-  }
-
-  openExport(): void {
-    const dialogRef = this.dialog.open(CollectionExportComponent);
-    dialogRef.componentInstance.collection = this.collection;
   }
 
   deleteCollection(): void {
