@@ -1,5 +1,5 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { LoadingService } from '../../core/loading/loading.service';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
@@ -13,9 +13,9 @@ import { ContainerService } from '../services/container.service';
 export class ContainerImportComponent {
   @ViewChild('fileInput') fileInput: ElementRef;
   @ViewChild('inputArea') inputArea: ElementRef;
-  @Input() container: Container;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) private container: Container,
     private loadingService: LoadingService,
     private notificationService: SnackNotificationService,
     private containerService: ContainerService,
@@ -26,7 +26,7 @@ export class ContainerImportComponent {
     this.fileInput.nativeElement.dispatchEvent(event);
   }
 
-  fileChanged(value: any) {
+  fileChanged() {
     const file: File = this.fileInput.nativeElement.files[0];
     const myReader: FileReader = new FileReader();
 

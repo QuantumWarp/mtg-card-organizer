@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { Container } from '../models/container';
 import { ContainerService } from '../services/container.service';
@@ -8,9 +8,8 @@ import { ContainerService } from '../services/container.service';
   templateUrl: './container-export.component.html'
 })
 export class ContainerExportComponent {
-  @Input() container: Container;
-
   constructor(
+    @Inject(MAT_DIALOG_DATA) private container: Container,
     private collectionService: ContainerService,
     private dialogRef: MatDialogRef<ContainerExportComponent>) { }
 

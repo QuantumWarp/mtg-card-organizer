@@ -1,7 +1,9 @@
 <div class="title">Containers</div>
 
 <mat-card *ngFor="let container of containers" (click)="itemSelected(container)">
-  <mat-card-header>
-    {{ container.name }}
-  </mat-card-header>
+  {{ container.name }}
+  <button mat-icon-button mat-raised-button color="error"
+    (click)="deleteItem(container); $event.stopPropagation()">
+    <mat-icon>close</mat-icon>
+  </button>
 </mat-card>

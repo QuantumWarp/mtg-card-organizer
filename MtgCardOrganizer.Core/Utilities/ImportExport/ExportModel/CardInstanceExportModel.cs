@@ -14,6 +14,7 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
         public bool Foil { get; set; }
         public bool Promo { get; set; }
 
+        public CardInstanceExportModel() { }
         public CardInstanceExportModel(CardInstance cardInstance, List<Set> sets)
         {
             this.Name = cardInstance.CardSet.Card.Name;

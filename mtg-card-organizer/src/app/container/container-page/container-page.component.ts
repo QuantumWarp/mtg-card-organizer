@@ -28,31 +28,39 @@ export class ContainerPageComponent implements OnInit {
     private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe(() => {
       this.container = this.route.snapshot.data['container'];
       this.changeDetector.detectChanges();
     });
   }
 
+  refresh(): void {
+    this.containerService.get(this.container.id).subscribe(result => {
+      this.container = result;
+    });
+  }
+
   createContainer(): void {
-    this.dialog.open(AddContainerModalComponent, { data: this.container });
+    const dialogRef = this.dialog.open(AddContainerModalComponent, { data: this.container });
+    dialogRef.afterClosed().subscribe(result => result ? this.refresh() : undefined);
   }
 
   createCollection(): void {
-    this.dialog.open(AddCollectionModalComponent, { data: this.container });
+    const dialogRef = this.dialog.open(AddCollectionModalComponent, { data: this.container });
+    dialogRef.afterClosed().subscribe(result => result ? this.refresh() : undefined);
   }
 
   createDeck(): void {
-    this.dialog.open(AddDeckModalComponent, { data: this.container });
+    const dialogRef = this.dialog.open(AddDeckModalComponent, { data: this.container });
+    dialogRef.afterClosed().subscribe(result => result ? this.refresh() : undefined);
   }
 
   openImport(): void {
-    const dialogRef = this.dialog.open(ContainerImportComponent);
-    dialogRef.componentInstance.container = this.container;
+    const dialogRef = this.dialog.open(ContainerImportComponent, { data: this.container });
+    dialogRef.afterClosed().subscribe(result => result ? this.refresh() : undefined);
   }
 
   openExport(): void {
-    const dialogRef = this.dialog.open(ContainerExportComponent);
-    dialogRef.componentInstance.container = this.container;
+    const dialogRef = this.dialog.open(ContainerExportComponent, { data: this.container });
   }
 }

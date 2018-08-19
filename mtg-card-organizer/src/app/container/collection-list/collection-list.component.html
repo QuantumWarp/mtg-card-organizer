@@ -2,4 +2,8 @@
 
 <mat-card *ngFor="let collection of collections" (click)="itemSelected(collection)">
   {{ collection.name }}
+  <button mat-icon-button mat-raised-button color="error"
+    (click)="deleteItem(collection); $event.stopPropagation()">
+    <mat-icon>close</mat-icon>
+  </button>
 </mat-card>

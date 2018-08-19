@@ -1,7 +1,9 @@
 <div class="title">Decks</div>
 
 <mat-card *ngFor="let deck of decks" (click)="itemSelected(deck)">
-  <mat-card-header>
-    {{ deck.name }}
-  </mat-card-header>
+  {{ deck.name }}
+  <button mat-icon-button mat-raised-button color="error"
+    (click)="deleteItem(deck); $event.stopPropagation()">
+    <mat-icon>close</mat-icon>
+  </button>
 </mat-card>

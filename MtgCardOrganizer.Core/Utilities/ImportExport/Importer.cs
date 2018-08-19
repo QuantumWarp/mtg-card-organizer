@@ -42,7 +42,7 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
 
             foreach (var collectionModel in containerModel.Collections)
             {
-                var collection = collectionModel.ToCollection();
+                var collection = collectionModel.ToCollection(parentContainer);
                 await _dbContext.Collections.AddAsync(collection);
 
                 var relevantCardSets = await GetRelevantCardSetsAsync(collectionModel);
@@ -52,7 +52,7 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
             
             foreach (var deckModel in containerModel.Decks)
             {
-                var deck = deckModel.ToDeck();
+                var deck = deckModel.ToDeck(parentContainer);
                 await _dbContext.Decks.AddAsync(deck);
             }
         }
