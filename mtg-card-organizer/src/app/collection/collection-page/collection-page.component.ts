@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
-import { CardRapidEntryComponent } from '../../card/card-rapid-entry/card-rapid-entry.component';
+import { CardRapidEntryComponent } from '../../card/card-rapid-entry/card-rapid-entry/card-rapid-entry.component';
 import { CardInstance } from '../../card/models/card-instance';
 import { CardQuery } from '../../card/models/card-query';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';

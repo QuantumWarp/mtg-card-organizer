@@ -13,6 +13,7 @@ export class CardQuery extends Base64QueryStringGenerator implements IPageable {
   name: string[] = [];
   text: string[] = [];
   type: string[] = [];
+  num: string[] = [];
   rarity: Rarity[] = [];
 
   manaCost = new ManaCostQuery();

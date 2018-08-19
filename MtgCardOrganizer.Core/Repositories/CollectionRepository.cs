@@ -82,13 +82,5 @@ namespace MtgCardOrganizer.Core.Repositories
             _dbContext.CardInstances.RemoveRange(cardInstances);
             await _dbContext.SaveChangesAsync();
         }
-
-        // public async Task<string> ExportAsync(int collectionId) {
-        //     return await new Exporter(this, new SetRepository(_dbContext)).ConstructExport(collectionId);
-        // }
-
-        // public async Task Import(int? collectionId, string importString) {
-        //     await new Importer(_dbContext).ProcessImportAsync(importString, null, _user.Id);
-        // }
     }
 }

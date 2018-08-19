@@ -7,9 +7,13 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input autocomplete="off" (keypress)="keyPressed($event)" matInput placeholder="Name" formControlName="name">
+      <input appAutofocus #mainInput autocomplete="off" (keypress)="keyPressed($event)" matInput placeholder="Name" formControlName="name">
     </mat-form-field>
   </form>
 
-  <app-card-rapid-entry-result (applied)="searched.emit()" [collection]="collection" #result></app-card-rapid-entry-result>
+  <app-card-rapid-entry-result #result
+    (refocusEntry)="mainInput.focus()"
+    (applied)="searched.emit()"
+    [collection]="collection">
+  </app-card-rapid-entry-result>
 </mat-card>

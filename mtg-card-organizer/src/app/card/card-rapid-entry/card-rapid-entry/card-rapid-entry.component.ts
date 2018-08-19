@@ -2,20 +2,20 @@ import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { Paging } from '../../shared/filtering/paging';
-import { CardQuery } from '../models/card-query';
-import { Set } from '../models/set';
-import { CardSetService } from '../services/card.service';
-import { SetService } from '../services/set.service';
-import { Collection } from '../../collection/models/collection';
-import { CardRapidEntryResultComponent } from './card-rapid-entry-result.component';
-import { RapidEntryResult } from './rapid-entry-result';
-import { CardInstance } from '../models/card-instance';
+import { Paging } from '../../../shared/filtering/paging';
+import { CardQuery } from '../../models/card-query';
+import { Set } from '../../models/set';
+import { CardSetService } from '../../services/card.service';
+import { SetService } from '../../services/set.service';
+import { Collection } from '../../../collection/models/collection';
+import { CardRapidEntryResultComponent } from '../card-rapid-entry-result/card-rapid-entry-result.component';
+import { RapidEntryResult } from '../rapid-entry-result';
+import { CardInstance } from '../../models/card-instance';
 
 @Component({
   selector: 'app-card-rapid-entry',
   templateUrl: './card-rapid-entry.component.html',
-  styleUrls: ['./card-rapid-entry.scss']
+  styleUrls: ['./card-rapid-entry.component.scss']
 })
 export class CardRapidEntryComponent implements OnInit {
   @Output() searched = new EventEmitter();
@@ -50,11 +50,18 @@ export class CardRapidEntryComponent implements OnInit {
   }
 
   private search(): void {
-    const cardQuery = Object.assign(new CardQuery(), this.form.value);
-    if (!cardQuery.name) { return; }
-    cardQuery.name = [ cardQuery.name ];
-    cardQuery.setIds = cardQuery.setIds ? cardQuery.setIds : [];
+    if (!this.form.value.name) { return; }
+
+    const cardQuery = new CardQuery();
     cardQuery.paging = new Paging({ limit: 10 });
+    cardQuery.setIds = this.form.value.setIds ? this.form.value.setIds : [];
+
+    if (cardQuery.setIds && cardQuery.setIds.length === 1 && !isNaN(Number(cardQuery.name))) {
+      cardQuery.num = [ this.form.value.name ];
+    } else {
+      cardQuery.name = [ this.form.value.name ];
+    }
+
     this.cardSetService.query(cardQuery).subscribe(results => {
       const newResult = new RapidEntryResult({
         cardInstance: new CardInstance(),
@@ -64,5 +71,6 @@ export class CardRapidEntryComponent implements OnInit {
       });
       this.resultComponent.applyNewResult(newResult);
     });
+    this.form.get('name').setValue('');
   }
 }

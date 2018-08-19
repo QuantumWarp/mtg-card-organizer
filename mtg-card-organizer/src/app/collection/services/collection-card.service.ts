@@ -16,11 +16,11 @@ export class CollectionCardService {
     return this.apiService.get<PagedData<CardInstance>>('api/collections/' + collectionId + '/cards', cardQuery);
   }
 
-  addCards(collectionId: number, cardInstances: CardInstance[]): Observable<boolean> {
+  addCards(collectionId: number, cardInstances: CardInstance[]): Observable<void> {
     return this.apiService.post('api/collections/' + collectionId + '/cards', cardInstances);
   }
 
-  deleteCards(collectionId: number, cardInstanceIds: number[]): Observable<boolean> {
+  deleteCards(collectionId: number, cardInstanceIds: number[]): Observable<void> {
     return this.apiService.post('api/collections/' + collectionId + '/cards/delete', cardInstanceIds);
   }
 }

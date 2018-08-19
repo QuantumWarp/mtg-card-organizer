@@ -19,6 +19,7 @@ namespace MtgCardOrganizer.Core.Requests
         public List<string> Name { get; set; } = new List<string>();
         public List<string> Text { get; set; } = new List<string>();
         public List<string> Type { get; set; } = new List<string>();
+        public List<string> Num { get; set; } = new List<string>();
         public List<Rarity> Rarity { get; set; } = new List<Rarity>();
 
         public ManaCostQuery ManaCost { get; set; } = new ManaCostQuery();
@@ -40,6 +41,10 @@ namespace MtgCardOrganizer.Core.Requests
             foreach (var part in Type)
                 queryable = queryable.Where(ExpressionHelper.Combine(transform, x => 
                     x.Card.Type.ToLower().Contains(part.ToLower())));
+
+            foreach (var num in Num)
+                queryable = queryable.Where(ExpressionHelper.Combine(transform, x => 
+                    NumStrings(num).Contains(x.Num)));
             
             if (Rarity.Any())
                 queryable = queryable.Where(ExpressionHelper.Combine(transform, x => 
@@ -50,6 +55,20 @@ namespace MtgCardOrganizer.Core.Requests
             queryable = queryable.OrderBy(ExpressionHelper.Combine(transform, x => x.Card.Name));
 
             return queryable;
+        }
+
+        private IEnumerable<string> NumStrings(string searchNum)
+        {
+            while (searchNum.Length < 4) 
+                searchNum = "0" + searchNum;
+
+            while (searchNum.StartsWith("0"))
+            {
+                yield return searchNum;
+                searchNum = searchNum.Substring(1);
+            }
+
+            yield return searchNum;
         }
     }
 }
