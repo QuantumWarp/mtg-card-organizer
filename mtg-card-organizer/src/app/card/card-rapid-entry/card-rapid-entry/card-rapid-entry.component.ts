@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Paging } from '../../../shared/filtering/paging';
 import { CardQuery } from '../../models/card-query';
 import { Set } from '../../models/set';
-import { CardSetService } from '../../services/card.service';
+import { CardSetService } from '../../services/card-set.service';
 import { SetService } from '../../services/set.service';
 import { Collection } from '../../../collection/models/collection';
 import { CardRapidEntryResultComponent } from '../card-rapid-entry-result/card-rapid-entry-result.component';

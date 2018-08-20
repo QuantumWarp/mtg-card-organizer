@@ -1,0 +1,15 @@
+<app-card-grid [wrappedService]="cardWrappedService" (rowSelected)="rowSelected.emit($event)" [filter]="filter" matSort class="mat-elevation-z4">
+  <ng-content></ng-content>
+
+  <ng-container matColumnDef="setSymbol">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Set</mat-header-cell>
+    <mat-cell *matCellDef="let record">
+      <app-ss [cardSet]="wrappedService.transform(record)" [sets]="sets"></app-ss>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="setNum">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Num</mat-header-cell>
+    <mat-cell *matCellDef="let record">{{wrappedService.transform(record).num}}</mat-cell>
+  </ng-container>
+</app-card-grid>

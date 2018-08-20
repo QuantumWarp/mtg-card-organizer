@@ -15,6 +15,7 @@ import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confir
 import { Collection } from '../models/collection';
 import { CollectionCardService, CollectionCardServiceWrapper } from '../services/collection-card.service';
 import { CardInstanceGridComponent } from '../../card/card-instance-grid/card-instance-grid.component';
+import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 
 @Component({
   selector: 'app-collection-page',
@@ -26,7 +27,7 @@ export class CollectionPageComponent implements OnInit {
 
   filter = new CardQuery();
   collection: Collection;
-  collectionCardServiceWrapper: CollectionCardServiceWrapper;
+  wrappedService: WrappedDataService<CardInstance, CardInstance>;
 
   mode: 'view' | 'filter' | 'fastAdd' = 'view';
 
@@ -41,13 +42,13 @@ export class CollectionPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(() => {
       this.collection = this.route.snapshot.data['collection'];
-      this.collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionCardService);
+      const collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionCardService);
+      this.wrappedService = WrappedDataService.construct(collectionCardServiceWrapper);
     });
   }
 
   cardInstanceSelected(cardInstance: CardInstance): void {
-    const dialogRef = this.dialog.open(CardDetailsModalComponent);
-    dialogRef.componentInstance.cardInstance = cardInstance;
+    this.dialog.open(CardDetailsModalComponent, { data: cardInstance.cardSet });
   }
 
   openRapidEntry() {

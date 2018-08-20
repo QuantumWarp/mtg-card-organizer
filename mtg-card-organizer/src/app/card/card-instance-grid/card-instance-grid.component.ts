@@ -1,35 +1,31 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 
+import { AbstractGridComponent } from '../../shared/grid/abstract-grid.component.html';
 import { DataService } from '../../shared/utils/data-service.interface';
+import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 import { CardInstance } from '../models/card-instance';
 import { CardQuery } from '../models/card-query';
-import { Set } from '../models/set';
-import { CardSetService, CardServiceInstanceWrapper } from '../services/card.service';
-import { SetService } from '../services/set.service';
-import { BasicGridComponent } from '../../shared/grid/basic-grid/basic-grid.component';
+import { CardSet } from '../models/card-set';
+import { CardSetGridComponent } from './card-set-grid.component';
 
 @Component({
   selector: 'app-card-instance-grid',
   templateUrl: './card-instance-grid.component.html',
   styleUrls: ['../card.scss']
 })
-export class CardInstanceGridComponent implements OnInit {
-  @Output() cardInstanceSelected = new EventEmitter<CardInstance>();
+export class CardInstanceGridComponent extends AbstractGridComponent implements OnChanges {
+  @ViewChild(CardSetGridComponent) cardSetGrid: CardSetGridComponent;
 
-  @ViewChild(BasicGridComponent) basicGrid: BasicGridComponent<CardInstance>;
-  @Input() sets: Set[];
   @Input() filter = new CardQuery();
 
   @Input() displayedColumns = ['name', 'setSymbol', 'manaCost'];
-  @Input() cardService: DataService<CardInstance>;
 
-  constructor(
-    public defaultCardService: CardSetService,
-    private setService: SetService) {
-    this.cardService = new CardServiceInstanceWrapper(defaultCardService);
-  }
+  @Input() wrappedService: WrappedDataService<any, CardInstance>;
+  cardSetWrappedService: WrappedDataService<any, CardSet>;
 
-  ngOnInit(): void {
-    this.setService.query().subscribe(results => this.sets = results.data);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['wrappedService']) {
+      this.cardSetWrappedService = this.wrappedService.wrapMore(x => x.cardSet);
+    }
   }
 }

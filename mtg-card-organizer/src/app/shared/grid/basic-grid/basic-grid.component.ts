@@ -12,7 +12,7 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
   templateUrl: './basic-grid.component.html',
   styleUrls: ['./basic-grid.component.scss'],
 })
-export class BasicGridComponent<T> extends AbstractGridComponent<T> implements OnChanges, AfterContentInit {
+export class BasicGridComponent<T> extends AbstractGridComponent implements OnChanges, AfterContentInit {
   @Output() rowSelected = new EventEmitter<T>();
 
   @Input() service: DataService<T>;

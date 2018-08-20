@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, Input, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { CardInstance } from '../models/card-instance';
+import { CardSet } from '../models/card-set';
 
 @Component({
   templateUrl: './card-details-modal.component.html',
@@ -9,7 +10,9 @@ import { CardInstance } from '../models/card-instance';
 export class CardDetailsModalComponent {
   @Input() cardInstance: CardInstance;
 
-  constructor(private dialogRef: MatDialogRef<CardDetailsModalComponent>) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public cardSet: CardSet,
+    private dialogRef: MatDialogRef<CardDetailsModalComponent>) { }
 
   close(): void {
     this.dialogRef.close();

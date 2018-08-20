@@ -1,0 +1,21 @@
+.search-bar {
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px lightgray solid;
+
+  > .search-field {
+    margin-right: 10px;
+    flex: 1;
+  }
+
+  > .filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.card-search {
+  background-color: white;
+}

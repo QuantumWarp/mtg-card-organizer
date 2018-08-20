@@ -10,13 +10,13 @@
 
   <div fxLayout="row" fxLayoutGap="20px">
     <app-card-filter *ngIf="mode === 'filter'" (filterChanged)="filter = $event"></app-card-filter>
-    <app-card-rapid-entry *ngIf="mode === 'fastAdd'" (searched)="grid.basicGrid.dataSource.refresh()" [collection]="collection"></app-card-rapid-entry>
+    <app-card-rapid-entry *ngIf="mode === 'fastAdd'" (searched)="grid.cardSetGrid.cardGrid.basicGrid.dataSource.refresh()" [collection]="collection"></app-card-rapid-entry>
 
     <app-card-instance-grid fxFlex
       [filter]="filter"
       [displayedColumns]="['name', 'setSymbol', 'manaCost', 'foil', 'promo']"
-      [cardService]="collectionCardServiceWrapper"
-      (cardInstanceSelected)="cardInstanceSelected($event)">
+      [wrappedService]="wrappedService"
+      (rowSelected)="cardInstanceSelected($event)">
     </app-card-instance-grid>
   </div>
 </div>

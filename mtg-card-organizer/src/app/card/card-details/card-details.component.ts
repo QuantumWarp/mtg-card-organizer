@@ -2,7 +2,7 @@ import { transition, trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
 
 import { fadeInAnimation } from '../../shared/animations/fade-in-animation';
-import { CardInstance } from '../models/card-instance';
+import { CardSet } from '../models/card-set';
 
 @Component({
   selector: 'app-card-details',
@@ -13,5 +13,5 @@ import { CardInstance } from '../models/card-instance';
   ]
 })
 export class CardDetailsComponent {
-  @Input() cardInstance: CardInstance;
+  @Input() cardSet: CardSet;
 }

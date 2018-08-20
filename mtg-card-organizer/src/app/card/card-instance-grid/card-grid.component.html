@@ -1,0 +1,25 @@
+<app-basic-grid [service]="wrappedService.dataService" (rowSelected)="rowSelected.emit($event)" [filter]="filter" matSort class="mat-elevation-z4">
+  <ng-content></ng-content>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+    <mat-cell *matCellDef="let record">{{wrappedService.transform(record).name}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="manaCost">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Mana Cost</mat-header-cell>
+    <mat-cell *matCellDef="let record">
+      <app-mc [card]="wrappedService.transform(record)"></app-mc>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="power">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Power</mat-header-cell>
+    <mat-cell *matCellDef="let record">{{wrappedService.transform(record).power}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="toughness">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Toughness</mat-header-cell>
+    <mat-cell *matCellDef="let record">{{wrappedService.transform(record).toughness}}</mat-cell>
+  </ng-container>
+</app-basic-grid>

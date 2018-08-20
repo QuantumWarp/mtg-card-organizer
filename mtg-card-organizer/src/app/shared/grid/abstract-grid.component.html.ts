@@ -1,7 +1,9 @@
-import { ContentChild, ContentChildren, Input, QueryList } from '@angular/core';
+import { ContentChild, ContentChildren, Input, QueryList, Output, EventEmitter } from '@angular/core';
 import { MatColumnDef, MatSort } from '@angular/material';
 
-export class AbstractGridComponent<T> {
+export class AbstractGridComponent {
+  @Output() rowSelected = new EventEmitter<any>();
+
   @ContentChildren(MatColumnDef) contentColumnDefs: QueryList<MatColumnDef>;
   @Input() inputColumnDefs: QueryList<MatColumnDef>;
 
