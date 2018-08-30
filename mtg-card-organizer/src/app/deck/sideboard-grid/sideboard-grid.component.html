@@ -1,0 +1,15 @@
+<div class="title">Sideboard</div>
+
+<app-card-grid fxFlex
+  [displayedColumns]="['name', 'manaCost']"
+  [wrappedService]="wrappedService">
+<!--
+  <ng-container matColumnDef="actions">
+    <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
+    <mat-cell class="crud-grid-action-column" *matCellDef="let record">
+      <button mat-icon-button (click)="$event.stopPropagation(); removeFromCollection(record)">
+        <mat-icon>highlight_off</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container> -->
+</app-card-grid>

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Core.Entities.Decks;
 using MtgCardOrganizer.Core.Initialization;
 using MtgCardOrganizer.Core.Utilities.General;
@@ -26,7 +27,10 @@ namespace MtgCardOrganizer.Core.Repositories
 
         public async Task<Deck> GetAsync(int id)
         {
-            return await _dbContext.Decks.FindAsync(id);
+            return await _dbContext.Decks
+                .Include(x => x.Cards)
+                    .ThenInclude(x => x.Card)
+                .SingleAsync(x => x.Id == id);
         }
 
         public async Task<Deck> CreateAsync(Deck deck)

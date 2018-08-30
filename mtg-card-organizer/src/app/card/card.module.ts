@@ -51,6 +51,8 @@ import { CardService } from './services/card.service';
     ]),
   ],
   exports: [
+    CardGridComponent,
+    CardSetGridComponent,
     CardInstanceGridComponent,
     CardDetailsComponent,
     CardRapidEntryComponent,

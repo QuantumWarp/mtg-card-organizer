@@ -4,9 +4,16 @@ import { PropertyFilter } from './property-filter';
 import { PropertySort } from './property-sort';
 
 export class PageSortFilter implements QueryStringGenerator {
+  static discriminator = 'PageSortFilter';
+  discriminator = PageSortFilter.discriminator;
+
   paging: Paging;
   sort: PropertySort;
   filters = new Array<PropertyFilter>();
+
+  static isPageSortFilter(obj: any): obj is PageSortFilter {
+    return obj.discriminator === PageSortFilter.discriminator;
+  }
 
   public constructor(init?: Partial<PageSortFilter>) {
     Object.assign(this, init);
