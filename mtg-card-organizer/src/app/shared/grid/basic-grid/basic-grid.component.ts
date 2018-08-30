@@ -28,7 +28,7 @@ export class BasicGridComponent<T> extends AbstractGridComponent implements OnCh
     return this.columns;
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (!this.dataSource) {
       this.dataSource = new GridDataSource(this.service, this.matPaginator, this.matSort);
     }

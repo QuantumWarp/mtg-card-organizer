@@ -10,13 +10,22 @@
 
   <div fxLayout="row" fxLayoutGap="20px">
     <app-card-filter *ngIf="mode === 'filter'" (filterChanged)="filter = $event"></app-card-filter>
-    <app-card-rapid-entry *ngIf="mode === 'fastAdd'" (searched)="grid.cardSetGrid.cardGrid.basicGrid.dataSource.refresh()" [collection]="collection"></app-card-rapid-entry>
+    <app-card-rapid-entry *ngIf="mode === 'fastAdd'" (searched)="refreshDataSource()" [collection]="collection"></app-card-rapid-entry>
 
     <app-card-instance-grid fxFlex
       [filter]="filter"
-      [displayedColumns]="['name', 'setSymbol', 'manaCost', 'foil', 'promo']"
+      [displayedColumns]="['name', 'setSymbol', 'manaCost', 'power', 'toughness', 'foil', 'promo', 'actions']"
       [wrappedService]="wrappedService"
       (rowSelected)="cardInstanceSelected($event)">
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
+        <mat-cell class="crud-grid-action-column" *matCellDef="let record">
+          <button mat-icon-button (click)="$event.stopPropagation(); removeFromCollection(record)">
+            <mat-icon>highlight_off</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
     </app-card-instance-grid>
   </div>
 </div>

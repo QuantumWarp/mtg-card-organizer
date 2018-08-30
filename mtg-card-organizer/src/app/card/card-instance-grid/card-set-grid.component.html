@@ -1,4 +1,9 @@
-<app-card-grid [wrappedService]="cardWrappedService" (rowSelected)="rowSelected.emit($event)" [filter]="filter" matSort class="mat-elevation-z4">
+<app-card-grid matSort class="mat-elevation-z4"
+  [wrappedService]="cardWrappedService"
+  (rowSelected)="rowSelected.emit($event)"
+  [inputColumnDefs]="columnDefs"
+  [filter]="filter"
+  [displayedColumns]="displayedColumns">
   <ng-content></ng-content>
 
   <ng-container matColumnDef="setSymbol">

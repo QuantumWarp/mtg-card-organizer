@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Core.Entities.Cards;
@@ -78,7 +79,7 @@ namespace MtgCardOrganizer.Core.Repositories
         
         public async Task DeleteCardsAsync(int collectionId, List<int> cardInstanceIds)
         {
-            var cardInstances = await _dbContext.CardInstances.FindAsync(cardInstanceIds);
+            var cardInstances = await _dbContext.CardInstances.Where(x => cardInstanceIds.Contains(x.Id)).ToListAsync();
             _dbContext.CardInstances.RemoveRange(cardInstances);
             await _dbContext.SaveChangesAsync();
         }

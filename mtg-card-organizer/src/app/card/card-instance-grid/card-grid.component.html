@@ -1,4 +1,9 @@
-<app-basic-grid [service]="wrappedService.dataService" (rowSelected)="rowSelected.emit($event)" [filter]="filter" matSort class="mat-elevation-z4">
+<app-basic-grid matSort class="mat-elevation-z4"
+  [service]="wrappedService.dataService"
+  (rowSelected)="rowSelected.emit($event)"
+  [inputColumnDefs]="columnDefs"
+  [filter]="filter"
+  [columns]="displayedColumns">
   <ng-content></ng-content>
 
   <ng-container matColumnDef="name">

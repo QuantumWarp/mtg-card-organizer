@@ -16,6 +16,7 @@ import { Collection } from '../models/collection';
 import { CollectionCardService, CollectionCardServiceWrapper } from '../services/collection-card.service';
 import { CardInstanceGridComponent } from '../../card/card-instance-grid/card-instance-grid.component';
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
+import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
 
 @Component({
   selector: 'app-collection-page',
@@ -51,6 +52,31 @@ export class CollectionPageComponent implements OnInit {
     this.dialog.open(CardDetailsModalComponent, { data: cardInstance.cardSet });
   }
 
+  removeFromCollection(cardInstance: CardInstance): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: new ConfirmDialogData({
+        title: `Remove ${cardInstance.cardSet.card.name}`,
+        description: 'Are you sure?',
+      })
+    });
+
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.collectionCardService.deleteCards(this.collection.id, [ cardInstance.id ]).subscribe(() => {
+          this.refreshDataSource();
+          this.notificationService.notify(new SnackNotificationModel({
+            message: 'Removed!',
+            type: SnackNotificationType.Success,
+          }));
+        });
+      }
+    });
+  }
+
+  refreshDataSource(): void {
+    this.grid.cardSetGrid.cardGrid.basicGrid.dataSource.refresh();
+  }
+
   openRapidEntry() {
     const dialogRef = this.dialog.open(CardRapidEntryComponent, {
       disableClose: true,
@@ -62,29 +88,6 @@ export class CollectionPageComponent implements OnInit {
       this.notificationService.notify({ message: 'Added Cards', type: SnackNotificationType.Success });
       // TODO: dont reload
       location.reload();
-    });
-  }
-
-  deleteCollection(): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogData({
-        title: 'Delete Collection',
-        description: 'Are you sure?',
-      })
-    });
-    dialogRef.afterClosed().subscribe(confirmed => {
-      if (confirmed) {
-        // const deletePromise = this.collectionService.deleteCollection(this.collection.id).toPromise();
-        const navPromise = () => {
-          if (this.collection.containerId) {
-            return this.router.navigate([this.collection ? '../' : './', this.collection.containerId], { relativeTo: this.route });
-          } else {
-            return this.router.navigate(['../'], { relativeTo: this.route });
-          }
-        };
-        // this.loadingService.load('Deleting...', deletePromise.then(navPromise));
-        // deletePromise.then(() => this.notificationService.notify({ message: 'Collection Deleted', type: SnackNotificationType.Success }));
-      }
     });
   }
 }

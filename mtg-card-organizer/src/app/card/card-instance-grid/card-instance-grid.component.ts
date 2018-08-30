@@ -18,7 +18,7 @@ export class CardInstanceGridComponent extends AbstractGridComponent implements 
 
   @Input() filter = new CardQuery();
 
-  @Input() displayedColumns = ['name', 'setSymbol', 'manaCost'];
+  @Input() displayedColumns = ['name', 'setSymbol', 'manaCost', 'power', 'toughness', 'foil', 'promo'];
 
   @Input() wrappedService: WrappedDataService<any, CardInstance>;
   cardSetWrappedService: WrappedDataService<any, CardSet>;

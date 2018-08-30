@@ -22,7 +22,7 @@ export class CardSetGridComponent extends AbstractGridComponent implements OnIni
 
   @Input() filter = new CardQuery();
 
-  @Input() displayedColumns = ['name', 'setSymbol', 'manaCost'];
+  @Input() displayedColumns = ['name', 'setSymbol', 'manaCost', 'power', 'toughness'];
 
   @Input() wrappedService: WrappedDataService<any, CardSet>;
   cardWrappedService: WrappedDataService<any, Card>;

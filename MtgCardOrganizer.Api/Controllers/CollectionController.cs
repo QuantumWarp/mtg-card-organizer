@@ -56,9 +56,9 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpPost("{id}/cards/delete")]
-        public IActionResult DeleteCards(int id, [FromBody] List<int> cardInstanceIds)
+        public async Task<IActionResult> DeleteCards(int id, [FromBody] List<int> cardInstanceIds)
         {
-            _collectionRepository.DeleteCardsAsync(id, cardInstanceIds);
+            await _collectionRepository.DeleteCardsAsync(id, cardInstanceIds);
             return NoContent();
         }
     }
