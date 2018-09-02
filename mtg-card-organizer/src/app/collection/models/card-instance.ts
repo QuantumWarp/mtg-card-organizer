@@ -1,4 +1,4 @@
-import { CardSet } from './card-set';
+import { CardSet } from '../../card/models/card-set';
 
 export class CardInstance {
   id: number;

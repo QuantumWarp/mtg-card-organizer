@@ -1,17 +1,16 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 
-import { AbstractGridComponent } from '../../shared/grid/abstract-grid.component.html';
-import { DataService } from '../../shared/utils/data-service.interface';
-import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
+import { CardSetGridComponent } from '../../card/card-set-grid/card-set-grid.component';
 import { CardInstance } from '../models/card-instance';
-import { CardQuery } from '../models/card-query';
-import { CardSet } from '../models/card-set';
-import { CardSetGridComponent } from './card-set-grid.component';
+import { CardQuery } from '../../card/models/card-query';
+import { CardSet } from '../../card/models/card-set';
+import { AbstractGridComponent } from '../../shared/grid/abstract-grid.component.html';
+import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 
 @Component({
   selector: 'app-card-instance-grid',
   templateUrl: './card-instance-grid.component.html',
-  styleUrls: ['../card.scss']
+  styleUrls: ['./card-instance-grid.component.scss']
 })
 export class CardInstanceGridComponent extends AbstractGridComponent implements OnChanges {
   @ViewChild(CardSetGridComponent) cardSetGrid: CardSetGridComponent;

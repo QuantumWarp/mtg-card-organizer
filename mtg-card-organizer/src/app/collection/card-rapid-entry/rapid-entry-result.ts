@@ -1,5 +1,5 @@
 import { CardInstance } from '../models/card-instance';
-import { CardSet } from '../models/card-set';
+import { CardSet } from '../../card/models/card-set';
 
 export class RapidEntryResult {
   entryText: string;

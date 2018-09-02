@@ -1,16 +1,16 @@
-import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { Paging } from '../../../shared/filtering/paging';
-import { CardQuery } from '../../models/card-query';
-import { Set } from '../../models/set';
-import { CardSetService } from '../../services/card-set.service';
-import { SetService } from '../../services/set.service';
+import { CardQuery } from '../../../card/models/card-query';
+import { Set } from '../../../card/models/set';
+import { CardSetService } from '../../../card/services/card-set.service';
+import { SetService } from '../../../card/services/set.service';
 import { Collection } from '../../../collection/models/collection';
+import { Paging } from '../../../shared/filtering/paging';
+import { CardInstance } from '../../models/card-instance';
 import { CardRapidEntryResultComponent } from '../card-rapid-entry-result/card-rapid-entry-result.component';
 import { RapidEntryResult } from '../rapid-entry-result';
-import { CardInstance } from '../../models/card-instance';
 
 @Component({
   selector: 'app-card-rapid-entry',

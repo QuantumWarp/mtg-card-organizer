@@ -5,7 +5,7 @@ import { CardSet } from '../models/card-set';
 @Component({
   selector: 'app-card-image',
   templateUrl: './card-image.component.html',
-  styleUrls: ['./card-image.scss']
+  styleUrls: ['./card-image.component.scss']
 })
 export class CardImageComponent {
   @Input() cardSet: CardSet;

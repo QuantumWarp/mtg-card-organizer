@@ -11,7 +11,7 @@ import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 @Component({
   selector: 'app-card-grid',
   templateUrl: './card-grid.component.html',
-  styleUrls: ['./card-grid.scss']
+  styleUrls: ['./card-grid.component.scss']
 })
 export class CardGridComponent extends AbstractGridComponent {
   @ViewChild(BasicGridComponent) basicGrid: BasicGridComponent<Card>;

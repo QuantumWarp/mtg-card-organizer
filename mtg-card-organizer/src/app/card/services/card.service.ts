@@ -6,7 +6,7 @@ import { PagedData } from '../../shared/filtering/paged-data';
 import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 import { CardQuery } from '../models/card-query';
 import { CardSet } from '../models/card-set';
-import { CardInstance } from '../models/card-instance';
+import { CardInstance } from '../../collection/models/card-instance';
 import { map } from 'rxjs/internal/operators';
 import { Card } from '../models/card';
 

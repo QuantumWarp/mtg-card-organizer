@@ -5,18 +5,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
-import { CardRapidEntryComponent } from '../../card/card-rapid-entry/card-rapid-entry/card-rapid-entry.component';
-import { CardInstance } from '../../card/models/card-instance';
+import { CardInstance } from '../models/card-instance';
 import { CardQuery } from '../../card/models/card-query';
+import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
+import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
+import { CardInstanceGridComponent } from '../card-instance-grid/card-instance-grid.component';
+import { CardRapidEntryComponent } from '../card-rapid-entry/card-rapid-entry/card-rapid-entry.component';
 import { Collection } from '../models/collection';
 import { CollectionCardService, CollectionCardServiceWrapper } from '../services/collection-card.service';
-import { CardInstanceGridComponent } from '../../card/card-instance-grid/card-instance-grid.component';
-import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
-import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
 
 @Component({
   selector: 'app-collection-page',

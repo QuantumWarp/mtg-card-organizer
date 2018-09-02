@@ -1,7 +1,7 @@
 import { Component, Input, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-import { CardInstance } from '../models/card-instance';
+import { CardInstance } from '../../collection/models/card-instance';
 import { CardSet } from '../models/card-set';
 
 @Component({

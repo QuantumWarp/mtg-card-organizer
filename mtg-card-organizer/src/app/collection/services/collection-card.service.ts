@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CardInstance } from '../../card/models/card-instance';
+import { CardInstance } from '../models/card-instance';
 import { CardQuery } from '../../card/models/card-query';
 import { ApiService } from '../../core/communication/api.service';
 import { PagedData } from '../../shared/filtering/paged-data';

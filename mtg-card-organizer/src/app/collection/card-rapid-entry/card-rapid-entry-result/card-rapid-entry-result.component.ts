@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+import { CardSet } from '../../../card/models/card-set';
+import { Set } from '../../../card/models/set';
+import { SetService } from '../../../card/services/set.service';
 import { Collection } from '../../../collection/models/collection';
 import { CollectionCardService } from '../../../collection/services/collection-card.service';
 import { SnackNotificationService } from '../../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../../core/notifications/snack-notification.type';
-import { CardSet } from '../../models/card-set';
-import { Set } from '../../models/set';
-import { SetService } from '../../services/set.service';
 import { RapidEntryResult } from '../rapid-entry-result';
 
 @Component({

@@ -7,7 +7,7 @@ import { CardSet } from '../models/card-set';
 @Component({
   selector: 'app-card-details',
   templateUrl: './card-details.component.html',
-  styleUrls: ['./card-details.scss'],
+  styleUrls: ['./card-details.component.scss'],
   animations: [
     trigger('enterAnimation', [ transition(':enter', fadeInAnimation(2000)) ])
   ]
