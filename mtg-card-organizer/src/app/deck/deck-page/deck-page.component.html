@@ -8,8 +8,19 @@
   </app-title-and-trail>
 
   <div fxLayout="row" fxLayoutGap="20px">
+    <app-deck-card-search *ngIf="mode === 'edit'"
+      (toMain)="addCard($event, deckParts.Main)"
+      (toSideboard)="addCard($event, deckParts.Sideboard)">
+    </app-deck-card-search>
 
-    <app-main-grid fxFlex [dataService]="mainDataService"></app-main-grid>
-    <app-sideboard-grid [dataService]="sideBoardDataService"></app-sideboard-grid>
+    <app-main-grid fxFlex [dataService]="mainDataService"
+      (toSideboard)="moveCard($event, deckParts.Sideboard)"
+      (remove)="moveCard($event)">
+    </app-main-grid>
+
+    <app-sideboard-grid fxFlex [dataService]="sideBoardDataService"
+      (toMain)="moveCard($event, deckParts.Main)"
+      (remove)="moveCard($event)">
+    </app-sideboard-grid>
   </div>
 </div>

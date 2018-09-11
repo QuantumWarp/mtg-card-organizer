@@ -9,10 +9,12 @@ import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 import { Set } from '../models/set';
 
 @Injectable()
-export class SetService implements DataService<Set> {
+export class SetService extends DataService<Set> {
   private cachedSets: Set[];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {
+    super();
+  }
 
   query(pageSortFilter?: PageSortFilter): Observable<PagedData<Set>> {
     if (this.cachedSets) {

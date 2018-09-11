@@ -9,7 +9,7 @@ using MtgCardOrganizer.Core.Utilities.General;
 
 namespace MtgCardOrganizer.Core.Requests
 {
-    public class ManaCostQuery : IQuery<CardSet>
+    public class ManaCostQuery // : IQuery<CardSet>
     {
         public bool Exclusive { get; set; }
         public bool OnlyMulticolor { get; set; }

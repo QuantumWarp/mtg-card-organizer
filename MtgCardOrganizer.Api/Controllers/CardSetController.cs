@@ -10,20 +10,20 @@ using MtgCardOrganizer.Core.Responses;
 namespace MtgCardOrganizer.Api.Controllers
 {
     [Authorize]
-    [Route("api/cards")]
-    public class CardController : Controller
+    [Route("api/card-sets")]
+    public class CardSetController : Controller
     {
-        public ICardRepository _cardRepository;
+        public ICardSetRepository _cardSetRepository;
 
-        public CardController(ICardRepository cardRepository) 
+        public CardSetController(ICardSetRepository cardSetRepository) 
         {
-            _cardRepository = cardRepository;
+            _cardSetRepository = cardSetRepository;
         }
 
         [HttpGet]
-        public async Task<PagedData<Card>> Query([Base64Binder] CardQuery cardQuery)
+        public async Task<PagedData<CardSet>> Query([Base64Binder] CardQuery cardQuery)
         {
-            return await _cardRepository.GetCardsAsync(cardQuery);
+            return await _cardSetRepository.GetCardSetsAsync(cardQuery);
         }
     }
 }

@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+app-card-filter {
+  margin-right: 20px;
+}
+
+.crud-grid-action-column {
+  flex: 0 0 25px;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}

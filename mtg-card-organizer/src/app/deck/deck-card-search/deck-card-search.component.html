@@ -1,0 +1,28 @@
+<div class="title">Filter</div>
+
+<div class="container">
+  <app-card-filter (filterChanged)="filter = $event"></app-card-filter>
+
+  <app-card-grid
+    [filter]="filter"
+    [displayedColumns]="['name', 'manaCost', 'toMain', 'toSideboard']"
+    [wrappedService]="wrappedService">
+    <ng-container matColumnDef="toMain">
+      <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
+      <mat-cell class="crud-grid-action-column" *matCellDef="let record">
+        <button mat-icon-button (click)="$event.stopPropagation(); toMain.emit(record)">
+          <mat-icon>label_important</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="toSideboard">
+      <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
+      <mat-cell class="crud-grid-action-column" *matCellDef="let record">
+        <button mat-icon-button (click)="$event.stopPropagation(); toSideboard.emit(record)">
+          <mat-icon>label_important</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+  </app-card-grid>
+</div>

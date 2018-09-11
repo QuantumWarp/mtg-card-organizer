@@ -2,8 +2,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { PagedData } from '../filtering/paged-data';
-import { DataService } from './data-service.interface';
 import { QueryStringGenerator } from './query-string-generator.interface';
+import { DataService } from '../grid/grid-data-source.interfaces';
 
 export class CustomDataSource<T> extends DataSource<T> {
   loading = false;

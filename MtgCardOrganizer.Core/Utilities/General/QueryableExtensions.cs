@@ -30,13 +30,7 @@ namespace MtgCardOrganizer.Core.Utilities.General
         public static IQueryable<T> ApplyQuery<T>(this IQueryable<T> queryable, IQuery<T> query)
         {
             if (query == null) return queryable;
-            return query.ApplyQuery(queryable, x => x);
-        }
-
-        public static IQueryable<T> ApplyQuery<T, TFilterType>(this IQueryable<T> queryable, IQuery<TFilterType> query, Expression<Func<T, TFilterType>> transform)
-        {
-            if (query == null) return queryable;
-            return query.ApplyQuery(queryable, transform);
+            return query.ApplyQuery(queryable);
         }
 
         private static IQueryable<T> ApplyFilters<T>(this IQueryable<T> queryable, IEnumerable<PropertyFilter<T>> filters) {

@@ -5,8 +5,8 @@ import { merge } from 'rxjs';
 import { Paging } from '../filtering/paging';
 import { isPageable, isSortable } from '../utils/apply-data-query.interface';
 import { CustomDataSource } from '../utils/custom-data-source';
-import { DataService } from '../utils/data-service.interface';
 import { QueryStringGenerator } from '../utils/query-string-generator.interface';
+import { DataService } from './grid-data-source.interfaces';
 
 export class GridDataSource<T> extends CustomDataSource<T> {
 
@@ -46,6 +46,8 @@ export class GridDataSource<T> extends CustomDataSource<T> {
 
   private setupRefreshTriggers(): void {
     const reloadEvents = new Array<EventEmitter<any>>();
+
+    reloadEvents.push(this.dataService.dataChanged);
 
     if (this.paginator) {
       reloadEvents.push(this.paginator.page);

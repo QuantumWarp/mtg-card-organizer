@@ -25,8 +25,10 @@ export class CollectionCardService {
   }
 }
 
-export class CollectionCardServiceWrapper implements DataService<CardInstance> {
-  constructor(public collectionId: number, private collectionCardService: CollectionCardService) { }
+export class CollectionCardServiceWrapper extends DataService<CardInstance> {
+  constructor(public collectionId: number, private collectionCardService: CollectionCardService) {
+    super();
+  }
 
   query(cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
     return this.collectionCardService.queryCards(this.collectionId, cardQuery);

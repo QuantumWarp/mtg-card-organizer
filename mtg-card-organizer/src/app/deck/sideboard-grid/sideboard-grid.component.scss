@@ -3,3 +3,10 @@
   font-weight: 600;
   margin-bottom: 10px;
 }
+
+.crud-grid-action-column {
+  flex: 0 0 25px;
+  display: flex;
+  justify-content: center;
+  overflow: visible;
+}

@@ -1,11 +1,11 @@
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ViewChild, SimpleChanges } from '@angular/core';
 import { MatPaginator, MatTable } from '@angular/material';
 
-import { DataService } from '../../utils/data-service.interface';
 import { AbstractGridComponent } from '../abstract-grid.component.html';
 import { GridDataSource } from '../grid-data-source';
 import { QueryStringGenerator } from '../../utils/query-string-generator.interface';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import { DataService } from '../grid-data-source.interfaces';
 
 @Component({
   selector: 'app-basic-grid',

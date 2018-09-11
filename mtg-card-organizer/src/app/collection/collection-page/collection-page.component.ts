@@ -35,7 +35,6 @@ export class CollectionPageComponent implements OnInit {
   constructor(
     public collectionCardService: CollectionCardService,
     private route: ActivatedRoute,
-    private router: Router,
     private dialog: MatDialog,
     private notificationService: SnackNotificationService,
     public authService: AuthenticationService) { }

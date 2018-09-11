@@ -65,7 +65,7 @@ namespace MtgCardOrganizer.Core.Repositories
                 .Include(x => x.CardSet)
                     .Include(x => x.CardSet.Card)
                 .Where(x => x.CollectionId == collectionId)
-                .ApplyQuery(query, x => x.CardSet)
+                .ApplyQuery(query)
                 .ApplyPagingAsync(query?.Paging);
         }
 

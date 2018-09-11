@@ -1,11 +1,10 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-
-import { Deck } from '../models/deck';
-import { DataService } from '../../shared/utils/data-service.interface';
-import { DeckCard } from '../models/deck-card';
+import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
-import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
+
 import { Card } from '../../card/models/card';
+import { DataService } from '../../shared/grid/grid-data-source.interfaces';
+import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
+import { DeckCard } from '../models/deck-card';
 
 @Component({
   selector: 'app-main-grid',
@@ -13,6 +12,9 @@ import { Card } from '../../card/models/card';
   styleUrls: ['./main-grid.component.scss'],
 })
 export class MainGridComponent implements OnChanges {
+  @Output() toSideboard = new EventEmitter<DeckCard>();
+  @Output() remove = new EventEmitter<DeckCard>();
+
   @Input() dataService: DataService<DeckCard>;
   wrappedService: WrappedDataService<DeckCard, Card>;
 

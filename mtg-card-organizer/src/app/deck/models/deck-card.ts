@@ -5,4 +5,8 @@ export class DeckCard {
   card: Card;
   deckPart: DeckPart;
   count: number;
+
+  constructor(init?: Partial<DeckCard>) {
+    Object.assign(this, init);
+  }
 }

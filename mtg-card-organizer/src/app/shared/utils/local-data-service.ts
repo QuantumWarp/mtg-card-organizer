@@ -9,21 +9,25 @@ import { PropertySortHelper } from '../filtering/local/property-sort.helper';
 import { PropertyFilterHelper } from '../filtering/local/property-filter.helper';
 import { Paging } from '../filtering/paging';
 
-export class LocalDataService<T> implements DataService<T> {
+export class LocalDataService<T> extends DataService<T> {
 
-  constructor(private data: T[]) { }
+  constructor(private data: T[]) {
+    super();
+  }
 
   updateData(data: T[]) {
     this.data = data;
+    this.dataChanged.emit();
   }
 
   query(queryStringGenerator?: QueryStringGenerator): Observable<PagedData<T>> {
     let resultData = this.data;
-    let paging = new Paging();
+
+    const paging = queryStringGenerator && (<any>queryStringGenerator).paging ? (<any>queryStringGenerator).paging : new Paging();
+
     if (PageSortFilter.isPageSortFilter(queryStringGenerator)) {
       resultData = PropertyFilterHelper.applyFilters(queryStringGenerator.filters, resultData);
       resultData = PropertySortHelper.applySort(queryStringGenerator.sort, resultData);
-      paging = queryStringGenerator.paging;
     }
 
     const pagedResults = PagedDataHelper.createPagedData(paging, resultData);

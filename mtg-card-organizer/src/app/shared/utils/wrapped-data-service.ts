@@ -2,8 +2,8 @@ import { Observable } from 'rxjs';
 
 import { PagedData } from '../filtering/paged-data';
 import { QueryStringGenerator } from './query-string-generator.interface';
-import { DataService } from './data-service.interface';
 import { map } from 'rxjs/internal/operators';
+import { DataService } from '../grid/grid-data-source.interfaces';
 
 export class WrappedDataService<TSource, TDestination> {
 

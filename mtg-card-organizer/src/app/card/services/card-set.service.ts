@@ -10,18 +10,22 @@ import { CardInstance } from '../../collection/models/card-instance';
 import { map } from 'rxjs/internal/operators';
 
 @Injectable()
-export class CardSetService implements DataService<CardSet> {
+export class CardSetService extends DataService<CardSet> {
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {
+    super();
+  }
 
   query(cardQuery: CardQuery): Observable<PagedData<CardSet>> {
-    return this.apiService.get<PagedData<CardSet>>('api/cards', cardQuery);
+    return this.apiService.get<PagedData<CardSet>>('api/card-sets', cardQuery);
   }
 }
 
-export class CardServiceInstanceWrapper implements DataService<CardInstance> {
+export class CardServiceInstanceWrapper extends DataService<CardInstance> {
 
-  constructor(private cardSetService: CardSetService) { }
+  constructor(private cardSetService: CardSetService) {
+    super();
+  }
 
   query(cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
     return this.cardSetService.query(cardQuery).pipe(

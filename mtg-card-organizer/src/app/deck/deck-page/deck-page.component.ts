@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { MatDialog } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
-import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
-import { Deck } from '../models/deck';
-import { DeckService } from '../services/deck.service';
+import { Card } from '../../card/models/card';
 import { LocalDataService } from '../../shared/utils/local-data-service';
+import { Deck } from '../models/deck';
+import { DeckCard } from '../models/deck-card';
 import { DeckPart } from '../models/deck-part';
-import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
+import { DeckService } from '../services/deck.service';
 
 @Component({
   selector: 'app-deck-page',
@@ -18,6 +17,7 @@ import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 })
 export class DeckPageComponent implements OnInit {
   deck: Deck;
+  deckParts = DeckPart;
 
   mode: 'view' | 'edit' = 'view';
 
@@ -34,6 +34,36 @@ export class DeckPageComponent implements OnInit {
       this.deck = this.route.snapshot.data['deck'];
       this.updateDataServices();
     });
+  }
+
+  addCard(card: Card, deckPart: DeckPart): void {
+    console.log(card);
+    const currentDeckCard = this.deck.cards.find(x => x.card.id === card.id && x.deckPart === deckPart);
+    if (currentDeckCard) {
+      currentDeckCard.count = currentDeckCard.count + 1;
+    } else {
+      this.deck.cards.push(new DeckCard({
+        card: card,
+        count: 1,
+        deckPart: deckPart,
+      }));
+    }
+    this.updateDataServices();
+  }
+
+  moveCard(deckCard: DeckCard, deckPart?: DeckPart): void {
+    console.log('move');
+    deckCard.count = deckCard.count - 1;
+    if (deckCard.count === 0) {
+      const index = this.deck.cards.indexOf(deckCard);
+      this.deck.cards.splice(index, 1);
+    }
+
+    if (deckPart !== undefined) {
+      this.addCard(deckCard.card, deckPart);
+    } else {
+      this.updateDataServices();
+    }
   }
 
   updateDataServices() {
