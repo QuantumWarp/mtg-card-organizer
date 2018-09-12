@@ -11,16 +11,16 @@ namespace MtgCardOrganizer.Core.Entities.Decks
         public int? ContainerId { get; set; }
         public Container Container { get; set; }
 
-        public ICollection<DeckCard> Cards { get; set; }
+        public ICollection<DeckCard> DeckCards { get; set; }
 
         public List<DeckCard> GetMain() 
         {
-            return Cards.Where(x => x.Part == DeckPart.Main).ToList();
+            return DeckCards.Where(x => x.Part == DeckPart.Main).ToList();
         }
         
         public List<DeckCard> GetSideboard() 
         {
-            return Cards.Where(x => x.Part == DeckPart.Sideboard).ToList();
+            return DeckCards.Where(x => x.Part == DeckPart.Sideboard).ToList();
         }
     }
 }

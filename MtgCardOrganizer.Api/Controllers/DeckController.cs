@@ -32,7 +32,7 @@ namespace MtgCardOrganizer.Api.Controllers
         [HttpPatch]
         public async Task<Deck> Update([FromBody] Deck deck)
         {
-            return await _deckRepository.CreateAsync(deck);
+            return await _deckRepository.UpdateAsync(deck);
         }
         
         

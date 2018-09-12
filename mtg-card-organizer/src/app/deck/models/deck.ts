@@ -6,7 +6,7 @@ export class Deck {
   name: string;
   containerId: number;
 
-  cards: DeckCard[];
+  deckCards: DeckCard[];
 
   constructor(init?: Partial<Deck>) {
     Object.assign(this, init);

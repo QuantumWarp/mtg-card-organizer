@@ -9,8 +9,13 @@ namespace MtgCardOrganizer.Core.EntityConfigurations.Decks
         {
             base.Configure(builder);
 
-            builder.HasOne(x => x.Deck).WithMany(x => x.Cards);
-            builder.HasOne(x => x.Card).WithMany(x => x.DeckCards);
+            builder.HasOne(x => x.Deck)
+                .WithMany(x => x.DeckCards)
+                .HasForeignKey(x => x.DeckId);
+
+            builder.HasOne(x => x.Card)
+                .WithMany(x => x.DeckCards)
+                .HasForeignKey(x => x.CardId);
         }
     }
 }

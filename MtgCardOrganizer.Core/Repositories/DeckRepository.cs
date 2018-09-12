@@ -28,7 +28,7 @@ namespace MtgCardOrganizer.Core.Repositories
         public async Task<Deck> GetAsync(int id)
         {
             return await _dbContext.Decks
-                .Include(x => x.Cards)
+                .Include(x => x.DeckCards)
                     .ThenInclude(x => x.Card)
                 .SingleAsync(x => x.Id == id);
         }
@@ -42,7 +42,14 @@ namespace MtgCardOrganizer.Core.Repositories
 
         public async Task<Deck> UpdateAsync(Deck deck)
         {
-            _dbContext.Decks.Update(deck);
+            foreach (var item in deck.DeckCards)
+            {
+                item.DeckId = deck.Id;
+                item.CardId = item.Card.Id;
+                item.Card = null;
+            }
+
+            _dbContext.UpdateChildren(deck, x => x.DeckCards);
             await _dbContext.SaveChangesAsync();
             return deck;
         }

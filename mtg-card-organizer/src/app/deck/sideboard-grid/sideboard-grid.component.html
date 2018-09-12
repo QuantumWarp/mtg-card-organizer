@@ -2,7 +2,8 @@
 
 <app-card-grid fxFlex
   [displayedColumns]="['toMain', 'remove', 'name', 'manaCost', 'count']"
-  [wrappedService]="wrappedService">
+  [wrappedService]="wrappedService"
+  (rowSelected)="rowSelected.emit($event.card)">
 
   <ng-container matColumnDef="toMain">
     <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>

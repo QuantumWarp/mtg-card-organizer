@@ -3,8 +3,18 @@
   flex-direction: row;
 }
 
-app-card-filter {
+.controls {
+  display: flex;
+  flex-direction: column;
   margin-right: 20px;
+
+  app-card-filter {
+    margin-bottom: 20px;
+  }
+
+  mat-card {
+    display: flex;
+  }
 }
 
 .crud-grid-action-column {

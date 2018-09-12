@@ -1,12 +1,19 @@
 <div class="title">Filter</div>
 
 <div class="container">
-  <app-card-filter (filterChanged)="filter = $event"></app-card-filter>
+  <div class="controls">
+    <app-card-filter (filterChanged)="filter = $event"></app-card-filter>
+
+    <mat-card>
+      <button mat-raised-button color="primary" (click)="save.emit()">Save</button>
+    </mat-card>
+  </div>
 
   <app-card-grid
     [filter]="filter"
     [displayedColumns]="['name', 'manaCost', 'toMain', 'toSideboard']"
-    [wrappedService]="wrappedService">
+    [wrappedService]="wrappedService"
+    (rowSelected)="rowSelected.emit($event)">
     <ng-container matColumnDef="toMain">
       <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
       <mat-cell class="crud-grid-action-column" *matCellDef="let record">

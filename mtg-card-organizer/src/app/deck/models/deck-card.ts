@@ -2,8 +2,9 @@ import { Card } from '../../card/models/card';
 import { DeckPart } from './deck-part';
 
 export class DeckCard {
+  cardId: number;
   card: Card;
-  deckPart: DeckPart;
+  part: DeckPart;
   count: number;
 
   constructor(init?: Partial<DeckCard>) {

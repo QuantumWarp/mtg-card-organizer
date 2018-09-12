@@ -14,6 +14,7 @@ import { DeckCard } from '../models/deck-card';
 export class SideboardGridComponent implements OnChanges {
   @Output() toMain = new EventEmitter<DeckCard>();
   @Output() remove = new EventEmitter<DeckCard>();
+  @Output() rowSelected = new EventEmitter<Card>();
 
   @Input() dataService: DataService<DeckCard>;
   wrappedService: WrappedDataService<DeckCard, Card>;

@@ -12,6 +12,8 @@ import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 export class DeckCardSearchComponent {
   @Output() toMain = new EventEmitter<Card>();
   @Output() toSideboard = new EventEmitter<Card>();
+  @Output() save = new EventEmitter();
+  @Output() rowSelected = new EventEmitter<Card>();
 
   filter = new CardQuery();
 
