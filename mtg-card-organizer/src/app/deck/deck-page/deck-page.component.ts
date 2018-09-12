@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { ActivatedRoute } from '@angular/router';
 
@@ -20,7 +20,7 @@ import { CardDetailsModalComponent } from '../../card/card-details/card-details-
   templateUrl: './deck-page.component.html',
   styleUrls: ['./deck-page.component.scss']
 })
-export class DeckPageComponent implements OnInit {
+export class DeckPageComponent implements OnInit, AfterViewInit {
   deck: Deck;
   deckParts = DeckPart;
 
@@ -32,16 +32,19 @@ export class DeckPageComponent implements OnInit {
   constructor(
     public deckService: DeckService,
     private route: ActivatedRoute,
-    private dialog: MatDialog,
     private notificationService: SnackNotificationService,
-    public authService: AuthenticationService) { }
+    public authService: AuthenticationService,
+    private cdf: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(() => {
       this.deck = this.route.snapshot.data['deck'];
-      console.log(this.deck);
-      this.updateDataServices();
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.updateDataServices();
+    this.cdf.detectChanges();
   }
 
   saveDeck(): void {
@@ -88,7 +91,5 @@ export class DeckPageComponent implements OnInit {
   updateDataServices() {
     this.mainDataService.updateData(this.deck.deckCards.filter(x => x.part === DeckPart.Main));
     this.sideBoardDataService.updateData(this.deck.deckCards.filter(x => x.part === DeckPart.Sideboard));
-    console.log(this.deck);
-    console.log(this.mainDataService);
   }
 }

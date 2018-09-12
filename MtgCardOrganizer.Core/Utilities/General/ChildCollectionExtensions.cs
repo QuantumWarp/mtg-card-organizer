@@ -23,11 +23,11 @@ namespace MtgCardOrganizer.Core.Utilities.General
             
             var additions = newChildren.Where(x => !currentChildren.Select(y => y.Id).Contains(x.Id)).ToList();
             var updates = newChildren.Where(x => currentChildren.Select(y => y.Id).Contains(x.Id)).ToList();
-            var removals = currentChildren.Where(x => newChildren.Select(y => y.Id).Contains(x.Id)).ToList();
+            var removals = currentChildren.Where(x => !newChildren.Select(y => y.Id).Contains(x.Id)).ToList();
 
             var childSet = context.Set<TChild>();
             if (additions.Any()) await childSet.AddRangeAsync(additions);
-            if (updates.Any()) childSet.UpdateRange(updates);
+            // if (updates.Any()) childSet.UpdateRange(updates);
             if (removals.Any()) childSet.RemoveRange(removals);
         }
     }
