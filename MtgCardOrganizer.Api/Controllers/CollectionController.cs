@@ -7,6 +7,7 @@ using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Entities.Collections;
 using MtgCardOrganizer.Core.Repositories;
 using MtgCardOrganizer.Core.Requests;
+using MtgCardOrganizer.Core.Requests.CardQueries;
 using MtgCardOrganizer.Core.Responses;
 
 namespace MtgCardOrganizer.Api.Controllers
@@ -44,7 +45,7 @@ namespace MtgCardOrganizer.Api.Controllers
         // Card Tasks
 
         [HttpGet("{id}/cards")]
-        public async Task<PagedData<CardInstance>> GetCards(int id, [Base64Binder] CardQuery cardQuery)
+        public async Task<PagedData<CardInstance>> GetCards(int id, [Base64Binder] CardInstanceQuery cardQuery)
         {
             return await _collectionRepository.GetCardsAsync(id, cardQuery);
         }

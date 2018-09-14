@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Initialization;
 using MtgCardOrganizer.Core.Requests;
+using MtgCardOrganizer.Core.Requests.CardQueries;
 using MtgCardOrganizer.Core.Responses;
 using MtgCardOrganizer.Core.Utilities.General;
 
@@ -10,7 +11,7 @@ namespace MtgCardOrganizer.Core.Repositories
 {
     public interface ICardSetRepository
     {
-        Task<PagedData<CardSet>> GetCardSetsAsync(CardQuery query);
+        Task<PagedData<CardSet>> GetCardSetsAsync(CardSetQuery query);
     }
 
     public class CardSetRepository : ICardSetRepository
@@ -22,11 +23,9 @@ namespace MtgCardOrganizer.Core.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PagedData<CardSet>> GetCardSetsAsync(CardQuery query)
+        public async Task<PagedData<CardSet>> GetCardSetsAsync(CardSetQuery query)
         {
-            var test = await _dbContext.CardSets.Include(x => x.Card).FirstAsync();
             return await _dbContext.CardSets
-                .Include(x => x.Card)
                 .ApplyQuery(query)
                 .ApplyPagingAsync(query?.Paging);
         }

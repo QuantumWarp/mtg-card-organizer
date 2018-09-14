@@ -5,6 +5,7 @@ using MtgCardOrganizer.Api.Helpers;
 using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Repositories;
 using MtgCardOrganizer.Core.Requests;
+using MtgCardOrganizer.Core.Requests.CardQueries;
 using MtgCardOrganizer.Core.Responses;
 
 namespace MtgCardOrganizer.Api.Controllers

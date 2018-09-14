@@ -5,6 +5,7 @@ using MtgCardOrganizer.Api.Helpers;
 using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Repositories;
 using MtgCardOrganizer.Core.Requests;
+using MtgCardOrganizer.Core.Requests.CardQueries;
 using MtgCardOrganizer.Core.Responses;
 
 namespace MtgCardOrganizer.Api.Controllers
@@ -21,7 +22,7 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<PagedData<CardSet>> Query([Base64Binder] CardQuery cardQuery)
+        public async Task<PagedData<CardSet>> Query([Base64Binder] CardSetQuery cardQuery)
         {
             return await _cardSetRepository.GetCardSetsAsync(cardQuery);
         }

@@ -6,6 +6,7 @@ using MtgCardOrganizer.Core.Entities.Collections;
 using MtgCardOrganizer.Core.Entities.Containers;
 using MtgCardOrganizer.Core.Repositories;
 using MtgCardOrganizer.Core.Requests;
+using MtgCardOrganizer.Core.Requests.CardQueries;
 using MtgCardOrganizer.Core.Requests.Generic;
 using Newtonsoft.Json;
 
@@ -53,7 +54,7 @@ namespace MtgCardOrganizer.Core.Utilities.ImportExport
             foreach (var collection in container.Collections)
             {
                 var collectionModel = new CollectionExportModel(collection);
-                var cardInstances = await _collectionRepository.GetCardsAsync(collection.Id, new CardQuery { Paging = new Paging() });
+                var cardInstances = await _collectionRepository.GetCardsAsync(collection.Id, new CardInstanceQuery { Paging = new Paging() });
                 collectionModel.Cards = cardInstances.Data.Select(x => new CardInstanceExportModel(x, _sets)).ToList();
                 containerModel.Collections.Add(collectionModel);
             }

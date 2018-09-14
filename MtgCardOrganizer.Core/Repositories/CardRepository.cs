@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Core.Entities.Cards;
 using MtgCardOrganizer.Core.Initialization;
 using MtgCardOrganizer.Core.Requests;
+using MtgCardOrganizer.Core.Requests.CardQueries;
 using MtgCardOrganizer.Core.Responses;
 using MtgCardOrganizer.Core.Utilities.General;
 

@@ -8,6 +8,7 @@ using MtgCardOrganizer.Core.Entities.Collections;
 using MtgCardOrganizer.Core.Enums;
 using MtgCardOrganizer.Core.Initialization;
 using MtgCardOrganizer.Core.Requests;
+using MtgCardOrganizer.Core.Requests.CardQueries;
 using MtgCardOrganizer.Core.Requests.Generic;
 using MtgCardOrganizer.Core.Responses;
 using MtgCardOrganizer.Core.Utilities.General;
@@ -22,7 +23,7 @@ namespace MtgCardOrganizer.Core.Repositories
         Task DeleteAsync(int collectionId);
 
 
-        Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardQuery query);
+        Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardInstanceQuery query);
         Task<List<CardInstance>> AddCardsAsync(int collectionId, List<CardInstance> cardInstances);
         Task DeleteCardsAsync(int collectionId, List<int> cardInstanceIds);
     }
@@ -59,11 +60,9 @@ namespace MtgCardOrganizer.Core.Repositories
 
         // Card Management
 
-        public async Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardQuery query)
+        public async Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardInstanceQuery query)
         {
             return await _dbContext.CardInstances
-                .Include(x => x.CardSet)
-                    .Include(x => x.CardSet.Card)
                 .Where(x => x.CollectionId == collectionId)
                 .ApplyQuery(query)
                 .ApplyPagingAsync(query?.Paging);
