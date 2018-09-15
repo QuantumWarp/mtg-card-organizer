@@ -3,8 +3,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MtgCardOrganizer.Core.Repositories;
-using MtgCardOrganizer.Core.Requests;
+using MtgCardOrganizer.Dal.Repositories;
+using MtgCardOrganizer.Dal.Requests;
 
 namespace MtgCardOrganizer.Api.Controllers
 {

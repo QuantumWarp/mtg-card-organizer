@@ -1,31 +1,31 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using Microsoft.AspNetCore.Mvc;
+using MtgCardOrganizer.Bll.Requests;
+using MtgCardOrganizer.Bll.Services;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using MtgCardOrganizer.Identity.Managers;
-using MtgCardOrganizer.Identity.Requests;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
     [Route("api/auth")]
     public class IdentityUserController : Controller
     {
-        private IIdentityUserRepository _identityUserRepository;
+        private IIdentityService _identityService;
 
-        public IdentityUserController(IIdentityUserRepository identityUserRepository)
+        public IdentityUserController(IIdentityService identityService)
         {
-            _identityUserRepository = identityUserRepository;
+            _identityService = identityService;
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<bool>> Register([FromBody] RegisterCommand registerCommand)
         {
-            return await _identityUserRepository.RegisterAsync(registerCommand);
+            return await _identityService.RegisterAsync(registerCommand);
         }
         
         [HttpPost("login")]
         public async Task<ActionResult<string>> GenerateToken([FromBody] LoginCommand loginCommand)
         {
-            var token = await _identityUserRepository.GenerateTokenAsync(loginCommand);
+            var token = await _identityService.GenerateTokenAsync(loginCommand);
             return Ok(new JwtSecurityTokenHandler().WriteToken(token));
         }
     }

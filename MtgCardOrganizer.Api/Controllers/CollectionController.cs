@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Api.Helpers;
-using MtgCardOrganizer.Core.Entities.Cards;
-using MtgCardOrganizer.Core.Entities.Collections;
-using MtgCardOrganizer.Core.Repositories;
-using MtgCardOrganizer.Core.Requests;
-using MtgCardOrganizer.Core.Requests.CardQueries;
-using MtgCardOrganizer.Core.Requests.Generic;
-using MtgCardOrganizer.Core.Responses;
+using MtgCardOrganizer.Dal.Entities.Cards;
+using MtgCardOrganizer.Dal.Entities.Collections;
+using MtgCardOrganizer.Dal.Repositories;
+using MtgCardOrganizer.Dal.Requests;
+using MtgCardOrganizer.Dal.Requests.CardQueries;
+using MtgCardOrganizer.Dal.Requests.Generic;
+using MtgCardOrganizer.Dal.Responses;
 
 namespace MtgCardOrganizer.Api.Controllers
 {

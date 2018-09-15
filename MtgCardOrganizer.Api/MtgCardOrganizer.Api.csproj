@@ -4,7 +4,10 @@
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="wwwroot\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.0" />
@@ -14,7 +17,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MtgCardOrganizer.Identity\MtgCardOrganizer.Identity.csproj" />
-    <ProjectReference Include="..\MtgCardOrganizer.Core\MtgCardOrganizer.Core.csproj" />
+    <ProjectReference Include="..\MtgCardOrganizer.Bll\MtgCardOrganizer.Bll.csproj" />
+    <ProjectReference Include="..\MtgCardOrganizer.Dal\MtgCardOrganizer.Dal.csproj" />
   </ItemGroup>
 </Project>

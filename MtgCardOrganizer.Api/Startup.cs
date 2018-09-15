@@ -1,16 +1,15 @@
-﻿using System.Security.Claims;
-using MtgCardOrganizer.Api.Exceptions;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MtgCardOrganizer.Identity.Initialization;
-using MtgCardOrganizer.Core.Initialization;
-using MtgCardOrganizer.Core.Utilities.General;
+using MtgCardOrganizer.Api.Exceptions;
 using MtgCardOrganizer.Api.Helpers;
+using MtgCardOrganizer.Bll.Initialization;
+using MtgCardOrganizer.Dal.Initialization;
+using MtgCardOrganizer.Dal.Utilities.General;
 using Newtonsoft.Json;
 
 namespace MtgCardOrganizer.Api
@@ -46,11 +45,11 @@ namespace MtgCardOrganizer.Api
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
-            services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddTransient<UserService>();
 
-            new IdentityInitializer(services, Configuration).AddServices();
-            new CoreInitializer(services, Configuration).AddServices();
+            new DalInitializer(services, Configuration).AddServices();
+            new BllInitializer(services, Configuration).AddServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

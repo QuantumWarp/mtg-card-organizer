@@ -1,17 +1,19 @@
-using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MtgCardOrganizer.Core.Initialization;
-using MtgCardOrganizer.Identity.Initialization;
+using MtgCardOrganizer.Bll.Initialization;
+using MtgCardOrganizer.Dal.Initialization;
 using MtgCardOrganizer.Seeding.Seeders;
+using System;
+using System.Collections.Generic;
 
 namespace MtgCardOrganizer.Seeding.Main
 {
     public class MainSeeder
     {
         private ServiceProvider _serviceProvider;
-        private List<ISectionSeeder> _sectionSeeders = new List<ISectionSeeder>();
+        private MtgCardOrganizerContext _dbContext;
+        private List<AbstractSeeder> _seeders = new List<AbstractSeeder>();
 
         public void Run()
         {
@@ -29,43 +31,35 @@ namespace MtgCardOrganizer.Seeding.Main
             var configuration = builder.Build();
 
             var services = new ServiceCollection();
-            new IdentityInitializer(services, configuration).AddServices();
-            new CoreInitializer(services, configuration).AddServices();
+            new DalInitializer(services, configuration).AddServices();
+            new BllInitializer(services, configuration).AddServices();
             _serviceProvider = services.BuildServiceProvider();
+            
+            _dbContext = ActivatorUtilities.CreateInstance<MtgCardOrganizerContext>(_serviceProvider);
         }
 
         private void CreateSeeders()
         {
-            _sectionSeeders.AddRange(new List<ISectionSeeder> {
-                new IdentitySeeder(_serviceProvider),
-                new CoreSeeder(_serviceProvider),
+            _seeders.AddRange(new List<AbstractSeeder> {
+                ActivatorUtilities.CreateInstance<UserSeeder>(_serviceProvider),
             });
         }
 
         private void Wipe()
         {
-            var processedDbNames = new List<string>();
-
-            foreach (var seeder in _sectionSeeders)
-            {
-                Console.WriteLine(seeder.GetType().Name + " - Wipe");   
-                processedDbNames = seeder.Wipe(processedDbNames);
-            }
+            Console.WriteLine("Wiping...");
+            _dbContext.Database.EnsureDeleted();
         }
 
         private void Migrate()
         {
-            foreach (var seeder in _sectionSeeders)
-            {
-                Console.WriteLine(seeder.GetType().Name + " - Migrate");   
-                seeder.Migrate();
-            }
+            Console.WriteLine("Migrating...");
+            _dbContext.Database.Migrate();
         }
 
         private void Seed()
         {
-
-            foreach (var seeder in _sectionSeeders)
+            foreach (var seeder in _seeders)
             {
                 Console.WriteLine(seeder.GetType().Name + " - Seeding");   
                 seeder.SeedAsync().GetAwaiter().GetResult();

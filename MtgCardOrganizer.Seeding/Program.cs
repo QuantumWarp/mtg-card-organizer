@@ -13,6 +13,7 @@ namespace MtgCardOrganizer.Seeding
             mainSeeder.Run();
             
             Console.WriteLine("Complete");
+            Console.ReadLine();
         }
     }
 }

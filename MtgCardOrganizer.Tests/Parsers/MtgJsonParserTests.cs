@@ -1,9 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MtgCardOrganizer.Core.Utilities.Parsers;
+using MtgCardOrganizer.Dal.Utilities.Parsers;
 using System.Linq;
 using System.IO;
 
-namespace MtgCardOrganizer.Core.Tests.Parsers
+namespace MtgCardOrganizer.Dal.Tests.Parsers
 {
     [TestClass]
     public class MtgJsonParserTests

@@ -13,8 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MtgCardOrganizer.Api\MtgCardOrganizer.Api.csproj" />
-    <ProjectReference Include="..\MtgCardOrganizer.Core\MtgCardOrganizer.Core.csproj" />
-    <ProjectReference Include="..\MtgCardOrganizer.Identity\MtgCardOrganizer.Identity.csproj" />
+    <ProjectReference Include="..\MtgCardOrganizer.Bll\MtgCardOrganizer.Bll.csproj" />
+    <ProjectReference Include="..\MtgCardOrganizer.Dal\MtgCardOrganizer.Dal.csproj" />
     <ProjectReference Include="..\MtgCardOrganizer.Seeding\MtgCardOrganizer.Seeding.csproj" />
   </ItemGroup>
 

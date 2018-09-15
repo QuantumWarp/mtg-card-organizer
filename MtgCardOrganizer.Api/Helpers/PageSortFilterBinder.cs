@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using MtgCardOrganizer.Core.Requests.Generic;
+using MtgCardOrganizer.Dal.Requests.Generic;
 
 namespace MtgCardOrganizer.Api.Helpers
 {

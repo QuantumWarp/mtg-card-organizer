@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MtgCardOrganizer.Core.Entities.Cards;
-using MtgCardOrganizer.Core.Repositories;
-using MtgCardOrganizer.Core.Requests.Generic;
-using MtgCardOrganizer.Core.Responses;
+using MtgCardOrganizer.Dal.Entities.Cards;
+using MtgCardOrganizer.Dal.Repositories;
+using MtgCardOrganizer.Dal.Requests.Generic;
+using MtgCardOrganizer.Dal.Responses;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
