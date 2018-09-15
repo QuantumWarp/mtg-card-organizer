@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MtgCardOrganizer.Dal.Enums;
 using MtgCardOrganizer.Dal.Requests.Generic;
-using MtgCardOrganizer.Dal.Utilities.General;
+using MtgCardOrganizer.Dal.Utilities;
 
 namespace MtgCardOrganizer.Dal.Requests.CardQueries
 {

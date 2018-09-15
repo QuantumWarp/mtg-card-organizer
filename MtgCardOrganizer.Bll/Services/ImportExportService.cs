@@ -1,8 +1,9 @@
-using System.Threading.Tasks;
 using MtgCardOrganizer.Dal.Initialization;
+using MtgCardOrganizer.Dal.Repositories;
 using MtgCardOrganizer.Dal.Utilities.ImportExport;
+using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Dal.Repositories
+namespace MtgCardOrganizer.Bll.Services
 {
     public interface IImportExportService
     {
@@ -10,13 +11,13 @@ namespace MtgCardOrganizer.Dal.Repositories
         Task ImportAsync(int containerId, string importString);
     }
 
-    public class ImportExportService : IImportExportService
+    internal class ImportExportService : IImportExportService
     {
         private readonly MtgCardOrganizerContext _dbContext;
-
         private readonly IContainerRepository _containerRepository;
         private readonly ICollectionRepository _collectionRepository;
         private readonly IDeckRepository _deckRepository;
+        private readonly ICardSetRepository _cardSetRepository;
         private readonly ISetRepository _setRepository;
 
         public ImportExportService(
@@ -24,12 +25,14 @@ namespace MtgCardOrganizer.Dal.Repositories
             IContainerRepository containerRepository,
             ICollectionRepository collectionRepository,
             IDeckRepository deckRepository,
+            ICardSetRepository cardSetRepository,
             ISetRepository setRepository)
         {
             _dbContext = dbContext;
             _containerRepository = containerRepository;
             _collectionRepository = collectionRepository;
             _deckRepository = deckRepository;
+            _cardSetRepository = cardSetRepository;
             _setRepository = setRepository;
         }
 
@@ -41,8 +44,12 @@ namespace MtgCardOrganizer.Dal.Repositories
 
         public async Task ImportAsync(int containerId, string importString)
         {
-            var importer = new Importer(_dbContext);
-            await importer.ProcessImportAsync(containerId, importString);
+            using (var transaction = await _dbContext.Database.BeginTransactionAsync())
+            {
+                var importer = new Importer(_containerRepository, _collectionRepository, _deckRepository, _cardSetRepository, _setRepository);
+                await importer.ProcessImportAsync(containerId, importString);
+                transaction.Commit();
+            }
         }
     }
 }

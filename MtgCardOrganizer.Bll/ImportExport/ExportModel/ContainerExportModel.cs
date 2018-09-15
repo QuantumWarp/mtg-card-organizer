@@ -15,14 +15,14 @@ namespace MtgCardOrganizer.Dal.Utilities.ImportExport
         public ContainerExportModel() { }
         public ContainerExportModel(Container container)
         {
-            this.Name = container.Name;
+            Name = container.Name;
         }
 
         public Container ToContainer(Container parentContainer)
         {
             return new Container {
-                Name = this.Name,
-                Parent = parentContainer,
+                Name = Name,
+                ParentId = parentContainer.Id,
             };
         }
     }

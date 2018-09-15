@@ -1,10 +1,8 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MtgCardOrganizer.Dal.Repositories;
-using MtgCardOrganizer.Dal.Requests;
+using MtgCardOrganizer.Bll.Requests;
+using MtgCardOrganizer.Bll.Services;
+using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
@@ -12,24 +10,17 @@ namespace MtgCardOrganizer.Api.Controllers
     [Route("api/admin")]
     public class AdminCardController : Controller
     {
-        private IAdminCardRepository _adminCardsRepository;
+        private IAdminCardService _adminCardService;
 
-        public AdminCardController(IAdminCardRepository adminCardsRepository)
+        public AdminCardController(IAdminCardService adminCardService)
         {
-            _adminCardsRepository = adminCardsRepository;
+            _adminCardService = adminCardService;
         }
 
         [HttpPost("import-cards")]
-        public async Task<IActionResult> ImportCards([FromBody] ImportRequest importRequest) 
+        public async Task<IActionResult> ImportCards([FromBody] AdminImportRequest importRequest) 
         {
-            await _adminCardsRepository.ImportCardsAsync(importRequest);
-            return new OkResult();
-        }
-
-        [HttpPost("clear-cards")]
-        public IActionResult ClearCards() 
-        {
-            _adminCardsRepository.ClearCards();
+            await _adminCardService.ImportCardsAsync(importRequest);
             return new OkResult();
         }
     }

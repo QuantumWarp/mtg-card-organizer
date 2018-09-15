@@ -1,20 +1,21 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities.Cards;
 using MtgCardOrganizer.Dal.Initialization;
-using MtgCardOrganizer.Dal.Requests;
 using MtgCardOrganizer.Dal.Requests.CardQueries;
 using MtgCardOrganizer.Dal.Responses;
-using MtgCardOrganizer.Dal.Utilities.General;
+using MtgCardOrganizer.Dal.Utilities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Dal.Repositories
 {
     public interface ICardRepository
     {
         Task<PagedData<Card>> GetCardsAsync(CardQuery query);
+        Task CreateManyAsync(List<Card> cards);
     }
 
-    public class CardRepository : ICardRepository
+    internal class CardRepository : ICardRepository
     {
         private MtgCardOrganizerContext _dbContext;
 
@@ -29,6 +30,13 @@ namespace MtgCardOrganizer.Dal.Repositories
                 .AsNoTracking()
                 .ApplyQuery(query)
                 .ApplyPagingAsync(query?.Paging);
+        }
+
+        // Admin Only
+        public async Task CreateManyAsync(List<Card> cards)
+        {
+            await _dbContext.Cards.AddRangeAsync(cards);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

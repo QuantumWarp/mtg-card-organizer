@@ -1,7 +1,7 @@
 using MtgCardOrganizer.Dal.Entities.Cards;
 using System.Collections.Generic;
 
-namespace MtgCardOrganizer.Dal.Utilities.Parsers
+namespace MtgCardOrganizer.Bll.Parsers
 {
     public interface IParser
     {

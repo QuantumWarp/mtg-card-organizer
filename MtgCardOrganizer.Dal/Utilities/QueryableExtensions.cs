@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
 
-namespace MtgCardOrganizer.Dal.Utilities.General
+namespace MtgCardOrganizer.Dal.Utilities
 {
     public static class PageSortFilterExtensions
     {

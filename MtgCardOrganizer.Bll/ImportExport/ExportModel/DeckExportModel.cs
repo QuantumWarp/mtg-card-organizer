@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using MtgCardOrganizer.Dal.Entities.Containers;
 using MtgCardOrganizer.Dal.Entities.Decks;
+using System.Collections.Generic;
 
 namespace MtgCardOrganizer.Dal.Utilities.ImportExport
 {
@@ -13,14 +13,14 @@ namespace MtgCardOrganizer.Dal.Utilities.ImportExport
         public DeckExportModel() { }
         public DeckExportModel(Deck deck)
         {
-            this.Name = deck.Name;
+            Name = deck.Name;
         }
 
         public Deck ToDeck(Container container)
         {
             return new Deck {
-                Name = this.Name,
-                Container = container,
+                Name = Name,
+                ContainerId = container.Id,
             };
         }
     }

@@ -1,6 +1,6 @@
 using System;
 
-namespace MtgCardOrganizer.Dal.Utilities.Parsers
+namespace MtgCardOrganizer.Bll.Parsers
 {
     public enum ParseType
     {

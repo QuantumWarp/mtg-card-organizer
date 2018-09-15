@@ -11,8 +11,7 @@ using MtgCardOrganizer.Dal.Requests;
 using MtgCardOrganizer.Dal.Requests.CardQueries;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
-using MtgCardOrganizer.Dal.Utilities.General;
-using MtgCardOrganizer.Dal.Utilities.ImportExport;
+using MtgCardOrganizer.Dal.Utilities;
 
 namespace MtgCardOrganizer.Dal.Repositories
 {
@@ -29,7 +28,7 @@ namespace MtgCardOrganizer.Dal.Repositories
         Task DeleteCardsAsync(int collectionId, List<int> cardInstanceIds);
     }
 
-    public class CollectionRepository : ICollectionRepository
+    internal class CollectionRepository : ICollectionRepository
     {
         private readonly MtgCardOrganizerContext _dbContext;
         private readonly UserService _user;

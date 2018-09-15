@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities;
 
-namespace MtgCardOrganizer.Dal.Utilities.General
+namespace MtgCardOrganizer.Dal.Utilities
 {
     public static class ChildCollectionExtensions 
     {

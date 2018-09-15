@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using MtgCardOrganizer.Dal.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using MtgCardOrganizer.Dal.Utilities.General;
 
-namespace MtgCardOrganizer.Dal.Utilities.PriceConnectors
+namespace MtgCardOrganizer.Bll.PriceConnectors
 {
     public class MagicMadhouseConnector
     {

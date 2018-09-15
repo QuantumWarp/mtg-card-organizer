@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Api.Helpers;
 using MtgCardOrganizer.Dal.Entities.Cards;
 using MtgCardOrganizer.Dal.Repositories;
-using MtgCardOrganizer.Dal.Requests;
 using MtgCardOrganizer.Dal.Requests.CardQueries;
 using MtgCardOrganizer.Dal.Responses;
+using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Api.Controllers
 {

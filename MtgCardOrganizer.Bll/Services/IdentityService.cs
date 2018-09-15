@@ -12,11 +12,11 @@ namespace MtgCardOrganizer.Bll.Services
 {
     public interface IIdentityService
     {
-        Task<bool> RegisterAsync(RegisterCommand registerCommand);
-        Task<JwtSecurityToken> GenerateTokenAsync(LoginCommand loginCommand);
+        Task<bool> RegisterAsync(RegisterRequest registerCommand);
+        Task<JwtSecurityToken> GenerateTokenAsync(LoginRequest loginCommand);
     }
 
-    public class IdentityService : IIdentityService
+    internal class IdentityService : IIdentityService
     {
         private UserManager<IdentityUser> _userManager;
         private SignInManager<IdentityUser> _signInManager;
@@ -29,20 +29,20 @@ namespace MtgCardOrganizer.Bll.Services
             _signInManager = signInManager;
         }
         
-        public async Task<bool> RegisterAsync(RegisterCommand registerCommand)
+        public async Task<bool> RegisterAsync(RegisterRequest registerRequest)
         {
-            var user = new IdentityUser { UserName = registerCommand.Username, Email = registerCommand.Email };
-            var result = await _userManager.CreateAsync(user, registerCommand.Password);
+            var user = new IdentityUser { UserName = registerRequest.Username, Email = registerRequest.Email };
+            var result = await _userManager.CreateAsync(user, registerRequest.Password);
             return result.Succeeded;
         }
         
-        public async Task<JwtSecurityToken> GenerateTokenAsync(LoginCommand loginCommand)
+        public async Task<JwtSecurityToken> GenerateTokenAsync(LoginRequest loginRequest)
         {
-            var user = await _userManager.FindByNameAsync(loginCommand.Username);
+            var user = await _userManager.FindByNameAsync(loginRequest.Username);
             if (user == null) 
                 throw new Exception("Email not found");
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginCommand.Password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginRequest.Password, false);
             if (!result.Succeeded)
                 throw new Exception("Sign in failed");
 

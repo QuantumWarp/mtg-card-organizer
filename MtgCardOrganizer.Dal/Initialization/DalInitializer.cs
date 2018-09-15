@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MtgCardOrganizer.Dal.Repositories;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("MtgCardOrganizer.Seeding")]
+[assembly: InternalsVisibleTo("MtgCardOrganizer.Tests")]
 namespace MtgCardOrganizer.Dal.Initialization
 {
     public class DalInitializer
@@ -18,27 +22,35 @@ namespace MtgCardOrganizer.Dal.Initialization
 
         public void AddServices() 
         {
-            this.AddRepositories(_services, _configuration);
-            this.AddContexts(_services, _configuration);
+            AddRepositories(_services, _configuration);
+            AddContext(_services, _configuration);
         }
 
         private void AddRepositories(IServiceCollection services, IConfigurationRoot configuration)
         {
-            services.AddTransient<IAdminCardRepository, AdminCardRepository>();
-            services.AddTransient<IContainerRepository, ContainerRepository>();
-            services.AddTransient<ICollectionRepository, CollectionRepository>();
-            services.AddTransient<IDeckRepository, DeckRepository>();
-            services.AddTransient<ICardRepository, CardRepository>();
-            services.AddTransient<ICardSetRepository, CardSetRepository>();
-            services.AddTransient<ISetRepository, SetRepository>();
-
-            services.AddTransient<IImportExportService, ImportExportService>();
+            services.AddScoped<IContainerRepository, ContainerRepository>();
+            services.AddScoped<ICollectionRepository, CollectionRepository>();
+            services.AddScoped<IDeckRepository, DeckRepository>();
+            services.AddScoped<ICardRepository, CardRepository>();
+            services.AddScoped<ICardSetRepository, CardSetRepository>();
+            services.AddScoped<ISetRepository, SetRepository>();
         }
 
-        private void AddContexts(IServiceCollection services, IConfigurationRoot configuration)
+        private void AddContext(IServiceCollection services, IConfigurationRoot configuration)
         {
             services.AddDbContext<MtgCardOrganizerContext>(options =>
                 options.UseSqlite(configuration["ConnectionString"]));
+            
+            _services.AddIdentity<IdentityUser, IdentityRole>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 5;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
+                .AddEntityFrameworkStores<MtgCardOrganizerContext>()
+                .AddDefaultTokenProviders();
         }
     }
 }

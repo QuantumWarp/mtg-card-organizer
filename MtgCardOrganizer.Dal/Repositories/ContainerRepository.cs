@@ -1,13 +1,12 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities.Containers;
 using MtgCardOrganizer.Dal.Enums;
 using MtgCardOrganizer.Dal.Initialization;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
-using MtgCardOrganizer.Dal.Utilities.General;
-using MtgCardOrganizer.Dal.Utilities.ImportExport;
+using MtgCardOrganizer.Dal.Utilities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Dal.Repositories
 {
@@ -21,7 +20,7 @@ namespace MtgCardOrganizer.Dal.Repositories
         Task DeleteAsync(int containerId);
     }
 
-    public class ContainerRepository : IContainerRepository
+    internal class ContainerRepository : IContainerRepository
     {
         private readonly MtgCardOrganizerContext _dbContext;
         private readonly UserService _user;

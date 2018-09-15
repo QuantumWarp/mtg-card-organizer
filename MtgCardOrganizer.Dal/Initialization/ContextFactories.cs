@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace MtgCardOrganizer.Dal.Initialization
 {
-    public class MtgCoreLibContextFactory : IDesignTimeDbContextFactory<MtgCardOrganizerContext>
+    internal class MtgCoreLibContextFactory : IDesignTimeDbContextFactory<MtgCardOrganizerContext>
     {
         public MtgCardOrganizerContext CreateDbContext(string[] args)
         {

@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using MtgCardOrganizer.Dal.Requests.Generic;
 
-namespace MtgCardOrganizer.Dal.Utilities.General
+namespace MtgCardOrganizer.Dal.Utilities
 {
     public static class ExpressionHelper 
     {

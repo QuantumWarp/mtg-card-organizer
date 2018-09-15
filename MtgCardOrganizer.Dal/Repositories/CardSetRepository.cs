@@ -1,20 +1,23 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities.Cards;
 using MtgCardOrganizer.Dal.Initialization;
-using MtgCardOrganizer.Dal.Requests;
 using MtgCardOrganizer.Dal.Requests.CardQueries;
 using MtgCardOrganizer.Dal.Responses;
-using MtgCardOrganizer.Dal.Utilities.General;
+using MtgCardOrganizer.Dal.Utilities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Dal.Repositories
 {
     public interface ICardSetRepository
     {
         Task<PagedData<CardSet>> GetCardSetsAsync(CardSetQuery query);
+        Task<List<CardSet>> GetCardSetsByNameAsync(List<string> names);
+        Task CreateManyAsync(List<CardSet> cardSets);
     }
 
-    public class CardSetRepository : ICardSetRepository
+    internal class CardSetRepository : ICardSetRepository
     {
         private MtgCardOrganizerContext _dbContext;
 
@@ -29,6 +32,22 @@ namespace MtgCardOrganizer.Dal.Repositories
                 .AsNoTracking()
                 .ApplyQuery(query)
                 .ApplyPagingAsync(query?.Paging);
+        }
+
+        // Importer
+        public async Task<List<CardSet>> GetCardSetsByNameAsync(List<string> names)
+        {
+            return await _dbContext.CardSets
+                .Include(x => x.Card)
+                .Where(x => names.Contains(x.Card.Name))
+                .ToListAsync();
+        }
+
+        // Admin Only
+        public async Task CreateManyAsync(List<CardSet> cardSets)
+        {
+            await _dbContext.CardSets.AddRangeAsync(cardSets);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

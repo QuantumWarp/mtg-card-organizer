@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Security.Claims;
 
-namespace MtgCardOrganizer.Dal.Utilities.General
+namespace MtgCardOrganizer.Dal.Utilities
 {
     public class UserService
     {

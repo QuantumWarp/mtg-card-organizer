@@ -10,8 +10,8 @@ namespace MtgCardOrganizer.Dal.Utilities.ImportExport
         public DeckCardExportModel() { }
         public DeckCardExportModel(DeckCard deckCard)
         {
-            this.Name = deckCard.Card.Name;
-            this.Count = deckCard.Count;
+            Name = deckCard.Card.Name;
+            Count = deckCard.Count;
         }
     }
 }

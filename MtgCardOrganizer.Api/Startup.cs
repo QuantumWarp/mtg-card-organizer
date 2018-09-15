@@ -9,9 +9,12 @@ using MtgCardOrganizer.Api.Exceptions;
 using MtgCardOrganizer.Api.Helpers;
 using MtgCardOrganizer.Bll.Initialization;
 using MtgCardOrganizer.Dal.Initialization;
-using MtgCardOrganizer.Dal.Utilities.General;
+using MtgCardOrganizer.Dal.Utilities;
 using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("MtgCardOrganizer.Seeding")]
+[assembly: InternalsVisibleTo("MtgCardOrganizer.Tests")]
 namespace MtgCardOrganizer.Api
 {
     public class Startup

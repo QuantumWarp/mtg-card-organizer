@@ -4,11 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using MtgCardOrganizer.Bll.Services;
-using MtgCardOrganizer.Dal.Initialization;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.CompilerServices;
 using System.Text;
 
+[assembly: InternalsVisibleTo("MtgCardOrganizer.Seeding")]
+[assembly: InternalsVisibleTo("MtgCardOrganizer.Tests")]
 namespace MtgCardOrganizer.Bll.Initialization
 {
     public class BllInitializer
@@ -24,29 +26,24 @@ namespace MtgCardOrganizer.Bll.Initialization
             _configuration = configuration;
         }
 
-        public void AddServices() 
+        public void AddServices()
         {
-            _services.AddTransient<IIdentityService, IdentityService>();
+            _services.AddScoped<IAdminCardService, AdminCardService>();
+            _services.AddScoped<IIdentityService, IdentityService>();
+            _services.AddScoped<IImportExportService, ImportExportService>();
 
+            AddAuth();
+        }
 
-            _services.AddIdentity<IdentityUser, IdentityRole>(options => {
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 8;
-                options.Password.RequiredUniqueChars = 5;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-            })
-                .AddEntityFrameworkStores<MtgCardOrganizerContext>()
-                .AddDefaultTokenProviders();
-
+        private void AddAuth()
+        {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             _services.AddAuthentication(options => {
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(cfg => {
                     cfg.RequireHttpsMetadata = false; // Dev only
                     cfg.SaveToken = true;

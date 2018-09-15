@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities.Decks;
 using MtgCardOrganizer.Dal.Initialization;
-using MtgCardOrganizer.Dal.Utilities.General;
+using MtgCardOrganizer.Dal.Utilities;
 
 namespace MtgCardOrganizer.Dal.Repositories
 {
@@ -14,7 +14,7 @@ namespace MtgCardOrganizer.Dal.Repositories
         Task DeleteAsync(int id);
     }
 
-    public class DeckRepository : IDeckRepository
+    internal class DeckRepository : IDeckRepository
     {
         private readonly MtgCardOrganizerContext _dbContext;
         private readonly UserService _user;

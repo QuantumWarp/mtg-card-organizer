@@ -1,13 +1,13 @@
+using MtgCardOrganizer.Dal.Entities.Cards;
+using MtgCardOrganizer.Dal.Enums;
+using MtgCardOrganizer.Dal.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
-using MtgCardOrganizer.Dal.Utilities.General;
-using MtgCardOrganizer.Dal.Entities.Cards;
-using MtgCardOrganizer.Dal.Enums;
 
-namespace MtgCardOrganizer.Dal.Utilities.Parsers
+namespace MtgCardOrganizer.Bll.Parsers
 {
     public class MtgJsonParser : IParser
     {
