@@ -35,6 +35,7 @@ namespace MtgCardOrganizer.Core.Repositories
         public async Task<bool> UserHasPermission(Permission permission, int containerId) {
             var validPermissions = PermissionExtensions.ValidPermissions(permission);
             var containerUserLink = await _dbContext.ContainerUserLinks
+                .AsNoTracking()
                 .Where(x => containerId == x.ContainerId)
                 .Where(x => validPermissions.Contains(x.Permission))
                 .SingleOrDefaultAsync();
@@ -44,6 +45,7 @@ namespace MtgCardOrganizer.Core.Repositories
         public async Task<Container> GetAsync(int? containerId)
         {
             var baseQueryable = _dbContext.Containers
+                .AsNoTracking()
                 .Include(x => x.SubContainers)
                 .Include(x => x.Collections)
                 .Include(x => x.Decks);
@@ -71,6 +73,7 @@ namespace MtgCardOrganizer.Core.Repositories
         public async Task<PagedData<Container>> GetManyAsync(QueryModel<Container> queryModel)
         {
             return await _dbContext.Containers
+                .AsNoTracking()
                 .Include(x => x.SubContainers)
                 .Include(x => x.Collections)
                 .Include(x => x.Decks)

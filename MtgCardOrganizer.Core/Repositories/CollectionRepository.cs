@@ -17,7 +17,8 @@ using MtgCardOrganizer.Core.Utilities.ImportExport;
 namespace MtgCardOrganizer.Core.Repositories
 {
     public interface ICollectionRepository
-    {
+    {        
+        Task<PagedData<Collection>> GetManyAsync(Paging paging);
         Task<Collection> GetAsync(int collectionId);
         Task<Collection> CreateAsync(Collection collection);
         Task DeleteAsync(int collectionId);
@@ -37,6 +38,13 @@ namespace MtgCardOrganizer.Core.Repositories
         {
             _user = user;
             _dbContext = dbContext;
+        }
+
+        public async Task<PagedData<Collection>> GetManyAsync(Paging paging)
+        {
+            return await _dbContext.Collections
+                .AsNoTracking()
+                .ApplyPagingAsync(paging);
         }
 
         public async Task<Collection> GetAsync(int id)
@@ -63,6 +71,7 @@ namespace MtgCardOrganizer.Core.Repositories
         public async Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardInstanceQuery query)
         {
             return await _dbContext.CardInstances
+                .AsNoTracking()
                 .Where(x => x.CollectionId == collectionId)
                 .ApplyQuery(query)
                 .ApplyPagingAsync(query?.Paging);

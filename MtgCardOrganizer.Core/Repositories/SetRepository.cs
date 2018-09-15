@@ -24,6 +24,7 @@ namespace MtgCardOrganizer.Core.Repositories
         public async Task<List<Set>> GetSetsAsync()
         {
             return await _dbContext.Sets
+                .AsNoTracking()
                 .OrderBy(x => x.Name)
                 .ToListAsync();
         }

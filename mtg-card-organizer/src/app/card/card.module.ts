@@ -17,6 +17,7 @@ import { CardService } from './services/card.service';
 import { SetService } from './services/set.service';
 import { SetSymbolComponent } from './set-symbol/set-symbol.component';
 import { CardGridComponent } from './card-grid/card-grid.component';
+import { CollectionService } from '../collection/services/collection.service';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { CardGridComponent } from './card-grid/card-grid.component';
     CardService,
     SetService,
     CardImagePipe,
+    CollectionService,
   ]
 })
 export class CardModule {}

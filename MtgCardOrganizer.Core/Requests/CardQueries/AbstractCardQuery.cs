@@ -35,6 +35,8 @@ namespace MtgCardOrganizer.Core.Requests.CardQueries
             if (Rarities.Any()) queryable = IsInRarities(queryable, Rarities);
             if (nums.Any()) queryable = IsInNums(queryable, nums);
 
+            if (CollectionIds.Any()) queryable = IsInCollections(queryable, CollectionIds);
+
             queryable = OrderResults(queryable);
 
             return queryable;

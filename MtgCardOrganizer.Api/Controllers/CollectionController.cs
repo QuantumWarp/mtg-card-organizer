@@ -8,6 +8,7 @@ using MtgCardOrganizer.Core.Entities.Collections;
 using MtgCardOrganizer.Core.Repositories;
 using MtgCardOrganizer.Core.Requests;
 using MtgCardOrganizer.Core.Requests.CardQueries;
+using MtgCardOrganizer.Core.Requests.Generic;
 using MtgCardOrganizer.Core.Responses;
 
 namespace MtgCardOrganizer.Api.Controllers
@@ -21,6 +22,12 @@ namespace MtgCardOrganizer.Api.Controllers
         public CollectionController(ICollectionRepository collectionRepository)
         {
             _collectionRepository = collectionRepository;
+        }
+
+        [HttpGet]
+        public async Task<PagedData<Collection>> GetMany([Base64Binder] Paging paging)
+        {
+            return await _collectionRepository.GetManyAsync(paging);
         }
 
         [HttpGet("{id}")]

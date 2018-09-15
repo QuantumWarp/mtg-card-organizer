@@ -28,6 +28,7 @@ namespace MtgCardOrganizer.Core.Repositories
         public async Task<Deck> GetAsync(int id)
         {
             return await _dbContext.Decks
+                .AsNoTracking()
                 .Include(x => x.DeckCards)
                     .ThenInclude(x => x.Card)
                 .SingleAsync(x => x.Id == id);

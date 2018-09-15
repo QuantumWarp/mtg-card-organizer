@@ -7,14 +7,15 @@ import { ManaCostQuery } from './mana-cost-query';
 export class CardQuery extends Base64QueryStringGenerator implements IPageable {
   paging: Paging;
 
-  collectionIds: number[];
-  setIds: number[] = [];
-
   name: string[] = [];
   text: string[] = [];
   type: string[] = [];
-  num: string[] = [];
-  rarity: Rarity[] = [];
+
+  setIds: number[] = [];
+  rarities: Rarity[] = [];
+  nums: string[] = [];
+
+  collectionIds: number[];
 
   manaCost = new ManaCostQuery();
 

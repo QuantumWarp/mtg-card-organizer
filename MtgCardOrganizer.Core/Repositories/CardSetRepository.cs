@@ -26,6 +26,7 @@ namespace MtgCardOrganizer.Core.Repositories
         public async Task<PagedData<CardSet>> GetCardSetsAsync(CardSetQuery query)
         {
             return await _dbContext.CardSets
+                .AsNoTracking()
                 .ApplyQuery(query)
                 .ApplyPagingAsync(query?.Paging);
         }

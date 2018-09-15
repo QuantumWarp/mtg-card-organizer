@@ -2,7 +2,12 @@
   <app-page-header></app-page-header>
   <app-title-and-trail title="Card Search" [trail]="['Tools']"></app-title-and-trail>
 
-  <app-card-search-bar (newCardQuery)="filter = $event"></app-card-search-bar>
+  <div fxLayout="row" fxLayoutGap="20px">
+    <app-card-filter (filterChanged)="filter = $event"></app-card-filter>
 
-  <app-card-set-grid (rowSelected)="cardSetSelected($event)"></app-card-set-grid>
+    <app-card-set-grid fxFlex
+      [filter]="filter"
+      (rowSelected)="cardSetSelected($event)">
+    </app-card-set-grid>
+  </div>
 </div>

@@ -57,7 +57,7 @@ export class CardRapidEntryComponent implements OnInit {
     cardQuery.setIds = this.form.value.setIds ? this.form.value.setIds : [];
 
     if (cardQuery.setIds && cardQuery.setIds.length === 1 && !isNaN(Number(cardQuery.name))) {
-      cardQuery.num = [ this.form.value.name ];
+      cardQuery.nums = [ this.form.value.name ];
     } else {
       cardQuery.name = [ this.form.value.name ];
     }
