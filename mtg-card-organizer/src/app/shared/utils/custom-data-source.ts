@@ -33,6 +33,7 @@ export class CustomDataSource<T> extends DataSource<T> {
 
   private reloadData(queryStringGenerator?: QueryStringGenerator): void {
     this.loading = true;
+    this.dataSubject.next([]);
     this.currentQuery = queryStringGenerator;
     this.dataService.query(queryStringGenerator).subscribe(result => {
       this.currentResult = result;
