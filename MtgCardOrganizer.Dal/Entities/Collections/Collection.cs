@@ -8,7 +8,7 @@ namespace MtgCardOrganizer.Dal.Entities.Collections
     {        
         public string Name { get; set; }
 
-        public int? ContainerId { get; set; }
+        public int ContainerId { get; set; }
         public Container Container { get; set; }
 
         public ICollection<CardInstance> CardInstances { get; set; }

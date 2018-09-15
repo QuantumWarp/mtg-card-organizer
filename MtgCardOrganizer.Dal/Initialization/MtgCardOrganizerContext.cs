@@ -9,6 +9,7 @@ using MtgCardOrganizer.Dal.EntityConfigurations.Cards;
 using MtgCardOrganizer.Dal.EntityConfigurations.Collections;
 using MtgCardOrganizer.Dal.EntityConfigurations.Containers;
 using MtgCardOrganizer.Dal.EntityConfigurations.Decks;
+using MtgCardOrganizer.Dal.EntityConfigurations.Identity;
 using MtgCardOrganizer.Dal.EntityConfigurations.Other;
 
 namespace MtgCardOrganizer.Dal.Initialization
@@ -34,6 +35,8 @@ namespace MtgCardOrganizer.Dal.Initialization
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+
             modelBuilder.ApplyConfiguration(new ContainerConfiguration());
             modelBuilder.ApplyConfiguration(new ContainerUserLinkConfiguration());
 

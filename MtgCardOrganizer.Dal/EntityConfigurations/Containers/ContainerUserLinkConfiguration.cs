@@ -9,7 +9,16 @@ namespace MtgCardOrganizer.Dal.EntityConfigurations.Containers
         public void Configure(EntityTypeBuilder<ContainerUserLink> builder)
         {
             builder.HasKey(x => new { x.UserId, x.ContainerId });
-            builder.HasOne(x => x.Container).WithMany(x => x.ContainerUserLinks).IsRequired();
+
+            builder.HasOne(x => x.Container)
+                .WithMany(x => x.ContainerUserLinks)
+                .HasForeignKey(x => x.ContainerId)
+                .IsRequired();
+
+            builder.HasOne(x => x.User)
+                .WithMany(x => x.ContainerUserLinks)
+                .HasForeignKey(x => x.UserId)
+                .IsRequired();
         }
     }
 }

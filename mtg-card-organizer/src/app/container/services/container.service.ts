@@ -9,9 +9,8 @@ export class ContainerService {
 
   constructor(private apiService: ApiService) { }
 
-  get(containerId?: number): Observable<Container> {
-    const url = containerId ? 'api/containers/' + containerId : 'api/containers';
-    return this.apiService.get<Container>(url);
+  get(containerId: number): Observable<Container> {
+    return this.apiService.get<Container>('api/containers/' + containerId);
   }
 
   create(containerName: string, parentId: number) {

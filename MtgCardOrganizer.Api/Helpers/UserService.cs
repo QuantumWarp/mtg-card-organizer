@@ -1,9 +1,10 @@
+using MtgCardOrganizer.Dal.Utilities;
 using System.Linq;
 using System.Security.Claims;
 
-namespace MtgCardOrganizer.Dal.Utilities
+namespace MtgCardOrganizer.Api.Helpers
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private ClaimsPrincipal _claimsPrincipal;
 

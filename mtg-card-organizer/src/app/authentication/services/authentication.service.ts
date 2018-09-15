@@ -10,6 +10,10 @@ import { tap } from 'rxjs/internal/operators';
 export class AuthenticationService {
   tokenInfo: any;
 
+  get baseContainerId(): string {
+    return this.tokenInfo.baseContainerId;
+  }
+
   get username(): string {
     return this.tokenInfo.username;
   }

@@ -3,9 +3,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MtgCardOrganizer.Bll.Initialization;
 using MtgCardOrganizer.Dal.Initialization;
+using MtgCardOrganizer.Dal.Utilities;
 using MtgCardOrganizer.Seeding.Seeders;
+using MtgCardOrganizer.Seeding.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace MtgCardOrganizer.Seeding.Main
 {
@@ -31,6 +34,9 @@ namespace MtgCardOrganizer.Seeding.Main
             var configuration = builder.Build();
 
             var services = new ServiceCollection();
+            
+            services.AddScoped<IUserService, DummyUserService>();
+
             new DalInitializer(services, configuration).AddServices();
             new BllInitializer(services, configuration).AddServices();
             _serviceProvider = services.BuildServiceProvider();

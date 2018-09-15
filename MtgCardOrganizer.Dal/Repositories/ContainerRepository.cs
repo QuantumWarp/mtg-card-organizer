@@ -2,94 +2,64 @@ using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities.Containers;
 using MtgCardOrganizer.Dal.Enums;
 using MtgCardOrganizer.Dal.Initialization;
-using MtgCardOrganizer.Dal.Requests.Generic;
-using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Dal.Repositories
 {
     public interface IContainerRepository
     {
-        Task<bool> UserHasPermission(Permission permission, int containerId);
-
-        Task<Container> GetAsync(int? containerId);
-        Task<PagedData<Container>> GetManyAsync(QueryModel<Container> queryModel);
-        Task<Container> CreateAsync(Container container);
+        Task<Container> GetAsync(int containerId);
+        Task CreateAsync(Container container, string providedUserId = null);
         Task DeleteAsync(int containerId);
     }
 
     internal class ContainerRepository : IContainerRepository
     {
         private readonly MtgCardOrganizerContext _dbContext;
-        private readonly UserService _user;
+        private readonly IUserService _user;
+        private readonly IPermissionRepository _permissionRepository;
 
-        public ContainerRepository(UserService user, MtgCardOrganizerContext dbContext)
+        public ContainerRepository(
+            MtgCardOrganizerContext dbContext,
+            IUserService user,
+            IPermissionRepository permissionRepository)
         {
-            _user = user;
             _dbContext = dbContext;
+            _user = user;
+            _permissionRepository = permissionRepository;
         }
 
-        public async Task<bool> UserHasPermission(Permission permission, int containerId) {
-            var validPermissions = PermissionExtensions.ValidPermissions(permission);
-            var containerUserLink = await _dbContext.ContainerUserLinks
-                .AsNoTracking()
-                .Where(x => containerId == x.ContainerId)
-                .Where(x => validPermissions.Contains(x.Permission))
-                .SingleOrDefaultAsync();
-            return containerUserLink != null;
-        }
-
-        public async Task<Container> GetAsync(int? containerId)
+        public async Task<Container> GetAsync(int containerId)
         {
-            var baseQueryable = _dbContext.Containers
-                .AsNoTracking()
-                .Include(x => x.SubContainers)
-                .Include(x => x.Collections)
-                .Include(x => x.Decks);
+            await _permissionRepository.CheckAsync(containerId, Permission.Read);
 
-            Container result;
-            if (containerId != null)
-            {
-                result = await baseQueryable.SingleAsync(x => x.Id == containerId);
-            }
-            else
-            {
-                result = await baseQueryable.SingleOrDefaultAsync(x => 
-                    x.ParentId == null && x.OwnerUserId == _user.Id);   
-
-                if (result == null) {
-                    result = await CreateAsync(new Container() {
-                        Name = "Base Container"
-                    });
-                }
-            }
-            
-            return result;
-        }
-
-        public async Task<PagedData<Container>> GetManyAsync(QueryModel<Container> queryModel)
-        {
             return await _dbContext.Containers
                 .AsNoTracking()
                 .Include(x => x.SubContainers)
                 .Include(x => x.Collections)
                 .Include(x => x.Decks)
-                .Where(x => x.OwnerUserId == _user.Id)
-                .ApplyQueryModelAsync(queryModel);
+                .SingleAsync(x => x.Id == containerId);
         }
 
-        public async Task<Container> CreateAsync(Container container)
+        public async Task CreateAsync(Container container, string providedUserId = null)
         {
-            container.OwnerUserId = _user.Id;
+            providedUserId = providedUserId ?? _user.Id;
+
+            if (container.ParentId.HasValue)
+            {
+                await _permissionRepository.CheckAsync(container.ParentId.Value, Permission.Admin);
+            }
+
             await _dbContext.Containers.AddAsync(container);
+            await _permissionRepository.UpdatePermissionAsync(container.Id, providedUserId, Permission.Admin);
             await _dbContext.SaveChangesAsync();
-            return container;
         }
 
         public async Task DeleteAsync(int containerId)
         {
+            await _permissionRepository.CheckAsync(containerId, Permission.Admin);
+
             var container = await _dbContext.Containers.FindAsync(containerId);
             _dbContext.Containers.Remove(container);
             await _dbContext.SaveChangesAsync();

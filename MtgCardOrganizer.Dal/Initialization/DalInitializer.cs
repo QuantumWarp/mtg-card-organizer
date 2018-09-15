@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MtgCardOrganizer.Dal.Entities.Identity;
 using MtgCardOrganizer.Dal.Repositories;
+using MtgCardOrganizer.Dal.Utilities;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MtgCardOrganizer.Seeding")]
@@ -28,6 +30,7 @@ namespace MtgCardOrganizer.Dal.Initialization
 
         private void AddRepositories(IServiceCollection services, IConfigurationRoot configuration)
         {
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
             services.AddScoped<IContainerRepository, ContainerRepository>();
             services.AddScoped<ICollectionRepository, CollectionRepository>();
             services.AddScoped<IDeckRepository, DeckRepository>();
@@ -41,7 +44,7 @@ namespace MtgCardOrganizer.Dal.Initialization
             services.AddDbContext<MtgCardOrganizerContext>(options =>
                 options.UseSqlite(configuration["ConnectionString"]));
             
-            _services.AddIdentity<IdentityUser, IdentityRole>(options => {
+            _services.AddIdentity<User, IdentityRole>(options => {
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 8;
                 options.Password.RequiredUniqueChars = 5;

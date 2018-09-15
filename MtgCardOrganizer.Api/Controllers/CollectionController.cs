@@ -25,21 +25,22 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<PagedData<Collection>> GetMany([Base64Binder] Paging paging)
+        public async Task<ActionResult<PagedData<Collection>>> GetMany([Base64Binder] Paging paging)
         {
             return await _collectionRepository.GetManyAsync(paging);
         }
 
         [HttpGet("{id}")]
-        public async Task<Collection> Get(int id)
+        public async Task<ActionResult<Collection>> Get(int id)
         {
             return await _collectionRepository.GetAsync(id);
         }
 
         [HttpPost]
-        public async Task<Collection> Create([FromBody] Collection collection)
+        public async Task<IActionResult> Create([FromBody] Collection collection)
         {
-            return await _collectionRepository.CreateAsync(collection);
+            await _collectionRepository.CreateAsync(collection);
+            return NoContent();
         }
         
         [HttpDelete("{id}")]
@@ -52,13 +53,13 @@ namespace MtgCardOrganizer.Api.Controllers
         // Card Tasks
 
         [HttpGet("{id}/cards")]
-        public async Task<PagedData<CardInstance>> GetCards(int id, [Base64Binder] CardInstanceQuery cardQuery)
+        public async Task<ActionResult<PagedData<CardInstance>>> GetCards(int id, [Base64Binder] CardInstanceQuery cardQuery)
         {
             return await _collectionRepository.GetCardsAsync(id, cardQuery);
         }
         
         [HttpPost("{id}/cards")]
-        public async Task<List<CardInstance>> AddCards(int id, [FromBody] List<CardInstance> cardInstances)
+        public async Task<ActionResult<List<CardInstance>>> AddCards(int id, [FromBody] List<CardInstance> cardInstances)
         {
             return await _collectionRepository.AddCardsAsync(id, cardInstances);
         }

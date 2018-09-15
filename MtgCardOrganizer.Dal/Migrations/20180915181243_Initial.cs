@@ -25,21 +25,23 @@ namespace MtgCardOrganizer.Dal.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
                     Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
                     SecurityStamp = table.Column<string>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    Discriminator = table.Column<string>(nullable: false),
+                    BaseContainerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,7 +75,6 @@ namespace MtgCardOrganizer.Dal.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: false),
                     IsPublic = table.Column<bool>(nullable: false),
-                    OwnerUserId = table.Column<string>(nullable: true),
                     ParentId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -227,7 +228,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: false),
-                    ContainerId = table.Column<int>(nullable: true)
+                    ContainerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -237,15 +238,15 @@ namespace MtgCardOrganizer.Dal.Migrations
                         column: x => x.ContainerId,
                         principalTable: "Containers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ContainerUserLinks",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
                     Permission = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
                     ContainerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -257,6 +258,12 @@ namespace MtgCardOrganizer.Dal.Migrations
                         principalTable: "Containers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ContainerUserLinks_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,7 +273,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: false),
-                    ContainerId = table.Column<int>(nullable: true)
+                    ContainerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -276,7 +283,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                         column: x => x.ContainerId,
                         principalTable: "Containers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -491,13 +498,13 @@ namespace MtgCardOrganizer.Dal.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "CardSets");
 
             migrationBuilder.DropTable(
                 name: "Collections");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Decks");

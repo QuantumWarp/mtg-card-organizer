@@ -48,8 +48,8 @@ namespace MtgCardOrganizer.Api
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
-            services.AddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
-            services.AddTransient<UserService>();
+            services.AddScoped(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddScoped<IUserService, UserService>();
 
             new DalInitializer(services, Configuration).AddServices();
             new BllInitializer(services, Configuration).AddServices();

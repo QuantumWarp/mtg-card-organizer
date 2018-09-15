@@ -9,7 +9,7 @@ using MtgCardOrganizer.Dal.Initialization;
 namespace MtgCardOrganizer.Dal.Migrations
 {
     [DbContext(typeof(MtgCardOrganizerContext))]
-    [Migration("20180915132502_Initial")]
+    [Migration("20180915181243_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,6 +70,9 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -108,6 +111,8 @@ namespace MtgCardOrganizer.Dal.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -272,7 +277,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ContainerId");
+                    b.Property<int>("ContainerId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -293,8 +298,6 @@ namespace MtgCardOrganizer.Dal.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired();
-
-                    b.Property<string>("OwnerUserId");
 
                     b.Property<int?>("ParentId");
 
@@ -325,7 +328,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ContainerId");
+                    b.Property<int>("ContainerId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -370,6 +373,17 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Formats");
+                });
+
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Identity.User", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<int>("BaseContainerId");
+
+                    b.ToTable("User");
+
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -447,7 +461,8 @@ namespace MtgCardOrganizer.Dal.Migrations
                 {
                     b.HasOne("MtgCardOrganizer.Dal.Entities.Containers.Container", "Container")
                         .WithMany("Collections")
-                        .HasForeignKey("ContainerId");
+                        .HasForeignKey("ContainerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.Container", b =>
@@ -463,13 +478,19 @@ namespace MtgCardOrganizer.Dal.Migrations
                         .WithMany("ContainerUserLinks")
                         .HasForeignKey("ContainerId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MtgCardOrganizer.Dal.Entities.Identity.User", "User")
+                        .WithMany("ContainerUserLinks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Decks.Deck", b =>
                 {
                     b.HasOne("MtgCardOrganizer.Dal.Entities.Containers.Container", "Container")
                         .WithMany("Decks")
-                        .HasForeignKey("ContainerId");
+                        .HasForeignKey("ContainerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Decks.DeckCard", b =>

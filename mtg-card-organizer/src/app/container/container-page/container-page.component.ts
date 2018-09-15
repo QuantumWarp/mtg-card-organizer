@@ -42,22 +42,22 @@ export class ContainerPageComponent implements OnInit {
 
   createContainer(): void {
     const dialogRef = this.dialog.open(AddContainerModalComponent, { data: this.container });
-    dialogRef.afterClosed().subscribe(result => result ? this.refresh() : undefined);
+    dialogRef.afterClosed().subscribe(() => this.refresh());
   }
 
   createCollection(): void {
     const dialogRef = this.dialog.open(AddCollectionModalComponent, { data: this.container });
-    dialogRef.afterClosed().subscribe(result => result ? this.refresh() : undefined);
+    dialogRef.afterClosed().subscribe(() => this.refresh());
   }
 
   createDeck(): void {
     const dialogRef = this.dialog.open(AddDeckModalComponent, { data: this.container });
-    dialogRef.afterClosed().subscribe(result => result ? this.refresh() : undefined);
+    dialogRef.afterClosed().subscribe(() => this.refresh());
   }
 
   openImport(): void {
     const dialogRef = this.dialog.open(ContainerImportComponent, { data: this.container });
-    dialogRef.afterClosed().subscribe(result => result ? this.refresh() : undefined);
+    dialogRef.afterClosed().subscribe(() => this.refresh());
   }
 
   openExport(): void {

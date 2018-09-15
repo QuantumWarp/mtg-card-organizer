@@ -17,9 +17,10 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<bool>> Register([FromBody] RegisterRequest registerRequest)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
         {
-            return await _identityService.RegisterAsync(registerRequest);
+            await _identityService.RegisterAsync(registerRequest);
+            return NoContent();
         }
         
         [HttpPost("login")]

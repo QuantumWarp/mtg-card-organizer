@@ -1,8 +1,8 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Dal.Entities.Decks;
 using MtgCardOrganizer.Dal.Repositories;
+using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Api.Controllers
 {
@@ -18,21 +18,23 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Deck> Get(int id)
+        public async Task<ActionResult<Deck>> Get(int id)
         {
             return await _deckRepository.GetAsync(id);
         }
 
         [HttpPost]
-        public async Task<Deck> Create([FromBody] Deck deck)
+        public async Task<IActionResult> Create([FromBody] Deck deck)
         {
-            return await _deckRepository.CreateAsync(deck);
+            await _deckRepository.CreateAsync(deck);
+            return NoContent();
         }
 
         [HttpPatch]
-        public async Task<Deck> Update([FromBody] Deck deck)
+        public async Task<IActionResult> Update([FromBody] Deck deck)
         {
-            return await _deckRepository.UpdateAsync(deck);
+            await _deckRepository.UpdateAsync(deck);
+            return NoContent();
         }
         
         

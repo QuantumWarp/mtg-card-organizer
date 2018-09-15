@@ -22,16 +22,17 @@ namespace MtgCardOrganizer.Api.Controllers
             _importExportService = importExportService;
         }
 
-        [HttpGet("{id?}")]
-        public async Task<Container> Get(int? id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Container>> Get(int id)
         {
             return await _containerRepository.GetAsync(id);
         }
 
         [HttpPost]
-        public async Task<Container> Create([FromBody] Container container)
+        public async Task<IActionResult> Create([FromBody] Container container)
         {
-            return await _containerRepository.CreateAsync(container);
+            await _containerRepository.CreateAsync(container);
+            return NoContent();
         }
         
         [HttpDelete("{id}")]
@@ -42,7 +43,7 @@ namespace MtgCardOrganizer.Api.Controllers
         }
 
         [HttpGet("{id}/export")]
-        public async Task<string> Export(int id)
+        public async Task<ActionResult<string>> Export(int id)
         {
             return await _importExportService.ExportAsync(id);
         }
