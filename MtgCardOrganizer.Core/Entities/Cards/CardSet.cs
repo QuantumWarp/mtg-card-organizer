@@ -11,6 +11,7 @@ namespace MtgCardOrganizer.Core.Entities.Cards
         public string Num { get; set; }
         public Rarity Rarity { get; set; }
         
+        public int CardId { get; set; }
         public int SetId { get; set; }
         public Card Card { get; set; }
         public Set Set { get; set; }

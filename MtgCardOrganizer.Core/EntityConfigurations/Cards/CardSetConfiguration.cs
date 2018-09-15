@@ -12,8 +12,8 @@ namespace MtgCardOrganizer.Core.EntityConfigurations.Cards
             builder.Property(x => x.Artist).IsRequired();
             builder.Property(x => x.Rarity).IsRequired();
 
-            builder.HasOne(x => x.Card).WithMany(x => x.CardSets).IsRequired();
-            builder.HasOne(x => x.Set).WithMany(x => x.CardSets).HasForeignKey(x => x.SetId);
+            builder.HasOne(x => x.Card).WithMany(x => x.CardSets).HasForeignKey(x => x.CardId).IsRequired();
+            builder.HasOne(x => x.Set).WithMany(x => x.CardSets).HasForeignKey(x => x.SetId).IsRequired();
         }
     }
 }

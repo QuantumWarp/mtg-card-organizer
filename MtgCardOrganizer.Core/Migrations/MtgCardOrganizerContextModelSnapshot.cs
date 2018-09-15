@@ -38,6 +38,8 @@ namespace MtgCardOrganizer.Core.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name");
+
                     b.ToTable("Cards");
                 });
 
@@ -49,8 +51,7 @@ namespace MtgCardOrganizer.Core.Migrations
                     b.Property<string>("Artist")
                         .IsRequired();
 
-                    b.Property<int?>("CardId")
-                        .IsRequired();
+                    b.Property<int>("CardId");
 
                     b.Property<string>("MultiverseId");
 
@@ -182,11 +183,11 @@ namespace MtgCardOrganizer.Core.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CardId");
+                    b.Property<int>("CardId");
 
                     b.Property<int>("Count");
 
-                    b.Property<int?>("DeckId");
+                    b.Property<int>("DeckId");
 
                     b.Property<int>("Part");
 
@@ -271,11 +272,13 @@ namespace MtgCardOrganizer.Core.Migrations
                 {
                     b.HasOne("MtgCardOrganizer.Core.Entities.Cards.Card", "Card")
                         .WithMany("DeckCards")
-                        .HasForeignKey("CardId");
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MtgCardOrganizer.Core.Entities.Decks.Deck", "Deck")
-                        .WithMany("Cards")
-                        .HasForeignKey("DeckId");
+                        .WithMany("DeckCards")
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

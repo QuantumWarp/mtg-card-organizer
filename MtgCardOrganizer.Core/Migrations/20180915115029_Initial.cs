@@ -143,8 +143,8 @@ namespace MtgCardOrganizer.Core.Migrations
                     Artist = table.Column<string>(nullable: false),
                     Num = table.Column<string>(nullable: true),
                     Rarity = table.Column<int>(nullable: false),
-                    SetId = table.Column<int>(nullable: false),
-                    CardId = table.Column<int>(nullable: false)
+                    CardId = table.Column<int>(nullable: false),
+                    SetId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -169,8 +169,8 @@ namespace MtgCardOrganizer.Core.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DeckId = table.Column<int>(nullable: true),
-                    CardId = table.Column<int>(nullable: true),
+                    DeckId = table.Column<int>(nullable: false),
+                    CardId = table.Column<int>(nullable: false),
                     Part = table.Column<int>(nullable: false),
                     Count = table.Column<int>(nullable: false)
                 },
@@ -182,13 +182,13 @@ namespace MtgCardOrganizer.Core.Migrations
                         column: x => x.CardId,
                         principalTable: "Cards",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DeckCards_Decks_DeckId",
                         column: x => x.DeckId,
                         principalTable: "Decks",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -228,6 +228,11 @@ namespace MtgCardOrganizer.Core.Migrations
                 name: "IX_CardInstances_CollectionId",
                 table: "CardInstances",
                 column: "CollectionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cards_Name",
+                table: "Cards",
+                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CardSets_CardId",
