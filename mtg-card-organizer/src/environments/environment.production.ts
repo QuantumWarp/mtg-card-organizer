@@ -5,8 +5,8 @@
 
 export const environment = {
   apiBaseUrl: 'https://localhost:5001',
-  production: false,
+  production: true,
   testSettings: {
-    includeTestModule: true,
+    includeTestModule: false,
   }
 };

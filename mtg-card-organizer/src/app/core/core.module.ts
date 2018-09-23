@@ -44,7 +44,7 @@ import { environment } from '../../environments/environment';
     JwtModule.forRoot({
       config: {
         tokenGetter: () => localStorage.getItem('access_token'),
-        whitelistedDomains: [environment.apiBaseUrl.replace('http://', '')],
+        whitelistedDomains: [environment.apiBaseUrl.replace('https://', '')],
         blacklistedRoutes: [
           environment.apiBaseUrl + 'api/auth/login',
           environment.apiBaseUrl + 'api/auth/register',
