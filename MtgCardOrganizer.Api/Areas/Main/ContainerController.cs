@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Bll.Services;
 using MtgCardOrganizer.Dal.Entities.Containers;
-using MtgCardOrganizer.Dal.Repositories;
+using MtgCardOrganizer.Dal.Repositories.Main;
+using MtgCardOrganizer.Dal.Utilities;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers
+namespace MtgCardOrganizer.Api.Controllers.Main
 {
-    [Authorize]
+    [Authorize(Roles = Roles.StandardUser)]
     [Route("api/containers")]
     public class ContainerRepository : Controller
     {

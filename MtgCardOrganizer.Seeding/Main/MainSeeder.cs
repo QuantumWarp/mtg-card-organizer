@@ -47,6 +47,7 @@ namespace MtgCardOrganizer.Seeding.Main
         private void CreateSeeders()
         {
             _seeders.AddRange(new List<AbstractSeeder> {
+                ActivatorUtilities.CreateInstance<RoleSeeder>(_serviceProvider),
                 ActivatorUtilities.CreateInstance<UserSeeder>(_serviceProvider),
             });
         }

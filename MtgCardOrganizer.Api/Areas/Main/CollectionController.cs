@@ -1,19 +1,18 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Api.Helpers;
-using MtgCardOrganizer.Dal.Entities.Cards;
 using MtgCardOrganizer.Dal.Entities.Collections;
-using MtgCardOrganizer.Dal.Repositories;
-using MtgCardOrganizer.Dal.Requests;
+using MtgCardOrganizer.Dal.Repositories.Main;
 using MtgCardOrganizer.Dal.Requests.CardQueries;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
+using MtgCardOrganizer.Dal.Utilities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers
+namespace MtgCardOrganizer.Api.Controllers.Main
 {
-    [Authorize]
+    [Authorize(Roles = Roles.StandardUser)]
     [Route("api/collections")]
     public class CollectionController : Controller
     {

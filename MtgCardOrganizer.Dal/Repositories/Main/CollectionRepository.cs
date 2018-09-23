@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities.Collections;
 using MtgCardOrganizer.Dal.Enums;
 using MtgCardOrganizer.Dal.Initialization;
+using MtgCardOrganizer.Dal.Repositories.Admin;
 using MtgCardOrganizer.Dal.Requests.CardQueries;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
@@ -10,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Dal.Repositories
+namespace MtgCardOrganizer.Dal.Repositories.Main
 {
     public interface ICollectionRepository
     {        

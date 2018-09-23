@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Dal.Entities.Decks;
-using MtgCardOrganizer.Dal.Repositories;
+using MtgCardOrganizer.Dal.Repositories.Main;
+using MtgCardOrganizer.Dal.Utilities;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers
+namespace MtgCardOrganizer.Api.Controllers.Main
 {
-    [Authorize]
+    [Authorize(Roles = Roles.StandardUser)]
     [Route("api/decks")]
     public class DeckController : Controller
     {

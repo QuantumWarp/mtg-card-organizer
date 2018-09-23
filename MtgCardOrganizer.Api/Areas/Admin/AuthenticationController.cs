@@ -1,17 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Bll.Requests;
 using MtgCardOrganizer.Bll.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers
+namespace MtgCardOrganizer.Api.Controllers.Admin
 {
+    [AllowAnonymous]
     [Route("api/auth")]
-    public class IdentityUserController : Controller
+    public class AuthenticationController : Controller
     {
         private IIdentityService _identityService;
 
-        public IdentityUserController(IIdentityService identityService)
+        public AuthenticationController(IIdentityService identityService)
         {
             _identityService = identityService;
         }

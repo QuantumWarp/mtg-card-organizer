@@ -1,4 +1,4 @@
-<div class="nav-node" [class.nav-node-open]="navNode.open">
+<div class="nav-node" [class.nav-node-open]="navNode.open" *ngIf="showNode">
   <div mat-ripple class="nav-node-button" (click)="nodeClicked()">
     <mat-icon>{{ navNode.icon }}</mat-icon>
     <div class="nav-node-text">{{ navNode.text }}</div>

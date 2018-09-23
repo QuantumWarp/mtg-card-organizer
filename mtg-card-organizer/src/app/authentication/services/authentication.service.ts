@@ -22,6 +22,12 @@ export class AuthenticationService {
     return this.tokenInfo.email;
   }
 
+  get roles(): string[] {
+    const key = Object.keys(this.tokenInfo).find(x => x.endsWith('role'));
+    const value = this.tokenInfo[key];
+    return value instanceof Array ? value : [ value ];
+  }
+
   constructor(
     private apiService: ApiService,
     private jwtHelperService: JwtHelperService
@@ -48,11 +54,11 @@ export class AuthenticationService {
 
   logout(): void {
     this.tokenInfo = undefined;
-    localStorage.removeItem('mtg_access_token');
+    localStorage.removeItem('access_token');
   }
 
   hasValidToken(): boolean {
-    const accessToken = localStorage.getItem('mtg_access_token');
+    const accessToken = localStorage.getItem('access_token');
     this.parseToken(accessToken);
     return accessToken && !this.jwtHelperService.isTokenExpired(accessToken);
   }
@@ -60,7 +66,7 @@ export class AuthenticationService {
   private parseToken(token: string): void {
     this.tokenInfo = this.jwtHelperService.decodeToken(token);
     if (this.tokenInfo) {
-      localStorage.setItem('mtg_access_token', token);
+      localStorage.setItem('access_token', token);
     }
   }
 }

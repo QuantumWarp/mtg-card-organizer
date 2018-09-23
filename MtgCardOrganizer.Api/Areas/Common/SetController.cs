@@ -1,15 +1,14 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Dal.Entities.Cards;
-using MtgCardOrganizer.Dal.Repositories;
-using MtgCardOrganizer.Dal.Requests.Generic;
-using MtgCardOrganizer.Dal.Responses;
+using MtgCardOrganizer.Dal.Repositories.Common;
+using MtgCardOrganizer.Dal.Utilities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers
+namespace MtgCardOrganizer.Api.Controllers.Common
 {
-    [Authorize]
+    [Authorize(Roles = Roles.StandardUser)]
     [Route("api/sets")]
     public class SetController : Controller
     {

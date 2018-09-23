@@ -4,6 +4,7 @@ export const navModel: NavNode[] = [
   {
     text: 'Admin',
     icon: 'lock',
+    requiredRole: 'Administrator',
     children: [
       {
         text: 'Import Cards',

@@ -1,7 +1,7 @@
 ﻿using MtgCardOrganizer.Bll.Parsers;
 using MtgCardOrganizer.Bll.Requests;
 using MtgCardOrganizer.Dal.Initialization;
-using MtgCardOrganizer.Dal.Repositories;
+using MtgCardOrganizer.Dal.Repositories.Common;
 using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Bll.Services

@@ -43,7 +43,7 @@ import { environment } from '../../environments/environment';
   imports: [
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => localStorage.getItem('mtg_access_token'),
+        tokenGetter: () => localStorage.getItem('access_token'),
         whitelistedDomains: [environment.apiBaseUrl.replace('http://', '')],
         blacklistedRoutes: [
           environment.apiBaseUrl + 'api/auth/login',

@@ -5,4 +5,5 @@ export interface NavNode {
   action?: () => void;
   children?: NavNode[];
   open?: boolean;
+  requiredRole?: string;
 }

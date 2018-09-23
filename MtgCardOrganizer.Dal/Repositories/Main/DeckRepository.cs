@@ -2,10 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities.Decks;
 using MtgCardOrganizer.Dal.Enums;
 using MtgCardOrganizer.Dal.Initialization;
+using MtgCardOrganizer.Dal.Repositories.Admin;
 using MtgCardOrganizer.Dal.Utilities;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Dal.Repositories
+namespace MtgCardOrganizer.Dal.Repositories.Main
 {
     public interface IDeckRepository
     {

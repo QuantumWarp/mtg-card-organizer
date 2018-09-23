@@ -1,16 +1,16 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Api.Helpers;
 using MtgCardOrganizer.Dal.Entities.Cards;
-using MtgCardOrganizer.Dal.Repositories;
-using MtgCardOrganizer.Dal.Requests;
+using MtgCardOrganizer.Dal.Repositories.Common;
 using MtgCardOrganizer.Dal.Requests.CardQueries;
 using MtgCardOrganizer.Dal.Responses;
+using MtgCardOrganizer.Dal.Utilities;
+using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers
+namespace MtgCardOrganizer.Api.Controllers.Common
 {
-    [Authorize]
+    [Authorize(Roles = Roles.StandardUser)]
     [Route("api/card-sets")]
     public class CardSetController : Controller
     {

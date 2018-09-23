@@ -7,7 +7,7 @@ using MtgCardOrganizer.Dal.Utilities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Dal.Repositories
+namespace MtgCardOrganizer.Dal.Repositories.Common
 {
     public interface ICardRepository
     {

@@ -1,14 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MtgCardOrganizer.Dal.Entities.Cards;
-using MtgCardOrganizer.Dal.Entities.Collections;
 using MtgCardOrganizer.Dal.Entities.Containers;
-using MtgCardOrganizer.Dal.Repositories;
-using MtgCardOrganizer.Dal.Requests;
+using MtgCardOrganizer.Dal.Repositories.Common;
+using MtgCardOrganizer.Dal.Repositories.Main;
 using MtgCardOrganizer.Dal.Requests.CardQueries;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Dal.Utilities.ImportExport
 {

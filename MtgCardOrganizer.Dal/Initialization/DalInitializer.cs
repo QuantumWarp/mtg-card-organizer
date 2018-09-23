@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MtgCardOrganizer.Dal.Entities.Identity;
-using MtgCardOrganizer.Dal.Repositories;
-using MtgCardOrganizer.Dal.Utilities;
+using MtgCardOrganizer.Dal.Repositories.Admin;
+using MtgCardOrganizer.Dal.Repositories.Common;
+using MtgCardOrganizer.Dal.Repositories.Main;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MtgCardOrganizer.Seeding")]

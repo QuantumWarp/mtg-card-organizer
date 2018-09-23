@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Bll.Requests;
 using MtgCardOrganizer.Bll.Services;
+using MtgCardOrganizer.Dal.Utilities;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers
+namespace MtgCardOrganizer.Api.Controllers.Admin
 {
-    [Authorize]
+    [Authorize(Roles = Roles.Administrator)]
     [Route("api/admin")]
     public class AdminCardController : Controller
     {

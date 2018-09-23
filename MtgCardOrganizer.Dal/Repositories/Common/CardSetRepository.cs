@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Dal.Repositories
+namespace MtgCardOrganizer.Dal.Repositories.Common
 {
     public interface ICardSetRepository
     {
