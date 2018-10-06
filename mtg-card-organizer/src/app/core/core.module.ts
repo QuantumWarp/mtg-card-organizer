@@ -24,6 +24,11 @@ import { UserService } from '../authentication/services/user.service';
 import { SharedModule } from '../shared/shared.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
+import { VersionService } from '../authentication/services/version.service';
+
+export function jwtTokenGetter()  {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -43,7 +48,7 @@ import { environment } from '../../environments/environment';
   imports: [
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => localStorage.getItem('access_token'),
+        tokenGetter: jwtTokenGetter,
         whitelistedDomains: [environment.apiBaseUrl.replace('https://', '')],
         blacklistedRoutes: [
           environment.apiBaseUrl + 'api/auth/login',
@@ -75,6 +80,7 @@ import { environment } from '../../environments/environment';
     SnackNotificationService,
     LoadingService,
     UserService,
+    VersionService,
   ]
 })
 export class CoreModule { }

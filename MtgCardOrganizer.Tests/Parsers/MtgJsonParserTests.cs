@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MtgCardOrganizer.Dal.Utilities.Parsers;
-using System.Linq;
+using MtgCardOrganizer.Bll.Parsers;
 using System.IO;
+using System.Linq;
 
 namespace MtgCardOrganizer.Dal.Tests.Parsers
 {

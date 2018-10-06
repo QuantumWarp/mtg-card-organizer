@@ -9,7 +9,7 @@ import { ContainerService } from '../services/container.service';
 })
 export class ContainerExportComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) private container: Container,
+    @Inject(MAT_DIALOG_DATA) public container: Container,
     private collectionService: ContainerService,
     private dialogRef: MatDialogRef<ContainerExportComponent>) { }
 

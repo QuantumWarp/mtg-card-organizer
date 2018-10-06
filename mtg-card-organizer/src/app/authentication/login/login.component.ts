@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-import { AuthenticationService } from '../services/authentication.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { AuthenticationService } from '../services/authentication.service';
+import { VersionService } from '../services/version.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['../authentication.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
@@ -17,7 +19,12 @@ export class LoginComponent {
 
   constructor(
     private authenticationService: AuthenticationService,
+    private versionService: VersionService,
     private router: Router) {}
+
+  ngOnInit(): void {
+    this.versionService.get().subscribe(result => console.log(result));
+  }
 
   login(): void {
     this.loading = true;

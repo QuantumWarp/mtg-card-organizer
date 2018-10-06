@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { BasicQueryStringGenerator } from '../../shared/utils/basic-query-string-generator';
 import { UserModel } from '../models/user.model';
 import { ApiService } from '../../core/communication/api.service';
+
 @Injectable()
 export class UserService {
   constructor(private apiService: ApiService) {}

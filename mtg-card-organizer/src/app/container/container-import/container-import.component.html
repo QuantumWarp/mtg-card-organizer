@@ -11,7 +11,7 @@
 
   <div class="modal-actions">
       <button mat-raised-button color="primary" (click)="openFileDialog()">Select From File</button>
-      <input style="display: none" type="file" ng2FileSelect #fileInput (change)="fileChanged($event)"/>
+      <input style="display: none" type="file" ng2FileSelect #fileInput (change)="fileChanged()"/>
       <span fxFlex></span>
     <button #cancelButton mat-raised-button (click)="close()">Cancel</button>
     <button mat-raised-button color="primary" (click)="import()">Import</button>
