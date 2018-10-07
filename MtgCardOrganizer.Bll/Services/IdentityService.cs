@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using MtgCardOrganizer.Bll.Exceptions;
 using MtgCardOrganizer.Bll.Initialization;
 using MtgCardOrganizer.Bll.Requests;
 using MtgCardOrganizer.Dal.Entities.Containers;
@@ -63,7 +64,7 @@ namespace MtgCardOrganizer.Bll.Services
                 };
 
                 var userUnique = await _userRepository.CheckUserUnique(user);
-                if (!userUnique) throw new Exception("User already exists");
+                if (!userUnique) throw new RegistrationException("User already exists");
 
                 var roles = new List<string> { Roles.StandardUser };
                 if (!_userManager.Users.Any()) roles.Add(Roles.Administrator);
@@ -83,23 +84,25 @@ namespace MtgCardOrganizer.Bll.Services
             var user = await _userManager.FindByNameAsync(loginRequest.LoginName);
             if (user == null) await _userManager.FindByEmailAsync(loginRequest.LoginName);
             if (user == null) 
-                throw new Exception("User not found");
+                throw new LoginException("Invalid login details");
 
             if (user.Suspended)
-                throw new Exception("User is currently suspended");
+                throw new LoginException("Account currently suspended");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginRequest.Password, false);
             if (!result.Succeeded)
-                throw new Exception("Sign in failed");
+                throw new LoginException("Invalid login details");
 
             var roles = await _userManager.GetRolesAsync(user);
 
-            var claims = new List<Claim>();
-            claims.Add(new Claim("username", user.UserName));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-            claims.Add(new Claim("baseContainerId", user.BaseContainerId.ToString()));
+            var claims = new List<Claim>
+            {
+                new Claim("username", user.UserName),
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("baseContainerId", user.BaseContainerId.ToString())
+            };
 
             foreach (var role in roles)
             {

@@ -40,7 +40,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
         {
             var userAlreadyExists = await _userManager.Users.AnyAsync(x =>
                 x.UserName == user.UserName || x.UserName == user.Email ||
-                x.Email == user.Email || x.Email == user.UserName);
+                (!string.IsNullOrEmpty(x.Email) && (x.Email == user.Email || x.Email == user.UserName)));
             return !userAlreadyExists;
         }
 

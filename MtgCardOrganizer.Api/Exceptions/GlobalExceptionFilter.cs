@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
+using MtgCardOrganizer.Bll.Exceptions;
+using MtgCardOrganizer.Dal.Exceptions;
 
 namespace MtgCardOrganizer.Api.Exceptions
 {
@@ -20,15 +23,35 @@ namespace MtgCardOrganizer.Api.Exceptions
         public override void OnException(ExceptionContext context)
         {
             var exception = context.Exception;
-            context.Result = ToResult(context.Exception);
-            _logger.LogError(_globalExceptionEventId, exception, "Global Exception");
+
+            var errorModel = new ErrorModel();
+
+            if (PropagatedExceptionTypes.Contains(exception.GetType()))
+            {
+                errorModel.Message = exception.Message;
+                errorModel.Data = exception.Data;
+                _logger.LogInformation(_globalExceptionEventId, exception, "Global Exception");
+            }
+            else
+            {
+                errorModel.Message = "Unexpected error occurred";
+                _logger.LogError(_globalExceptionEventId, exception, "Unexpected Exception");
+            }
+
+            context.Result = new ObjectResult(errorModel)
+            {
+                StatusCode = (int)HttpStatusCode.InternalServerError
+            };
         }
 
-        private ObjectResult ToResult(Exception ex)
+        public List<Type> PropagatedExceptionTypes = new List<Type>
         {
-            var result = new ObjectResult(ex);
-            result.StatusCode = (int)HttpStatusCode.InternalServerError;
-            return result;
-        }
+            // BLL Exceptions
+            typeof(LoginException),
+            typeof(RegistrationException),
+
+            // DAL Exceptions
+            typeof(PermissionException),
+        };
     }
 }

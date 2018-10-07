@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities.Containers;
 using MtgCardOrganizer.Dal.Enums;
+using MtgCardOrganizer.Dal.Exceptions;
 using MtgCardOrganizer.Dal.Initialization;
 using MtgCardOrganizer.Dal.Utilities;
 using System;
@@ -45,7 +46,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
             }
 
             if (!valid)
-                throw new Exception("User does not have permission");
+                throw new PermissionException("Invalid permissions");
         }
 
         // Does not save changes

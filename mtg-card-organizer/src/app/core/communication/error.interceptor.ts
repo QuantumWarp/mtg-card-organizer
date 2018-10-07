@@ -7,6 +7,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular
 import { SnackNotificationService } from '../notifications/snack-notification.service';
 import { SnackNotificationType } from '../notifications/snack-notification.type';
 import { catchError } from 'rxjs/internal/operators';
+import { ErrorModel } from './error.model';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -28,9 +29,13 @@ export class ErrorInterceptor implements HttpInterceptor {
         });
         return true;
       default:
+        let errorModel: ErrorModel = err.error;
+        if (!ErrorModel.isErrorModel(errorModel)) {
+          errorModel = new ErrorModel('Unexpected error occurred');
+        }
         this.snackNotificationService.notify({
           type: SnackNotificationType.Error,
-          message: 'Error contacting the server',
+          message: errorModel.message,
         });
         return false;
     }

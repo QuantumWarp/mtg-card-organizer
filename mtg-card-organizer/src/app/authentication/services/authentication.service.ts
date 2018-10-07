@@ -12,14 +12,17 @@ export class AuthenticationService {
   tokenInfo: any;
 
   get baseContainerId(): string {
+    if (!this.tokenInfo) { return; }
     return this.tokenInfo.baseContainerId;
   }
 
   get username(): string {
+    if (!this.tokenInfo) { return; }
     return this.tokenInfo.username;
   }
 
   get email(): string {
+    if (!this.tokenInfo) { return; }
     return this.tokenInfo.email;
   }
 

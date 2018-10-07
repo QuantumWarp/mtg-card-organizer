@@ -36,24 +36,10 @@ export class LoginComponent implements OnInit {
     const loginModel = <LoginModel>this.form.value;
     this.authenticationService.login(loginModel).subscribe(
       () => this.loginSuccess(),
-      (erRes) => this.processErrorResponse(erRes)
-    );
+      () => this.loading = false);
   }
 
   private loginSuccess(): void {
     this.router.navigateByUrl('/home');
-  }
-
-  private processErrorResponse(httpErrorResponse: HttpErrorResponse): void {
-    const errorType = httpErrorResponse.error.error;
-    switch (errorType) {
-      case 'invalid_grant':
-        this.error = 'Invalid username or password';
-        break;
-      default:
-        this.error = 'Unknown error occurred';
-        break;
-    }
-    this.loading = false;
   }
 }
