@@ -4,33 +4,31 @@
       <div class="auth-title">Mtg Card Organizer</div>
     </div>
 
-    <div class="auth-content">
+    <form class="auth-content" [formGroup]="form">
       <mat-form-field>
-        <input matInput placeholder="Username" [(ngModel)]="username" />
-      </mat-form-field>
-      
-      <mat-form-field>
-        <input matInput placeholder="Email" [(ngModel)]="email" />
+        <input matInput placeholder="Username" formControlName="username"/>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Password" type="password" [(ngModel)]="password" />
+        <input matInput placeholder="Email" formControlName="email"
+          matTooltip="Email not required, but if not provided will prevent use of 'Forgot Password'" />
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Password (Confirm)" type="password" [(ngModel)]="confirmPassword" />
+        <input matInput placeholder="Password" type="password" formControlName="password"
+          matTooltip="Password must be at least 8 characters long, at least 5 of them should be unique. Please consider using a longer password for improved security." />
+        <mat-error *ngIf="form.get('password').hasError('passwordInvalid')">Password policy not satisfied</mat-error>
       </mat-form-field>
 
-      <div class="register-terms-conditions">
-        <mat-checkbox [(ngModel)]="termsAndConditionsAgreed">
-          I accept the <a class="auth-link-text" href="javascript:void(0)">Terms and Conditions</a>
-        </mat-checkbox>
-      </div>
+      <mat-form-field>
+        <input matInput placeholder="Password (Confirm)" type="password" formControlName="confirmPassword" />
+        <mat-error *ngIf="form.get('confirmPassword').hasError('passwordMismatch')">Passwords do not match</mat-error>
+      </mat-form-field>
 
       <div class="auth-button-area">
-        <button class="auth-button" [disabled]="!termsAndConditionsAgreed" mat-raised-button color="primary" (click)="register()">Register</button>
+        <button class="auth-button" [disabled]="!form.valid" mat-raised-button color="primary" (click)="register()">Register</button>
       </div>
-    </div>
+    </form>
 
     <div class="auth-footer">
       <div>Already have an account?</div>

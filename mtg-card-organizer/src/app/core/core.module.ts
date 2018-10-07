@@ -24,6 +24,7 @@ import { SharedModule } from '../shared/shared.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
 import { VersionService } from '../authentication/services/version.service';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 
 export function jwtTokenGetter()  {
   return localStorage.getItem('access_token');
@@ -72,6 +73,7 @@ export function jwtTokenGetter()  {
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
     AuthenticationService,
     AuthGuard,
     ApiService,

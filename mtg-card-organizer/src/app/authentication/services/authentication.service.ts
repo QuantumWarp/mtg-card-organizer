@@ -5,6 +5,7 @@ import { RegisterModel } from '../models/register.model';
 import { ApiService } from '../../core/communication/api.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/internal/operators';
+import { LoginModel } from '../models/login.model';
 
 @Injectable()
 export class AuthenticationService {
@@ -34,21 +35,12 @@ export class AuthenticationService {
     private jwtHelperService: JwtHelperService
   ) { }
 
-  register(username: string, email: string, password: string, confirmPassword: string): Observable<void> {
-    const registerModel: RegisterModel = {
-      username: username,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword
-    };
+  register(registerModel: RegisterModel): Observable<void> {
     return this.apiService.post<void>('api/auth/register', registerModel);
   }
 
-  login(loginName: string, password: string): Observable<string> {
-    return this.apiService.post<string>('api/auth/login', {
-      loginName: loginName,
-      password: password
-    }).pipe(
+  login(loginModel: LoginModel): Observable<string> {
+    return this.apiService.post<string>('api/auth/login', loginModel).pipe(
       tap((token) => this.parseToken(token))
     );
   }

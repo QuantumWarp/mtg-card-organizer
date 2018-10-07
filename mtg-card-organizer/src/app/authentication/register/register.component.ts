@@ -1,25 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { RegisterModel } from '../models/register.model';
+import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
+import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
+import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['../authentication.scss']
 })
-export class RegisterComponent {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
+export class RegisterComponent implements OnInit {
+  form: FormGroup;
+
   termsAndConditionsAgreed = false;
 
   constructor(
+    private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
+    private snackNotificationService: SnackNotificationService,
     private router: Router) { }
 
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      username: [, Validators.required],
+      email: [, ],
+      password: [, [ Validators.required, this.passwordPolicyValidation ]],
+      confirmPassword: [, [ Validators.required, this.passwordMatchValidation ]],
+    });
+  }
+
+  passwordPolicyValidation(control: FormGroup): ValidationErrors | null {
+    const password = <string>control.value;
+    if (!password) { return null; }
+    const uniqueCharCount = password.split('').filter((value, index, array) => value && array.indexOf(value) === index).length;
+    const valid = password.length >= 8 && uniqueCharCount >= 5;
+    return valid ? null : { 'passwordInvalid': true };
+  }
+
+  passwordMatchValidation(control: FormGroup): ValidationErrors | null {
+    if (!control.parent) { return null; }
+    const passwordMatch = control.value === control.parent.get('password').value;
+    return passwordMatch ? null : { 'passwordMismatch': true };
+  }
+
   register(): void {
-    this.authenticationService.register(this.username, this.email, this.password, this.confirmPassword).toPromise()
-      .then(() => this.router.navigateByUrl('/auth/login'));
+    const registerModel = <RegisterModel>this.form.value;
+    this.authenticationService.register(registerModel).subscribe(() => {
+      this.snackNotificationService.notify(new SnackNotificationModel({
+        type: SnackNotificationType.Success,
+        message: 'Registration Successful'
+      }));
+      this.router.navigateByUrl('/auth/login');
+    });
   }
 }

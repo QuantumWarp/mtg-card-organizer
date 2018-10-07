@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../services/authentication.service';
 import { VersionService } from '../services/version.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { LoginModel } from '../models/login.model';
+import { catchError } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-login',
@@ -11,26 +14,30 @@ import { VersionService } from '../services/version.service';
   styleUrls: ['../authentication.scss']
 })
 export class LoginComponent implements OnInit {
-  loginName: string;
-  password: string;
+  form: FormGroup;
 
   loading = false;
   error: string;
 
   constructor(
+    private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
-    private versionService: VersionService,
     private router: Router) {}
 
   ngOnInit(): void {
-    this.versionService.get().subscribe(result => console.log(result));
+    this.form = this.formBuilder.group({
+      loginName: [, Validators.required],
+      password: [, [ Validators.required ]],
+    });
   }
 
   login(): void {
     this.loading = true;
-    this.authenticationService.login(this.loginName, this.password).toPromise()
-      .then(() => this.loginSuccess())
-      .catch((erRes) => this.processErrorResponse(erRes));
+    const loginModel = <LoginModel>this.form.value;
+    this.authenticationService.login(loginModel).subscribe(
+      () => this.loginSuccess(),
+      (erRes) => this.processErrorResponse(erRes)
+    );
   }
 
   private loginSuccess(): void {
