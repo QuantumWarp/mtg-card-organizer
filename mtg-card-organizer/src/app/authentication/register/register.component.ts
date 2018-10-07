@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../services/authentication.service';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { RegisterModel } from '../models/register.model';
-import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
+
 import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
+import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
+import { RegisterModel } from '../models/register.model';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -46,7 +47,9 @@ export class RegisterComponent implements OnInit {
     return passwordMatch ? null : { 'passwordMismatch': true };
   }
 
+  @HostListener('document:keydown.enter')
   register(): void {
+    if (!this.form.valid) { return; }
     const registerModel = <RegisterModel>this.form.value;
     this.authenticationService.register(registerModel).subscribe(() => {
       this.snackNotificationService.notify(new SnackNotificationModel({

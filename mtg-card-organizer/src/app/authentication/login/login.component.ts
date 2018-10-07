@@ -1,12 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../services/authentication.service';
-import { VersionService } from '../services/version.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginModel } from '../models/login.model';
-import { catchError } from 'rxjs/internal/operators';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +28,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  @HostListener('document:keydown.enter')
   login(): void {
+    if (!this.form.valid) { return; }
     this.loading = true;
     const loginModel = <LoginModel>this.form.value;
     this.authenticationService.login(loginModel).subscribe(
