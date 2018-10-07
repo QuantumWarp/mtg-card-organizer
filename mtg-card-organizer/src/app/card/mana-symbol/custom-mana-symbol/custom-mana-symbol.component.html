@@ -1,0 +1,9 @@
+<mat-icon *ngIf="unknown" style="color: black">help_outline</mat-icon>
+<div *ngIf="isNumber">{{ symbolString }}</div>
+<div *ngIf="symbolString === 'X'" style="color: black">X</div>
+<mat-icon *ngIf="symbolString === 'C'" style="color: black" style="transform: rotate(45deg)">crop_square</mat-icon>
+<mat-icon *ngIf="symbolString === 'B'" style="color: black">lens</mat-icon>
+<mat-icon *ngIf="symbolString === 'U'" style="color: blue">lens</mat-icon>
+<mat-icon *ngIf="symbolString === 'G'" style="color: green">lens</mat-icon>
+<mat-icon *ngIf="symbolString === 'R'" style="color: red">lens</mat-icon>
+<mat-icon *ngIf="symbolString === 'W'" style="color: lightgray">lens</mat-icon>

@@ -6,6 +6,9 @@
 export const environment = {
   apiBaseUrl: 'https://api.mtg.quantumwss.com',
   production: true,
+  displaySettings: {
+    realManaSymbols: false,
+  },
   testSettings: {
     includeTestModule: false,
   }

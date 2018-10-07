@@ -6,6 +6,9 @@
 export const environment = {
   apiBaseUrl: 'https://localhost:5001',
   production: false,
+  displaySettings: {
+    realManaSymbols: false,
+  },
   testSettings: {
     includeTestModule: true,
   }

@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  justify-content: center;
+  width: 22px;
+
+  > div {
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
