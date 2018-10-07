@@ -11,6 +11,11 @@ export const navModel: NavNode[] = [
         icon: 'get_app',
         routerLink: '/admin/import-cards',
       },
+      {
+        text: 'User Admin',
+        icon: 'account_box',
+        routerLink: '/admin/users',
+      },
     ]
   },
   {

@@ -9,14 +9,14 @@ using MtgCardOrganizer.Dal.Initialization;
 namespace MtgCardOrganizer.Dal.Migrations
 {
     [DbContext(typeof(MtgCardOrganizerContext))]
-    [Migration("20180915181243_Initial")]
+    [Migration("20181007093027_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799");
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -380,6 +380,10 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
                     b.Property<int>("BaseContainerId");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<bool>("Suspended");
 
                     b.ToTable("User");
 

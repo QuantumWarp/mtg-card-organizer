@@ -31,6 +31,7 @@ namespace MtgCardOrganizer.Dal.Initialization
 
         private void AddRepositories(IServiceCollection services, IConfigurationRoot configuration)
         {
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPermissionRepository, PermissionRepository>();
             services.AddScoped<IContainerRepository, ContainerRepository>();
             services.AddScoped<ICollectionRepository, CollectionRepository>();

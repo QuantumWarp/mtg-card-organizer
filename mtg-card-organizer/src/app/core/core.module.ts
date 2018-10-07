@@ -20,7 +20,6 @@ import { SnackNotificationService } from './notifications/snack-notification.ser
 import { ErrorInterceptor } from './communication/error.interceptor';
 import { LoadingComponent } from './loading/loading.component';
 import { LoadingService } from './loading/loading.service';
-import { UserService } from '../authentication/services/user.service';
 import { SharedModule } from '../shared/shared.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
@@ -79,7 +78,6 @@ export function jwtTokenGetter()  {
     GravatarService,
     SnackNotificationService,
     LoadingService,
-    UserService,
     VersionService,
   ]
 })

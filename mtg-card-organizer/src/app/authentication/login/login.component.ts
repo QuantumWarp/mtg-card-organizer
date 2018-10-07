@@ -11,7 +11,7 @@ import { VersionService } from '../services/version.service';
   styleUrls: ['../authentication.scss']
 })
 export class LoginComponent implements OnInit {
-  username: string;
+  loginName: string;
   password: string;
 
   loading = false;
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.loading = true;
-    this.authenticationService.login(this.username, this.password).toPromise()
+    this.authenticationService.login(this.loginName, this.password).toPromise()
       .then(() => this.loginSuccess())
       .catch((erRes) => this.processErrorResponse(erRes));
   }

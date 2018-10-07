@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Api.Helpers;
+using MtgCardOrganizer.Bll.Services;
 using MtgCardOrganizer.Dal.Entities.Identity;
 using MtgCardOrganizer.Dal.Repositories.Admin;
 using MtgCardOrganizer.Dal.Requests.Generic;
@@ -11,19 +12,30 @@ using System.Threading.Tasks;
 namespace MtgCardOrganizer.Api.Controllers.Admin
 {
     [Authorize(Roles = Roles.Administrator)]
-    [Route("api/users")]
-    public class IdentityUserController : Controller
+    [Route("api/admin/users")]
+    public class AdminUserController : Controller
     {
-        private IUserRepository _userRepository;
+        private readonly IIdentityService _identityService;
+        private readonly IUserRepository _userRepository;
 
-        public IdentityUserController(IUserRepository userRepository)
+        public AdminUserController(
+            IIdentityService identityService,
+            IUserRepository userRepository)
         {
+            _identityService = identityService;
             _userRepository = userRepository;
         }
         
         public async Task<ActionResult<PagedData<User>>> GetMany([Base64Binder] Paging paging)
         {
             return await _userRepository.GetMany(paging);
+        }
+
+        [Route("{userId}/toggle-suspension")]
+        public async Task<IActionResult> ToggleSuspension(string userId)
+        {
+            await _identityService.ToggleSuspension(userId);
+            return Ok();
         }
     }
 }

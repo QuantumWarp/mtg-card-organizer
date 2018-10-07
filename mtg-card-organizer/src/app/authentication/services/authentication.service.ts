@@ -43,9 +43,9 @@ export class AuthenticationService {
     return this.apiService.post<void>('api/auth/register', registerModel);
   }
 
-  login(username: string, password: string): Observable<string> {
+  login(loginName: string, password: string): Observable<string> {
     return this.apiService.post<string>('api/auth/login', {
-      username: username,
+      loginName: loginName,
       password: password
     }).pipe(
       tap((token) => this.parseToken(token))

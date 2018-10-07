@@ -1,0 +1,38 @@
+<app-basic-grid matSort class="mat-elevation-z4"
+  [service]="adminUserService"
+  (rowSelected)="rowSelected.emit($event)"
+  [inputColumnDefs]="columnDefs"
+  [columns]="displayedColumns">
+  <ng-content></ng-content>
+
+  <ng-container matColumnDef="userName">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+    <mat-cell *matCellDef="let record">{{ record.userName }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+    <mat-cell *matCellDef="let record">{{ record.email }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="suspended">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Suspended</mat-header-cell>
+    <mat-cell *matCellDef="let record">
+      <mat-checkbox disabled="true" [(ngModel)]="record.suspended"></mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="createdDate">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Created</mat-header-cell>
+    <mat-cell *matCellDef="let record">{{ record.createdDate | date:'medium' }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="suspendAction">
+    <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
+    <mat-cell class="crud-grid-action-column" *matCellDef="let record">
+      <button mat-icon-button matTooltip="Toggle Suspension" (click)="$event.stopPropagation(); suspendAction(record);">
+        <mat-icon>gavel</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+</app-basic-grid>

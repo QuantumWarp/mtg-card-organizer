@@ -11,7 +11,7 @@ namespace MtgCardOrganizer.Api.Controllers.Admin
     [Route("api/auth")]
     public class AuthenticationController : Controller
     {
-        private IIdentityService _identityService;
+        private readonly IIdentityService _identityService;
 
         public AuthenticationController(IIdentityService identityService)
         {

@@ -22,10 +22,12 @@ import {
     MatRadioModule,
     MatTabsModule,
     MatButtonToggleModule,
+    MatTooltipModule,
 } from '@angular/material';
 
 @NgModule({
   imports: [
+    MatTooltipModule,
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
@@ -49,6 +51,7 @@ import {
     MatButtonToggleModule,
   ],
   exports: [
+    MatTooltipModule,
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,

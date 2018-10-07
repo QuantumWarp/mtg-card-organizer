@@ -2,7 +2,7 @@ namespace MtgCardOrganizer.Bll.Requests
 {
     public class LoginRequest
     {
-        public string Username { get; set; }
+        public string LoginName { get; set; }
         public string Password { get; set; }
     }
 }

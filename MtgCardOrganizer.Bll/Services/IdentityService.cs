@@ -5,6 +5,7 @@ using MtgCardOrganizer.Bll.Requests;
 using MtgCardOrganizer.Dal.Entities.Containers;
 using MtgCardOrganizer.Dal.Entities.Identity;
 using MtgCardOrganizer.Dal.Initialization;
+using MtgCardOrganizer.Dal.Repositories.Admin;
 using MtgCardOrganizer.Dal.Repositories.Main;
 using MtgCardOrganizer.Dal.Utilities;
 using System;
@@ -20,23 +21,26 @@ namespace MtgCardOrganizer.Bll.Services
     {
         Task RegisterAsync(RegisterRequest registerCommand);
         Task<JwtSecurityToken> GenerateTokenAsync(LoginRequest loginCommand);
+        Task ToggleSuspension(string userId);
     }
 
     internal class IdentityService : IIdentityService
     {
         private readonly MtgCardOrganizerContext _dbContext;
-
+        private readonly IUserRepository _userRepository;
         private readonly IContainerRepository _containerRepository;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
         public IdentityService(
-            MtgCardOrganizerContext dbContext,
+            IUserRepository userRepository,
             IContainerRepository containerRepository,
+            MtgCardOrganizerContext dbContext,
             UserManager<User> userManager,
             SignInManager<User> signInManager)
         {
             _dbContext = dbContext;
+            _userRepository = userRepository;
             _containerRepository = containerRepository;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -58,6 +62,9 @@ namespace MtgCardOrganizer.Bll.Services
                     Email = registerRequest.Email,
                 };
 
+                var userUnique = await _userRepository.CheckUserUnique(user);
+                if (!userUnique) throw new Exception("User already exists");
+
                 var roles = new List<string> { Roles.StandardUser };
                 if (!_userManager.Users.Any()) roles.Add(Roles.Administrator);
 
@@ -73,9 +80,13 @@ namespace MtgCardOrganizer.Bll.Services
         
         public async Task<JwtSecurityToken> GenerateTokenAsync(LoginRequest loginRequest)
         {
-            var user = await _userManager.FindByNameAsync(loginRequest.Username);
+            var user = await _userManager.FindByNameAsync(loginRequest.LoginName);
+            if (user == null) await _userManager.FindByEmailAsync(loginRequest.LoginName);
             if (user == null) 
-                throw new Exception("Email not found");
+                throw new Exception("User not found");
+
+            if (user.Suspended)
+                throw new Exception("User is currently suspended");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginRequest.Password, false);
             if (!result.Succeeded)
@@ -103,6 +114,12 @@ namespace MtgCardOrganizer.Bll.Services
                 signingCredentials: credentials);
 
             return token;
+        }
+
+        public async Task ToggleSuspension(string userId)
+        {
+            // TODO: Logout user
+            await _userRepository.ToggleSuspension(userId);
         }
     }
 }
