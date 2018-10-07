@@ -23,6 +23,7 @@ export class AuthenticationService {
   }
 
   get roles(): string[] {
+    if (!this.tokenInfo) { return []; }
     const key = Object.keys(this.tokenInfo).find(x => x.endsWith('role'));
     const value = this.tokenInfo[key];
     return value instanceof Array ? value : [ value ];
