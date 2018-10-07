@@ -12,6 +12,7 @@ using MtgCardOrganizer.Bll.Initialization;
 using MtgCardOrganizer.Dal.Initialization;
 using MtgCardOrganizer.Dal.Utilities;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MtgCardOrganizer.Seeding")]
@@ -27,10 +28,13 @@ namespace MtgCardOrganizer.Api
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
             Configuration = builder.Build();
+            Environment = env;
         }
 
         public IConfigurationRoot Configuration { get; }
+        public IHostingEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -52,8 +56,8 @@ namespace MtgCardOrganizer.Api
             services.AddScoped(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
             services.AddScoped<IUserService, UserService>();
 
-            new DalInitializer(services, Configuration).AddServices();
-            new BllInitializer(services, Configuration).AddServices();
+            new DalInitializer(services, Configuration, Environment).AddServices();
+            new BllInitializer(services, Configuration, Environment).AddServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +70,10 @@ namespace MtgCardOrganizer.Api
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(builder => builder
+                .WithOrigins(Configuration.GetSection("AllowedOrigins").Get<string[]>())
+                .AllowAnyHeader()
+                .AllowAnyMethod());
             app.UseAuthentication();
             app.UseMvc();
         }

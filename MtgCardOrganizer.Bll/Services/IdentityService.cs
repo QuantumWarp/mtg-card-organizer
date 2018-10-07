@@ -109,7 +109,7 @@ namespace MtgCardOrganizer.Bll.Services
             var credentials = new SigningCredentials(BllInitializer.IdentityKey, SecurityAlgorithms.HmacSha256);
             var expiryTime = DateTime.Now.AddDays(1);
 
-            var token = new JwtSecurityToken("Test", "Test", claims,
+            var token = new JwtSecurityToken("MtgCardOrganizer", "MtgCardOrganizer", claims,
                 expires: expiryTime,
                 signingCredentials: credentials);
 

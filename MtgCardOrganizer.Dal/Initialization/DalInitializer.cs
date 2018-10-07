@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,13 +15,18 @@ namespace MtgCardOrganizer.Dal.Initialization
 {
     public class DalInitializer
     {
-        private IServiceCollection _services;
-        private IConfigurationRoot _configuration;
+        private readonly IServiceCollection _services;
+        private readonly IConfigurationRoot _configuration;
+        private readonly IHostingEnvironment _environment;
 
-        public DalInitializer(IServiceCollection services, IConfigurationRoot configuration)
+        public DalInitializer(
+            IServiceCollection services,
+            IConfigurationRoot configuration,
+            IHostingEnvironment environment)
         {
             _services = services;
             _configuration = configuration;
+            _environment = environment;
         }
 
         public void AddServices() 

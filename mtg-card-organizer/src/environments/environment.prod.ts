@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  apiBaseUrl: 'http://46.101.64.67:5001',
+  apiBaseUrl: 'https://api.mtg.quantumwss.com',
   production: true,
   testSettings: {
     includeTestModule: false,

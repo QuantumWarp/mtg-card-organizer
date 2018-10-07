@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -17,13 +17,18 @@ namespace MtgCardOrganizer.Bll.Initialization
     {
         internal static readonly SymmetricSecurityKey IdentityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("86759592-46f3-441b-ad0e-e4670e04a2b3"));
 
-        private IServiceCollection _services;
-        private IConfigurationRoot _configuration;
+        private readonly IServiceCollection _services;
+        private readonly IConfigurationRoot _configuration;
+        private readonly IHostingEnvironment _environment;
 
-        public BllInitializer(IServiceCollection services, IConfigurationRoot configuration)
+        public BllInitializer(
+            IServiceCollection services,
+            IConfigurationRoot configuration,
+            IHostingEnvironment environment)
         {
             _services = services;
             _configuration = configuration;
+            _environment = environment;
         }
 
         public void AddServices()
@@ -38,21 +43,20 @@ namespace MtgCardOrganizer.Bll.Initialization
         private void AddAuth()
         {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            _services.AddAuthentication(options => {
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+            _services
+                .AddAuthentication(options => {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(cfg => {
-                    cfg.RequireHttpsMetadata = false; // Dev only
+                    cfg.RequireHttpsMetadata = !_environment.IsDevelopment();
                     cfg.SaveToken = true;
                     cfg.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateAudience = false,
-                        ValidateIssuer = false,
-                        ValidateLifetime = false,
-                        RequireExpirationTime = false,
+                        ValidIssuer = "MtgCardOrganizer",
+                        ValidAudience = "MtgCardOrganizer",
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = IdentityKey,
                         ClockSkew = TimeSpan.FromMinutes(5),
