@@ -17,7 +17,7 @@ const testRoutes: Route[] = environment.testSettings && environment.testSettings
     RouterModule.forRoot([
       {
         path: '',
-        redirectTo: '/home',
+        redirectTo: '/containers',
         pathMatch: 'full',
       },
       {

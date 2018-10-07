@@ -1,9 +1,9 @@
-import { browser, by, element, ExpectedConditions } from 'protractor';
+import { browser, by, element } from 'protractor';
 import { waitForUrl } from '../helper';
 
 export class LoginPage {
   get usernameElement() {
-    return element(by.css('input[placeholder="Username"]'));
+    return element(by.css('input[placeholder="Username / Email"]'));
   }
 
   get passwordElement() {
@@ -24,7 +24,7 @@ export class LoginPage {
     this.usernameElement.sendKeys('QuantumWarp');
     this.passwordElement.sendKeys('admin123');
     this.signInButton.click();
-    waitForUrl('/home');
+    waitForUrl('/containers');
   }
 
   navigateTo() {

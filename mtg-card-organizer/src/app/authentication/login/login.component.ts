@@ -39,6 +39,6 @@ export class LoginComponent implements OnInit {
   }
 
   private loginSuccess(): void {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/containers');
   }
 }

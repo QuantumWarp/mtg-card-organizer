@@ -9,6 +9,6 @@ export class Error404Component {
   constructor(private router: Router) {}
 
   returnHome(): void {
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/containers');
   }
 }

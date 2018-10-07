@@ -14,9 +14,9 @@
     <button mat-menu-item (click)="createDeck()">Add Deck</button>
   </mat-menu>
 
-  <div class="item-lists">
-    <app-sub-container-list [containers]="container.subContainers" (containerInvalidated)="refresh()"></app-sub-container-list>
-    <app-collection-list [collections]="container.collections" (containerInvalidated)="refresh()"></app-collection-list>
-    <app-deck-list [decks]="container.decks" (containerInvalidated)="refresh()"></app-deck-list>
+  <div fxLayout="row" fxLayoutGap="10px">
+    <app-sub-container-list [containers]="container.subContainers" (containerInvalidated)="refresh()" (addClicked)="createContainer()"></app-sub-container-list>
+    <app-collection-list [collections]="container.collections" (containerInvalidated)="refresh()" (addClicked)="createCollection()"></app-collection-list>
+    <app-deck-list [decks]="container.decks" (containerInvalidated)="refresh()" (addClicked)="createDeck()"></app-deck-list>
   </div>
 </div>

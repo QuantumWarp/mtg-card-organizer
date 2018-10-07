@@ -17,6 +17,7 @@ import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confir
 })
 export class CollectionListComponent {
   @Output() containerInvalidated = new EventEmitter();
+  @Output() addClicked = new EventEmitter();
 
   @Input() collections: Collection[];
 

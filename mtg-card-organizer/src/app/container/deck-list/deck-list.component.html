@@ -1,9 +1,21 @@
-<div class="title">Decks</div>
+<mat-card class="mat-elevation-z4">
 
-<mat-card *ngFor="let deck of decks" (click)="itemSelected(deck)">
-  {{ deck.name }}
-  <button mat-icon-button mat-raised-button color="error"
-    (click)="deleteItem(deck); $event.stopPropagation()">
-    <mat-icon>close</mat-icon>
-  </button>
+  <div class="title">
+    Decks
+    <button mat-raised-button color="primary" (click)="addClicked.emit()">Add New</button>
+  </div>
+
+  <div class="list-wrapper" fxLayout="column" fxLayoutGap="8px">
+    <div class="list-none" *ngIf="decks.length === 0">
+      No Decks Created
+    </div>
+
+    <mat-card *ngFor="let deck of decks" (click)="itemSelected(deck)">
+      {{ deck.name }}
+      <button mat-icon-button mat-raised-button color="error"
+        (click)="deleteItem(deck); $event.stopPropagation()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card>
+  </div>
 </mat-card>

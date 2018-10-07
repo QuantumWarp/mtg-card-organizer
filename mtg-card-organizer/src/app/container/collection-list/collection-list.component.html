@@ -1,9 +1,22 @@
-<div class="title">Collections</div>
+<mat-card class="mat-elevation-z4">
 
-<mat-card *ngFor="let collection of collections" (click)="itemSelected(collection)">
-  {{ collection.name }}
-  <button mat-icon-button mat-raised-button color="error"
-    (click)="deleteItem(collection); $event.stopPropagation()">
-    <mat-icon>close</mat-icon>
-  </button>
+  <div class="title">
+    Collections
+    <button mat-raised-button color="primary" (click)="addClicked.emit()">Add New</button>
+  </div>
+
+  <div class="list-wrapper" fxLayout="column" fxLayoutGap="8px">
+    <div class="list-none" *ngIf="collections.length === 0">
+      No Collections Created
+    </div>
+
+    <mat-card class="list-card" *ngFor="let collection of collections" (click)="itemSelected(collection)">
+      {{ collection.name }}
+      <button mat-icon-button mat-raised-button color="error"
+        (click)="deleteItem(collection); $event.stopPropagation()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card>
+  </div>
+
 </mat-card>

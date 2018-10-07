@@ -17,6 +17,7 @@ import { SnackNotificationType } from '../../core/notifications/snack-notificati
 })
 export class SubContainerListComponent {
   @Output() containerInvalidated = new EventEmitter();
+  @Output() addClicked = new EventEmitter();
 
   @Input() containers: Container[];
 
