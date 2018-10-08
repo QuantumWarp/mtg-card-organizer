@@ -1,12 +1,20 @@
 <div class="toolbar mat-elevation-z4">
-  <div class="title">{{title}}</div>
+  <div class="logo-container">
+    <img class="quantum-logo" src="assets/quantumwss-icon-large.png">
+  </div>
+  <div class="title">MTG Card Organizer</div>
+  <div fxFlex fxLayoutAlign="end stretch">
+    <button mat-button (click)="openAbout()">
+      <mat-icon>help</mat-icon>
+    </button>
+  </div>
   <div class="account" [matMenuTriggerFor]="menu">
     <app-gravatar-icon size="40"></app-gravatar-icon>
     <div>{{ authenticationService.username }}</div>
   </div>
 </div>
 
-<mat-menu #menu [overlapTrigger]="false">
-  <button mat-menu-item>Profile</button>
+<mat-menu #menu [overlapTrigger]="false" xPosition="before">
+  <button mat-menu-item (click)="openAbout()">About</button>
   <button mat-menu-item (click)="logout()">Logout</button>
 </mat-menu>

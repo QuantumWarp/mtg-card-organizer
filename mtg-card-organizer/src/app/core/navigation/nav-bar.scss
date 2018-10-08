@@ -1,17 +1,28 @@
 .toolbar {
   display: flex;
   flex-direction: row;
-  justify-content:space-between;
   align-items: stretch;
   height: 60px;
   position: relative;
   z-index: 1;
   background-color: white;
 
+  > .logo-container {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+
+    > .quantum-logo {
+      width: 45px;
+      height: 45px;
+    }
+  }
+
   > .title {
     display: flex;
     align-items: center;
     padding: 10px;
+    font-weight: bold;
     font-size: 25px;
   }
 
@@ -19,6 +30,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    min-width: 150px;
     padding: 10px;
     font-size: 18px;
     border-left: solid 1px grey;

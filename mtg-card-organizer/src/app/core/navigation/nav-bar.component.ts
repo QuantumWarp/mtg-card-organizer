@@ -1,11 +1,9 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { MatToolbar, MatButton, MatIcon } from '@angular/material';
-import { AuthenticationService } from '../../authentication/services/authentication.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SnackNotificationService } from '../notifications/snack-notification.service';
-import { SnackNotificationType } from '../notifications/snack-notification.type';
-import { LoadingService } from '../loading/loading.service';
-import { Observable } from 'rxjs';
+
+import { AuthenticationService } from '../../authentication/services/authentication.service';
+import { MatDialog } from '@angular/material';
+import { AboutComponent } from '../about/about.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,11 +11,15 @@ import { Observable } from 'rxjs';
   styleUrls: ['./nav-bar.scss']
 })
 export class NavBarComponent {
-  title = 'MTG Card Organizer';
 
   constructor(
     public authenticationService: AuthenticationService,
+    private dialog: MatDialog,
     private router: Router) {}
+
+  openAbout(): void {
+    this.dialog.open(AboutComponent);
+  }
 
   logout() {
     this.authenticationService.logout();

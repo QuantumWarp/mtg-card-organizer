@@ -25,6 +25,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
 import { VersionService } from '../authentication/services/version.service';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
+import { AboutComponent } from './about/about.component';
 
 export function jwtTokenGetter()  {
   return localStorage.getItem('access_token');
@@ -32,6 +33,7 @@ export function jwtTokenGetter()  {
 
 @NgModule({
   declarations: [
+    AboutComponent,
     HomeComponent,
     StandardLayoutComponent,
     ContentComponent,
@@ -42,6 +44,7 @@ export function jwtTokenGetter()  {
     LoadingComponent,
   ],
   entryComponents: [
+    AboutComponent,
     SnackNotificationComponent,
     LoadingComponent,
   ],
