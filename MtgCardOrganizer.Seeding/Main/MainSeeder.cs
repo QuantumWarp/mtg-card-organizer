@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,8 +38,8 @@ namespace MtgCardOrganizer.Seeding.Main
             
             services.AddScoped<IUserService, DummyUserService>();
 
-            new DalInitializer(services, configuration).AddServices();
-            new BllInitializer(services, configuration).AddServices();
+            new DalInitializer(services, configuration, new HostingEnvironment()).AddServices();
+            new BllInitializer(services, configuration, new HostingEnvironment()).AddServices();
             _serviceProvider = services.BuildServiceProvider();
             
             _dbContext = ActivatorUtilities.CreateInstance<MtgCardOrganizerContext>(_serviceProvider);

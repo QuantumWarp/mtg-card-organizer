@@ -16,11 +16,11 @@ namespace MtgCardOrganizer.Seeding.Seeders
 
         public async override Task SeedAsync()
         {
-            await _identityService.RegisterAsync(new RegisterRequest {
-                Username = "QuantumWarp",
-                Email = "test@test.com",
-                Password = "admin123",
-            });
+            //await _identityService.RegisterAsync(new RegisterRequest {
+            //    Username = "QuantumWarp",
+            //    Email = "test@test.com",
+            //    Password = "admin123",
+            //});
         }
     }
 }
