@@ -8,6 +8,7 @@ namespace MtgCardOrganizer.Api.Areas.Main.Dtos
 
         public string Name { get; set; }
         public bool IsPublic { get; set; }
+        public bool IsBookmarked { get; set; }
 
         public int? ParentId { get; set; }
 

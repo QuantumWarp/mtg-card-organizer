@@ -6,5 +6,7 @@
 
         public string Name { get; set; }
         public int ContainerId { get; set; }
+
+        public bool IsBookmarked { get; set; }
     }
 }

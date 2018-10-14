@@ -1,23 +1,21 @@
 <div class="padded-page">
   <app-page-header></app-page-header>
-  <app-title-and-trail [title]="container ? container.name : authService.username + '\'s Collections'">
+  <app-title-and-trail [title]="'Container - ' + container.name">
     <button [matMenuTriggerFor]="collectionMenu" class="options-button mat-elevation-z4"
       mat-icon-button matTooltip="Settings">
       <mat-icon>settings</mat-icon>
     </button>
 
     <button class="options-button mat-elevation-z4"
+      (click)="toggleBookmark()"
       mat-icon-button matTooltip="Toggle Bookmark">
-      <mat-icon>bookmark</mat-icon>
+      <mat-icon>{{ container.isBookmarked ? 'bookmark' : 'bookmark_border' }}</mat-icon>
     </button>
   </app-title-and-trail>
 
   <mat-menu #collectionMenu="matMenu">
     <button mat-menu-item (click)="openImport()">Import</button>
     <button mat-menu-item (click)="openExport()">Export</button>
-    <button mat-menu-item (click)="createContainer()">Add Container</button>
-    <button mat-menu-item (click)="createCollection()">Add Collection</button>
-    <button mat-menu-item (click)="createDeck()">Add Deck</button>
   </mat-menu>
 
   <div fxLayout="row" fxLayoutGap="10px">

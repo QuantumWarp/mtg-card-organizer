@@ -1,11 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatDialog } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
-import { CardInstance } from '../models/card-instance';
 import { CardQuery } from '../../card/models/card-query';
 import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
@@ -15,8 +14,10 @@ import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confir
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 import { CardInstanceGridComponent } from '../card-instance-grid/card-instance-grid.component';
 import { CardRapidEntryComponent } from '../card-rapid-entry/card-rapid-entry/card-rapid-entry.component';
+import { CardInstance } from '../models/card-instance';
 import { Collection } from '../models/collection';
 import { CollectionCardService, CollectionCardServiceWrapper } from '../services/collection-card.service';
+import { CollectionService } from '../services/collection.service';
 
 @Component({
   selector: 'app-collection-page',
@@ -34,6 +35,7 @@ export class CollectionPageComponent implements OnInit {
 
   constructor(
     public collectionCardService: CollectionCardService,
+    public collectionService: CollectionService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private notificationService: SnackNotificationService,
@@ -88,5 +90,10 @@ export class CollectionPageComponent implements OnInit {
       // TODO: dont reload
       location.reload();
     });
+  }
+
+  toggleBookmark(): void {
+    this.collectionService.toggleBookmark(this.collection.id)
+      .subscribe(() => this.collection.isBookmarked = !this.collection.isBookmarked);
   }
 }

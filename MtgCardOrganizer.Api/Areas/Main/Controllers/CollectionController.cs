@@ -33,7 +33,9 @@ namespace MtgCardOrganizer.Api.Areas.Main.Controllers
         public async Task<ActionResult<CollectionDto>> Get(int id)
         {
             var collection = await _collectionRepository.GetAsync(id);
-            return _mapper.Map<CollectionDto>(collection);
+            var collectionDto = _mapper.Map<CollectionDto>(collection);
+            collectionDto.IsBookmarked = await _collectionRepository.IsBookmarkedAsync(id);
+            return collectionDto;
         }
 
         [HttpPost]

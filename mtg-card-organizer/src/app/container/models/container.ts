@@ -6,6 +6,7 @@ export class Container {
 
     name: string;
     parentId?: number;
+    isBookmarked: boolean;
 
     subContainers: Container[];
     collections: Collection[];

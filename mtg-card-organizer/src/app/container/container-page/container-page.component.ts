@@ -63,4 +63,9 @@ export class ContainerPageComponent implements OnInit {
   openExport(): void {
     this.dialog.open(ContainerExportComponent, { data: this.container });
   }
+
+  toggleBookmark(): void {
+    this.containerService.toggleBookmark(this.container.id)
+      .subscribe(() => this.container.isBookmarked = !this.container.isBookmarked);
+  }
 }

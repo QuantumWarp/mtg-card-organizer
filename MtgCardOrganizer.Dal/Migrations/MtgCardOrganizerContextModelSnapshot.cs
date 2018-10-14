@@ -58,61 +58,6 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -287,7 +232,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.ToTable("Collections");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Collections.CollectionUserFavorite", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Collections.CollectionUserBookmark", b =>
                 {
                     b.Property<string>("UserId");
 
@@ -297,7 +242,7 @@ namespace MtgCardOrganizer.Dal.Migrations
 
                     b.HasIndex("CollectionId");
 
-                    b.ToTable("CollectionUserFavorites");
+                    b.ToTable("CollectionUserBookmarks");
                 });
 
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.Container", b =>
@@ -386,6 +331,62 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.ToTable("DeckCards");
                 });
 
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Identity.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<int>("BaseContainerId");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("Suspended");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers");
+                });
+
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Other.Format", b =>
                 {
                     b.Property<int>("Id")
@@ -399,21 +400,6 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.ToTable("Formats");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Identity.User", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<int>("BaseContainerId");
-
-                    b.Property<DateTime>("CreatedDate");
-
-                    b.Property<bool>("Suspended");
-
-                    b.ToTable("User");
-
-                    b.HasDiscriminator().HasValue("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -424,7 +410,7 @@ namespace MtgCardOrganizer.Dal.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("MtgCardOrganizer.Dal.Entities.Identity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -432,7 +418,7 @@ namespace MtgCardOrganizer.Dal.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("MtgCardOrganizer.Dal.Entities.Identity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -445,7 +431,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("MtgCardOrganizer.Dal.Entities.Identity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -453,7 +439,7 @@ namespace MtgCardOrganizer.Dal.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("MtgCardOrganizer.Dal.Entities.Identity.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -493,15 +479,15 @@ namespace MtgCardOrganizer.Dal.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Collections.CollectionUserFavorite", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Collections.CollectionUserBookmark", b =>
                 {
                     b.HasOne("MtgCardOrganizer.Dal.Entities.Collections.Collection", "Collection")
-                        .WithMany("CollectionUserFavorites")
+                        .WithMany("CollectionUserBookmarks")
                         .HasForeignKey("CollectionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MtgCardOrganizer.Dal.Entities.Identity.User", "User")
-                        .WithMany("CollectionUserFavorites")
+                        .WithMany("CollectionUserBookmarks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -40,10 +40,9 @@ namespace MtgCardOrganizer.Dal.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    BaseContainerId = table.Column<int>(nullable: true),
-                    Suspended = table.Column<bool>(nullable: true),
-                    CreatedDate = table.Column<DateTime>(nullable: true)
+                    BaseContainerId = table.Column<int>(nullable: false),
+                    Suspended = table.Column<bool>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -343,7 +342,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CollectionUserFavorites",
+                name: "CollectionUserBookmarks",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
@@ -351,15 +350,15 @@ namespace MtgCardOrganizer.Dal.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CollectionUserFavorites", x => new { x.UserId, x.CollectionId });
+                    table.PrimaryKey("PK_CollectionUserBookmarks", x => new { x.UserId, x.CollectionId });
                     table.ForeignKey(
-                        name: "FK_CollectionUserFavorites_Collections_CollectionId",
+                        name: "FK_CollectionUserBookmarks_Collections_CollectionId",
                         column: x => x.CollectionId,
                         principalTable: "Collections",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CollectionUserFavorites_AspNetUsers_UserId",
+                        name: "FK_CollectionUserBookmarks_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -490,8 +489,8 @@ namespace MtgCardOrganizer.Dal.Migrations
                 column: "ContainerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollectionUserFavorites_CollectionId",
-                table: "CollectionUserFavorites",
+                name: "IX_CollectionUserBookmarks_CollectionId",
+                table: "CollectionUserBookmarks",
                 column: "CollectionId");
 
             migrationBuilder.CreateIndex(
@@ -546,7 +545,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                 name: "CardInstances");
 
             migrationBuilder.DropTable(
-                name: "CollectionUserFavorites");
+                name: "CollectionUserBookmarks");
 
             migrationBuilder.DropTable(
                 name: "ContainerUserBookmarks");

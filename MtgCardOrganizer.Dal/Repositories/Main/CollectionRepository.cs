@@ -24,6 +24,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
         Task DeleteCardsAsync(int collectionId, List<int> cardInstanceIds);
 
         Task<PagedData<Collection>> GetBookmarksAsync(Paging paging);
+        Task<bool> IsBookmarkedAsync(int collectionId);
         Task ToggleBookmarkAsync(int collectionId);
     }
 
@@ -108,24 +109,30 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
                 .ApplyPagingAsync(paging);
         }
 
+        public async Task<bool> IsBookmarkedAsync(int collectionId)
+        {
+            var currentBookmarkEntry = await _dbContext.CollectionUserBookmarks.FindAsync(_user.Id, collectionId);
+            return currentBookmarkEntry != null;
+        }
+
         public async Task ToggleBookmarkAsync(int collectionId)
         {
             var collection = await _dbContext.Collections.FindAsync(collectionId);
             await _permissionRepository.CheckAsync(collection.ContainerId, Permission.Read);
 
-            var currentFavoriteEntry = await _dbContext.CollectionUserBookmarks.FindAsync(_user.Id, collectionId);
+            var currentBookmarkEntry = await _dbContext.CollectionUserBookmarks.FindAsync(_user.Id, collectionId);
 
-            if (currentFavoriteEntry == null)
+            if (currentBookmarkEntry != null)
+            {
+                _dbContext.Remove(currentBookmarkEntry);
+            }
+            else
             {
                 await _dbContext.CollectionUserBookmarks.AddAsync(new CollectionUserBookmark()
                 {
                     UserId = _user.Id,
                     CollectionId = collectionId,
                 });
-            }
-            else
-            {
-                _dbContext.Remove(currentFavoriteEntry);
             }
 
             await _dbContext.SaveChangesAsync();
