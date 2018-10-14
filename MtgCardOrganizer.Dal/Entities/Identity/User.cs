@@ -10,7 +10,7 @@ namespace MtgCardOrganizer.Dal.Entities.Identity
     {
         public int BaseContainerId { get; set; }
 
-        public ICollection<ContainerUserLink> ContainerUserLinks { get; set; }
+        public ICollection<ContainerUserPermission> ContainerUserPermissions { get; set; }
         public ICollection<ContainerUserBookmark> ContainerUserBookmarks { get; set; }
         public ICollection<CollectionUserBookmark> CollectionUserBookmarks { get; set; }
 

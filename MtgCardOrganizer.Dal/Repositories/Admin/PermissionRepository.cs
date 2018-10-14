@@ -14,9 +14,9 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
     public interface IPermissionRepository
     {
         Task CheckAsync(int containerId, Permission requiredPermission);
-        Task<PagedData<ContainerUserLink>> GetPermissionsAsync(int containerId, Paging paging);
+        Task<PagedData<ContainerUserPermission>> GetPermissionsAsync(int containerId, Paging paging);
         Task<Permission> GetPermissionAsync(int containerId);
-        Task UpdatePermissionAsync(ContainerUserLink containerUserLink);
+        Task UpdatePermissionAsync(ContainerUserPermission containerUserLink);
     }
 
     public class PermissionRepository : IPermissionRepository
@@ -41,9 +41,9 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
                 throw new PermissionException("Invalid permissions");
         }
 
-        public async Task<PagedData<ContainerUserLink>> GetPermissionsAsync(int containerId, Paging paging)
+        public async Task<PagedData<ContainerUserPermission>> GetPermissionsAsync(int containerId, Paging paging)
         {
-            return await _dbContext.ContainerUserLinks
+            return await _dbContext.ContainerUserPermissions
                 .AsNoTracking()
                 .Include(x => x.User)
                 .Where(x => x.ContainerId == containerId)
@@ -52,7 +52,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
 
         public async Task<Permission> GetPermissionAsync(int containerId)
         {
-            var link = await _dbContext.ContainerUserLinks
+            var link = await _dbContext.ContainerUserPermissions
                 .AsNoTracking()
                 .Where(x => x.UserId == _user.Id)
                 .Where(x => x.ContainerId == containerId)
@@ -72,9 +72,9 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
             }
         }
 
-        public async Task UpdatePermissionAsync(ContainerUserLink containerUserLink)
+        public async Task UpdatePermissionAsync(ContainerUserPermission containerUserLink)
         {
-            var currentPermission = await _dbContext.ContainerUserLinks
+            var currentPermission = await _dbContext.ContainerUserPermissions
                 .Where(x => x.UserId == containerUserLink.UserId)
                 .Where(x => x.ContainerId == containerUserLink.ContainerId)
                 .SingleOrDefaultAsync();
@@ -83,7 +83,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
             {
                 if (currentPermission != null)
                 {
-                    _dbContext.ContainerUserLinks.Remove(currentPermission);
+                    _dbContext.ContainerUserPermissions.Remove(currentPermission);
                     await _dbContext.SaveChangesAsync();
                 }
                 return;
@@ -92,12 +92,12 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
             if (currentPermission != null)
             {
                 currentPermission.Permission = containerUserLink.Permission;
-                _dbContext.ContainerUserLinks.Update(currentPermission);
+                _dbContext.ContainerUserPermissions.Update(currentPermission);
                 await _dbContext.SaveChangesAsync();
                 return;
             }
 
-            await _dbContext.ContainerUserLinks.AddAsync(containerUserLink);
+            await _dbContext.ContainerUserPermissions.AddAsync(containerUserLink);
             await _dbContext.SaveChangesAsync();
         }
     }

@@ -110,7 +110,7 @@ namespace MtgCardOrganizer.Api.Areas.Main.Controllers
 
             await _permissionRepository.CheckAsync(id, Permission.Admin);
 
-            var link = _mapper.Map<ContainerUserLink>(userPermissionDto);
+            var link = _mapper.Map<ContainerUserPermission>(userPermissionDto);
             link.ContainerId = id;
             await _permissionRepository.UpdatePermissionAsync(link);
             return NoContent();

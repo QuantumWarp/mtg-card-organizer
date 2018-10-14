@@ -277,7 +277,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.ToTable("ContainerUserBookmarks");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserLink", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserPermission", b =>
                 {
                     b.Property<string>("UserId");
 
@@ -289,7 +289,7 @@ namespace MtgCardOrganizer.Dal.Migrations
 
                     b.HasIndex("ContainerId");
 
-                    b.ToTable("ContainerUserLinks");
+                    b.ToTable("ContainerUserPermissions");
                 });
 
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Decks.Deck", b =>
@@ -512,15 +512,15 @@ namespace MtgCardOrganizer.Dal.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserLink", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserPermission", b =>
                 {
                     b.HasOne("MtgCardOrganizer.Dal.Entities.Containers.Container", "Container")
-                        .WithMany("ContainerUserLinks")
+                        .WithMany("ContainerUserPermissions")
                         .HasForeignKey("ContainerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MtgCardOrganizer.Dal.Entities.Identity.User", "User")
-                        .WithMany("ContainerUserLinks")
+                        .WithMany("ContainerUserPermissions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

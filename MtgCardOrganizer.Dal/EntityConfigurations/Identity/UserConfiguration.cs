@@ -8,7 +8,7 @@ namespace MtgCardOrganizer.Dal.EntityConfigurations.Identity
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasMany(x => x.ContainerUserLinks)
+            builder.HasMany(x => x.ContainerUserPermissions)
                 .WithOne(x => x.User);
 
             builder.Property(x => x.BaseContainerId).IsRequired();

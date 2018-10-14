@@ -15,9 +15,9 @@ namespace MtgCardOrganizer.Api.Areas.Main.Mapping
                 .ForSourceMember(x => x.IsBookmarked, opt => opt.Ignore())
                 .ForSourceMember(x => x.Permission, opt => opt.Ignore());
 
-            CreateMap<ContainerUserLink, UserPermissionDto>(MemberList.Destination)
+            CreateMap<ContainerUserPermission, UserPermissionDto>(MemberList.Destination)
                 .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.User.UserName));
-            CreateMap<UserPermissionDto, ContainerUserLink>(MemberList.Source)
+            CreateMap<UserPermissionDto, ContainerUserPermission>(MemberList.Source)
                 .ForSourceMember(x => x.UserName, opt => opt.Ignore());
         }
     }

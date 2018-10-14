@@ -16,7 +16,7 @@ namespace MtgCardOrganizer.Dal.Entities.Containers
         public ICollection<Collection> Collections { get; set; }
         public ICollection<Deck> Decks { get; set; }
 
-        public ICollection<ContainerUserLink> ContainerUserLinks { get; set; }
+        public ICollection<ContainerUserPermission> ContainerUserPermissions { get; set; }
         public ICollection<ContainerUserBookmark> ContainerUserBookmarks { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using MtgCardOrganizer.Dal.Enums;
 
 namespace MtgCardOrganizer.Dal.Entities.Containers
 {
-    public class ContainerUserLink
+    public class ContainerUserPermission
     {
         public Permission Permission { get; set; }
 

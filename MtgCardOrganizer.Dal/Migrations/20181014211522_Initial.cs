@@ -267,7 +267,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ContainerUserLinks",
+                name: "ContainerUserPermissions",
                 columns: table => new
                 {
                     Permission = table.Column<int>(nullable: false),
@@ -276,15 +276,15 @@ namespace MtgCardOrganizer.Dal.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContainerUserLinks", x => new { x.UserId, x.ContainerId });
+                    table.PrimaryKey("PK_ContainerUserPermissions", x => new { x.UserId, x.ContainerId });
                     table.ForeignKey(
-                        name: "FK_ContainerUserLinks_Containers_ContainerId",
+                        name: "FK_ContainerUserPermissions_Containers_ContainerId",
                         column: x => x.ContainerId,
                         principalTable: "Containers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ContainerUserLinks_AspNetUsers_UserId",
+                        name: "FK_ContainerUserPermissions_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -504,8 +504,8 @@ namespace MtgCardOrganizer.Dal.Migrations
                 column: "ContainerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ContainerUserLinks_ContainerId",
-                table: "ContainerUserLinks",
+                name: "IX_ContainerUserPermissions_ContainerId",
+                table: "ContainerUserPermissions",
                 column: "ContainerId");
 
             migrationBuilder.CreateIndex(
@@ -551,7 +551,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                 name: "ContainerUserBookmarks");
 
             migrationBuilder.DropTable(
-                name: "ContainerUserLinks");
+                name: "ContainerUserPermissions");
 
             migrationBuilder.DropTable(
                 name: "DeckCards");

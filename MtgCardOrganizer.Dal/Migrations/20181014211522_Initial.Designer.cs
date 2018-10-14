@@ -9,7 +9,7 @@ using MtgCardOrganizer.Dal.Initialization;
 namespace MtgCardOrganizer.Dal.Migrations
 {
     [DbContext(typeof(MtgCardOrganizerContext))]
-    [Migration("20181014190119_Initial")]
+    [Migration("20181014211522_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -279,7 +279,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.ToTable("ContainerUserBookmarks");
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserLink", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserPermission", b =>
                 {
                     b.Property<string>("UserId");
 
@@ -291,7 +291,7 @@ namespace MtgCardOrganizer.Dal.Migrations
 
                     b.HasIndex("ContainerId");
 
-                    b.ToTable("ContainerUserLinks");
+                    b.ToTable("ContainerUserPermissions");
                 });
 
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Decks.Deck", b =>
@@ -514,15 +514,15 @@ namespace MtgCardOrganizer.Dal.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserLink", b =>
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserPermission", b =>
                 {
                     b.HasOne("MtgCardOrganizer.Dal.Entities.Containers.Container", "Container")
-                        .WithMany("ContainerUserLinks")
+                        .WithMany("ContainerUserPermissions")
                         .HasForeignKey("ContainerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MtgCardOrganizer.Dal.Entities.Identity.User", "User")
-                        .WithMany("ContainerUserLinks")
+                        .WithMany("ContainerUserPermissions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

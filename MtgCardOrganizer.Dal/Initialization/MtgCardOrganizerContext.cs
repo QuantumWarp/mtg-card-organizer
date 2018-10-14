@@ -18,7 +18,7 @@ namespace MtgCardOrganizer.Dal.Initialization
     public class MtgCardOrganizerContext : IdentityDbContext<User>
     {
         public DbSet<Container> Containers { get; set; }
-        public DbSet<ContainerUserLink> ContainerUserLinks { get; set; }
+        public DbSet<ContainerUserPermission> ContainerUserPermissions { get; set; }
         public DbSet<ContainerUserBookmark> ContainerUserBookmarks { get; set; }
 
         public DbSet<Collection> Collections { get; set; }
@@ -41,7 +41,7 @@ namespace MtgCardOrganizer.Dal.Initialization
             modelBuilder.ApplyConfiguration(new UserConfiguration());
 
             modelBuilder.ApplyConfiguration(new ContainerConfiguration());
-            modelBuilder.ApplyConfiguration(new ContainerUserLinkConfiguration());
+            modelBuilder.ApplyConfiguration(new ContainerUserPermissionConfiguration());
             modelBuilder.ApplyConfiguration(new ContainerUserBookmarkConfiguration());
 
             modelBuilder.ApplyConfiguration(new CollectionConfiguration());
