@@ -22,7 +22,7 @@ namespace MtgCardOrganizer.Dal.Initialization
         public DbSet<ContainerUserBookmark> ContainerUserBookmarks { get; set; }
 
         public DbSet<Collection> Collections { get; set; }
-        public DbSet<CollectionUserFavorite> CollectionUserFavorites { get; set; }
+        public DbSet<CollectionUserBookmark> CollectionUserBookmarks { get; set; }
         public DbSet<CardInstance> CardInstances { get; set; }
 
         public DbSet<Deck> Decks { get; set; }
@@ -45,7 +45,7 @@ namespace MtgCardOrganizer.Dal.Initialization
             modelBuilder.ApplyConfiguration(new ContainerUserBookmarkConfiguration());
 
             modelBuilder.ApplyConfiguration(new CollectionConfiguration());
-            modelBuilder.ApplyConfiguration(new CollectionUserFavoriteConfiguration());
+            modelBuilder.ApplyConfiguration(new CollectionUserBookmarkConfiguration());
             modelBuilder.ApplyConfiguration(new CardInstanceConfiguration());
 
             modelBuilder.ApplyConfiguration(new DeckConfiguration());

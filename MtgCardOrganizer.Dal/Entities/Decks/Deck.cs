@@ -5,7 +5,7 @@ using MtgCardOrganizer.Dal.Entities.Containers;
 namespace MtgCardOrganizer.Dal.Entities.Decks
 {
     public class Deck : Entity
-    {        
+    {
         public string Name { get; set; }
 
         public int ContainerId { get; set; }

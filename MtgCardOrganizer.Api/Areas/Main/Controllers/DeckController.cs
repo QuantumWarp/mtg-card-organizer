@@ -1,39 +1,48 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MtgCardOrganizer.Api.Areas.Main.Dtos;
 using MtgCardOrganizer.Dal.Entities.Decks;
 using MtgCardOrganizer.Dal.Repositories.Main;
 using MtgCardOrganizer.Dal.Utilities;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers.Main
+namespace MtgCardOrganizer.Api.Areas.Main.Controllers
 {
     [Authorize(Roles = Roles.StandardUser)]
     [Route("api/decks")]
     public class DeckController : Controller
     {
-        public IDeckRepository _deckRepository;
+        private readonly IMapper _mapper;
+        private readonly IDeckRepository _deckRepository;
 
-        public DeckController(IDeckRepository deckRepository)
+        public DeckController(
+            IMapper mapper,
+            IDeckRepository deckRepository)
         {
+            _mapper = mapper;
             _deckRepository = deckRepository;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Deck>> Get(int id)
+        public async Task<ActionResult<DeckDto>> Get(int id)
         {
-            return await _deckRepository.GetAsync(id);
+            var deck = await _deckRepository.GetAsync(id);
+            return _mapper.Map<DeckDto>(deck);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Deck deck)
+        public async Task<IActionResult> Create([FromBody] DeckDto deckDto)
         {
+            var deck = _mapper.Map<Deck>(deckDto);
             await _deckRepository.CreateAsync(deck);
             return NoContent();
         }
 
         [HttpPatch]
-        public async Task<IActionResult> Update([FromBody] Deck deck)
+        public async Task<IActionResult> Update([FromBody] DeckDto deckDto)
         {
+            var deck = _mapper.Map<Deck>(deckDto);
             await _deckRepository.UpdateAsync(deck);
             return NoContent();
         }

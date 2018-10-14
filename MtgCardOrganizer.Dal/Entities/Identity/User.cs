@@ -12,7 +12,7 @@ namespace MtgCardOrganizer.Dal.Entities.Identity
 
         public ICollection<ContainerUserLink> ContainerUserLinks { get; set; }
         public ICollection<ContainerUserBookmark> ContainerUserBookmarks { get; set; }
-        public ICollection<CollectionUserFavorite> CollectionUserFavorites { get; set; }
+        public ICollection<CollectionUserBookmark> CollectionUserBookmarks { get; set; }
 
         public bool Suspended { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;

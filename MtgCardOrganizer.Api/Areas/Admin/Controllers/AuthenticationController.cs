@@ -5,7 +5,7 @@ using MtgCardOrganizer.Bll.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers.Admin
+namespace MtgCardOrganizer.Api.Areas.Admin.Controllers
 {
     [AllowAnonymous]
     [Route("api/auth")]

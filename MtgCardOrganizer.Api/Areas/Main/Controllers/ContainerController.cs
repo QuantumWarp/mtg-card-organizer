@@ -1,5 +1,8 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MtgCardOrganizer.Api.Areas.Main.Dtos;
+using MtgCardOrganizer.Api.Helpers;
 using MtgCardOrganizer.Bll.Services;
 using MtgCardOrganizer.Dal.Entities.Containers;
 using MtgCardOrganizer.Dal.Repositories.Main;
@@ -8,32 +11,37 @@ using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers.Main
+namespace MtgCardOrganizer.Api.Areas.Main.Controllers
 {
     [Authorize(Roles = Roles.StandardUser)]
     [Route("api/containers")]
     public class ContainerRepository : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IContainerRepository _containerRepository;
         private readonly IImportExportService _importExportService;
 
         public ContainerRepository(
+            IMapper mapper,
             IContainerRepository containerRepository,
             IImportExportService importExportService)
         {
+            _mapper = mapper;
             _containerRepository = containerRepository;
             _importExportService = importExportService;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Container>> Get(int id)
+        public async Task<ActionResult<ContainerDto>> Get(int id)
         {
-            return await _containerRepository.GetAsync(id);
+            var container = await _containerRepository.GetAsync(id);
+            return _mapper.Map<ContainerDto>(container);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Container container)
+        public async Task<IActionResult> Create([FromBody] ContainerDto containerDto)
         {
+            var container = _mapper.Map<Container>(containerDto);
             await _containerRepository.CreateAsync(container);
             return NoContent();
         }
@@ -61,16 +69,17 @@ namespace MtgCardOrganizer.Api.Controllers.Main
 
         // Bookmarks
         [HttpGet("bookmarks")]
-        public async Task<ActionResult<PagedData<Container>>> GetBookmarkedContainers(Paging paging)
+        public async Task<ActionResult<PagedData<ContainerDto>>> GetBookmarkedContainers([Base64Binder] Paging paging)
         {
-            return await _containerRepository.GetBookmarksAsync(paging);
+            var containers = await _containerRepository.GetBookmarksAsync(paging);
+            return _mapper.Map<PagedData<ContainerDto>>(containers);
         }
 
         [HttpPost("{id}/toggle-bookmark")]
         public async Task<IActionResult> ToggleBookmark(int id)
         {
             await _containerRepository.ToggleBookmarkAsync(id);
-            return Ok();
+            return NoContent();
         }
     }
 }

@@ -33,7 +33,7 @@ export class CardFilterComponent implements OnInit {
     });
 
     if (!this.disableCollectionSearch) {
-      this.collectionService.getFavorites().subscribe(pagedData => {
+      this.collectionService.getBookmarks().subscribe(pagedData => {
         this.collections = pagedData.data;
       });
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -46,6 +47,8 @@ namespace MtgCardOrganizer.Api
                 logging.AddConfiguration(Configuration.GetSection("Logging"));
                 logging.AddConsole();
             });
+
+            services.AddAutoMapper();
 
             // Add framework services.
             services.AddCors();

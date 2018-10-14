@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Identity;
 using MtgCardOrganizer.Dal.Entities.Collections;
 using MtgCardOrganizer.Dal.Entities.Decks;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MtgCardOrganizer.Dal.Entities.Containers
 {

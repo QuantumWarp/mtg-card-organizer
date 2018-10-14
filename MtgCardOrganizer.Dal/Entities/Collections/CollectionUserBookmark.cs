@@ -2,7 +2,7 @@
 
 namespace MtgCardOrganizer.Dal.Entities.Collections
 {
-    public class CollectionUserFavorite
+    public class CollectionUserBookmark
     {
         public string UserId { get; set; }
         public int CollectionId { get; set; }

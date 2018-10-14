@@ -23,12 +23,12 @@ export class CollectionService {
     return this.apiService.delete<boolean>('api/collections/' + collectionId);
   }
 
-  // Favorites
-  getFavorites(paging?: Paging): Observable<PagedData<Collection>> {
-    return this.apiService.get<PagedData<Collection>>('api/collections/favorites', paging);
+  // Bookmarks
+  getBookmarks(paging?: Paging): Observable<PagedData<Collection>> {
+    return this.apiService.get<PagedData<Collection>>('api/collections/bookmarks', paging);
   }
 
-  toggleFavorite(collectionId: number): Observable<void> {
-    return this.apiService.post(`api/collections/${collectionId}/toggle-favorite`, {});
+  toggleBookmark(collectionId: number): Observable<void> {
+    return this.apiService.post(`api/collections/${collectionId}/toggle-bookmark`, {});
   }
 }

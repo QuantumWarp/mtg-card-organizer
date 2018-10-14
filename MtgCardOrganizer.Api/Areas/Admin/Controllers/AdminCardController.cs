@@ -5,13 +5,13 @@ using MtgCardOrganizer.Bll.Services;
 using MtgCardOrganizer.Dal.Utilities;
 using System.Threading.Tasks;
 
-namespace MtgCardOrganizer.Api.Controllers.Admin
+namespace MtgCardOrganizer.Api.Areas.Admin.Controllers
 {
     [Authorize(Roles = Roles.Administrator)]
     [Route("api/admin")]
     public class AdminCardController : Controller
     {
-        private IAdminCardService _adminCardService;
+        private readonly IAdminCardService _adminCardService;
 
         public AdminCardController(IAdminCardService adminCardService)
         {
@@ -22,7 +22,7 @@ namespace MtgCardOrganizer.Api.Controllers.Admin
         public async Task<IActionResult> ImportCards([FromBody] AdminImportRequest importRequest) 
         {
             await _adminCardService.ImportCardsAsync(importRequest);
-            return new OkResult();
+            return NoContent();
         }
     }
 }

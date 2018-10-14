@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using MtgCardOrganizer.Dal.Entities.Cards;
-using MtgCardOrganizer.Dal.Entities.Collections;
 
 namespace MtgCardOrganizer.Dal.Entities.Collections
 {

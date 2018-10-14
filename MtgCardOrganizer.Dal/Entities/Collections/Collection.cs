@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace MtgCardOrganizer.Dal.Entities.Collections
 {
     public class Collection : Entity
-    {        
+    {
         public string Name { get; set; }
 
         public int ContainerId { get; set; }
@@ -12,6 +12,6 @@ namespace MtgCardOrganizer.Dal.Entities.Collections
 
         public ICollection<CardInstance> CardInstances { get; set; }
 
-        public ICollection<CollectionUserFavorite> CollectionUserFavorites { get; set; }
+        public ICollection<CollectionUserBookmark> CollectionUserBookmarks { get; set; }
     }
 }
