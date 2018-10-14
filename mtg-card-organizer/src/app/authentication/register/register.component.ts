@@ -14,6 +14,8 @@ import { AuthenticationService } from '../services/authentication.service';
   styleUrls: ['../authentication.scss']
 })
 export class RegisterComponent implements OnInit {
+  loading = false;
+
   form: FormGroup;
 
   termsAndConditionsAgreed = false;
@@ -49,7 +51,8 @@ export class RegisterComponent implements OnInit {
 
   @HostListener('document:keydown.enter')
   register(): void {
-    if (!this.form.valid) { return; }
+    if (!this.form.valid || this.loading) { return; }
+    this.loading = true;
     const registerModel = <RegisterModel>this.form.value;
     this.authenticationService.register(registerModel).subscribe(() => {
       this.snackNotificationService.notify(new SnackNotificationModel({
@@ -57,6 +60,7 @@ export class RegisterComponent implements OnInit {
         message: 'Registration Successful'
       }));
       this.router.navigateByUrl('/auth/login');
-    });
+    },
+    () => this.loading = false);
   }
 }

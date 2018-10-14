@@ -26,7 +26,7 @@
       </mat-form-field>
 
       <div class="auth-button-area">
-        <button class="auth-button" [disabled]="!form.valid" mat-raised-button color="primary" (click)="register()">Register</button>
+        <button class="auth-button" [disabled]="!form.valid || loading" mat-raised-button color="primary" (click)="register()">Register</button>
       </div>
     </form>
 
