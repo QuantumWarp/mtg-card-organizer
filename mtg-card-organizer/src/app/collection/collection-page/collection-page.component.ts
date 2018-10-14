@@ -66,7 +66,7 @@ export class CollectionPageComponent implements OnInit {
         this.collectionCardService.deleteCards(this.collection.id, [ cardInstance.id ]).subscribe(() => {
           this.refreshDataSource();
           this.notificationService.notify(new SnackNotificationModel({
-            message: 'Removed!',
+            message: 'Removed',
             type: SnackNotificationType.Success,
           }));
         });

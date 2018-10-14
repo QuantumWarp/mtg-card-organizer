@@ -9,14 +9,14 @@
   <ng-container matColumnDef="foil">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Foil</mat-header-cell>
     <mat-cell *matCellDef="let record">
-      <mat-checkbox disabled [value]="wrappedService.transform(record).foil"></mat-checkbox>
+      <mat-checkbox disabled [(ngModel)]="wrappedService.transform(record).foil"></mat-checkbox>
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="promo">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Promo</mat-header-cell>
     <mat-cell *matCellDef="let record">
-      <mat-checkbox disabled [value]="wrappedService.transform(record).promo"></mat-checkbox>
+      <mat-checkbox disabled [(ngModel)]="wrappedService.transform(record).promo"></mat-checkbox>
     </mat-cell>
   </ng-container>
 </app-card-set-grid>
