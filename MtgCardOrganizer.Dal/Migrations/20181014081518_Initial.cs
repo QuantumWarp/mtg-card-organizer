@@ -244,6 +244,30 @@ namespace MtgCardOrganizer.Dal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ContainerUserBookmarks",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    ContainerId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContainerUserBookmarks", x => new { x.UserId, x.ContainerId });
+                    table.ForeignKey(
+                        name: "FK_ContainerUserBookmarks_Containers_ContainerId",
+                        column: x => x.ContainerId,
+                        principalTable: "Containers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ContainerUserBookmarks_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ContainerUserLinks",
                 columns: table => new
                 {
@@ -314,6 +338,30 @@ namespace MtgCardOrganizer.Dal.Migrations
                         name: "FK_CardSets_Sets_SetId",
                         column: x => x.SetId,
                         principalTable: "Sets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CollectionUserFavorites",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    CollectionId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollectionUserFavorites", x => new { x.UserId, x.CollectionId });
+                    table.ForeignKey(
+                        name: "FK_CollectionUserFavorites_Collections_CollectionId",
+                        column: x => x.CollectionId,
+                        principalTable: "Collections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollectionUserFavorites_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -442,9 +490,19 @@ namespace MtgCardOrganizer.Dal.Migrations
                 column: "ContainerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CollectionUserFavorites_CollectionId",
+                table: "CollectionUserFavorites",
+                column: "CollectionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Containers_ParentId",
                 table: "Containers",
                 column: "ParentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ContainerUserBookmarks_ContainerId",
+                table: "ContainerUserBookmarks",
+                column: "ContainerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContainerUserLinks_ContainerId",
@@ -486,6 +544,12 @@ namespace MtgCardOrganizer.Dal.Migrations
 
             migrationBuilder.DropTable(
                 name: "CardInstances");
+
+            migrationBuilder.DropTable(
+                name: "CollectionUserFavorites");
+
+            migrationBuilder.DropTable(
+                name: "ContainerUserBookmarks");
 
             migrationBuilder.DropTable(
                 name: "ContainerUserLinks");

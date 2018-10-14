@@ -2,16 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities.Identity;
 using MtgCardOrganizer.Dal.Initialization;
+using MtgCardOrganizer.Dal.Requests;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Dal.Repositories.Admin
 {
     public interface IUserRepository
     {
-        Task<PagedData<User>> GetMany(Paging paging);
+        Task<PagedData<User>> GetMany(UserQuery userQuery);
         Task<bool> CheckUserUnique(User user);
         Task ToggleSuspension(string userId);
         Task RemoveUser(string userId);
@@ -30,10 +32,11 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
             _userManager = userManager;
         }
 
-        public async Task<PagedData<User>> GetMany(Paging paging)
+        public async Task<PagedData<User>> GetMany(UserQuery userQuery)
         {
             return await _userManager.Users
-                .ApplyPagingAsync(paging);
+                .ConditionalWhere(x => x.UserName.ToLower().Contains(userQuery.UserName), userQuery.UserName != null)
+                .ApplyPagingAsync(userQuery.Paging);
         }
 
         public async Task<bool> CheckUserUnique(User user)

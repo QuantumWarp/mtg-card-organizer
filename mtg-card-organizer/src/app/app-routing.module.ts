@@ -43,6 +43,10 @@ const testRoutes: Route[] = environment.testSettings && environment.testSettings
             loadChildren: 'app/admin/admin.module#AdminModule',
           },
           {
+            path: 'bookmarks',
+            loadChildren: 'app/bookmark/bookmark.module#BookmarkModule',
+          },
+          {
             path: 'containers',
             loadChildren: 'app/container/container.module#ContainerModule',
           },

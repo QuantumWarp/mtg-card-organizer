@@ -64,7 +64,7 @@ export function jwtOptionsFactory() {
         useFactory: jwtOptionsFactory
       }
     }),
-    RouterModule.forChild([]),
+    RouterModule.forRoot([]),
     SharedModule,
   ],
   exports: [

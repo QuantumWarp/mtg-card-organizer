@@ -24,7 +24,7 @@ export class CardQuery extends Base64QueryStringGenerator implements IPageable {
   }
 
   constructor(init?: Partial<CardQuery>) {
-    super();
+    super('cardQuery');
     Object.assign(this, init);
   }
 }

@@ -18,7 +18,4 @@
       </Generator>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\Collections\" />
-  </ItemGroup>
 </Project>

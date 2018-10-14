@@ -1,7 +1,10 @@
 import { QueryStringGenerator } from './query-string-generator.interface';
 
 export class Base64QueryStringGenerator implements QueryStringGenerator {
+
+  constructor(public paramName: string) { }
+
   toQueryString(): string {
-    return 'cardQuery=' + btoa(JSON.stringify(this));
+    return this.paramName + '=' + btoa(JSON.stringify(this));
   }
 }

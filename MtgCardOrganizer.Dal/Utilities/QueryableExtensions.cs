@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Requests.Generic;
@@ -59,6 +61,15 @@ namespace MtgCardOrganizer.Dal.Utilities
         private static IQueryable<T> ApplyFilter<T>(this IQueryable<T> queryable, PropertyFilter<T> filter) {
             var expression = ExpressionHelper.CreateFilterExpression<T>(filter);
             return queryable.Where(expression);
+        }
+
+        public static IQueryable<T> ConditionalWhere<T>(this IQueryable<T> queryable, Expression<Func<T, bool>> predicate, bool condition)
+        {
+            if (condition) {
+                return queryable.Where(predicate);
+            } else {
+                return queryable;
+            }
         }
     }
 }

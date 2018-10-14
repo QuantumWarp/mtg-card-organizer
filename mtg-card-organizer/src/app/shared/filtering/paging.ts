@@ -5,7 +5,7 @@ export class Paging extends Base64QueryStringGenerator {
   limit?: number = null;
 
   constructor(init?: Partial<Paging>) {
-    super();
+    super('paging');
     Object.assign(this, init);
   }
 }

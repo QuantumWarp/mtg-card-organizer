@@ -61,6 +61,6 @@ export class ContainerPageComponent implements OnInit {
   }
 
   openExport(): void {
-    const dialogRef = this.dialog.open(ContainerExportComponent, { data: this.container });
+    this.dialog.open(ContainerExportComponent, { data: this.container });
   }
 }

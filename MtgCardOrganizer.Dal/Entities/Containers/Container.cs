@@ -2,11 +2,12 @@ using Microsoft.AspNetCore.Identity;
 using MtgCardOrganizer.Dal.Entities.Collections;
 using MtgCardOrganizer.Dal.Entities.Decks;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MtgCardOrganizer.Dal.Entities.Containers
 {
     public class Container : Entity
-    {        
+    {
         public string Name { get; set; }
         public bool IsPublic { get; set; }
         
@@ -18,5 +19,6 @@ namespace MtgCardOrganizer.Dal.Entities.Containers
         public ICollection<Deck> Decks { get; set; }
 
         public ICollection<ContainerUserLink> ContainerUserLinks { get; set; }
+        public ICollection<ContainerUserBookmark> ContainerUserBookmarks { get; set; }
     }
 }

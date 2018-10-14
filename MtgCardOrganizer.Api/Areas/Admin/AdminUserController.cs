@@ -4,6 +4,7 @@ using MtgCardOrganizer.Api.Helpers;
 using MtgCardOrganizer.Bll.Services;
 using MtgCardOrganizer.Dal.Entities.Identity;
 using MtgCardOrganizer.Dal.Repositories.Admin;
+using MtgCardOrganizer.Dal.Requests;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
@@ -28,7 +29,8 @@ namespace MtgCardOrganizer.Api.Controllers.Admin
         
         public async Task<ActionResult<PagedData<User>>> GetMany([Base64Binder] Paging paging)
         {
-            return await _userRepository.GetMany(paging);
+            var userQuery = new UserQuery() { Paging = paging };
+            return await _userRepository.GetMany(userQuery);
         }
 
         [HttpPost("{userId}/toggle-suspension")]

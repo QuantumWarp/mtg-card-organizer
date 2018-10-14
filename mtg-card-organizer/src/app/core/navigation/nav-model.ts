@@ -24,6 +24,11 @@ export const navModel: NavNode[] = [
     routerLink: '/containers',
   },
   {
+    text: 'Bookmarks',
+    icon: 'bookmark',
+    routerLink: '/bookmarks',
+  },
+  {
     text: 'Tools',
     icon: 'build',
     children: [

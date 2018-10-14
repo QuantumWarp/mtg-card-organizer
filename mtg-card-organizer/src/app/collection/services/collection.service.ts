@@ -11,10 +11,6 @@ export class CollectionService {
 
   constructor(private apiService: ApiService) { }
 
-  getMany(paging?: Paging): Observable<PagedData<Collection>> {
-    return this.apiService.get<PagedData<Collection>>('api/collections', paging);
-  }
-
   get(collectionId: number): Observable<Collection> {
     return this.apiService.get<Collection>('api/collections/' + collectionId);
   }
@@ -25,5 +21,14 @@ export class CollectionService {
 
   delete(collectionId: number) {
     return this.apiService.delete<boolean>('api/collections/' + collectionId);
+  }
+
+  // Favorites
+  getFavorites(paging?: Paging): Observable<PagedData<Collection>> {
+    return this.apiService.get<PagedData<Collection>>('api/collections/favorites', paging);
+  }
+
+  toggleFavorite(collectionId: number): Observable<void> {
+    return this.apiService.post(`api/collections/${collectionId}/toggle-favorite`, {});
   }
 }

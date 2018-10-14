@@ -4,6 +4,7 @@ using MtgCardOrganizer.Dal.Entities.Cards;
 using MtgCardOrganizer.Dal.Entities.Collections;
 using MtgCardOrganizer.Dal.Entities.Containers;
 using MtgCardOrganizer.Dal.Entities.Decks;
+using MtgCardOrganizer.Dal.Entities.Identity;
 using MtgCardOrganizer.Dal.Entities.Other;
 using MtgCardOrganizer.Dal.EntityConfigurations.Cards;
 using MtgCardOrganizer.Dal.EntityConfigurations.Collections;
@@ -14,12 +15,14 @@ using MtgCardOrganizer.Dal.EntityConfigurations.Other;
 
 namespace MtgCardOrganizer.Dal.Initialization
 {
-    public class MtgCardOrganizerContext : IdentityDbContext
+    public class MtgCardOrganizerContext : IdentityDbContext<User>
     {
         public DbSet<Container> Containers { get; set; }
         public DbSet<ContainerUserLink> ContainerUserLinks { get; set; }
+        public DbSet<ContainerUserBookmark> ContainerUserBookmarks { get; set; }
 
         public DbSet<Collection> Collections { get; set; }
+        public DbSet<CollectionUserFavorite> CollectionUserFavorites { get; set; }
         public DbSet<CardInstance> CardInstances { get; set; }
 
         public DbSet<Deck> Decks { get; set; }
@@ -39,8 +42,10 @@ namespace MtgCardOrganizer.Dal.Initialization
 
             modelBuilder.ApplyConfiguration(new ContainerConfiguration());
             modelBuilder.ApplyConfiguration(new ContainerUserLinkConfiguration());
+            modelBuilder.ApplyConfiguration(new ContainerUserBookmarkConfiguration());
 
             modelBuilder.ApplyConfiguration(new CollectionConfiguration());
+            modelBuilder.ApplyConfiguration(new CollectionUserFavoriteConfiguration());
             modelBuilder.ApplyConfiguration(new CardInstanceConfiguration());
 
             modelBuilder.ApplyConfiguration(new DeckConfiguration());

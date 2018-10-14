@@ -9,7 +9,7 @@ using MtgCardOrganizer.Dal.Initialization;
 namespace MtgCardOrganizer.Dal.Migrations
 {
     [DbContext(typeof(MtgCardOrganizerContext))]
-    [Migration("20181007093027_Initial")]
+    [Migration("20181014081518_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -289,6 +289,19 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.ToTable("Collections");
                 });
 
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Collections.CollectionUserFavorite", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<int>("CollectionId");
+
+                    b.HasKey("UserId", "CollectionId");
+
+                    b.HasIndex("CollectionId");
+
+                    b.ToTable("CollectionUserFavorites");
+                });
+
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.Container", b =>
                 {
                     b.Property<int>("Id")
@@ -306,6 +319,19 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Containers");
+                });
+
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserBookmark", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<int>("ContainerId");
+
+                    b.HasKey("UserId", "ContainerId");
+
+                    b.HasIndex("ContainerId");
+
+                    b.ToTable("ContainerUserBookmarks");
                 });
 
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserLink", b =>
@@ -469,11 +495,37 @@ namespace MtgCardOrganizer.Dal.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Collections.CollectionUserFavorite", b =>
+                {
+                    b.HasOne("MtgCardOrganizer.Dal.Entities.Collections.Collection", "Collection")
+                        .WithMany("CollectionUserFavorites")
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MtgCardOrganizer.Dal.Entities.Identity.User", "User")
+                        .WithMany("CollectionUserFavorites")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.Container", b =>
                 {
                     b.HasOne("MtgCardOrganizer.Dal.Entities.Containers.Container", "Parent")
                         .WithMany("SubContainers")
                         .HasForeignKey("ParentId");
+                });
+
+            modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserBookmark", b =>
+                {
+                    b.HasOne("MtgCardOrganizer.Dal.Entities.Containers.Container", "Container")
+                        .WithMany("ContainerUserBookmarks")
+                        .HasForeignKey("ContainerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MtgCardOrganizer.Dal.Entities.Identity.User", "User")
+                        .WithMany("ContainerUserBookmarks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MtgCardOrganizer.Dal.Entities.Containers.ContainerUserLink", b =>

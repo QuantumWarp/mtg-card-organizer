@@ -15,15 +15,16 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
 {
     public interface ICollectionRepository
     {        
-        Task<PagedData<Collection>> GetManyAsync(Paging paging);
         Task<Collection> GetAsync(int collectionId);
         Task CreateAsync(Collection collection);
         Task DeleteAsync(int collectionId);
 
-
         Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardInstanceQuery query);
         Task<List<CardInstance>> AddCardsAsync(int collectionId, List<CardInstance> cardInstances);
         Task DeleteCardsAsync(int collectionId, List<int> cardInstanceIds);
+
+        Task<PagedData<Collection>> GetFavoritesAsync(Paging paging);
+        Task ToggleFavoriteAsync(int collectionId);
     }
 
     internal class CollectionRepository : ICollectionRepository
@@ -40,14 +41,6 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
             _permissionRepository = permissionRepository;
             _user = user;
             _dbContext = dbContext;
-        }
-
-        public async Task<PagedData<Collection>> GetManyAsync(Paging paging)
-        {
-            return await _dbContext.Collections
-                .AsNoTracking()
-                .Where(x => x.Container.ContainerUserLinks.Any(y => y.UserId == _user.Id && y.Permission > Permission.None))
-                .ApplyPagingAsync(paging);
         }
 
         public async Task<Collection> GetAsync(int id)
@@ -73,7 +66,6 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
         }
 
         // Card Management
-
         public async Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardInstanceQuery query)
         {
             var collection = await _dbContext.Collections.FindAsync(collectionId);
@@ -104,6 +96,39 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
 
             var cardInstances = await _dbContext.CardInstances.Where(x => cardInstanceIds.Contains(x.Id)).ToListAsync();
             _dbContext.CardInstances.RemoveRange(cardInstances);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        // Bookmarks
+        public async Task<PagedData<Collection>> GetFavoritesAsync(Paging paging)
+        {
+            return await _dbContext.CollectionUserFavorites
+                .AsNoTracking()
+                .Where(x => x.User.Id == _user.Id)
+                .Select(x => x.Collection)
+                .ApplyPagingAsync(paging);
+        }
+
+        public async Task ToggleFavoriteAsync(int collectionId)
+        {
+            var collection = await _dbContext.Collections.FindAsync(collectionId);
+            await _permissionRepository.CheckAsync(collection.ContainerId, Permission.Read);
+
+            var currentFavoriteEntry = await _dbContext.CollectionUserFavorites.FindAsync(_user.Id, collectionId);
+
+            if (currentFavoriteEntry == null)
+            {
+                await _dbContext.CollectionUserFavorites.AddAsync(new CollectionUserFavorite()
+                {
+                    UserId = _user.Id,
+                    CollectionId = collectionId,
+                });
+            }
+            else
+            {
+                _dbContext.Remove(currentFavoriteEntry);
+            }
+
             await _dbContext.SaveChangesAsync();
         }
     }

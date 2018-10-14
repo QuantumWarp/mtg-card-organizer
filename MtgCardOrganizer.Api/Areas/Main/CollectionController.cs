@@ -23,12 +23,6 @@ namespace MtgCardOrganizer.Api.Controllers.Main
             _collectionRepository = collectionRepository;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<PagedData<Collection>>> GetMany([Base64Binder] Paging paging)
-        {
-            return await _collectionRepository.GetManyAsync(paging);
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<Collection>> Get(int id)
         {
@@ -68,6 +62,20 @@ namespace MtgCardOrganizer.Api.Controllers.Main
         {
             await _collectionRepository.DeleteCardsAsync(id, cardInstanceIds);
             return NoContent();
+        }
+
+        // Favorites
+        [HttpGet("favorites")]
+        public async Task<ActionResult<PagedData<Collection>>> GetFavorites([Base64Binder] Paging paging)
+        {
+            return await _collectionRepository.GetFavoritesAsync(paging);
+        }
+
+        [HttpPost("{id}/toggle-favorite")]
+        public async Task<IActionResult> ToggleFavorite(int id)
+        {
+            await _collectionRepository.ToggleFavoriteAsync(id);
+            return Ok();
         }
     }
 }

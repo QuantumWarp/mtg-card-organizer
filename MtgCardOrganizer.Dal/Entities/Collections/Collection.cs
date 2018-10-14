@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using MtgCardOrganizer.Dal.Entities.Cards;
 using MtgCardOrganizer.Dal.Entities.Containers;
+using System.Collections.Generic;
 
 namespace MtgCardOrganizer.Dal.Entities.Collections
 {
@@ -12,5 +11,7 @@ namespace MtgCardOrganizer.Dal.Entities.Collections
         public Container Container { get; set; }
 
         public ICollection<CardInstance> CardInstances { get; set; }
+
+        public ICollection<CollectionUserFavorite> CollectionUserFavorites { get; set; }
     }
 }

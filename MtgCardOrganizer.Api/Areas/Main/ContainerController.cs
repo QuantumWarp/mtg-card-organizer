@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using MtgCardOrganizer.Bll.Services;
 using MtgCardOrganizer.Dal.Entities.Containers;
 using MtgCardOrganizer.Dal.Repositories.Main;
+using MtgCardOrganizer.Dal.Requests.Generic;
+using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
 using System.Threading.Tasks;
 
@@ -43,6 +45,7 @@ namespace MtgCardOrganizer.Api.Controllers.Main
             return NoContent();
         }
 
+        // Export/Import
         [HttpGet("{id}/export")]
         public async Task<ActionResult<string>> Export(int id)
         {
@@ -56,5 +59,18 @@ namespace MtgCardOrganizer.Api.Controllers.Main
             return NoContent();
         }
 
+        // Bookmarks
+        [HttpGet("bookmarks")]
+        public async Task<ActionResult<PagedData<Container>>> GetBookmarkedContainers(Paging paging)
+        {
+            return await _containerRepository.GetBookmarksAsync(paging);
+        }
+
+        [HttpPost("{id}/toggle-bookmark")]
+        public async Task<IActionResult> ToggleBookmark(int id)
+        {
+            await _containerRepository.ToggleBookmarkAsync(id);
+            return Ok();
+        }
     }
 }
