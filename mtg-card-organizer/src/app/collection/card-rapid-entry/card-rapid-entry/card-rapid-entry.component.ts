@@ -56,7 +56,7 @@ export class CardRapidEntryComponent implements OnInit {
     cardQuery.paging = new Paging({ limit: 10 });
     cardQuery.setIds = this.form.value.setIds ? this.form.value.setIds : [];
 
-    if (cardQuery.setIds && cardQuery.setIds.length === 1 && !isNaN(Number(cardQuery.name))) {
+    if (cardQuery.setIds && cardQuery.setIds.length === 1 && !isNaN(Number(this.form.value.name))) {
       cardQuery.nums = [ this.form.value.name ];
     } else {
       cardQuery.name = [ this.form.value.name ];
