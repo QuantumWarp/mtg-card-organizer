@@ -21,4 +21,8 @@ export class AdminUserService extends DataService<AdminUserModel> {
   toggleUserSuspension(userId: string): Observable<void> {
     return this.apiService.post(`api/admin/users/${userId}/toggle-suspension`, {});
   }
+
+  remove(userId: string): Observable<void> {
+    return this.apiService.delete(`api/admin/users/${userId}`);
+  }
 }

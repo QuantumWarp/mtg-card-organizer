@@ -5,7 +5,6 @@ using MtgCardOrganizer.Dal.Initialization;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Dal.Repositories.Admin
@@ -15,6 +14,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
         Task<PagedData<User>> GetMany(Paging paging);
         Task<bool> CheckUserUnique(User user);
         Task ToggleSuspension(string userId);
+        Task RemoveUser(string userId);
     }
 
     internal class UserRepository : IUserRepository
@@ -49,6 +49,12 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
             var user = await _userManager.FindByIdAsync(userId);
             user.Suspended = !user.Suspended;
             await _userManager.UpdateAsync(user);
+        }
+
+        public async Task RemoveUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            await _userManager.DeleteAsync(user);
         }
     }
 }

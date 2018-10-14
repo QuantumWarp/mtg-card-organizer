@@ -35,4 +35,13 @@
       </button>
     </mat-cell>
   </ng-container>
+
+  <ng-container matColumnDef="removeAction">
+    <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
+    <mat-cell class="crud-grid-action-column" *matCellDef="let record">
+      <button mat-icon-button matTooltip="Remove User" (click)="$event.stopPropagation(); removeAction(record);">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
 </app-basic-grid>

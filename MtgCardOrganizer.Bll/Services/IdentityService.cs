@@ -53,7 +53,7 @@ namespace MtgCardOrganizer.Bll.Services
             {
                 var container = new Container
                 {
-                    Name = "Base Container",
+                    Name = registerRequest.Username + "'s Container",
                     IsPublic = true,
                 };
 
@@ -64,7 +64,7 @@ namespace MtgCardOrganizer.Bll.Services
                 };
 
                 var userUnique = await _userRepository.CheckUserUnique(user);
-                if (!userUnique) throw new RegistrationException("User already exists");
+                if (!userUnique) throw new RegistrationException("User or email already exists");
 
                 var roles = new List<string> { Roles.StandardUser };
                 if (!_userManager.Users.Any()) roles.Add(Roles.Administrator);

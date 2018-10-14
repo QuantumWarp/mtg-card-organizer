@@ -31,10 +31,17 @@ namespace MtgCardOrganizer.Api.Controllers.Admin
             return await _userRepository.GetMany(paging);
         }
 
-        [Route("{userId}/toggle-suspension")]
+        [HttpPost("{userId}/toggle-suspension")]
         public async Task<IActionResult> ToggleSuspension(string userId)
         {
             await _identityService.ToggleSuspension(userId);
+            return Ok();
+        }
+
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            await _userRepository.RemoveUser(userId);
             return Ok();
         }
     }
