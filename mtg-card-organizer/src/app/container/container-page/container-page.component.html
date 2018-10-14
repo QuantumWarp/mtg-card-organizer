@@ -14,6 +14,7 @@
   </app-title-and-trail>
 
   <mat-menu #collectionMenu="matMenu">
+    <button *ngIf="container.permission === permissions.Admin" mat-menu-item (click)="openPermissions()">Permissions</button>
     <button mat-menu-item (click)="openImport()">Import</button>
     <button mat-menu-item (click)="openExport()">Export</button>
   </mat-menu>

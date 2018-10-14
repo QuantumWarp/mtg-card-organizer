@@ -60,7 +60,11 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
             }
 
             await _dbContext.Containers.AddAsync(container);
-            await _permissionRepository.UpdatePermissionAsync(container.Id, providedUserId, Permission.Admin);
+            await _permissionRepository.UpdatePermissionAsync(new ContainerUserLink() {
+                ContainerId = container.Id,
+                UserId = providedUserId,
+                Permission = Permission.Admin,
+            });
             await _dbContext.SaveChangesAsync();
         }
 

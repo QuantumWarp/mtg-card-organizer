@@ -3,8 +3,9 @@ using MtgCardOrganizer.Dal.Entities.Containers;
 using MtgCardOrganizer.Dal.Enums;
 using MtgCardOrganizer.Dal.Exceptions;
 using MtgCardOrganizer.Dal.Initialization;
+using MtgCardOrganizer.Dal.Requests.Generic;
+using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,8 +13,10 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
 {
     public interface IPermissionRepository
     {
-        Task CheckAsync(int containerId, Permission permission);
-        Task UpdatePermissionAsync(int containerId, string userId, Permission permission);
+        Task CheckAsync(int containerId, Permission requiredPermission);
+        Task<PagedData<ContainerUserLink>> GetPermissionsAsync(int containerId, Paging paging);
+        Task<Permission> GetPermissionAsync(int containerId);
+        Task UpdatePermissionAsync(ContainerUserLink containerUserLink);
     }
 
     public class PermissionRepository : IPermissionRepository
@@ -21,67 +24,81 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
         private readonly MtgCardOrganizerContext _dbContext;
         private readonly IUserService _user;
 
-        public PermissionRepository(IUserService user, MtgCardOrganizerContext dbContext)
+        public PermissionRepository(
+            IUserService user,
+            MtgCardOrganizerContext dbContext)
         {
             _user = user;
             _dbContext = dbContext;
         }
 
-        public async Task CheckAsync(int containerId, Permission permission)
+        public async Task CheckAsync(int containerId, Permission requiredPermission)
         {
-            var valid = await _dbContext.ContainerUserLinks
-                .AsNoTracking()
-                .Where(x => x.UserId == _user.Id)
-                .Where(x => x.ContainerId == containerId)
-                .Where(x => x.Permission >= permission)
-                .AnyAsync();
-
-            if (!valid && permission <= Permission.Read)
-            {
-                var container = await _dbContext.Containers
-                    .AsNoTracking()
-                    .Where(x => x.Id == containerId)
-                    .SingleAsync();
-                valid = container.IsPublic;
-            }
+            var userPermission = await GetPermissionAsync(containerId);
+            var valid = requiredPermission <= userPermission;
 
             if (!valid)
                 throw new PermissionException("Invalid permissions");
         }
 
-        // Does not save changes
-        public async Task UpdatePermissionAsync(int containerId, string userId, Permission permission)
+        public async Task<PagedData<ContainerUserLink>> GetPermissionsAsync(int containerId, Paging paging)
         {
-            var currentPermission = await _dbContext.ContainerUserLinks
-                .Where(x => x.UserId == userId)
+            return await _dbContext.ContainerUserLinks
+                .AsNoTracking()
+                .Include(x => x.User)
+                .Where(x => x.ContainerId == containerId)
+                .ApplyPagingAsync(paging);
+        }
+
+        public async Task<Permission> GetPermissionAsync(int containerId)
+        {
+            var link = await _dbContext.ContainerUserLinks
+                .AsNoTracking()
+                .Where(x => x.UserId == _user.Id)
                 .Where(x => x.ContainerId == containerId)
                 .SingleOrDefaultAsync();
 
-            if (permission == Permission.None)
+            if (link != null)
+            {
+                return link.Permission;
+            }
+            else
+            {
+                var container = await _dbContext.Containers
+                    .AsNoTracking()
+                    .Where(x => x.Id == containerId)
+                    .SingleAsync();
+                return container.IsPublic ? Permission.Read : Permission.None;
+            }
+        }
+
+        public async Task UpdatePermissionAsync(ContainerUserLink containerUserLink)
+        {
+            var currentPermission = await _dbContext.ContainerUserLinks
+                .Where(x => x.UserId == containerUserLink.UserId)
+                .Where(x => x.ContainerId == containerUserLink.ContainerId)
+                .SingleOrDefaultAsync();
+
+            if (containerUserLink.Permission == Permission.None)
             {
                 if (currentPermission != null)
                 {
-                    _dbContext.Remove(currentPermission);
+                    _dbContext.ContainerUserLinks.Remove(currentPermission);
+                    await _dbContext.SaveChangesAsync();
                 }
                 return;
             }
             
             if (currentPermission != null)
             {
-                currentPermission.Permission = permission;
-                _dbContext.Update(currentPermission);
+                currentPermission.Permission = containerUserLink.Permission;
+                _dbContext.ContainerUserLinks.Update(currentPermission);
+                await _dbContext.SaveChangesAsync();
                 return;
             }
-            
-            var userLink = new ContainerUserLink
-            {
-                ContainerId = containerId,
-                UserId = userId,
-                Permission = permission,
-            };
 
-            await _dbContext.AddAsync(userLink);
-            return;
+            await _dbContext.ContainerUserLinks.AddAsync(containerUserLink);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

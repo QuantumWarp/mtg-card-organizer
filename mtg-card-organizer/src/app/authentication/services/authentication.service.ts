@@ -16,6 +16,11 @@ export class AuthenticationService {
     return this.tokenInfo.baseContainerId;
   }
 
+  get id(): string {
+    if (!this.tokenInfo) { return; }
+    return this.tokenInfo.sub;
+  }
+
   get username(): string {
     if (!this.tokenInfo) { return; }
     return this.tokenInfo.username;

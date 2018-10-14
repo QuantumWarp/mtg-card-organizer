@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using MtgCardOrganizer.Dal.Entities.Identity;
 using MtgCardOrganizer.Dal.Initialization;
 using MtgCardOrganizer.Dal.Requests;
-using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Dal.Repositories.Admin

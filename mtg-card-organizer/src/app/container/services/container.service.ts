@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from '../../core/communication/api.service';
-import { Container } from '../models/container';
 import { PagedData } from '../../shared/filtering/paged-data';
 import { Paging } from '../../shared/filtering/paging';
+import { Container } from '../models/container';
 
 @Injectable()
 export class ContainerService {
@@ -23,6 +23,7 @@ export class ContainerService {
     return this.apiService.delete('api/containers/' + containerId);
   }
 
+  // Import/Export
   export(containerId: number): void {
     this.apiService.download('api/containers/' + containerId + '/export');
   }
@@ -31,6 +32,7 @@ export class ContainerService {
     return this.apiService.post('api/containers/' + containerId + '/import', importString);
   }
 
+  // Bookmarks
   bookmarks(paging?: Paging): Observable<PagedData<Container>> {
     return this.apiService.get('api/containers/bookmarks', paging);
   }

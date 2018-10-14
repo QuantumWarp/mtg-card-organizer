@@ -1,5 +1,6 @@
 import { Collection } from '../../collection/models/collection';
 import { Deck } from '../../deck/models/deck';
+import { Permission } from './permission';
 
 export class Container {
     id: number;
@@ -7,6 +8,7 @@ export class Container {
     name: string;
     parentId?: number;
     isBookmarked: boolean;
+    permission: Permission;
 
     subContainers: Container[];
     collections: Collection[];

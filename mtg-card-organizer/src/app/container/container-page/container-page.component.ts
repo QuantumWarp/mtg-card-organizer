@@ -11,6 +11,8 @@ import { Container } from '../models/container';
 import { ContainerService } from '../services/container.service';
 import { ContainerImportComponent } from '../container-import/container-import.component';
 import { ContainerExportComponent } from '../container-export/container-export.component';
+import { ContainerPermissionsComponent } from '../container-permissions/container-permissions.component';
+import { Permission } from '../models/permission';
 
 @Component({
   selector: 'app-container-page',
@@ -19,6 +21,7 @@ import { ContainerExportComponent } from '../container-export/container-export.c
 })
 export class ContainerPageComponent implements OnInit {
   container: Container;
+  permissions = Permission;
 
   constructor(
     public containerService: ContainerService,
@@ -53,6 +56,10 @@ export class ContainerPageComponent implements OnInit {
   createDeck(): void {
     const dialogRef = this.dialog.open(AddDeckModalComponent, { data: this.container });
     dialogRef.afterClosed().subscribe(() => this.refresh());
+  }
+
+  openPermissions(): void {
+    this.dialog.open(ContainerPermissionsComponent, { data: this.container, width: '600px' });
   }
 
   openImport(): void {

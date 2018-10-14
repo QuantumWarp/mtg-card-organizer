@@ -5,10 +5,14 @@ using MtgCardOrganizer.Api.Areas.Main.Dtos;
 using MtgCardOrganizer.Api.Helpers;
 using MtgCardOrganizer.Bll.Services;
 using MtgCardOrganizer.Dal.Entities.Containers;
+using MtgCardOrganizer.Dal.Enums;
+using MtgCardOrganizer.Dal.Repositories.Admin;
 using MtgCardOrganizer.Dal.Repositories.Main;
+using MtgCardOrganizer.Dal.Requests;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
+using System;
 using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Api.Areas.Main.Controllers
@@ -18,15 +22,18 @@ namespace MtgCardOrganizer.Api.Areas.Main.Controllers
     public class ContainerRepository : Controller
     {
         private readonly IMapper _mapper;
+        private readonly IPermissionRepository _permissionRepository;
         private readonly IContainerRepository _containerRepository;
         private readonly IImportExportService _importExportService;
 
         public ContainerRepository(
             IMapper mapper,
+            IPermissionRepository permissionRepository,
             IContainerRepository containerRepository,
             IImportExportService importExportService)
         {
             _mapper = mapper;
+            _permissionRepository = permissionRepository;
             _containerRepository = containerRepository;
             _importExportService = importExportService;
         }
@@ -37,6 +44,7 @@ namespace MtgCardOrganizer.Api.Areas.Main.Controllers
             var container = await _containerRepository.GetAsync(id);
             var containerDto = _mapper.Map<ContainerDto>(container);
             containerDto.IsBookmarked = await _containerRepository.IsBookmarkedAsync(id);
+            containerDto.Permission = await _permissionRepository.GetPermissionAsync(id);
             return containerDto;
         }
 
@@ -81,6 +89,30 @@ namespace MtgCardOrganizer.Api.Areas.Main.Controllers
         public async Task<IActionResult> ToggleBookmark(int id)
         {
             await _containerRepository.ToggleBookmarkAsync(id);
+            return NoContent();
+        }
+
+        // Permissions
+        [HttpGet("{id}/permissions")]
+        public async Task<ActionResult<PagedData<UserPermissionDto>>> GetPermissions(int id, [Base64Binder] Paging paging)
+        {
+            await _permissionRepository.CheckAsync(id, Permission.Admin);
+
+            var links = await _permissionRepository.GetPermissionsAsync(id, paging);
+            return _mapper.Map<PagedData<UserPermissionDto>>(links);
+        }
+
+        [HttpPost("{id}/update-permission")]
+        public async Task<IActionResult> UpdatePermssion(int id, [FromBody] UserPermissionDto userPermissionDto)
+        {
+            if (userPermissionDto.UserId == null)
+                throw new Exception("UserId required");
+
+            await _permissionRepository.CheckAsync(id, Permission.Admin);
+
+            var link = _mapper.Map<ContainerUserLink>(userPermissionDto);
+            link.ContainerId = id;
+            await _permissionRepository.UpdatePermissionAsync(link);
             return NoContent();
         }
     }

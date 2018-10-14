@@ -9,9 +9,16 @@ namespace MtgCardOrganizer.Api.Areas.Main.Mapping
         public ContainerProfile()
         {
             CreateMap<Container, ContainerDto>(MemberList.Destination)
-                .ForMember(x => x.IsBookmarked, opt => opt.Ignore());
+                .ForMember(x => x.IsBookmarked, opt => opt.Ignore())
+                .ForMember(x => x.Permission, opt => opt.Ignore());
             CreateMap<ContainerDto, Container>(MemberList.Source)
-                .ForSourceMember(x => x.IsBookmarked, opt => opt.Ignore());
+                .ForSourceMember(x => x.IsBookmarked, opt => opt.Ignore())
+                .ForSourceMember(x => x.Permission, opt => opt.Ignore());
+
+            CreateMap<ContainerUserLink, UserPermissionDto>(MemberList.Destination)
+                .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.User.UserName));
+            CreateMap<UserPermissionDto, ContainerUserLink>(MemberList.Source)
+                .ForSourceMember(x => x.UserName, opt => opt.Ignore());
         }
     }
 }

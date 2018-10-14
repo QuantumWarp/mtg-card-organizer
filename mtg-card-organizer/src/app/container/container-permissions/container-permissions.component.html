@@ -1,0 +1,77 @@
+<mat-toolbar>
+  Container Permissions
+  <mat-checkbox [(ngModel)]="allUsers">All Users</mat-checkbox>
+</mat-toolbar>
+
+<ng-container *ngIf="!allUsers">
+  <app-basic-grid matSort class="mat-elevation-z4"
+    [filter]="userQuery"
+    [service]="permssionDataService"
+    [columns]="userPermissionsDisplayedColumns">
+
+    <ng-container matColumnDef="userName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+      <mat-cell *matCellDef="let record">{{ record.userName }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="permission">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Permission</mat-header-cell>
+      <mat-cell *matCellDef="let record">{{ permissions[record.permission] }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="setPermission">
+      <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
+      <mat-cell class="crud-grid-action-column" *matCellDef="let record">
+        <button [matMenuTriggerFor]="setPermissionMenu" mat-icon-button (click)="$event.stopPropagation();">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <mat-menu #setPermissionMenu="matMenu">
+          <button mat-menu-item (click)="setPermission(record.userId, permissions.Admin)">Admin</button>
+          <button mat-menu-item (click)="setPermission(record.userId, permissions.Write)">Write</button>
+          <button mat-menu-item (click)="setPermission(record.userId, permissions.Read)">Read</button>
+          <button mat-menu-item (click)="setPermission(record.userId, permissions.None)">None</button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+  </app-basic-grid>
+</ng-container>
+
+<ng-container *ngIf="allUsers">
+  <mat-form-field>
+    <input matInput autocomplete="off" placeholder="Search" [formControl]="searchFormControl">
+  </mat-form-field>
+
+  <app-basic-grid matSort class="mat-elevation-z4"
+    [filter]="userQuery"
+    [service]="userService"
+    [columns]="userDisplayedColumns">
+
+    <ng-container matColumnDef="userName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+      <mat-cell *matCellDef="let record">{{ record.userName }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="setPermission">
+      <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
+      <mat-cell class="crud-grid-action-column" *matCellDef="let record">
+        <button [matMenuTriggerFor]="setPermissionMenu" mat-icon-button matTooltip="Set Admin" (click)="$event.stopPropagation();">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+        <mat-menu #setPermissionMenu="matMenu">
+          <button mat-menu-item (click)="setPermission(record.id, permissions.Admin)">Admin</button>
+          <button mat-menu-item (click)="setPermission(record.id, permissions.Write)">Write</button>
+          <button mat-menu-item (click)="setPermission(record.id, permissions.Read)">Read</button>
+          <button mat-menu-item (click)="setPermission(record.id, permissions.None)">None</button>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+  </app-basic-grid>
+</ng-container>
+
+<mat-toolbar>
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+</mat-toolbar>

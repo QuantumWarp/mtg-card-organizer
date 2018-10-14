@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MtgCardOrganizer.Dal.Enums;
+using System.Collections.Generic;
 
 namespace MtgCardOrganizer.Api.Areas.Main.Dtos
 {
@@ -8,7 +9,9 @@ namespace MtgCardOrganizer.Api.Areas.Main.Dtos
 
         public string Name { get; set; }
         public bool IsPublic { get; set; }
+
         public bool IsBookmarked { get; set; }
+        public Permission Permission { get; set; }
 
         public int? ParentId { get; set; }
 
