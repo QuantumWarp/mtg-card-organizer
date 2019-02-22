@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Seeding.Seeders
 {
-    public class RoleSeeder : AbstractSeeder
+    public class RoleSeeder : AbstractSeeder<IdentityRole>
     {
         private RoleManager<IdentityRole> _roleManager;
         
@@ -15,8 +15,8 @@ namespace MtgCardOrganizer.Seeding.Seeders
         {
             _roleManager = roleManager;
         }
-
-        public async override Task SeedAsync()
+        
+        public async override Task CustomSeed()
         {
             await _roleManager.CreateAsync(new IdentityRole(Roles.Administrator));
             await _roleManager.CreateAsync(new IdentityRole(Roles.StandardUser));

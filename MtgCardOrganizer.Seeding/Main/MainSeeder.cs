@@ -9,7 +9,7 @@ using MtgCardOrganizer.Seeding.Seeders;
 using MtgCardOrganizer.Seeding.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
+using System.Reflection;
 
 namespace MtgCardOrganizer.Seeding.Main
 {
@@ -17,12 +17,11 @@ namespace MtgCardOrganizer.Seeding.Main
     {
         private ServiceProvider _serviceProvider;
         private MtgCardOrganizerContext _dbContext;
-        private List<AbstractSeeder> _seeders = new List<AbstractSeeder>();
+        private List<IAbstractSeeder> _seeders = new List<IAbstractSeeder>();
 
         public void Run()
         {
             BuildServiceProvider();
-            CreateSeeders();
             Wipe();
             Migrate();
             Seed();
@@ -40,17 +39,21 @@ namespace MtgCardOrganizer.Seeding.Main
 
             new DalInitializer(services, configuration, new HostingEnvironment()).AddServices();
             new BllInitializer(services, configuration, new HostingEnvironment()).AddServices();
+
+            foreach (var seedType in SeedTypes())
+            {
+                services.AddSingleton(seedType);
+            }
+
             _serviceProvider = services.BuildServiceProvider();
-            
+
             _dbContext = ActivatorUtilities.CreateInstance<MtgCardOrganizerContext>(_serviceProvider);
         }
 
-        private void CreateSeeders()
+        private IEnumerable<Type> SeedTypes()
         {
-            _seeders.AddRange(new List<AbstractSeeder> {
-                ActivatorUtilities.CreateInstance<RoleSeeder>(_serviceProvider),
-                ActivatorUtilities.CreateInstance<UserSeeder>(_serviceProvider),
-            });
+            yield return typeof(RoleSeeder);
+            yield return typeof(UserSeeder);
         }
 
         private void Wipe()
@@ -64,14 +67,28 @@ namespace MtgCardOrganizer.Seeding.Main
             Console.WriteLine("Migrating...");
             _dbContext.Database.Migrate();
         }
-
+        
         private void Seed()
         {
-            foreach (var seeder in _seeders)
+            var method = typeof(MainSeeder).GetMethod(nameof(SeedGeneric), BindingFlags.NonPublic | BindingFlags.Instance);
+
+            foreach (var seedType in SeedTypes())
             {
-                Console.WriteLine(seeder.GetType().Name + " - Seeding");   
-                seeder.SeedAsync().GetAwaiter().GetResult();
+                MethodInfo genericMethod = method.MakeGenericMethod(seedType, seedType.BaseType.GenericTypeArguments[0]);
+                genericMethod.Invoke(this, null);
             }
+        }
+
+        private void SeedGeneric<T, TEntity>() where T : AbstractSeeder<TEntity> where TEntity : class
+        {
+            var seeder = _serviceProvider.GetService<T>();
+            seeder.Initialize();
+            Console.WriteLine(seeder.GetType().Name + " - Seeding");
+            var data = seeder.SeedData;
+            _dbContext.Set<TEntity>().AddRange(data);
+            _dbContext.SaveChanges();
+
+            seeder.CustomSeed().GetAwaiter().GetResult();
         }
     }
 }
