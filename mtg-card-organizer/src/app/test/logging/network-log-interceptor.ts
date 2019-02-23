@@ -5,8 +5,6 @@ import { tap } from 'rxjs/internal/operators';
 
 import { environment } from '../../../environments/environment';
 
-
-
 export abstract class NetworkLogInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!req.url.startsWith(environment.apiBaseUrl)) {
