@@ -6,6 +6,7 @@ import { DefaultPageComponent } from './default-page/default-page.component';
 import { GravatarIconComponent } from './gravatar-icon/gravatar-icon.component';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import { TitleAndTrailComponent } from './page-header/title-and-trail.component';
+import { CardModule } from './card/card.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { TitleAndTrailComponent } from './page-header/title-and-trail.component'
     MaterialModule,
   ],
   exports: [
+    CardModule,
     GravatarIconComponent,
     ConfirmDialogComponent,
     DefaultPageComponent,

@@ -1,34 +1,35 @@
-<div class="page-container">
-  <div class="auth-card mat-elevation-z4">
-    <div class="auth-header">
-      <div class="auth-title">Mtg Card Organizer</div>
+<mco-card class="register-card">
+  <ng-container mcoCardHeader>MTG Card Organizer</ng-container>
+
+  <form fxLayout="column" [formGroup]="form" (ngSubmit)="register()">
+    <mat-form-field>
+      <input matInput placeholder="Username" formControlName="username"/>
+      <mat-error *ngIf="form.get('username').hasError('required')">Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email"
+        matTooltip="Email not required, but if not provided will prevent use of 'Forgot Password'" />
+      <mat-error *ngIf="form.get('email').hasError('required')">Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Password" [type]="showPassword ? 'text' : 'password'" formControlName="password"
+        matTooltip="Password must be at least 8 characters long, at least 5 of them should be unique. Please consider using a longer password for improved security." />
+      <mat-icon class="show-password-toggle" matSuffix (click)="showPassword = !showPassword">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      <mat-error *ngIf="form.get('password').hasError('required')">Required</mat-error>
+      <mat-error *ngIf="form.get('password').hasError('passwordInvalid')">Password policy not satisfied</mat-error>
+    </mat-form-field>
+
+    <div *ngIf="error" class="auth-error">{{ error }}</div>
+
+    <div fxLayoutAlign="center center">
+      <button mat-raised-button color="primary">Register</button>
     </div>
+  </form>
 
-    <form class="auth-content" [formGroup]="form">
-      <mat-form-field>
-        <input matInput placeholder="Username" formControlName="username"/>
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput placeholder="Email" formControlName="email"
-          matTooltip="Email not required, but if not provided will prevent use of 'Forgot Password'" />
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput placeholder="Password" [type]="showPassword ? 'text' : 'password'" formControlName="password"
-          matTooltip="Password must be at least 8 characters long, at least 5 of them should be unique. Please consider using a longer password for improved security." />
-        <mat-icon class="show-password-toggle" matSuffix (click)="showPassword = !showPassword">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-        <mat-error *ngIf="form.get('password').hasError('passwordInvalid')">Password policy not satisfied</mat-error>
-      </mat-form-field>
-
-      <div class="auth-button-area">
-        <button class="auth-button" [disabled]="!form.valid || loading" mat-raised-button color="primary" (click)="register()">Register</button>
-      </div>
-    </form>
-
-    <div class="auth-footer">
-      <div>Already have an account?</div>
-      <div routerLink="/auth/login" class="auth-link-text">Sign In</div>
-    </div>
+  <div fxLayout="column" fxLayoutAlign="start center">
+    <span>Already have an account?</span>
+    <span routerLink="/auth/login" class="link-text">Sign In</span>
   </div>
-</div>
+</mco-card>

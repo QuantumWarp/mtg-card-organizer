@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url('/assets/page-header.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-card {
+  width: 300px;
+  margin-bottom: 10px;
+
+  button {
+    width: 100px;
+  }
+
+  form {
+    margin-bottom: 10px;
+  }
+}
+
+.disclaimer-card {
+  width: 400px;
+}
+
+.auth-error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.link-text {
+  color: steelblue;
+  cursor: pointer;
+}
+
+.show-password-toggle {
+  cursor: pointer;
+  user-select: none;
+}

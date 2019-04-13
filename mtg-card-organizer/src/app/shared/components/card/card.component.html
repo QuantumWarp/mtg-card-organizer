@@ -1,0 +1,13 @@
+<mat-card fxFlex>
+  <div #headerRef [class.header]="headerRef.innerHTML.trim()">
+    <ng-content select="mco-card-header, [mcoCardHeader]"></ng-content>
+  </div>
+
+  <mat-card-content>
+    <ng-content></ng-content>
+  </mat-card-content>
+
+  <div #footerRef [class.footer]="footerRef.innerHTML.trim()">
+    <ng-content select="mco-card-actions, [mcoCardActions]"></ng-content>
+  </div>
+</mat-card>

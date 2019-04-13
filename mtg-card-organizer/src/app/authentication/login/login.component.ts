@@ -6,9 +6,8 @@ import { LoginModel } from '../models/login.model';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
-  selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['../authentication.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
@@ -25,7 +24,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       loginName: [, Validators.required],
-      password: [, [ Validators.required ]],
+      password: [, Validators.required],
     });
   }
 

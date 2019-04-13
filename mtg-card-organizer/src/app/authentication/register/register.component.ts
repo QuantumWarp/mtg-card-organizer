@@ -9,9 +9,8 @@ import { RegisterModel } from '../models/register.model';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
-  selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['../authentication.scss']
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
   loading = false;

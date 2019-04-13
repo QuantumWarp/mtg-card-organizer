@@ -1,47 +1,39 @@
-<div class="page-container" fxLayout="column" fxLayoutGap="10px">
-  <div class="auth-card mat-elevation-z4">
-    <div class="auth-header">
-      <div class="auth-title">Mtg Card Organizer</div>
+<mco-card class="login-card">
+  <ng-container mcoCardHeader>MTG Card Organizer</ng-container>
+
+  <form fxLayout="column" [formGroup]="form" (ngSubmit)="login()">
+    <mat-form-field>
+      <input matInput name="loginName" placeholder="Username / Email" formControlName="loginName" />
+      <mat-error *ngIf="form.get('loginName').hasError('required')">Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput name="password" [type]="showPassword ? 'text' : 'password'" placeholder="Password" type="password" formControlName="password"
+        matTooltip="Password must be at least 8 characters long, at least 5 of them should be unique." />
+      <mat-icon class="show-password-toggle" matSuffix (click)="showPassword = !showPassword">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      <mat-error *ngIf="form.get('password').hasError('required')">Required</mat-error>
+    </mat-form-field>
+
+    <div *ngIf="error" class="auth-error">{{ error }}</div>
+
+    <!-- <div class="login-forgot-password">
+      <a class="auth-link-text" href="javascript:void(0)">Forgot Password?</a>
+    </div> -->
+
+    <div fxLayoutAlign="center center">
+      <button mat-raised-button color="primary">{{ loading ? "Loading..." : "Login" }}</button>
     </div>
+  </form>
 
-    <div class="auth-content">
-      <form [formGroup]="form" class="auth-form">
-        <mat-form-field>
-          <input matInput name="loginName" placeholder="Username / Email" formControlName="loginName" />
-        </mat-form-field>
-
-        <mat-form-field>
-          <input matInput name="password" [type]="showPassword ? 'text' : 'password'" placeholder="Password" type="password" formControlName="password"
-            matTooltip="Password must be at least 8 characters long, at least 5 of them should be unique." />
-          <mat-icon class="show-password-toggle" matSuffix (click)="showPassword = !showPassword">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-        </mat-form-field>
-      </form>
-
-      <div *ngIf="error" class="auth-error">{{ error }}</div>
-
-      <!-- <div class="login-forgot-password">
-        <a class="auth-link-text" href="javascript:void(0)">Forgot Password?</a>
-      </div> -->
-
-      <div class="auth-button-area">
-        <button class="auth-button" [disabled]="!form.valid || loading" mat-raised-button color="primary" (click)="login()">
-          {{ loading ? "Loading..." : "Login" }}
-        </button>
-      </div>
-    </div>
-
-    <div class="auth-footer">
-      <div>Don't have an account?</div>
-      <div routerLink="/auth/register" class="auth-link-text">Create an account</div>
-    </div>
+  <div fxLayout="column" fxLayoutAlign="start center">
+    <span>Don't have an account?</span>
+    <span routerLink="/auth/register" class="link-text">Create an account</span>
   </div>
+</mco-card>
 
-  <div class="auth-card mat-elevation-z4">
-    <div class="auth-disclaimer">
-      Mtg Card Organzier is unofficial Fan Content permitted under the Fan Content Policy.
-      Not approved/endorsed by Wizards.
-      Portions of the materials used are property of Wizards of the Coast.
-      ©Wizards of the Coast LLC
-    </div>
-  </div>
-</div>
+<mco-card class="disclaimer-card">
+  Mtg Card Organzier is unofficial Fan Content permitted under the Fan Content Policy.
+  Not approved/endorsed by Wizards.
+  Portions of the materials used are property of Wizards of the Coast.
+  ©Wizards of the Coast LLC
+</mco-card>
