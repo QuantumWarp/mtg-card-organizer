@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
 
   form: FormGroup;
 
+  showPassword = false;
   termsAndConditionsAgreed = false;
 
   constructor(
@@ -29,9 +30,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       username: [, Validators.required],
-      email: [, ],
+      email: [, Validators.required],
       password: [, [ Validators.required, this.passwordPolicyValidation ]],
-      confirmPassword: [, [ Validators.required, this.passwordMatchValidation ]],
     });
   }
 
@@ -41,12 +41,6 @@ export class RegisterComponent implements OnInit {
     const uniqueCharCount = password.split('').filter((value, index, array) => value && array.indexOf(value) === index).length;
     const valid = password.length >= 8 && uniqueCharCount >= 5;
     return valid ? null : { 'passwordInvalid': true };
-  }
-
-  passwordMatchValidation(control: FormGroup): ValidationErrors | null {
-    if (!control.parent) { return null; }
-    const passwordMatch = control.value === control.parent.get('password').value;
-    return passwordMatch ? null : { 'passwordMismatch': true };
   }
 
   @HostListener('document:keydown.enter')

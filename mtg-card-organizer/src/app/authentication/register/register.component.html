@@ -15,14 +15,10 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Password" type="password" formControlName="password"
+        <input matInput placeholder="Password" [type]="showPassword ? 'text' : 'password'" formControlName="password"
           matTooltip="Password must be at least 8 characters long, at least 5 of them should be unique. Please consider using a longer password for improved security." />
+        <mat-icon class="show-password-toggle" matSuffix (click)="showPassword = !showPassword">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         <mat-error *ngIf="form.get('password').hasError('passwordInvalid')">Password policy not satisfied</mat-error>
-      </mat-form-field>
-
-      <mat-form-field>
-        <input matInput placeholder="Password (Confirm)" type="password" formControlName="confirmPassword" />
-        <mat-error *ngIf="form.get('confirmPassword').hasError('passwordMismatch')">Passwords do not match</mat-error>
       </mat-form-field>
 
       <div class="auth-button-area">

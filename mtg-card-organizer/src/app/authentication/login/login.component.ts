@@ -13,6 +13,7 @@ import { AuthenticationService } from '../services/authentication.service';
 export class LoginComponent implements OnInit {
   form: FormGroup;
 
+  showPassword = false;
   loading = false;
   error: string;
 
