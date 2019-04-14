@@ -1,19 +1,14 @@
-<div class="modal">
-  <div class="modal-header">
-    <div class="modal-title">Import</div>
-  </div>
+<mco-modal>
+  <span mcoModalHeader>Import</span>
 
-  <div class="modal-content">
-    <mat-form-field fxFlex>
-      <textarea #inputArea matInput placeholder="Input"></textarea>
-    </mat-form-field>
-  </div>
+  <mat-form-field fxFlex>
+    <textarea #inputArea matInput placeholder="Input"></textarea>
+  </mat-form-field>
 
-  <div class="modal-actions">
-      <button mat-raised-button color="primary" (click)="openFileDialog()">Select From File</button>
-      <input style="display: none" type="file" ng2FileSelect #fileInput (change)="fileChanged()"/>
-      <span fxFlex></span>
-    <button #cancelButton mat-raised-button (click)="close()">Cancel</button>
+  <div mcoModalActions fxLayoutGap="5px">
+    <button mat-raised-button color="primary" (click)="openFileDialog()">Select From File</button>
+    <input style="display: none" type="file" ng2FileSelect #fileInput (change)="fileChanged()"/>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
     <button mat-raised-button color="primary" (click)="import()">Import</button>
   </div>
-</div>
+</mco-modal>

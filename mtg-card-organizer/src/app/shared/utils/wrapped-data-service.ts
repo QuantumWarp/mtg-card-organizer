@@ -9,7 +9,8 @@ export class WrappedDataService<TSource, TDestination> {
 
   constructor(
     public dataService: DataService<TSource>,
-    public transform: (source: TSource) => TDestination) { }
+    public transform: (source: TSource) => TDestination,
+  ) { }
 
   static construct<T>(dataService: DataService<T>): WrappedDataService<T, T> {
     return new WrappedDataService(dataService, x => x);

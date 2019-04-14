@@ -1,13 +1,7 @@
-<div class="modal" style="min-width:500px">
-  <div class="modal-header">
-    <div class="modal-title">{{ cardSet.card.name }}</div>
-  </div>
+<mco-modal>
+  <span>{{ cardSet.card.name }}</span>
 
-  <div class="modal-content">
-    <mco-card-details [cardSet]="cardSet"></mco-card-details>
-  </div>
+  <mco-card-details [cardSet]="cardSet"></mco-card-details>
 
-  <div class="modal-actions">
-    <button mat-raised-button (click)="close()">Close</button>
-  </div>
-</div>
+  <button mat-raised-button mat-dialog-close>Close</button>
+</mco-modal>

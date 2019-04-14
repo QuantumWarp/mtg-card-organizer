@@ -1,13 +1,8 @@
-<div class="modal">
-  <div class="modal-header">
-    <div class="modal-title">Export Container - {{ container.name }}</div>
-  </div>
+<mco-modal>
+  <span mcoModalHeader>Export Container - {{ container.name }}</span>
 
-  <div class="modal-content">
-  </div>
-
-  <div class="modal-actions">
+  <div mcoModalActions fxLayoutGap="5px">
     <button #cancelButton mat-raised-button (click)="close()">Cancel</button>
     <button mat-raised-button color="primary" (click)="download()">Download</button>
   </div>
-</div>
+</mco-modal>
