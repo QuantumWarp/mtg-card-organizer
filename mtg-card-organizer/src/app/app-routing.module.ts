@@ -4,7 +4,6 @@ import { Route, RouterModule } from '@angular/router';
 import { environment } from '../environments/environment';
 import { AuthGuard } from './authentication/services/auth.guard';
 import { StandardLayoutComponent } from './core/layouts/standard-layout.component';
-import { HomeComponent } from './home/home.component';
 
 const testRoutes: Route[] = environment.testSettings && environment.testSettings.includeTestModule ?
   [{
@@ -34,10 +33,6 @@ const testRoutes: Route[] = environment.testSettings && environment.testSettings
         canActivate: [ AuthGuard ],
         children: [
           ...testRoutes,
-          {
-            path: 'home',
-            component: HomeComponent
-          },
           {
             path: 'admin',
             loadChildren: 'app/admin/admin.module#AdminModule',

@@ -11,7 +11,6 @@ import { AppRoutingModule } from '../app-routing.module';
 import { AuthGuard } from '../authentication/services/auth.guard';
 import { AuthenticationService } from '../authentication/services/authentication.service';
 import { VersionService } from '../authentication/services/version.service';
-import { HomeComponent } from '../home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { AboutComponent } from './about/about.component';
 import { ApiService } from './communication/api.service';
@@ -41,7 +40,6 @@ export function jwtOptionsFactory() {
 @NgModule({
   declarations: [
     AboutComponent,
-    HomeComponent,
     StandardLayoutComponent,
     ContentComponent,
     SnackNotificationComponent,
@@ -70,7 +68,6 @@ export function jwtOptionsFactory() {
     HttpClientModule,
     AppRoutingModule,
 
-    HomeComponent,
     StandardLayoutComponent,
     ContentComponent,
   ],
