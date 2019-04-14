@@ -4,19 +4,6 @@
   width: 50px;
 }
 
-.nav-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(41, 41, 41);
-  width: 50px;
-  overflow: hidden;
-}
-
-mco-nav-node {
-  width: 200px;
-}
-
 .nav-node.nav-node-closed {
   background-color: rgba(0, 0, 0, 0);
 }
@@ -61,4 +48,3 @@ mco-nav-node {
     overflow: hidden;
   }
 }
-

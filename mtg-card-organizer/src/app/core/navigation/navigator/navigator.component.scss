@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 50px;
+}
+
+.nav-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(41, 41, 41);
+  width: 50px;
+  overflow: hidden;
+}
+
+mco-nav-node {
+  width: 200px;
+}

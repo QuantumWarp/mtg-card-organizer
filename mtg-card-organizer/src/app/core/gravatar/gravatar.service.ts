@@ -3,7 +3,6 @@ import { Md5 } from 'ts-md5';
 
 import { GravatarConfig } from './gravatar.config';
 
-
 @Injectable()
 export class GravatarService {
   private readonly baseUrl = 'https://secure.gravatar.com/avatar/';

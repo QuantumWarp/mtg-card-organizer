@@ -1,4 +1,4 @@
-import { NavNode } from './nav-node';
+import { NavNode } from './nav-node/nav-node';
 
 export const navModel: NavNode[] = [
   {

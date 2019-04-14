@@ -1,13 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 
-import { navModel } from './nav-model';
-import { NavNode } from './nav-node';
+import { navModel } from '../nav-model';
+import { NavNode } from '../nav-node/nav-node';
 
 @Component({
   selector: 'mco-navigator',
   templateUrl: './navigator.component.html',
-  styleUrls: ['./navigation.scss'],
+  styleUrls: ['./navigator.component.scss'],
   animations: [
     trigger('navToggle', [
       state('0', style({})),

@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../../authentication/services/authentication.service';
+import { AuthenticationService } from '../../../authentication/services/authentication.service';
 import { MatDialog } from '@angular/material';
-import { AboutComponent } from '../about/about.component';
+import { AboutComponent } from '../../about/about.component';
 
 @Component({
   selector: 'mco-nav-bar',
   templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.scss']
+  styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent {
-
   constructor(
     public authenticationService: AuthenticationService,
     private dialog: MatDialog,
-    private router: Router) {}
+    private router: Router,
+  ) { }
 
   openAbout(): void {
-    this.dialog.open(AboutComponent);
+    this.dialog.open(AboutComponent, { width: '600px' });
   }
 
   logout() {

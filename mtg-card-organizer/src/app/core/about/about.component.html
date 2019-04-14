@@ -1,38 +1,33 @@
-<mat-card>
-  <mat-toolbar>
-    About
-  </mat-toolbar>
+<mco-modal>
+  <span mcoModalHeader>About</span>
 
-  <div class="main-content">
-    <div class="section">
-      <div class="section-header">Mtg Card Organizer © John Lowther 2018</div>
-      <div class="section-content">
-        This is a work in progess and many parts of the application may be rough or unfinished.
-        Please make sure to export your containers periodically.
-        Any issues or questions you can contact <a href="mailto:quantumwss@hotmail.com?Subject=MTG%20Card%20Organizer%20Inquiry" target="_top">quantumwss@hotmail.com</a>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-header">Graphics</div>
-      <div class="section-content">QuantumWSS Logo <img height="12px" width="12px" src="assets/quantumwss-icon.png"> © John Lowther 2018</div>
-      <div class="section-content"><a href="https://andrewgioia.github.io/Keyrune/index.html">Keyrune</a> Symbol Package - Created by Andrew Gioia</div>
-      <div class="section-content">Standard Blue Headers - <a href="http://www.freepik.com">Designed by Kotkoa / Freepik</a></div>
-    </div>
-
-    <div class="section">
-      <div class="section-header">WOTC - <a href="https://company.wizards.com/fancontentpolicy">Fan Content Policy</a></div>
-      <div class="section-content">
-        Mtg Card Organzier is unofficial Fan Content permitted under the Fan Content Policy.
-        Not approved/endorsed by Wizards.
-        Portions of the materials used are property of Wizards of the Coast.
-        ©Wizards of the Coast LLC
-      </div>
-    </div>
+  <div class="text-title">Mtg Card Organizer © John Lowther 2018</div>
+  <div class="text-description">
+    This is a work in progess and many parts of the application may be rough or unfinished.
+    Please make sure to export your containers periodically.
+    Any issues or questions you can contact <a href="mailto:quantumwss@hotmail.com?Subject=MTG%20Card%20Organizer%20Inquiry" target="_top">quantumwss@hotmail.com</a>
   </div>
 
-  <div class="actions" fxLayoutAlign="center center">
-    <button mat-raised-button (click)="close()">Close</button>
-  </div>
-</mat-card>
+  <br><br>
 
+  <div class="text-title">Graphics</div>
+  <div class="text-description">
+    QuantumWSS Logo <img height="12px" width="12px" src="assets/quantumwss-icon.png"> © John Lowther 2018<br>
+    <a href="https://andrewgioia.github.io/Keyrune/index.html">Keyrune</a> Symbol Package - Created by Andrew Gioia<br>
+    Standard Blue Headers - <a href="http://www.freepik.com">Designed by Kotkoa / Freepik</a>
+  </div>
+
+  <br><br>
+
+  <div class="text-title">WOTC - <a href="https://company.wizards.com/fancontentpolicy">Fan Content Policy</a></div>
+  <div class="text-description">
+    Mtg Card Organzier is unofficial Fan Content permitted under the Fan Content Policy.
+    Not approved/endorsed by Wizards.
+    Portions of the materials used are property of Wizards of the Coast.
+    ©Wizards of the Coast LLC
+  </div>
+
+  <div mcoModalActions fxLayoutAlign="center center">
+    <button mat-raised-button mat-dialog-close>Close</button>
+  </div>
+</mco-modal>

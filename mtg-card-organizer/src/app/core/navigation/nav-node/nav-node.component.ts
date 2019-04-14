@@ -1,15 +1,14 @@
-import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
-
-import { NavNode } from './nav-node';
-import { navModel } from './nav-model';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AuthenticationService } from '../../authentication/services/authentication.service';
+
+import { AuthenticationService } from '../../../authentication/services/authentication.service';
+import { NavNode } from './nav-node';
 
 @Component({
   selector: 'mco-nav-node',
   templateUrl: './nav-node.component.html',
-  styleUrls: ['./navigation.scss'],
+  styleUrls: ['./nav-node.component.scss'],
   animations: [
     trigger('arrowDown', [
       state('0', style({})),
@@ -39,7 +38,8 @@ export class NavNodeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService) { }
+    private authenticationService: AuthenticationService,
+  ) { }
 
   ngOnInit(): void {
     this.navNode.open = false;

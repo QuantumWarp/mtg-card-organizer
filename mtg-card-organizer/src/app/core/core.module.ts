@@ -21,9 +21,7 @@ import { GravatarService } from './gravatar/gravatar.service';
 import { StandardLayoutComponent } from './layouts/standard-layout.component';
 import { LoadingComponent } from './loading/loading.component';
 import { LoadingService } from './loading/loading.service';
-import { NavBarComponent } from './navigation/nav-bar.component';
-import { NavNodeComponent } from './navigation/nav-node.component';
-import { NavigatorComponent } from './navigation/navigator.component';
+import { NavigationModule } from './navigation/navigation.module';
 import { SnackNotificationComponent } from './notifications/snack-notification.component';
 import { SnackNotificationService } from './notifications/snack-notification.service';
 
@@ -46,9 +44,6 @@ export function jwtOptionsFactory() {
     HomeComponent,
     StandardLayoutComponent,
     ContentComponent,
-    NavBarComponent,
-    NavNodeComponent,
-    NavigatorComponent,
     SnackNotificationComponent,
     LoadingComponent,
   ],
@@ -66,6 +61,8 @@ export function jwtOptionsFactory() {
     }),
     RouterModule.forRoot([]),
     SharedModule,
+
+    NavigationModule,
   ],
   exports: [
     BrowserModule,
@@ -76,8 +73,6 @@ export function jwtOptionsFactory() {
     HomeComponent,
     StandardLayoutComponent,
     ContentComponent,
-    NavBarComponent,
-    NavigatorComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

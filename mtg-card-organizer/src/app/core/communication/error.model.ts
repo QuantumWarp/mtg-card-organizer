@@ -1,5 +1,4 @@
 export class ErrorModel {
-
   constructor(
     public message: string,
     public data?: any,

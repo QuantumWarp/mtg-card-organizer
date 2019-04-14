@@ -7,16 +7,15 @@ import { SnackNotificationType } from './snack-notification.type';
 @Component({
   selector: 'mco-snack-notification',
   templateUrl: './snack-notification.component.html',
-  styleUrls: ['./snack-notification.scss']
+  styleUrls: ['./snack-notification.component.scss']
 })
 export class SnackNotificationComponent {
   snackNotificationType = SnackNotificationType;
 
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public model: SnackNotificationModel) {}
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public model: SnackNotificationModel) { }
 
   runAction(): void {
-    if (this.model.action) {
-      this.model.action();
-    }
+    if (!this.model.action) { return; }
+    this.model.action();
   }
 }
