@@ -1,14 +1,14 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { Collection } from '../../../collection/models/collection';
 import { CollectionService } from '../../../collection/services/collection.service';
-import { SnackNotificationModel } from '../../../core/notifications/snack-notification.model';
 import { SnackNotificationService } from '../../../core/notifications/snack-notification.service';
-import { SnackNotificationType } from '../../../core/notifications/snack-notification.type';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog.data';
+import { AddCollectionModalComponent } from '../../add-modals/collection/add-collection-modal.component';
+import { Container } from '../../models/container';
 
 @Component({
   selector: 'mco-collection-list',
@@ -16,10 +16,9 @@ import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/con
   styleUrls: ['./collection-list.component.scss']
 })
 export class CollectionListComponent {
-  @Output() containerInvalidated = new EventEmitter();
-  @Output() addClicked = new EventEmitter();
+  @Output() collectionsUpdated = new EventEmitter();
 
-  @Input() collections: Collection[];
+  @Input() container: Container;
 
   constructor(
     private router: Router,
@@ -28,26 +27,31 @@ export class CollectionListComponent {
     private collectionService: CollectionService,
   ) { }
 
-  itemSelected(collection: Collection): void {
+  viewCollection(collection: Collection): void {
     this.router.navigateByUrl('/collections/' + collection.id);
   }
 
-  deleteItem(collection: Collection): void {
+  createCollection(): void {
+    const dialogRef = this.dialog.open(AddCollectionModalComponent, {
+      data: this.container,
+    });
+    dialogRef.afterClosed().subscribe((success) => success && this.collectionsUpdated.emit());
+  }
+
+  deleteCollection(collection: Collection): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: <ConfirmDialogData> {
         title: 'Delete Collection',
-        description: 'Are you sure you want to delete \'' + collection.name + '\'',
+        description: `Are you sure you want to delete '${collection.name}'`,
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (!result) { return; }
+
       this.collectionService.delete(collection.id).subscribe(() => {
-        this.snackNotificationService.notify(new SnackNotificationModel({
-          message: '\'' + collection.name + '\' Deleted',
-          type: SnackNotificationType.Success,
-        }));
-        this.containerInvalidated.emit();
+        this.snackNotificationService.notifySuccess(`'${collection.name}' Deleted`);
+        this.collectionsUpdated.emit();
       });
     });
   }

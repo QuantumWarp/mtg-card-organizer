@@ -5,6 +5,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { ConfirmDialogModule } from './confirm-dialog/confirm-dialog.module';
 import { DefaultPageModule } from './default-page/default-page.module';
 import { GravatarIconModule } from './gravatar-icon/gravatar-icon.module';
+import { ItemListModule } from './item-list/item-list.module';
 import { ModalModule } from './modal/modal.module';
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ModalModule } from './modal/modal.module';
     ConfirmDialogModule,
     DefaultPageModule,
     GravatarIconModule,
+    ItemListModule,
     ModalModule,
-  ]
+  ],
 })
 export class ComponentsModule { }

@@ -1,7 +1,7 @@
 <mco-modal>
   <span mcoModalHeader>Add Collection</span>
 
-  <form #formRef="ngForm" autocomplete="off" [formGroup]="form" (ngSumbit)="confirm()">
+  <form autocomplete="off" [formGroup]="form" #formRef="ngForm" (ngSubmit)="confirm()">
     <mat-form-field>
       <input matInput formControlName="name" placeholder="Name">
       <mat-error *ngIf="form.get('name').hasError('required')">Required</mat-error>

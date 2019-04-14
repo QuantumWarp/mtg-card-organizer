@@ -1,0 +1,26 @@
+<mco-card contentPadding="0px">
+  <div mcoCardHeader fxLayoutAlign="space-between center">
+    <div fxLayoutGap="5px" fxLayoutAlign="start center">
+      <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+      <span>{{ title }}</span>
+    </div>
+    <button mat-icon-button color="primary" (click)="addClicked.emit()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <ng-container *ngFor="let item of data; last as lastItem">
+    <div fxLayoutAlign="space-between center" class="item" (click)="itemClicked.emit(item)">
+      <span>{{ item.name }}</span>
+      <button mat-icon-button color="warn" (click)="deleteClicked.emit(item)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <mat-divider *ngIf="item !== lastItem"></mat-divider>
+  </ng-container>
+
+  <div *ngIf="data.length === 0" class="no-items">
+    No items
+  </div>
+</mco-card>

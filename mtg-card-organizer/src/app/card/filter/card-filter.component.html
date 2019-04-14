@@ -1,7 +1,7 @@
-<mat-card class="mat-elevation-z4">
-  <form [formGroup]="form" fxLayout="column">
-    <button mat-raised-button color="primary" (click)="apply()">Apply</button>
+<mco-card>
+  <span mcoCardHeader>Filter</span>
 
+  <form [formGroup]="form" fxLayout="column">
     <mat-form-field *ngIf="!disableCollectionSearch">
       <mat-select placeholder="Collection" formControlName="collectionIds" multiple>
         <mat-option *ngFor="let collection of collections" [value]="collection.id">{{ collection.name }}</mat-option>
@@ -35,5 +35,7 @@
     <mat-form-field>
       <input autocomplete="off" matInput placeholder="Number" formControlName="nums">
     </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="apply()">Apply</button>
   </form>
-</mat-card>
+</mco-card>

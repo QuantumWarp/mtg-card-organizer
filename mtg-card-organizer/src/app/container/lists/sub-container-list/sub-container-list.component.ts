@@ -1,14 +1,13 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { Container } from '../../models/container';
-import { ContainerService } from '../../services/container.service';
-import { MatDialog } from '@angular/material';
+import { SnackNotificationService } from '../../../core/notifications/snack-notification.service';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog.data';
-import { SnackNotificationService } from '../../../core/notifications/snack-notification.service';
-import { SnackNotificationModel } from '../../../core/notifications/snack-notification.model';
-import { SnackNotificationType } from '../../../core/notifications/snack-notification.type';
+import { AddContainerModalComponent } from '../../add-modals/container/add-container-modal.component';
+import { Container } from '../../models/container';
+import { ContainerService } from '../../services/container.service';
 
 @Component({
   selector: 'mco-sub-container-list',
@@ -16,10 +15,9 @@ import { SnackNotificationType } from '../../../core/notifications/snack-notific
   styleUrls: ['./sub-container-list.component.scss']
 })
 export class SubContainerListComponent {
-  @Output() containerInvalidated = new EventEmitter();
-  @Output() addClicked = new EventEmitter();
+  @Output() containersUpdated = new EventEmitter();
 
-  @Input() containers: Container[];
+  @Input() container: Container;
 
   constructor(
     private router: Router,
@@ -28,26 +26,31 @@ export class SubContainerListComponent {
     private containerService: ContainerService,
   ) { }
 
-  itemSelected(container: Container): void {
+  viewSubContainer(container: Container): void {
     this.router.navigateByUrl('/containers/' + container.id);
   }
 
-  deleteItem(container: Container): void {
+  createSubContainer(): void {
+    const dialogRef = this.dialog.open(AddContainerModalComponent, {
+      data: this.container,
+    });
+    dialogRef.afterClosed().subscribe((success) => success && this.containersUpdated.emit());
+  }
+
+  deleteSubContainer(container: Container): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: <ConfirmDialogData> {
         title: 'Delete Container',
-        description: 'Are you sure you want to delete \'' + container.name + '\'',
+        description: `Are you sure you want to delete '${container.name}'`,
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (!result) { return; }
+
       this.containerService.delete(container.id).subscribe(() => {
-        this.snackNotificationService.notify(new SnackNotificationModel({
-          message: '\'' + container.name + '\' Deleted',
-          type: SnackNotificationType.Success,
-        }));
-        this.containerInvalidated.emit();
+        this.snackNotificationService.notifySuccess(`'${container.name}' Deleted`);
+        this.containersUpdated.emit();
       });
     });
   }

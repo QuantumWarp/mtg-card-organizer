@@ -1,14 +1,14 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { SnackNotificationModel } from '../../../core/notifications/snack-notification.model';
 import { SnackNotificationService } from '../../../core/notifications/snack-notification.service';
-import { SnackNotificationType } from '../../../core/notifications/snack-notification.type';
 import { Deck } from '../../../deck/models/deck';
 import { DeckService } from '../../../deck/services/deck.service';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog.data';
+import { AddDeckModalComponent } from '../../add-modals/deck/add-deck-modal.component';
+import { Container } from '../../models/container';
 
 @Component({
   selector: 'mco-deck-list',
@@ -16,10 +16,9 @@ import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/con
   styleUrls: ['./deck-list.component.scss']
 })
 export class DeckListComponent {
-  @Output() containerInvalidated = new EventEmitter();
-  @Output() addClicked = new EventEmitter();
+  @Output() decksUpdated = new EventEmitter();
 
-  @Input() decks: Deck[];
+  @Input() container: Container;
 
   constructor(
     private router: Router,
@@ -28,26 +27,31 @@ export class DeckListComponent {
     private deckService: DeckService,
   ) { }
 
-  itemSelected(deck: Deck): void {
+  viewDeck(deck: Deck): void {
     this.router.navigateByUrl('/decks/' + deck.id);
   }
 
-  deleteItem(deck: Deck): void {
+  createDeck(): void {
+    const dialogRef = this.dialog.open(AddDeckModalComponent, {
+      data: this.container,
+    });
+    dialogRef.afterClosed().subscribe((success) => success && this.decksUpdated.emit());
+  }
+
+  deleteDeck(deck: Deck): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: <ConfirmDialogData> {
         title: 'Delete Deck',
-        description: 'Are you sure you want to delete \'' + deck.name + '\'',
+        description: `Are you sure you want to delete '${deck.name}'`,
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (!result) { return; }
+
       this.deckService.delete(deck.id).subscribe(() => {
-        this.snackNotificationService.notify(new SnackNotificationModel({
-          message: '\'' + deck.name + '\' Deleted',
-          type: SnackNotificationType.Success,
-        }));
-        this.containerInvalidated.emit();
+        this.snackNotificationService.notifySuccess(`'${deck.name}' Deleted`);
+        this.decksUpdated.emit();
       });
     });
   }

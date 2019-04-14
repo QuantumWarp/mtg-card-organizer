@@ -4,9 +4,6 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
-import { AddCollectionModalComponent } from '../add-modals/collection/add-collection-modal.component';
-import { AddContainerModalComponent } from '../add-modals/container/add-container-modal.component';
-import { AddDeckModalComponent } from '../add-modals/deck/add-deck-modal.component';
 import { ContainerExportComponent } from '../import-export/export/container-export.component';
 import { ContainerImportComponent } from '../import-export/import/container-import.component';
 import { Container } from '../models/container';
@@ -42,21 +39,6 @@ export class ContainerPageComponent implements OnInit {
     this.containerService.get(this.container.id).subscribe(result => {
       this.container = result;
     });
-  }
-
-  createContainer(): void {
-    const dialogRef = this.dialog.open(AddContainerModalComponent, { data: this.container });
-    dialogRef.afterClosed().subscribe(() => this.refresh());
-  }
-
-  createCollection(): void {
-    const dialogRef = this.dialog.open(AddCollectionModalComponent, { data: this.container });
-    dialogRef.afterClosed().subscribe(() => this.refresh());
-  }
-
-  createDeck(): void {
-    const dialogRef = this.dialog.open(AddDeckModalComponent, { data: this.container });
-    dialogRef.afterClosed().subscribe(() => this.refresh());
   }
 
   openPermissions(): void {

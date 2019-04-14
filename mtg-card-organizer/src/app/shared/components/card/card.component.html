@@ -3,7 +3,7 @@
     <ng-content select="mco-card-header, [mcoCardHeader]"></ng-content>
   </div>
 
-  <mat-card-content>
+  <mat-card-content [style.padding]="contentPadding">
     <ng-content></ng-content>
   </mat-card-content>
 

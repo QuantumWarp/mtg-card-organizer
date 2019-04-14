@@ -1,0 +1,17 @@
+.no-items {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  color: gray;
+  padding: 20px;
+}
+
+.item {
+  font-weight: bold;
+  padding: 10px 25px;
+  cursor: pointer;
+}
+
+:hover.item {
+  background-color: lightgray;
+}

@@ -12,15 +12,15 @@
     </button>
   </ng-container>
 
-  <mat-menu #collectionMenu="matMenu">
-    <button *ngIf="container.permission === permissions.Admin" mat-menu-item (click)="openPermissions()">Permissions</button>
-    <button mat-menu-item (click)="openImport()">Import</button>
-    <button mat-menu-item (click)="openExport()">Export</button>
-  </mat-menu>
-
   <div fxLayout="row" fxLayoutGap="10px">
-    <mco-sub-container-list [containers]="container.subContainers" (containerInvalidated)="refresh()" (addClicked)="createContainer()"></mco-sub-container-list>
-    <mco-collection-list [collections]="container.collections" (containerInvalidated)="refresh()" (addClicked)="createCollection()"></mco-collection-list>
-    <mco-deck-list [decks]="container.decks" (containerInvalidated)="refresh()" (addClicked)="createDeck()"></mco-deck-list>
+    <mco-sub-container-list [container]="container" (containersUpdated)="refresh()"></mco-sub-container-list>
+    <mco-collection-list [container]="container" (collectionsUpdated)="refresh()"></mco-collection-list>
+    <mco-deck-list [container]="container" (decksUpdated)="refresh()"></mco-deck-list>
   </div>
 </mco-default-page>
+
+<mat-menu #collectionMenu="matMenu">
+  <button *ngIf="container.permission === permissions.Admin" mat-menu-item (click)="openPermissions()">Permissions</button>
+  <button mat-menu-item (click)="openImport()">Import</button>
+  <button mat-menu-item (click)="openExport()">Export</button>
+</mat-menu>
