@@ -16,7 +16,7 @@ import { ContainerIdPermissionService, ContainerPermissionService } from '../ser
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 
 @Component({
-  selector: 'app-container-permissions',
+  selector: 'mco-container-permissions',
   templateUrl: './container-permissions.component.html',
   styleUrls: ['./container-permissions.component.scss']
 })

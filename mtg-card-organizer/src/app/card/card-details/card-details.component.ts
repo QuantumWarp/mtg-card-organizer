@@ -5,7 +5,7 @@ import { fadeInAnimation } from '../../shared/animations/fade-in-animation';
 import { CardSet } from '../models/card-set';
 
 @Component({
-  selector: 'app-card-details',
+  selector: 'mco-card-details',
   templateUrl: './card-details.component.html',
   styleUrls: ['./card-details.component.scss'],
   animations: [

@@ -1,6 +1,6 @@
 <div class="padded-page">
-  <app-page-header></app-page-header>
-  <app-title-and-trail [title]="'Container - ' + container.name">
+  <mco-page-header></mco-page-header>
+  <mco-title-and-trail [title]="'Container - ' + container.name">
     <button [matMenuTriggerFor]="collectionMenu" class="options-button mat-elevation-z4"
       mat-icon-button matTooltip="Settings">
       <mat-icon>settings</mat-icon>
@@ -11,7 +11,7 @@
       mat-icon-button matTooltip="Toggle Bookmark">
       <mat-icon>{{ container.isBookmarked ? 'bookmark' : 'bookmark_border' }}</mat-icon>
     </button>
-  </app-title-and-trail>
+  </mco-title-and-trail>
 
   <mat-menu #collectionMenu="matMenu">
     <button *ngIf="container.permission === permissions.Admin" mat-menu-item (click)="openPermissions()">Permissions</button>
@@ -20,8 +20,8 @@
   </mat-menu>
 
   <div fxLayout="row" fxLayoutGap="10px">
-    <app-sub-container-list [containers]="container.subContainers" (containerInvalidated)="refresh()" (addClicked)="createContainer()"></app-sub-container-list>
-    <app-collection-list [collections]="container.collections" (containerInvalidated)="refresh()" (addClicked)="createCollection()"></app-collection-list>
-    <app-deck-list [decks]="container.decks" (containerInvalidated)="refresh()" (addClicked)="createDeck()"></app-deck-list>
+    <mco-sub-container-list [containers]="container.subContainers" (containerInvalidated)="refresh()" (addClicked)="createContainer()"></mco-sub-container-list>
+    <mco-collection-list [collections]="container.collections" (containerInvalidated)="refresh()" (addClicked)="createCollection()"></mco-collection-list>
+    <mco-deck-list [decks]="container.decks" (containerInvalidated)="refresh()" (addClicked)="createDeck()"></mco-deck-list>
   </div>
 </div>

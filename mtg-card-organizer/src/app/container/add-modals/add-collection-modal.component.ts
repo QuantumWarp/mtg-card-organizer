@@ -5,7 +5,7 @@ import { CollectionService } from '../../collection/services/collection.service'
 import { Container } from '../models/container';
 
 @Component({
-  selector: 'app-add-collection-modal',
+  selector: 'mco-add-collection-modal',
   templateUrl: './add-collection-modal.component.html',
   styleUrls: ['./modals.scss']
 })

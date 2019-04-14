@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./error.scss']
 })
 export class Error404Component {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   returnHome(): void {
     this.router.navigateByUrl('/containers');

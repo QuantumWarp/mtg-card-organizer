@@ -12,7 +12,7 @@ import { UserQuery } from '../models/user-query';
 import { Paging } from '../../shared/filtering/paging';
 
 @Component({
-  selector: 'app-user-search',
+  selector: 'mco-user-search',
   templateUrl: './user-search.component.html',
   styleUrls: ['./user-search.component.scss']
 })

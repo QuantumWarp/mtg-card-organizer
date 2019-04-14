@@ -10,7 +10,7 @@ import { SnackNotificationType } from '../../../core/notifications/snack-notific
 import { RapidEntryResult } from '../rapid-entry-result';
 
 @Component({
-  selector: 'app-card-rapid-entry-result',
+  selector: 'mco-card-rapid-entry-result',
   templateUrl: './card-rapid-entry-result.component.html',
   styleUrls: ['./card-rapid-entry-result.component.scss']
 })

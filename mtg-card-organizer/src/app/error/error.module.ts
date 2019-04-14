@@ -15,7 +15,7 @@ import { Error404Component } from './error-404.component';
         path: '404',
         component: Error404Component
       }
-    ])
+    ]),
   ]
 })
 export class ErrorModule {}

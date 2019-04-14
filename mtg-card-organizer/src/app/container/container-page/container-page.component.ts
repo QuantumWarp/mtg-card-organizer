@@ -15,7 +15,7 @@ import { ContainerPermissionsComponent } from '../container-permissions/containe
 import { Permission } from '../models/permission';
 
 @Component({
-  selector: 'app-container-page',
+  selector: 'mco-container-page',
   templateUrl: './container-page.component.html',
   styleUrls: ['./container-page.component.scss']
 })

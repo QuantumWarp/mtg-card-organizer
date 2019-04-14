@@ -5,7 +5,7 @@ import { DeckService } from '../../deck/services/deck.service';
 import { Container } from '../models/container';
 
 @Component({
-  selector: 'app-add-deck-modal',
+  selector: 'mco-add-deck-modal',
   templateUrl: './add-deck-modal.component.html',
   styleUrls: ['./modals.scss']
 })

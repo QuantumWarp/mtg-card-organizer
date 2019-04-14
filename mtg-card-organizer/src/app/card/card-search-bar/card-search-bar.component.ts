@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
 
 @Component({
-  selector: 'app-card-search-bar',
+  selector: 'mco-card-search-bar',
   templateUrl: './card-search-bar.component.html',
 })
 export class CardSearchBarComponent implements OnInit {

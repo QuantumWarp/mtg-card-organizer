@@ -4,7 +4,7 @@ import { Card } from '../../models/card';
 import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-mc',
+  selector: 'mco-mc',
   templateUrl: './mana-cost.component.html',
   styleUrls: ['./mana-cost.component.scss']
 })

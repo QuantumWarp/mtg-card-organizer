@@ -6,11 +6,11 @@
   </div>
   <div [@slideOpen]="navNode.open" class="nav-children">
     <div *ngIf="hasChildren">
-      <app-nav-node *ngFor="let navNode of navNode.children"
+      <mco-nav-node *ngFor="let navNode of navNode.children"
         [navNode]="navNode"
         [nestedIndex]="nestedIndex + 1"
         (nodeActionEvent)="nodeActionEvent.emit($event)">
-      </app-nav-node>
+      </mco-nav-node>
     </div>
   </div>
 </div>

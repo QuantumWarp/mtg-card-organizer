@@ -11,7 +11,7 @@ import { SnackNotificationModel } from '../../core/notifications/snack-notificat
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
 
 @Component({
-  selector: 'app-sub-container-list',
+  selector: 'mco-sub-container-list',
   templateUrl: './sub-container-list.component.html',
   styleUrls: ['./sub-container-list.component.scss']
 })

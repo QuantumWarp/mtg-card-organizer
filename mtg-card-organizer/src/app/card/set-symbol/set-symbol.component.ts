@@ -5,7 +5,7 @@ import { Rarity } from '../models/rarity';
 import { Set } from '../models/set';
 
 @Component({
-  selector: 'app-ss',
+  selector: 'mco-ss',
   templateUrl: './set-symbol.component.html'
 })
 export class SetSymbolComponent implements OnChanges {

@@ -8,7 +8,7 @@ import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DataService } from '../grid-data-source.interfaces';
 
 @Component({
-  selector: 'app-basic-grid',
+  selector: 'mco-basic-grid',
   templateUrl: './basic-grid.component.html',
   styleUrls: ['./basic-grid.component.scss'],
 })

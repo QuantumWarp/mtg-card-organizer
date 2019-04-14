@@ -8,7 +8,7 @@ import { CardQuery } from '../models/card-query';
 import { CardService } from '../services/card.service';
 
 @Component({
-  selector: 'app-card-grid',
+  selector: 'mco-card-grid',
   templateUrl: './card-grid.component.html',
   styleUrls: ['./card-grid.component.scss']
 })

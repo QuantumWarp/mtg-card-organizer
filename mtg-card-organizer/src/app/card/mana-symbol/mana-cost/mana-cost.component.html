@@ -1,13 +1,13 @@
 <ng-container *ngIf="realManaSymbol">
-  <app-real-ms *ngFor="let symbolString of symbolStringArray"
+  <mco-real-ms *ngFor="let symbolString of symbolStringArray"
       [symbolString]="symbolString"
       [size]="size"
       [shadow]="shadow">
-  </app-real-ms>
+  </mco-real-ms>
 </ng-container>
 
 <ng-container *ngIf="!realManaSymbol">
-  <app-custom-ms *ngFor="let symbolString of symbolStringArray"
+  <mco-custom-ms *ngFor="let symbolString of symbolStringArray"
     [symbolString]="symbolString">
-  </app-custom-ms>
+  </mco-custom-ms>
 </ng-container>

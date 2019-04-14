@@ -1,7 +1,7 @@
 <div [@navToggle]="open" class="nav-container mat-elevation-z4" (mouseover)="open = true" (mouseleave)="open = false">
-  <app-nav-node *ngFor="let navNode of navModel"
+  <mco-nav-node *ngFor="let navNode of navModel"
     [navNode]="navNode"
     [nestedIndex]="0"
     (nodeActionEvent)="actionClicked($event)">
-  </app-nav-node>
+  </mco-nav-node>
 </div>

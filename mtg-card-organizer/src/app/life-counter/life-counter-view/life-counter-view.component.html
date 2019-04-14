@@ -1,9 +1,9 @@
 <div class="padded-page" fxLayoutGap="10px">
-  <app-page-header></app-page-header>
-  <app-title-and-trail title="Life Counter (Work in Progress)" [trail]="['Tools']"></app-title-and-trail>
+  <mco-page-header></mco-page-header>
+  <mco-title-and-trail title="Life Counter (Work in Progress)" [trail]="['Tools']"></mco-title-and-trail>
 
-  <app-life-counter-controller [lifeCounterModel]="lifeCounterModel"></app-life-counter-controller>
+  <mco-life-counter-controller [lifeCounterModel]="lifeCounterModel"></mco-life-counter-controller>
   <div fxLayoutGap="10px">
-    <app-life-counter-single *ngFor="let lifeCounter of lifeCounterModel.lifeCounters" [lifeCounter]="lifeCounter" fxFlex></app-life-counter-single>
+    <mco-life-counter-single *ngFor="let lifeCounter of lifeCounterModel.lifeCounters" [lifeCounter]="lifeCounter" fxFlex></mco-life-counter-single>
   </div>
 </div>

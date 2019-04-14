@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-real-ms',
+  selector: 'mco-real-ms',
   templateUrl: './real-mana-symbol.component.html'
 })
 export class RealManaSymbolComponent implements OnChanges {

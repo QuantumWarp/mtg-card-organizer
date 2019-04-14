@@ -4,7 +4,7 @@
   <mat-row *matRowDef="let record; columns: displayedColumns;" (click)="rowSelected.emit(record);"></mat-row>
 </mat-table>
 
-<app-no-results-message *ngIf="!dataSource.loading && dataSource.noResults"></app-no-results-message>
-<app-loading-message *ngIf="dataSource.loading"></app-loading-message>
+<mco-no-results-message *ngIf="!dataSource.loading && dataSource.noResults"></mco-no-results-message>
+<mco-loading-message *ngIf="dataSource.loading"></mco-loading-message>
 
 <mat-paginator pageSize="10"></mat-paginator>

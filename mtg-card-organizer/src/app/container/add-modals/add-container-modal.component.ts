@@ -5,7 +5,7 @@ import { Container } from '../models/container';
 import { ContainerService } from '../services/container.service';
 
 @Component({
-  selector: 'app-add-container-modal',
+  selector: 'mco-add-container-modal',
   templateUrl: './add-container-modal.component.html',
   styleUrls: ['./modals.scss']
 })

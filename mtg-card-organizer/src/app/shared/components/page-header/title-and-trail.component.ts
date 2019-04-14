@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-title-and-trail',
+  selector: 'mco-title-and-trail',
   templateUrl: './title-and-trail.component.html',
   styleUrls: ['./page-header.component.scss']
 })

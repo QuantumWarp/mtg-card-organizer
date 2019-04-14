@@ -13,7 +13,7 @@ import { CardRapidEntryResultComponent } from '../card-rapid-entry-result/card-r
 import { RapidEntryResult } from '../rapid-entry-result';
 
 @Component({
-  selector: 'app-card-rapid-entry',
+  selector: 'mco-card-rapid-entry',
   templateUrl: './card-rapid-entry.component.html',
   styleUrls: ['./card-rapid-entry.component.scss']
 })

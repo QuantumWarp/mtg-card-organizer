@@ -20,7 +20,7 @@ import { CollectionCardService, CollectionCardServiceWrapper } from '../services
 import { CollectionService } from '../services/collection.service';
 
 @Component({
-  selector: 'app-collection-page',
+  selector: 'mco-collection-page',
   templateUrl: './collection-page.component.html',
   styleUrls: ['./collection-page.component.scss']
 })

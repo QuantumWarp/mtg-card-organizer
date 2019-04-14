@@ -8,7 +8,7 @@ import { AbstractGridComponent } from '../../shared/grid/abstract-grid.component
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 
 @Component({
-  selector: 'app-card-instance-grid',
+  selector: 'mco-card-instance-grid',
   templateUrl: './card-instance-grid.component.html',
   styleUrls: ['./card-instance-grid.component.scss']
 })

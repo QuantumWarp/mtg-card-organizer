@@ -11,7 +11,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
 
 @Component({
-  selector: 'app-deck-list',
+  selector: 'mco-deck-list',
   templateUrl: './deck-list.component.html',
   styleUrls: ['./deck-list.component.scss']
 })

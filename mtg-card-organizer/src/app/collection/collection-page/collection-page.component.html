@@ -1,6 +1,6 @@
 <div class="padded-page">
-  <app-page-header></app-page-header>
-  <app-title-and-trail [title]="'Collection - ' + collection.name">
+  <mco-page-header></mco-page-header>
+  <mco-title-and-trail [title]="'Collection - ' + collection.name">
     <mat-button-toggle-group name="fontStyle" class="toggle-group" [(ngModel)]="mode">
       <mat-button-toggle value="view">View</mat-button-toggle>
       <mat-button-toggle value="filter">Filter</mat-button-toggle>
@@ -12,13 +12,13 @@
       mat-icon-button matTooltip="Toggle Bookmark">
       <mat-icon>{{ collection.isBookmarked ? 'bookmark' : 'bookmark_border' }}</mat-icon>
     </button>
-  </app-title-and-trail>
+  </mco-title-and-trail>
 
   <div fxLayout="row" fxLayoutGap="20px">
-    <app-card-filter *ngIf="mode === 'filter'" (filterChanged)="filter = $event"></app-card-filter>
-    <app-card-rapid-entry *ngIf="mode === 'fastAdd'" (searched)="refreshDataSource()" [collection]="collection"></app-card-rapid-entry>
+    <mco-card-filter *ngIf="mode === 'filter'" (filterChanged)="filter = $event"></mco-card-filter>
+    <mco-card-rapid-entry *ngIf="mode === 'fastAdd'" (searched)="refreshDataSource()" [collection]="collection"></mco-card-rapid-entry>
 
-    <app-card-instance-grid fxFlex
+    <mco-card-instance-grid fxFlex
       [filter]="filter"
       [displayedColumns]="['name', 'setSymbol', 'manaCost', 'power', 'toughness', 'foil', 'promo', 'actions']"
       [wrappedService]="wrappedService"
@@ -32,6 +32,6 @@
           </button>
         </mat-cell>
       </ng-container>
-    </app-card-instance-grid>
+    </mco-card-instance-grid>
   </div>
 </div>

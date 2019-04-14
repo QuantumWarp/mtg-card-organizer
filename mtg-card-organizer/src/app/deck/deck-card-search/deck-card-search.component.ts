@@ -5,7 +5,7 @@ import { CardService } from '../../card/services/card.service';
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 
 @Component({
-  selector: 'app-deck-card-search',
+  selector: 'mco-deck-card-search',
   templateUrl: './deck-card-search.component.html',
   styleUrls: ['./deck-card-search.component.scss']
 })

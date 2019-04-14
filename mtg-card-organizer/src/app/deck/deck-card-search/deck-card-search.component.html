@@ -2,14 +2,14 @@
 
 <div class="container">
   <div class="controls">
-    <app-card-filter (filterChanged)="filter = $event"></app-card-filter>
+    <mco-card-filter (filterChanged)="filter = $event"></mco-card-filter>
 
     <mat-card>
       <button mat-raised-button color="primary" (click)="save.emit()">Save</button>
     </mat-card>
   </div>
 
-  <app-card-grid
+  <mco-card-grid
     [filter]="filter"
     [displayedColumns]="['name', 'manaCost', 'toMain', 'toSideboard']"
     [wrappedService]="wrappedService"
@@ -31,5 +31,5 @@
         </button>
       </mat-cell>
     </ng-container>
-  </app-card-grid>
+  </mco-card-grid>
 </div>

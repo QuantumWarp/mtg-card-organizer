@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-default-page',
+  selector: 'mco-default-page',
   templateUrl: './default-page.component.html',
   styleUrls: ['./default-page.component.scss']
 })

@@ -5,7 +5,7 @@ import { SnackNotificationService } from '../../core/notifications/snack-notific
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
 
 @Component({
-  selector: 'app-import-cards',
+  selector: 'mco-import-cards',
   templateUrl: './import-cards.component.html',
   styleUrls: ['./import-cards.scss']
 })

@@ -11,7 +11,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
 
 @Component({
-  selector: 'app-bookmarked-container-list',
+  selector: 'mco-bookmarked-container-list',
   templateUrl: './bookmarked-container-list.component.html',
   styleUrls: ['./bookmarked-container-list.component.scss']
 })

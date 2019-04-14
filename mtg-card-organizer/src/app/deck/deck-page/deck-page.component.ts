@@ -16,7 +16,7 @@ import { MatDialog } from '@angular/material';
 import { CardDetailsModalComponent } from '../../card/card-details/card-details-modal.component';
 
 @Component({
-  selector: 'app-deck-page',
+  selector: 'mco-deck-page',
   templateUrl: './deck-page.component.html',
   styleUrls: ['./deck-page.component.scss']
 })

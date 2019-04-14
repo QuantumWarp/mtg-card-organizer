@@ -5,7 +5,7 @@ import { SnackNotificationModel } from './snack-notification.model';
 import { SnackNotificationType } from './snack-notification.type';
 
 @Component({
-  selector: 'app-snack-notification',
+  selector: 'mco-snack-notification',
   templateUrl: './snack-notification.component.html',
   styleUrls: ['./snack-notification.scss']
 })

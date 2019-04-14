@@ -9,7 +9,7 @@ import { Set } from '../models/set';
 import { SetService } from '../services/set.service';
 
 @Component({
-  selector: 'app-card-filter',
+  selector: 'mco-card-filter',
   templateUrl: './card-filter.component.html'
 })
 export class CardFilterComponent implements OnInit {

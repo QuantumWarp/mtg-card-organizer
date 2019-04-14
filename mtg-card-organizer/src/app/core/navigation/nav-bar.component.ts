@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 import { AboutComponent } from '../about/about.component';
 
 @Component({
-  selector: 'app-nav-bar',
+  selector: 'mco-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.scss']
 })

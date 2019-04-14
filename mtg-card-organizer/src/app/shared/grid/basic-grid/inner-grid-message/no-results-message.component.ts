@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-no-results-message',
+  selector: 'mco-no-results-message',
   templateUrl: './no-results-message.component.html',
   // styleUrls: ['./inner-grid-message.scss'],
 })

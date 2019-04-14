@@ -12,7 +12,7 @@ import { SnackNotificationModel } from '../../../core/notifications/snack-notifi
 import { SnackNotificationType } from '../../../core/notifications/snack-notification.type';
 
 @Component({
-  selector: 'app-admin-user-grid',
+  selector: 'mco-admin-user-grid',
   templateUrl: './admin-user-grid.component.html',
   styleUrls: ['./admin-user-grid.component.scss']
 })

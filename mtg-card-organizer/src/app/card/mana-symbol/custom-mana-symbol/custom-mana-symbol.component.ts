@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-custom-ms',
+  selector: 'mco-custom-ms',
   templateUrl: './custom-mana-symbol.component.html',
   styleUrls: ['./custom-mana-symbol.component.scss']
 })

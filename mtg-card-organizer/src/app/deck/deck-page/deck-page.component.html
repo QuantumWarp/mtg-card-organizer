@@ -1,30 +1,30 @@
 <div class="padded-page">
-  <app-page-header></app-page-header>
-  <app-title-and-trail [title]="'Deck - ' + deck.name">
+  <mco-page-header></mco-page-header>
+  <mco-title-and-trail [title]="'Deck - ' + deck.name">
     <mat-button-toggle-group name="fontStyle" class="toggle-group" [(ngModel)]="mode">
       <mat-button-toggle value="view">View</mat-button-toggle>
       <mat-button-toggle value="edit">Edit</mat-button-toggle>
     </mat-button-toggle-group>
-  </app-title-and-trail>
+  </mco-title-and-trail>
 
   <div fxLayout="row" fxLayoutGap="20px">
-    <app-deck-card-search *ngIf="mode === 'edit'"
+    <mco-deck-card-search *ngIf="mode === 'edit'"
       (toMain)="addCard($event, deckParts.Main)"
       (toSideboard)="addCard($event, deckParts.Sideboard)"
       (save)="saveDeck()"
       (rowSelected)="openCardDialog($event)">
-    </app-deck-card-search>
+    </mco-deck-card-search>
 
-    <app-main-grid fxFlex [dataService]="mainDataService"
+    <mco-main-grid fxFlex [dataService]="mainDataService"
       (toSideboard)="moveCard($event, deckParts.Sideboard)"
       (remove)="moveCard($event)"
       (rowSelected)="openCardDialog($event)">
-    </app-main-grid>
+    </mco-main-grid>
 
-    <app-sideboard-grid fxFlex [dataService]="sideBoardDataService"
+    <mco-sideboard-grid fxFlex [dataService]="sideBoardDataService"
       (toMain)="moveCard($event, deckParts.Main)"
       (remove)="moveCard($event)"
       (rowSelected)="openCardDialog($event)">
-    </app-sideboard-grid>
+    </mco-sideboard-grid>
   </div>
 </div>

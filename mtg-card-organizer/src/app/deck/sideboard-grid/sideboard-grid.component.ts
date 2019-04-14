@@ -7,7 +7,7 @@ import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 import { DeckCard } from '../models/deck-card';
 
 @Component({
-  selector: 'app-sideboard-grid',
+  selector: 'mco-sideboard-grid',
   templateUrl: './sideboard-grid.component.html',
   styleUrls: ['./sideboard-grid.component.scss'],
 })

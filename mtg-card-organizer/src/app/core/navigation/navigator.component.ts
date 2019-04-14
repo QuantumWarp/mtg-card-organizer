@@ -5,7 +5,7 @@ import { navModel } from './nav-model';
 import { NavNode } from './nav-node';
 
 @Component({
-  selector: 'app-navigator',
+  selector: 'mco-navigator',
   templateUrl: './navigator.component.html',
   styleUrls: ['./navigation.scss'],
   animations: [

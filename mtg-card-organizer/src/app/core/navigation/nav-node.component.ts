@@ -7,7 +7,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 
 @Component({
-  selector: 'app-nav-node',
+  selector: 'mco-nav-node',
   templateUrl: './nav-node.component.html',
   styleUrls: ['./navigation.scss'],
   animations: [

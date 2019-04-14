@@ -9,7 +9,7 @@ import { Paging } from '../../shared/filtering/paging';
 import { UserSearchComponent } from '../user-search/user-search.component';
 
 @Component({
-  selector: 'app-bookmark-page',
+  selector: 'mco-bookmark-page',
   templateUrl: './bookmark-page.component.html',
   styleUrls: ['./bookmark-page.component.scss']
 })

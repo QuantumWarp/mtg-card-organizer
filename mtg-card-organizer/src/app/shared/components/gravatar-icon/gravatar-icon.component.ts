@@ -4,7 +4,7 @@ import { AuthenticationService } from '../../../authentication/services/authenti
 import { GravatarService } from '../../../core/gravatar/gravatar.service';
 
 @Component({
-  selector: 'app-gravatar-icon',
+  selector: 'mco-gravatar-icon',
   templateUrl: './gravatar-icon.component.html',
   styleUrls: ['./gravatar-icon.component.scss'],
 })

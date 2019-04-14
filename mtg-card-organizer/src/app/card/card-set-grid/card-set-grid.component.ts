@@ -11,7 +11,7 @@ import { CardSetService } from '../services/card-set.service';
 import { SetService } from '../services/set.service';
 
 @Component({
-  selector: 'app-card-set-grid',
+  selector: 'mco-card-set-grid',
   templateUrl: './card-set-grid.component.html',
   styleUrls: ['./card-set-grid.component.scss']
 })
