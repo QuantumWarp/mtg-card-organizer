@@ -17,7 +17,6 @@ export class BookmarkPageComponent implements OnInit {
 
   constructor(
     private containerService: ContainerService,
-    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -28,11 +27,5 @@ export class BookmarkPageComponent implements OnInit {
     this.containerService.bookmarks(new Paging()).subscribe(result => {
       this.bookmarkedContainers = result.data;
     });
-  }
-
-  addContainerBookmark(): void {
-    this.dialog.open(UserSearchComponent)
-      .afterClosed()
-      .subscribe(() => this.refresh());
   }
 }

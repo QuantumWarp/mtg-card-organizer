@@ -12,7 +12,7 @@
   <ng-container *ngFor="let item of data; last as lastItem">
     <div fxLayoutAlign="space-between center" class="item" (click)="itemClicked.emit(item)">
       <span>{{ item.name }}</span>
-      <button mat-icon-button color="warn" (click)="deleteClicked.emit(item)">
+      <button mat-icon-button color="warn" (click)="$event.stopPropagation(); deleteClicked.emit(item)">
         <mat-icon>delete</mat-icon>
       </button>
     </div>

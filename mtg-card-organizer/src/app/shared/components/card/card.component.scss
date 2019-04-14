@@ -8,17 +8,18 @@ mat-card-content {
 }
 
 .header, .footer {
-  padding: 20px;
   background-color: lightgray;
   font-size: 20px;
   font-weight: bold;
 }
 
 .header {
+  padding: 20px;
   border-radius: 4px 4px 0px 0px;
 }
 
 .footer {
+  padding: 10px;
   border-radius: 0px 0px 4px 4px;
   display: flex;
   justify-content: center;

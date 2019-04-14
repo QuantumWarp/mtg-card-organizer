@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import { ConfirmDialogComponent } from './confirm-dialog.component';
 import { ModalModule } from '../modal/modal.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { ModalModule } from '../modal/modal.module';
   imports: [
     CommonModule,
     MaterialModule,
+    FlexLayoutModule,
 
     ModalModule,
   ],

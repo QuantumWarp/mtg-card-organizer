@@ -50,7 +50,7 @@ export class UserSearchComponent implements OnInit {
 
   bookmarkUserContainer(user: UserModel): void {
     this.containerService.toggleBookmark(user.baseContainerId).subscribe(() =>
-      this.dialogRef.close()
+      this.dialogRef.close(true)
     );
   }
 }

@@ -1,31 +1,36 @@
-<mat-toolbar>User Search</mat-toolbar>
+<mco-modal contentPadding="0px">
+  <span mcoModalHeader>User Search</span>
 
-<mat-form-field>
-  <input matInput autocomplete="off" placeholder="Search" [formControl]="searchFormControl">
-</mat-form-field>
+  <div fxLayout="column" fxLayoutAlign="start stretch">
+    <mat-form-field>
+      <input matInput autocomplete="off" placeholder="Search" [formControl]="searchFormControl">
+    </mat-form-field>
 
-<mco-basic-grid matSort class="mat-elevation-z4"
-  [filter]="userQuery"
-  [service]="userService"
-  (rowSelected)="openContainer($event)"
-  [columns]="displayedColumns">
+    <mat-divider></mat-divider>
 
-  <ng-container matColumnDef="userName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-    <mat-cell *matCellDef="let record">{{ record.userName }}</mat-cell>
-  </ng-container>
+    <mco-basic-grid matSort
+      [filter]="userQuery"
+      [service]="userService"
+      (rowSelected)="openContainer($event)"
+      [columns]="displayedColumns">
 
-  <ng-container matColumnDef="bookmarkAction">
-    <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
-    <mat-cell class="crud-grid-action-column" *matCellDef="let record">
-      <button mat-icon-button matTooltip="Bookmark User Container" (click)="$event.stopPropagation(); bookmarkUserContainer(record);">
-        <mat-icon>bookmark</mat-icon>
-      </button>
-    </mat-cell>
-  </ng-container>
+      <ng-container matColumnDef="userName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+        <mat-cell *matCellDef="let record">{{ record.userName }}</mat-cell>
+      </ng-container>
 
-</mco-basic-grid>
+      <ng-container matColumnDef="bookmarkAction">
+        <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
+        <mat-cell class="crud-grid-action-column" *matCellDef="let record">
+          <button mat-icon-button matTooltip="Bookmark User Container" (click)="$event.stopPropagation(); bookmarkUserContainer(record);">
+            <mat-icon>bookmark</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+    </mco-basic-grid>
+  </div>
 
-<mat-toolbar>
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-</mat-toolbar>
+  <div mcoModalActions fxLayoutAlign="center center">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+  </div>
+</mco-modal>
