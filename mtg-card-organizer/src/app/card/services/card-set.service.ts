@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/internal/operators';
 
+import { CardInstance } from '../../collection/models/card-instance';
 import { ApiService } from '../../core/communication/api.service';
 import { PagedData } from '../../shared/filtering/paged-data';
 import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 import { CardQuery } from '../models/card-query';
 import { CardSet } from '../models/card-set';
-import { CardInstance } from '../../collection/models/card-instance';
-import { map } from 'rxjs/internal/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CardSetService extends DataService<CardSet> {
-
   constructor(private apiService: ApiService) {
     super();
   }
@@ -22,7 +23,6 @@ export class CardSetService extends DataService<CardSet> {
 }
 
 export class CardServiceInstanceWrapper extends DataService<CardInstance> {
-
   constructor(private cardSetService: CardSetService) {
     super();
   }

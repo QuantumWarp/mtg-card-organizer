@@ -3,12 +3,11 @@ import { RouterModule } from '@angular/router';
 
 import { CardModule } from '../card/card.module';
 import { SharedModule } from '../shared/shared.module';
-import { DeckPageComponent } from './deck-page/deck-page.component';
-import { DeckResolver } from './services/deck.resolver';
-import { DeckService } from './services/deck.service';
+import { DeckCardSearchComponent } from './card-search/deck-card-search.component';
 import { MainGridComponent } from './main-grid/main-grid.component';
+import { DeckPageComponent } from './page/deck-page.component';
+import { DeckResolver } from './services/deck.resolver';
 import { SideboardGridComponent } from './sideboard-grid/sideboard-grid.component';
-import { DeckCardSearchComponent } from './deck-card-search/deck-card-search.component';
 
 @NgModule({
   declarations: [

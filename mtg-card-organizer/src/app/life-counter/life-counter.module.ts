@@ -2,9 +2,9 @@ import { NgModule, } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 
 import { RouterModule } from '@angular/router';
-import { LifeCounterViewComponent } from './life-counter-view/life-counter-view.component';
-import { LifeCounterControllerComponent } from './life-counter-controller/life-counter-controller.component';
-import { LifeCounterSingleComponent } from './life-counter-single/life-counter-single.component';
+import { LifeCounterViewComponent } from './view/life-counter-view.component';
+import { LifeCounterControllerComponent } from './controller/life-counter-controller.component';
+import { LifeCounterSingleComponent } from './single/life-counter-single.component';
 
 @NgModule({
   declarations: [

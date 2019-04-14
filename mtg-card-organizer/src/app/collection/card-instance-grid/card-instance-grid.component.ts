@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 
-import { CardSetGridComponent } from '../../card/card-set-grid/card-set-grid.component';
+import { CardSetGridComponent } from '../../card/grids/card-set/card-set-grid.component';
 import { CardInstance } from '../models/card-instance';
 import { CardQuery } from '../../card/models/card-query';
 import { CardSet } from '../../card/models/card-set';
