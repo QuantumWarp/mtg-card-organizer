@@ -1,12 +1,15 @@
 <mco-modal>
   <span mcoModalHeader>Add Deck</span>
 
-  <mat-form-field>
-    <input autocomplete="off" matInput [(ngModel)]="name" placeholder="Name">
-  </mat-form-field>
+  <form #formRef="ngForm" autocomplete="off" [formGroup]="form" (ngSumbit)="confirm()">
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Name">
+      <mat-error *ngIf="form.get('name').hasError('required')">Required</mat-error>
+    </mat-form-field>
+  </form>
 
   <div mcoModalActions fxLayoutGap="5px">
     <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button (click)="confirm()" mat-raised-button color="primary" [disabled]="!name">Confirm</button>
+    <button (click)="formRef.onSubmit()" mat-raised-button color="primary">Confirm</button>
   </div>
 </mco-modal>
