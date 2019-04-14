@@ -1,20 +1,10 @@
-.container {
+:host {
   display: flex;
   flex-direction: row;
 }
 
-.controls {
-  display: flex;
-  flex-direction: column;
+mco-card-filter {
   margin-right: 20px;
-
-  mco-card-filter {
-    margin-bottom: 20px;
-  }
-
-  mat-card {
-    display: flex;
-  }
 }
 
 .crud-grid-action-column {

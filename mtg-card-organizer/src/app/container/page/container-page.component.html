@@ -1,11 +1,11 @@
 <mco-default-page [title]="'Container - ' + container.name">
   <ng-container mcoPageExtraHeader>
-    <button [matMenuTriggerFor]="collectionMenu" class="options-button mat-elevation-z4"
+    <button [matMenuTriggerFor]="collectionMenu" class="options-button mat-elevation-z2"
       mat-icon-button matTooltip="Settings">
       <mat-icon>settings</mat-icon>
     </button>
 
-    <button class="options-button mat-elevation-z4"
+    <button class="options-button mat-elevation-z2"
       (click)="toggleBookmark()"
       mat-icon-button matTooltip="Toggle Bookmark">
       <mat-icon>{{ container.isBookmarked ? 'bookmark' : 'bookmark_border' }}</mat-icon>

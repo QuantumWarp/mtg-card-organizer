@@ -1,13 +1,7 @@
-<div class="title">Filter</div>
+<mco-card-filter (filterChanged)="filter = $event"></mco-card-filter>
 
-<div class="container">
-  <div class="controls">
-    <mco-card-filter (filterChanged)="filter = $event"></mco-card-filter>
-
-    <mat-card>
-      <button mat-raised-button color="primary" (click)="save.emit()">Save</button>
-    </mat-card>
-  </div>
+<mco-card contentPadding="0px">
+  <span mcoCardHeader>Search Results</span>
 
   <mco-card-grid
     [filter]="filter"
@@ -32,4 +26,4 @@
       </mat-cell>
     </ng-container>
   </mco-card-grid>
-</div>
+</mco-card>

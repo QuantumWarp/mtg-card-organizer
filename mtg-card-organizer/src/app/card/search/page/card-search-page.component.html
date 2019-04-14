@@ -1,10 +1,14 @@
-<mco-default-page title="Card Search" [trail]="['Tools']">
+<mco-default-page title="Card Search">
   <div fxLayout="row" fxLayoutGap="20px">
     <mco-card-filter (filterChanged)="filter = $event"></mco-card-filter>
 
-    <mco-card-set-grid fxFlex
-      [filter]="filter"
-      (rowSelected)="cardSetSelected($event)">
-    </mco-card-set-grid>
+    <mco-card contentPadding="0px" fxFlex>
+      <span mcoCardHeader>Search Results</span>
+
+      <mco-card-set-grid
+        [filter]="filter"
+        (rowSelected)="cardSetSelected($event)">
+      </mco-card-set-grid>
+    </mco-card>
   </div>
 </mco-default-page>

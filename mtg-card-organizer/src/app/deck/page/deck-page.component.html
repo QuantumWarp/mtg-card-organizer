@@ -1,10 +1,12 @@
 <mco-default-page [title]="'Deck - ' + deck.name">
-  <ng-container mcoPageExtraHeader>
-    <mat-button-toggle-group name="fontStyle" class="toggle-group" [(ngModel)]="mode">
-      <mat-button-toggle value="view">View</mat-button-toggle>
-      <mat-button-toggle value="edit">Edit</mat-button-toggle>
-    </mat-button-toggle-group>
-  </ng-container>
+  <div mcoPageExtraHeader fxFlex fxLayoutAlign="end center">
+    <div class="mat-elevation-z2">
+      <mat-button-toggle-group name="fontStyle" class="toggle-group" [(ngModel)]="mode">
+        <mat-button-toggle value="view">View</mat-button-toggle>
+        <mat-button-toggle value="edit">Edit</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mco-deck-card-search *ngIf="mode === 'edit'"
