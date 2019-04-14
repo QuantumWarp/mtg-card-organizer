@@ -6,9 +6,10 @@ import { PagedData } from '../../shared/filtering/paged-data';
 import { Paging } from '../../shared/filtering/paging';
 import { Container } from '../models/container';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ContainerService {
-
   constructor(private apiService: ApiService) { }
 
   get(containerId: number): Observable<Container> {

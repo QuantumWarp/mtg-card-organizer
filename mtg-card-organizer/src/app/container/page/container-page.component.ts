@@ -4,31 +4,32 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
-import { AddCollectionModalComponent } from '../add-modals/add-collection-modal.component';
-import { AddContainerModalComponent } from '../add-modals/add-container-modal.component';
-import { AddDeckModalComponent } from '../add-modals/add-deck-modal.component';
+import { AddCollectionModalComponent } from '../add-modals/collection/add-collection-modal.component';
+import { AddContainerModalComponent } from '../add-modals/container/add-container-modal.component';
+import { AddDeckModalComponent } from '../add-modals/deck/add-deck-modal.component';
+import { ContainerExportComponent } from '../import-export/export/container-export.component';
+import { ContainerImportComponent } from '../import-export/import/container-import.component';
 import { Container } from '../models/container';
-import { ContainerService } from '../services/container.service';
-import { ContainerImportComponent } from '../container-import/container-import.component';
-import { ContainerExportComponent } from '../container-export/container-export.component';
-import { ContainerPermissionsComponent } from '../container-permissions/container-permissions.component';
 import { Permission } from '../models/permission';
+import { ContainerPermissionsComponent } from '../permissions/container-permissions.component';
+import { ContainerService } from '../services/container.service';
 
 @Component({
   selector: 'mco-container-page',
   templateUrl: './container-page.component.html',
-  styleUrls: ['./container-page.component.scss']
+  styleUrls: ['./container-page.component.scss'],
 })
 export class ContainerPageComponent implements OnInit {
   container: Container;
   permissions = Permission;
 
   constructor(
+    public authService: AuthenticationService,
     public containerService: ContainerService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    public authService: AuthenticationService,
-    private changeDetector: ChangeDetectorRef) { }
+    private changeDetector: ChangeDetectorRef,
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(() => {

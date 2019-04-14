@@ -25,7 +25,8 @@ export class BookmarkedContainerListComponent {
     private router: Router,
     private dialog: MatDialog,
     private snackNotificationService: SnackNotificationService,
-    private containerService: ContainerService) { }
+    private containerService: ContainerService,
+  ) { }
 
   itemSelected(container: Container): void {
     this.router.navigateByUrl('/containers/' + container.id);

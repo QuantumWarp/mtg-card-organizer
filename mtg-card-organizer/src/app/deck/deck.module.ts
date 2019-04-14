@@ -26,7 +26,6 @@ import { DeckCardSearchComponent } from './deck-card-search/deck-card-search.com
   ],
   exports: [],
   providers: [
-    DeckService,
     DeckResolver,
   ]
 })

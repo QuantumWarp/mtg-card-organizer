@@ -10,7 +10,7 @@ import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 @Component({
   selector: 'mco-card-instance-grid',
   templateUrl: './card-instance-grid.component.html',
-  styleUrls: ['./card-instance-grid.component.scss']
+  styleUrls: ['./card-instance-grid.component.scss'],
 })
 export class CardInstanceGridComponent extends AbstractGridComponent implements OnChanges {
   @ViewChild(CardSetGridComponent) cardSetGrid: CardSetGridComponent;

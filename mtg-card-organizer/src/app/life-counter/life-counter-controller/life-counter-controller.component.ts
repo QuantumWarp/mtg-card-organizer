@@ -5,7 +5,8 @@ import { LifeCounterHandler } from './life-counter-handler';
 
 @Component({
   selector: 'mco-life-counter-controller',
-  templateUrl: './life-counter-controller.component.html'
+  templateUrl: './life-counter-controller.component.html',
+  styleUrls: ['./life-counter-controller.component.scss'],
 })
 export class LifeCounterControllerComponent implements OnInit {
   @Input() lifeCounterModel: LifeCounterModel;

@@ -6,13 +6,13 @@ import { Container } from '../models/container';
 import { ContainerService } from './container.service';
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 
-
 @Injectable()
 export class ContainerResolver implements Resolve<Container> {
 
   constructor(
     private containerService: ContainerService,
-    private authenticationService: AuthenticationService) {}
+    private authenticationService: AuthenticationService,
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<Container> {
     let value = Number(route.paramMap.get('id'));

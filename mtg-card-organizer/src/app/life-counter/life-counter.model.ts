@@ -1,3 +1,20 @@
+export class LifeCounter {
+  life: number;
+  selected = false;
+
+  constructor(startingLife: number) {
+    this.reset(startingLife);
+  }
+
+  reset(startingLife: number): void {
+    this.life = startingLife;
+  }
+
+  adjustLife(gain: boolean, amount: number) {
+    this.life = this.life + ((gain ? 1 : -1) * amount);
+  }
+}
+
 export class LifeCounterModel {
     startingLife = 20;
     lifeCounters = new Array<LifeCounter>();
@@ -39,21 +56,4 @@ export class LifeCounterModel {
           lifeCounter.reset(this.startingLife);
       });
     }
-}
-
-export class LifeCounter {
-  life: number;
-  selected = false;
-
-  constructor(startingLife: number) {
-    this.reset(startingLife);
-  }
-
-  reset(startingLife: number): void {
-    this.life = startingLife;
-  }
-
-  adjustLife(gain: boolean, amount: number) {
-    this.life = this.life + ((gain ? 1 : -1) * amount);
-  }
 }

@@ -1,0 +1,12 @@
+<mco-modal>
+  <span mcoModalHeader>Add Collection</span>
+
+  <mat-form-field>
+    <input autocomplete="off" matInput [(ngModel)]="name" placeholder="Name">
+  </mat-form-field>
+
+  <div mcoModalActions fxLayoutGap="5px">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button (click)="confirm()" mat-raised-button color="primary" [disabled]="!name">Confirm</button>
+  </div>
+</mco-modal>

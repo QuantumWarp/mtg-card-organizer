@@ -26,10 +26,11 @@ export class UserSearchComponent implements OnInit {
   displayedColumns = [ 'userName', 'bookmarkAction' ];
 
   constructor(
+    public containerService: ContainerService,
+    public userService: UserService,
     private router: Router,
     private dialogRef: MatDialogRef<UserSearchComponent>,
-    public containerService: ContainerService,
-    public userService: UserService) { }
+  ) { }
 
   ngOnInit(): void {
     this.searchFormControl.valueChanges.pipe(

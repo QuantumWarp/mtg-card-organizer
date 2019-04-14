@@ -7,10 +7,11 @@ import { Paging } from '../../shared/filtering/paging';
 import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 import { UserPermissionModel } from '../models/user-permission.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ContainerPermissionService {
-
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) { }
 
   query(containerId: number, paging?: Paging): Observable<PagedData<UserPermissionModel>> {
     return this.apiService.get(`api/containers/${containerId}/permissions`, paging);
@@ -24,7 +25,8 @@ export class ContainerPermissionService {
 export class ContainerIdPermissionService extends DataService<UserPermissionModel> {
   constructor(
     private containerId: number,
-    private containerPermissionService: ContainerPermissionService) {
+    private containerPermissionService: ContainerPermissionService,
+  ) {
     super();
   }
 

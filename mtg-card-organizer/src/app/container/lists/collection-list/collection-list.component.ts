@@ -2,13 +2,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { Collection } from '../../collection/models/collection';
-import { CollectionService } from '../../collection/services/collection.service';
-import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
-import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
-import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
-import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
-import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
+import { Collection } from '../../../collection/models/collection';
+import { CollectionService } from '../../../collection/services/collection.service';
+import { SnackNotificationModel } from '../../../core/notifications/snack-notification.model';
+import { SnackNotificationService } from '../../../core/notifications/snack-notification.service';
+import { SnackNotificationType } from '../../../core/notifications/snack-notification.type';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog.data';
 
 @Component({
   selector: 'mco-collection-list',
@@ -25,7 +25,8 @@ export class CollectionListComponent {
     private router: Router,
     private dialog: MatDialog,
     private snackNotificationService: SnackNotificationService,
-    private collectionService: CollectionService) { }
+    private collectionService: CollectionService,
+  ) { }
 
   itemSelected(collection: Collection): void {
     this.router.navigateByUrl('/collections/' + collection.id);

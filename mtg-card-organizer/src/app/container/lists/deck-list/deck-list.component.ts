@@ -2,13 +2,13 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
-import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
-import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
-import { Deck } from '../../deck/models/deck';
-import { DeckService } from '../../deck/services/deck.service';
-import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
-import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
+import { SnackNotificationModel } from '../../../core/notifications/snack-notification.model';
+import { SnackNotificationService } from '../../../core/notifications/snack-notification.service';
+import { SnackNotificationType } from '../../../core/notifications/snack-notification.type';
+import { Deck } from '../../../deck/models/deck';
+import { DeckService } from '../../../deck/services/deck.service';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog.data';
 
 @Component({
   selector: 'mco-deck-list',
@@ -25,7 +25,8 @@ export class DeckListComponent {
     private router: Router,
     private dialog: MatDialog,
     private snackNotificationService: SnackNotificationService,
-    private deckService: DeckService) { }
+    private deckService: DeckService,
+  ) { }
 
   itemSelected(deck: Deck): void {
     this.router.navigateByUrl('/decks/' + deck.id);

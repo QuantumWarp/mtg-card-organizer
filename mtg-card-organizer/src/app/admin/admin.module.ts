@@ -4,8 +4,6 @@ import { RouterModule } from '@angular/router';
 import { CardModule } from '../card/card.module';
 import { SharedModule } from '../shared/shared.module';
 import { ImportCardsComponent } from './import-cards/import-cards.component';
-import { AdminUserService } from './services/admin-user.service';
-import { ImportService } from './services/import.service';
 import { AdminUserGridComponent } from './users/admin-user-grid/admin-user-grid.component';
 import { AdminUserPageComponent } from './users/admin-user-page/admin-user-page.component';
 
@@ -23,9 +21,5 @@ import { AdminUserPageComponent } from './users/admin-user-page/admin-user-page.
       { path: 'users', component: AdminUserPageComponent },
     ]),
   ],
-  providers: [
-    AdminUserService,
-    ImportService,
-  ]
 })
 export class AdminModule {}

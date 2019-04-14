@@ -3,9 +3,10 @@ import { Observable } from 'rxjs';
 
 import { ApiService } from '../../core/communication/api.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ImportService {
-
   constructor(private apiService: ApiService) { }
 
   import(importString: string): Observable<void> {

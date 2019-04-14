@@ -1,4 +1,3 @@
-import { Card } from '../../card/models/card';
 import { DeckCard } from './deck-card';
 
 export class Deck {

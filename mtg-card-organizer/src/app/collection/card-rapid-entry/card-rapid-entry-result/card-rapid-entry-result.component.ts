@@ -33,7 +33,8 @@ export class CardRapidEntryResultComponent implements OnInit {
   constructor(
     private setService: SetService,
     private collectionCardService: CollectionCardService,
-    private snackNotificationService: SnackNotificationService) { }
+    private snackNotificationService: SnackNotificationService,
+  ) { }
 
   setById(id: number): Set {
     return this.sets.find(x => x.id === id);

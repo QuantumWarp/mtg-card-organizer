@@ -33,7 +33,8 @@ export class CardRapidEntryComponent implements OnInit {
   constructor(
     private setService: SetService,
     private cardSetService: CardSetService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
     this.setService.query().subscribe(results => this.sets = results.data);

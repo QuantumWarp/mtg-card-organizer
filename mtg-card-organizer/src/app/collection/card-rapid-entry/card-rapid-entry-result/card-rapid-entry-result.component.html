@@ -1,23 +1,21 @@
-<mat-card>
-  <div class="result-title">
-    <mat-icon *ngIf="rapidEntryResult?.results.length === 0" color="warn">warning</mat-icon>
-    {{ detailString }}
-  </div>
+<div class="result-title">
+  <mat-icon *ngIf="rapidEntryResult?.results.length === 0" color="warn">warning</mat-icon>
+  {{ detailString }}
+</div>
 
-  <div class="adjustable-fields" *ngIf="rapidEntryResult && rapidEntryResult.results.length !== 0">
-    <mat-checkbox [(ngModel)]="rapidEntryResult.cardInstance.foil" (change)="this.refocusEntry.emit()">Foil</mat-checkbox>
-    <mat-checkbox [(ngModel)]="rapidEntryResult.cardInstance.promo" (change)="this.refocusEntry.emit()">Promo</mat-checkbox>
-  </div>
+<div class="adjustable-fields" *ngIf="rapidEntryResult && rapidEntryResult.results.length !== 0">
+  <mat-checkbox [(ngModel)]="rapidEntryResult.cardInstance.foil" (change)="this.refocusEntry.emit()">Foil</mat-checkbox>
+  <mat-checkbox [(ngModel)]="rapidEntryResult.cardInstance.promo" (change)="this.refocusEntry.emit()">Promo</mat-checkbox>
+</div>
 
-  <div class="clickable-options" *ngIf="rapidEntryResult && rapidEntryResult.results.length !== 0">
-    <button *ngIf="rapidEntryResult.results.length === 1" mat-raised-button color="primary" (click)="applyNewResult()">Apply</button>
-    <button mat-raised-button color="primary" (click)="clear()">Clear</button>
-  </div>
+<div class="clickable-options" *ngIf="rapidEntryResult && rapidEntryResult.results.length !== 0">
+  <button *ngIf="rapidEntryResult.results.length === 1" mat-raised-button color="primary" (click)="applyNewResult()">Apply</button>
+  <button mat-raised-button color="primary" (click)="clear()">Clear</button>
+</div>
 
-  <div class="result-tiles-container" *ngIf="rapidEntryResult">
-    <div class="result-tile mat-elevation-z4" *ngFor="let cardSet of rapidEntryResult.results" (click)="optionClicked(cardSet)">
-      <div class="large-text">{{ cardSet.card.name }}</div>
-      <div><mco-ss [cardSet]="cardSet" [sets]="sets"></mco-ss> {{ setById(cardSet.setId).name }} - ({{cardSet.num}})</div>
-    </div>
+<div class="result-tiles-container" *ngIf="rapidEntryResult">
+  <div class="result-tile mat-elevation-z4" *ngFor="let cardSet of rapidEntryResult.results" (click)="optionClicked(cardSet)">
+    <div class="large-text">{{ cardSet.card.name }}</div>
+    <div><mco-ss [cardSet]="cardSet" [sets]="sets"></mco-ss> {{ setById(cardSet.setId).name }} - ({{cardSet.num}})</div>
   </div>
-</mat-card>
+</div>

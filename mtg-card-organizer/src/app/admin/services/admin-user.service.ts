@@ -7,9 +7,10 @@ import { AdminUserModel } from '../users/admin-user.model';
 import { PageSortFilter } from '../../shared/filtering/page-sort-filter';
 import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AdminUserService extends DataService<AdminUserModel> {
-
   constructor(private apiService: ApiService) {
     super();
   }

@@ -24,10 +24,5 @@ import { UserSearchComponent } from './user-search/user-search.component';
       { path: '', component: BookmarkPageComponent },
     ]),
   ],
-  providers: [
-    UserService,
-    CollectionService,
-    ContainerService,
-  ]
 })
 export class BookmarkModule {}

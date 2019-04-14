@@ -2,7 +2,7 @@
   <span mcoModalHeader>Export Container - {{ container.name }}</span>
 
   <div mcoModalActions fxLayoutGap="5px">
-    <button #cancelButton mat-raised-button (click)="close()">Cancel</button>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
     <button mat-raised-button color="primary" (click)="download()">Download</button>
   </div>
 </mco-modal>

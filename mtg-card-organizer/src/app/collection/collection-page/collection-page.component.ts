@@ -34,12 +34,13 @@ export class CollectionPageComponent implements OnInit {
   mode: 'view' | 'filter' | 'fastAdd' = 'view';
 
   constructor(
+    public authService: AuthenticationService,
     public collectionCardService: CollectionCardService,
     public collectionService: CollectionService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private notificationService: SnackNotificationService,
-    public authService: AuthenticationService) { }
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(() => {

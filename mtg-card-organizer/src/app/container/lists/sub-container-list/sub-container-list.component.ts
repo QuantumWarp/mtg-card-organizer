@@ -1,14 +1,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Container } from '../models/container';
-import { ContainerService } from '../services/container.service';
+import { Container } from '../../models/container';
+import { ContainerService } from '../../services/container.service';
 import { MatDialog } from '@angular/material';
-import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
-import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
-import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
-import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
-import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogData } from '../../../shared/components/confirm-dialog/confirm-dialog.data';
+import { SnackNotificationService } from '../../../core/notifications/snack-notification.service';
+import { SnackNotificationModel } from '../../../core/notifications/snack-notification.model';
+import { SnackNotificationType } from '../../../core/notifications/snack-notification.type';
 
 @Component({
   selector: 'mco-sub-container-list',
@@ -25,7 +25,8 @@ export class SubContainerListComponent {
     private router: Router,
     private dialog: MatDialog,
     private snackNotificationService: SnackNotificationService,
-    private containerService: ContainerService) { }
+    private containerService: ContainerService,
+  ) { }
 
   itemSelected(container: Container): void {
     this.router.navigateByUrl('/containers/' + container.id);

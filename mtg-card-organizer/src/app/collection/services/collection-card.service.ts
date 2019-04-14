@@ -7,9 +7,10 @@ import { ApiService } from '../../core/communication/api.service';
 import { PagedData } from '../../shared/filtering/paged-data';
 import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CollectionCardService {
-
   constructor(private apiService: ApiService) { }
 
   queryCards(collectionId: number, cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
@@ -26,7 +27,10 @@ export class CollectionCardService {
 }
 
 export class CollectionCardServiceWrapper extends DataService<CardInstance> {
-  constructor(public collectionId: number, private collectionCardService: CollectionCardService) {
+  constructor(
+    public collectionId: number,
+    private collectionCardService: CollectionCardService,
+  ) {
     super();
   }
 

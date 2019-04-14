@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 import { ApiService } from '../../core/communication/api.service';
 import { Deck } from '../models/deck';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DeckService {
-
   constructor(private apiService: ApiService) { }
 
   get(deckId: number): Observable<Deck> {

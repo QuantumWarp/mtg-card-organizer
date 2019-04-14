@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatDialog } from '@angular/material';
 
-import { CollectionService } from '../../collection/services/collection.service';
-import { ContainerService } from '../../container/services/container.service';
 import { Container } from '../../container/models/container';
+import { ContainerService } from '../../container/services/container.service';
 import { Paging } from '../../shared/filtering/paging';
 import { UserSearchComponent } from '../user-search/user-search.component';
 
@@ -14,12 +13,12 @@ import { UserSearchComponent } from '../user-search/user-search.component';
   styleUrls: ['./bookmark-page.component.scss']
 })
 export class BookmarkPageComponent implements OnInit {
-
   bookmarkedContainers: Container[] = [];
 
   constructor(
     private containerService: ContainerService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
     this.refresh();

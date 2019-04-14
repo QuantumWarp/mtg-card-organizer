@@ -14,7 +14,7 @@ import { SnackNotificationType } from '../../../core/notifications/snack-notific
 @Component({
   selector: 'mco-admin-user-grid',
   templateUrl: './admin-user-grid.component.html',
-  styleUrls: ['./admin-user-grid.component.scss']
+  styleUrls: ['./admin-user-grid.component.scss'],
 })
 export class AdminUserGridComponent extends AbstractGridComponent {
   @ViewChild(BasicGridComponent) basicGrid: BasicGridComponent<AdminUserModel>;
@@ -24,7 +24,8 @@ export class AdminUserGridComponent extends AbstractGridComponent {
   constructor(
     private dialog: MatDialog,
     private snackNotificationService: SnackNotificationService,
-    public adminUserService: AdminUserService) {
+    public adminUserService: AdminUserService,
+  ) {
     super();
   }
 

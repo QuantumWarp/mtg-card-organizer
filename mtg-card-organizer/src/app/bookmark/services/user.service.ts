@@ -7,9 +7,10 @@ import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 import { UserModel } from '../models/user.model';
 import { UserQuery } from '../models/user-query';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserService extends DataService<UserModel> {
-
   constructor(private apiService: ApiService) {
     super();
   }

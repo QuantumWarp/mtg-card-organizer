@@ -6,9 +6,10 @@ import { Collection } from '../models/collection';
 import { Paging } from '../../shared/filtering/paging';
 import { PagedData } from '../../shared/filtering/paged-data';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class CollectionService {
-
   constructor(private apiService: ApiService) { }
 
   get(collectionId: number): Observable<Collection> {

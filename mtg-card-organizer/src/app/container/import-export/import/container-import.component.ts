@@ -1,14 +1,15 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { LoadingService } from '../../core/loading/loading.service';
-import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
-import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
-import { Container } from '../models/container';
-import { ContainerService } from '../services/container.service';
+import { LoadingService } from '../../../core/loading/loading.service';
+import { SnackNotificationService } from '../../../core/notifications/snack-notification.service';
+import { SnackNotificationType } from '../../../core/notifications/snack-notification.type';
+import { Container } from '../../models/container';
+import { ContainerService } from '../../services/container.service';
 
 @Component({
-  templateUrl: './container-import.component.html'
+  templateUrl: './container-import.component.html',
+  styleUrls: ['./container-import.component.scss'],
 })
 export class ContainerImportComponent {
   @ViewChild('fileInput') fileInput: ElementRef;
@@ -19,7 +20,8 @@ export class ContainerImportComponent {
     private loadingService: LoadingService,
     private notificationService: SnackNotificationService,
     private containerService: ContainerService,
-    private dialogRef: MatDialogRef<ContainerImportComponent>) { }
+    private dialogRef: MatDialogRef<ContainerImportComponent>,
+  ) { }
 
   openFileDialog(): void {
     const event = new MouseEvent('click', {bubbles: false});
@@ -47,9 +49,5 @@ export class ContainerImportComponent {
       });
       this.dialogRef.close(true);
     });
-  }
-
-  close(): void {
-    this.dialogRef.close(false);
   }
 }

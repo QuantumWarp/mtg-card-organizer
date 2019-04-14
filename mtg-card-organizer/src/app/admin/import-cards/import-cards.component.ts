@@ -1,13 +1,14 @@
-import { Component, ViewChildren, ViewChild, ElementRef } from '@angular/core';
-import { ImportService } from '../services/import.service';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+
 import { LoadingService } from '../../core/loading/loading.service';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
+import { ImportService } from '../services/import.service';
 
 @Component({
   selector: 'mco-import-cards',
   templateUrl: './import-cards.component.html',
-  styleUrls: ['./import-cards.scss']
+  styleUrls: ['./import-cards.component.scss']
 })
 export class ImportCardsComponent {
   @ViewChild('fileInput') fileInput: ElementRef;
@@ -16,14 +17,15 @@ export class ImportCardsComponent {
   constructor(
     private importService: ImportService,
     private loadingService: LoadingService,
-    private notificationService: SnackNotificationService) {}
+    private notificationService: SnackNotificationService,
+  ) {}
 
   openFileDialog(): void {
     const event = new MouseEvent('click', {bubbles: false});
     this.fileInput.nativeElement.dispatchEvent(event);
   }
 
-  fileChanged(value: any) {
+  fileChanged() {
     console.log(this.fileInput.nativeElement.files[0]);
     const file: File = this.fileInput.nativeElement.files[0];
     const myReader: FileReader = new FileReader();

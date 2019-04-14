@@ -20,7 +20,7 @@ export class MainGridComponent implements OnChanges {
   wrappedService: WrappedDataService<DeckCard, Card>;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['dataService']) {
+    if (changes.dataService) {
       this.wrappedService = new WrappedDataService(this.dataService, x => x.card);
     }
   }

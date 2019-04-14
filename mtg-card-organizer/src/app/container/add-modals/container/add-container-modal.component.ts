@@ -1,21 +1,22 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { Container } from '../models/container';
-import { ContainerService } from '../services/container.service';
+import { Container } from '../../models/container';
+import { ContainerService } from '../../services/container.service';
 
 @Component({
   selector: 'mco-add-container-modal',
   templateUrl: './add-container-modal.component.html',
-  styleUrls: ['./modals.scss']
+  styleUrls: ['./add-container-modal.component.scss'],
 })
 export class AddContainerModalComponent {
-  @Input() name: string;
+  name: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private parentContainer: Container,
     private containerService: ContainerService,
-    private dialogRef: MatDialogRef<AddContainerModalComponent>) { }
+    private dialogRef: MatDialogRef<AddContainerModalComponent>,
+  ) { }
 
   confirm(): void {
     this.containerService
