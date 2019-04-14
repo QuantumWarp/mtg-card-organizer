@@ -33,10 +33,10 @@ export class SubContainerListComponent {
 
   deleteItem(container: Container): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogData({
+      data: <ConfirmDialogData> {
         title: 'Delete Container',
         description: 'Are you sure you want to delete \'' + container.name + '\'',
-      })
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

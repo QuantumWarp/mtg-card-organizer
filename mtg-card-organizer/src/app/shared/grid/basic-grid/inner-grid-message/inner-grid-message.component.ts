@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './inner-grid-message.component.html',
   styleUrls: ['./inner-grid-message.component.scss'],
 })
-export class InnerGridMessageComponent {
-
-}
+export class InnerGridMessageComponent { }

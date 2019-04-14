@@ -1,7 +1,6 @@
 import { tap } from 'rxjs/internal/operators';
 import { of, Observable } from 'rxjs';
 
-
 export class Cache {
   private resultCache = new Map<any, any>();
 

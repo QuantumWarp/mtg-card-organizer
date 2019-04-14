@@ -1,7 +1,4 @@
-<div class="padded-page">
-  <mco-page-header></mco-page-header>
-  <mco-title-and-trail title="Import Cards" [trail]="['Admin']"></mco-title-and-trail>
-
+<mco-default-page title="Import Cards" [trail]="['Admin']">
   <mat-card class="import-cards-content">
     <mat-form-field class="input-area">
       <textarea #inputArea matInput placeholder="Input"></textarea>
@@ -14,4 +11,4 @@
       <button mat-raised-button color="primary" (click)="import()">Import</button>
     </div>
   </mat-card>
-</div>
+</mco-default-page>

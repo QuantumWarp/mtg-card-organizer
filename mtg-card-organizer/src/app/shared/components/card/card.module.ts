@@ -5,7 +5,6 @@ import { CardActionsDirective, CardHeaderDirective } from './card-parts.directiv
 import { CardComponent } from './card.component';
 import { CommonModule } from '@angular/common';
 
-
 @NgModule({
   declarations: [
     CardComponent,

@@ -31,6 +31,16 @@ export class CustomDataSource<T> extends DataSource<T> {
     this.reloadData(queryStringGenerator);
   }
 
+  connectToResult(): Observable<PagedData<T>> {
+    return this.resultSubject;
+  }
+
+  connect(): Observable<T[]> {
+    return this.dataSubject;
+  }
+
+  disconnect(): void { }
+
   private reloadData(queryStringGenerator?: QueryStringGenerator): void {
     this.loading = true;
     this.dataSubject.next([]);
@@ -43,16 +53,5 @@ export class CustomDataSource<T> extends DataSource<T> {
       this.dataSubject.next(result.data);
       this.loading = false;
     });
-  }
-
-  connectToResult(): Observable<PagedData<T>> {
-    return this.resultSubject;
-  }
-
-  connect(): Observable<T[]> {
-    return this.dataSubject;
-  }
-
-  disconnect(): void {
   }
 }

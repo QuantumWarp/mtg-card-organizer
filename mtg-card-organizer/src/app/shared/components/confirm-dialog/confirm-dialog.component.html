@@ -1,10 +1,10 @@
-<mat-toolbar>{{ data.title }}</mat-toolbar>
+<mco-modal>
+  <span mcoModalHeader>{{ data.title }}</span>
 
-<div class="confirm-dialog-content">
   {{ data.description }}
-</div>
 
-<mat-toolbar>
-  <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button (click)="confirm()" mat-raised-button color="primary">Confirm</button>
-</mat-toolbar>
+  <div>
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button (click)="confirm()" mat-raised-button color="primary">Confirm</button>
+  </div>
+</mco-modal>

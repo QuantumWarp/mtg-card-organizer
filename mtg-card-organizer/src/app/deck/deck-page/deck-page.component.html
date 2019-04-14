@@ -1,11 +1,10 @@
-<div class="padded-page">
-  <mco-page-header></mco-page-header>
-  <mco-title-and-trail [title]="'Deck - ' + deck.name">
+<mco-default-page [title]="'Deck - ' + deck.name">
+  <ng-container mcoPageExtraHeader>
     <mat-button-toggle-group name="fontStyle" class="toggle-group" [(ngModel)]="mode">
       <mat-button-toggle value="view">View</mat-button-toggle>
       <mat-button-toggle value="edit">Edit</mat-button-toggle>
     </mat-button-toggle-group>
-  </mco-title-and-trail>
+  </ng-container>
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mco-deck-card-search *ngIf="mode === 'edit'"
@@ -27,4 +26,4 @@
       (rowSelected)="openCardDialog($event)">
     </mco-sideboard-grid>
   </div>
-</div>
+</mco-default-page>

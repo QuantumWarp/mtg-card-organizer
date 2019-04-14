@@ -33,10 +33,10 @@ export class DeckListComponent {
 
   deleteItem(deck: Deck): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogData({
+      data: <ConfirmDialogData> {
         title: 'Delete Deck',
         description: 'Are you sure you want to delete \'' + deck.name + '\'',
-      })
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

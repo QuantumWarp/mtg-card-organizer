@@ -9,11 +9,11 @@ import { QueryStringGenerator } from '../utils/query-string-generator.interface'
 import { DataService } from './grid-data-source.interfaces';
 
 export class GridDataSource<T> extends CustomDataSource<T> {
-
   constructor(
     dataService: DataService<T>,
     private paginator?: MatPaginator,
-    private sort?: MatSort) {
+    private sort?: MatSort,
+  ) {
     super(dataService);
     this.setupGridUpdates();
     this.setupRefreshTriggers();

@@ -1,10 +1,9 @@
-<div class="padded-page">
-  <mco-page-header></mco-page-header>
-  <mco-title-and-trail title="Bookmarks">
+<mco-default-page title="Bookmarks">
+  <ng-container mcoPageExtraHeader>
     <button [matMenuTriggerFor]="collectionMenu" class="options-button mat-elevation-z4" mat-icon-button>
       <mat-icon>settings</mat-icon>
     </button>
-  </mco-title-and-trail>
+  </ng-container>
 
   <mat-menu #collectionMenu="matMenu">
     <button mat-menu-item (click)="addContainerBookmark()">Add Bookmark</button>
@@ -14,4 +13,4 @@
     <mco-bookmarked-container-list fxFlex [containers]="bookmarkedContainers" (containerInvalidated)="refresh()" (addClicked)="addContainerBookmark()"></mco-bookmarked-container-list>
     <div fxFlex></div>
   </div>
-</div>
+</mco-default-page>

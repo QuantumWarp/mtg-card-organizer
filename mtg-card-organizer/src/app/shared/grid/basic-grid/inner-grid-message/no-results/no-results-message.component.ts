@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'mco-no-results-message',
   templateUrl: './no-results-message.component.html',
-  // styleUrls: ['./inner-grid-message.scss'],
+  styleUrls: ['./no-results-message.component.scss'],
 })
-export class NoResultsMessageComponent {
-
-}
+export class NoResultsMessageComponent { }

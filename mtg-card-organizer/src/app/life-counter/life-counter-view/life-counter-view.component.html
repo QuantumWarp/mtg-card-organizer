@@ -1,9 +1,6 @@
-<div class="padded-page" fxLayoutGap="10px">
-  <mco-page-header></mco-page-header>
-  <mco-title-and-trail title="Life Counter (Work in Progress)" [trail]="['Tools']"></mco-title-and-trail>
-
+<mco-default-page title="Life Counter (Work in Progress)" [trail]="['Tools']">
   <mco-life-counter-controller [lifeCounterModel]="lifeCounterModel"></mco-life-counter-controller>
   <div fxLayoutGap="10px">
     <mco-life-counter-single *ngFor="let lifeCounter of lifeCounterModel.lifeCounters" [lifeCounter]="lifeCounter" fxFlex></mco-life-counter-single>
   </div>
-</div>
+</mco-default-page>

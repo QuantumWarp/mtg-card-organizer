@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './loading-message.component.html',
   styleUrls: ['./loading-message.component.scss'],
 })
-export class LoadingMessageComponent {
-
-}
+export class LoadingMessageComponent { }

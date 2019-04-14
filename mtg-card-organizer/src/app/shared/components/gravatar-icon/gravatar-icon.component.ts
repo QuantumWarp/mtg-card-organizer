@@ -16,13 +16,18 @@ export class GravatarIconComponent implements OnChanges, OnInit {
 
   constructor(
     private gravatarService: GravatarService,
-    private authenticationService: AuthenticationService) { }
+    private authenticationService: AuthenticationService,
+  ) { }
 
   ngOnInit(): void {
-    this.ngOnChanges();
+    this.updateUrl();
   }
 
   ngOnChanges(): void {
+    this.updateUrl();
+  }
+
+  private updateUrl(): void {
     const email = this.email ? this.email : this.authenticationService.email;
     this.gravatarUrl = this.gravatarService.constructUrl({
       email: email,

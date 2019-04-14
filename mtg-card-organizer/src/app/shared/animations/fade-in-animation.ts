@@ -1,4 +1,4 @@
-import { transition, animate, style, keyframes } from '@angular/animations';
+import { animate, style } from '@angular/animations';
 
 export function fadeInAnimation(transitionMs: number = 300) {
   return [

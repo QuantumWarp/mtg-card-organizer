@@ -33,10 +33,10 @@ export class CollectionListComponent {
 
   deleteItem(collection: Collection): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogData({
+      data: <ConfirmDialogData> {
         title: 'Delete Collection',
         description: 'Are you sure you want to delete \'' + collection.name + '\'',
-      })
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

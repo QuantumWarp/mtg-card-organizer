@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
-import { AbstractGridComponent } from '../../shared/grid/abstract-grid.component.html';
+import { AbstractGridComponent } from '../../shared/grid/abstract-grid.component';
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 import { CardGridComponent } from '../card-grid/card-grid.component';
 import { Card } from '../models/card';

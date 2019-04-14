@@ -42,5 +42,5 @@ export class AbstractGridComponent {
     }
 
     return true;
-}
+  }
 }

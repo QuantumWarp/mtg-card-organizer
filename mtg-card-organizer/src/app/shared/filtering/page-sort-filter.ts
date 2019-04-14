@@ -15,7 +15,7 @@ export class PageSortFilter implements QueryStringGenerator {
     return obj.discriminator === PageSortFilter.discriminator;
   }
 
-  public constructor(init?: Partial<PageSortFilter>) {
+  constructor(init?: Partial<PageSortFilter>) {
     Object.assign(this, init);
   }
 

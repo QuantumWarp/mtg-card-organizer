@@ -1,6 +1,5 @@
-<div class="padded-page">
-  <mco-page-header></mco-page-header>
-  <mco-title-and-trail [title]="'Collection - ' + collection.name">
+<mco-default-page [title]="'Collection - ' + collection.name">
+  <ng-container mcoPageExtraHeader>
     <mat-button-toggle-group name="fontStyle" class="toggle-group" [(ngModel)]="mode">
       <mat-button-toggle value="view">View</mat-button-toggle>
       <mat-button-toggle value="filter">Filter</mat-button-toggle>
@@ -12,7 +11,7 @@
       mat-icon-button matTooltip="Toggle Bookmark">
       <mat-icon>{{ collection.isBookmarked ? 'bookmark' : 'bookmark_border' }}</mat-icon>
     </button>
-  </mco-title-and-trail>
+  </ng-container>
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mco-card-filter *ngIf="mode === 'filter'" (filterChanged)="filter = $event"></mco-card-filter>

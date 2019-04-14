@@ -1,8 +1,4 @@
-export class ConfirmDialogData {
+export interface ConfirmDialogData {
   title: string;
   description: string;
-
-  constructor(init: Partial<ConfirmDialogData>) {
-    Object.assign(this, init);
-  }
 }

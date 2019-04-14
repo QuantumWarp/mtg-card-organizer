@@ -6,7 +6,7 @@ export class PropertySort implements QueryStringGenerator {
   field: string;
   ascending: boolean;
 
-  public constructor(init?: Partial<PropertySort>) {
+  constructor(init?: Partial<PropertySort>) {
     Object.assign(this, init);
   }
 

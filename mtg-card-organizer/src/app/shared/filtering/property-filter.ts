@@ -6,7 +6,7 @@ export class PropertyFilter implements QueryStringGenerator {
   operator: PropertyFilterOperator;
   value: any;
 
-  public constructor(init?: Partial<PropertyFilter>) {
+  constructor(init?: Partial<PropertyFilter>) {
     Object.assign(this, init);
   }
 

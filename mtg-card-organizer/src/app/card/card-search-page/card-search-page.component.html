@@ -1,7 +1,4 @@
-<div class="padded-page">
-  <mco-page-header></mco-page-header>
-  <mco-title-and-trail title="Card Search" [trail]="['Tools']"></mco-title-and-trail>
-
+<mco-default-page title="Card Search" [trail]="['Tools']">
   <div fxLayout="row" fxLayoutGap="20px">
     <mco-card-filter (filterChanged)="filter = $event"></mco-card-filter>
 
@@ -10,4 +7,4 @@
       (rowSelected)="cardSetSelected($event)">
     </mco-card-set-grid>
   </div>
-</div>
+</mco-default-page>

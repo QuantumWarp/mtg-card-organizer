@@ -1,16 +1,15 @@
 import { Observable, of } from 'rxjs';
 
-import { PagedData } from '../filtering/paged-data';
-import { QueryStringGenerator } from './query-string-generator.interface';
-import { DataService } from '../grid/grid-data-source.interfaces';
 import { PagedDataHelper } from '../filtering/local/paged-data.helper';
-import { PageSortFilter } from '../filtering/page-sort-filter';
-import { PropertySortHelper } from '../filtering/local/property-sort.helper';
 import { PropertyFilterHelper } from '../filtering/local/property-filter.helper';
+import { PropertySortHelper } from '../filtering/local/property-sort.helper';
+import { PageSortFilter } from '../filtering/page-sort-filter';
+import { PagedData } from '../filtering/paged-data';
 import { Paging } from '../filtering/paging';
+import { DataService } from '../grid/grid-data-source.interfaces';
+import { QueryStringGenerator } from './query-string-generator.interface';
 
 export class LocalDataService<T> extends DataService<T> {
-
   constructor(private data: T[]) {
     super();
   }

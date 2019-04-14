@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 
-import { AbstractGridComponent } from '../../../shared/grid/abstract-grid.component.html';
+import { AbstractGridComponent } from '../../../shared/grid/abstract-grid.component';
 import { BasicGridComponent } from '../../../shared/grid/basic-grid/basic-grid.component';
 import { AdminUserService } from '../../services/admin-user.service';
 import { AdminUserModel } from '../admin-user.model';
@@ -40,10 +40,10 @@ export class AdminUserGridComponent extends AbstractGridComponent {
 
   removeAction(user: AdminUserModel): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogData({
+      data: <ConfirmDialogData>{
         title: 'Delete User',
         description: `Are you sure you want to permenently remove the user '${user.userName}'?`,
-      })
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

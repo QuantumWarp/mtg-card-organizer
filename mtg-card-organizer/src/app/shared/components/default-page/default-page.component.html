@@ -1,3 +1,5 @@
 <mco-page-header></mco-page-header>
-<mco-title-and-trail [title]="title" [trail]="trail"></mco-title-and-trail>
+<mco-title-and-trail [title]="title" [trail]="trail">
+  <ng-content select="mco-page-extra-header, [mcoPageExtraHeader]"></ng-content>
+</mco-title-and-trail>
 <ng-content></ng-content>

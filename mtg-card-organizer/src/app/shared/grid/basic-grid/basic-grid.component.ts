@@ -1,10 +1,10 @@
-import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ViewChild, SimpleChanges } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatPaginator, MatTable } from '@angular/material';
 
-import { AbstractGridComponent } from '../abstract-grid.component.html';
-import { GridDataSource } from '../grid-data-source';
 import { QueryStringGenerator } from '../../utils/query-string-generator.interface';
-import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
+import { AbstractGridComponent } from '../abstract-grid.component';
+import { GridDataSource } from '../grid-data-source';
 import { DataService } from '../grid-data-source.interfaces';
 
 @Component({
@@ -28,7 +28,7 @@ export class BasicGridComponent<T> extends AbstractGridComponent implements OnCh
     return this.columns;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (!this.dataSource) {
       this.dataSource = new GridDataSource(this.service, this.matPaginator, this.matSort);
     }

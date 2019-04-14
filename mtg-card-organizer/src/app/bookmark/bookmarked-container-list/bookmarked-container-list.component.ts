@@ -33,10 +33,10 @@ export class BookmarkedContainerListComponent {
 
   deleteItem(container: Container): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogData({
+      data: <ConfirmDialogData> {
         title: 'Remove Bookmark',
         description: 'Are you sure you want to remove bookmark for \'' + container.name + '\'',
-      })
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

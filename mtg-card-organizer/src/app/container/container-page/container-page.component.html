@@ -1,6 +1,5 @@
-<div class="padded-page">
-  <mco-page-header></mco-page-header>
-  <mco-title-and-trail [title]="'Container - ' + container.name">
+<mco-default-page [title]="'Container - ' + container.name">
+  <ng-container mcoPageExtraHeader>
     <button [matMenuTriggerFor]="collectionMenu" class="options-button mat-elevation-z4"
       mat-icon-button matTooltip="Settings">
       <mat-icon>settings</mat-icon>
@@ -11,7 +10,7 @@
       mat-icon-button matTooltip="Toggle Bookmark">
       <mat-icon>{{ container.isBookmarked ? 'bookmark' : 'bookmark_border' }}</mat-icon>
     </button>
-  </mco-title-and-trail>
+  </ng-container>
 
   <mat-menu #collectionMenu="matMenu">
     <button *ngIf="container.permission === permissions.Admin" mat-menu-item (click)="openPermissions()">Permissions</button>
@@ -24,4 +23,4 @@
     <mco-collection-list [collections]="container.collections" (containerInvalidated)="refresh()" (addClicked)="createCollection()"></mco-collection-list>
     <mco-deck-list [decks]="container.decks" (containerInvalidated)="refresh()" (addClicked)="createDeck()"></mco-deck-list>
   </div>
-</div>
+</mco-default-page>

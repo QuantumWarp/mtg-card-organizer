@@ -4,7 +4,7 @@ import { CardSetGridComponent } from '../../card/card-set-grid/card-set-grid.com
 import { CardInstance } from '../models/card-instance';
 import { CardQuery } from '../../card/models/card-query';
 import { CardSet } from '../../card/models/card-set';
-import { AbstractGridComponent } from '../../shared/grid/abstract-grid.component.html';
+import { AbstractGridComponent } from '../../shared/grid/abstract-grid.component';
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 
 @Component({

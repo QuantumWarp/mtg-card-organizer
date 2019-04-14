@@ -55,10 +55,10 @@ export class CollectionPageComponent implements OnInit {
 
   removeFromCollection(cardInstance: CardInstance): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: new ConfirmDialogData({
+      data: <ConfirmDialogData> {
         title: `Remove ${cardInstance.cardSet.card.name}`,
         description: 'Are you sure?',
-      })
+      }
     });
 
     dialogRef.afterClosed().subscribe(confirmed => {
