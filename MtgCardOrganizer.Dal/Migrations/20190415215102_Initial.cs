@@ -60,7 +60,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     ConvertedManaCost = table.Column<string>(nullable: true),
                     Power = table.Column<string>(nullable: true),
                     Toughness = table.Column<string>(nullable: true),
-                    OracleText = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -109,7 +109,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: false),
-                    Code = table.Column<string>(nullable: false)
+                    Code = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -318,9 +318,9 @@ namespace MtgCardOrganizer.Dal.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     MultiverseId = table.Column<string>(nullable: true),
-                    Artist = table.Column<string>(nullable: false),
+                    Artist = table.Column<string>(nullable: true),
                     Num = table.Column<string>(nullable: true),
-                    Rarity = table.Column<int>(nullable: false),
+                    Rarity = table.Column<int>(nullable: true),
                     CardId = table.Column<int>(nullable: false),
                     SetId = table.Column<int>(nullable: false)
                 },

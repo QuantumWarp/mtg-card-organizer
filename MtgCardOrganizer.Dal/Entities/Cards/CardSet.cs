@@ -9,7 +9,7 @@ namespace MtgCardOrganizer.Dal.Entities.Cards
         public string MultiverseId { get; set; }
         public string Artist { get; set; }
         public string Num { get; set; }
-        public Rarity Rarity { get; set; }
+        public Rarity? Rarity { get; set; }
         
         public int CardId { get; set; }
         public int SetId { get; set; }

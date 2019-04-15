@@ -26,9 +26,9 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
             return queryable.Where(x => x.Card.Name.ToLower().Contains(substring));
         }
 
-        protected override IQueryable<CardSet> OracleTextContains(IQueryable<CardSet> queryable, string substring)
+        protected override IQueryable<CardSet> TextContains(IQueryable<CardSet> queryable, string substring)
         {
-            return queryable.Where(x => x.Card.OracleText.ToLower().Contains(substring));
+            return queryable.Where(x => x.Card.Text.ToLower().Contains(substring));
         }
 
         protected override IQueryable<CardSet> TypeContains(IQueryable<CardSet> queryable, string substring)
@@ -43,7 +43,7 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
             return queryable.Where(x => setIds.Contains(x.SetId));
         }
         
-        protected override IQueryable<CardSet> IsInRarities(IQueryable<CardSet> queryable, List<Rarity> rarities)
+        protected override IQueryable<CardSet> IsInRarities(IQueryable<CardSet> queryable, List<Rarity?> rarities)
         {
             return queryable.Where(x => rarities.Contains(x.Rarity));
         }

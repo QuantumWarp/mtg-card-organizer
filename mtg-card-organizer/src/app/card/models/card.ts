@@ -6,7 +6,7 @@ export class Card {
   convertedManaCost: string;
   power: string;
   toughness: string;
-  oracleText: string;
+  text: string;
   type: string;
 
   public constructor(init?: Partial<Card>) {

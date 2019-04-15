@@ -14,7 +14,7 @@ namespace MtgCardOrganizer.Dal.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -135,9 +135,9 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<string>("OracleText");
-
                     b.Property<string>("Power");
+
+                    b.Property<string>("Text");
 
                     b.Property<string>("Toughness");
 
@@ -155,8 +155,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Artist")
-                        .IsRequired();
+                    b.Property<string>("Artist");
 
                     b.Property<int>("CardId");
 
@@ -164,7 +163,7 @@ namespace MtgCardOrganizer.Dal.Migrations
 
                     b.Property<string>("Num");
 
-                    b.Property<int>("Rarity");
+                    b.Property<int?>("Rarity");
 
                     b.Property<int>("SetId");
 
@@ -182,8 +181,7 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Code")
-                        .IsRequired();
+                    b.Property<string>("Code");
 
                     b.Property<string>("Name")
                         .IsRequired();

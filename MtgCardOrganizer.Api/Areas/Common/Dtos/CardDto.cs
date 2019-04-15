@@ -9,7 +9,7 @@
         public string ConvertedManaCost { get; set; }
         public string Power { get; set; }
         public string Toughness { get; set; }
-        public string OracleText { get; set; }
+        public string Text { get; set; }
         public string Type { get; set; }
     }
 }

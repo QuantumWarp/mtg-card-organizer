@@ -10,7 +10,6 @@ namespace MtgCardOrganizer.Dal.EntityConfigurations.Cards
             base.Configure(builder);
 
             builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.Code).IsRequired();
         }
     }
 }

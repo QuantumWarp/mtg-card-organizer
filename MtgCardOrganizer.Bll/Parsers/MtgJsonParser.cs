@@ -11,10 +11,9 @@ namespace MtgCardOrganizer.Bll.Parsers
 {
     public class MtgJsonParser : IParser
     {
-        private readonly string DownloadFilename = "../AllSets-x.json.zip";
-
-        private readonly Uri AllCardsUri = new Uri("https://mtgjson.com/json/AllSets.json.zip");
-        private readonly Uri AllCardsAndExtrasUri = new Uri("https://mtgjson.com/json/AllSets-x.json.zip");
+        private readonly string DownloadFilename = "../AllSets.json.zip";
+        
+        private readonly Uri AllCardsAndExtrasUri = new Uri("https://mtgjson.com/json/AllSets.json.zip");
 
         public List<Set> Sets { get; } = new List<Set>();
         public List<Card> Cards { get; } = new List<Card>();
@@ -49,15 +48,17 @@ namespace MtgCardOrganizer.Bll.Parsers
 
             card.Name = cardObj["name"].ToString();
             if (cardObj.ContainsKey("manaCost")) card.ManaCost = cardObj["manaCost"].ToString();
-            card.ConvertedManaCost = cardObj["cmc"].ToString();
+            if (cardObj.ContainsKey("convertedManaCost")) card.ConvertedManaCost = cardObj["convertedManaCost"].ToString();
             if (cardObj.ContainsKey("power")) card.Power = cardObj["power"].ToString();
             if (cardObj.ContainsKey("toughness")) card.Toughness = cardObj["toughness"].ToString();
+            if (cardObj.ContainsKey("text")) card.Text = cardObj["text"].ToString();
+            if (cardObj.ContainsKey("type")) card.Text = cardObj["type"].ToString();
 
             var cardSet = new CardSet();
-            cardSet.Artist = cardObj["artist"].ToString();
+            if (cardObj.ContainsKey("artist")) cardSet.Artist = cardObj["artist"].ToString();
             if (cardObj.ContainsKey("number")) cardSet.Num = cardObj["number"].ToString();
-            cardSet.Rarity = ParseRarity(cardObj["rarity"].ToString());
-            if (cardObj.ContainsKey("multiverseid")) cardSet.MultiverseId = cardObj["multiverseid"].ToString();
+            if (cardObj.ContainsKey("rarity")) cardSet.Rarity = ParseRarity(cardObj["rarity"].ToString());
+            if (cardObj.ContainsKey("multiverseId")) cardSet.MultiverseId = cardObj["multiverseId"].ToString();
             cardSet.Card = card;
             cardSet.Set = set;
 
@@ -65,19 +66,21 @@ namespace MtgCardOrganizer.Bll.Parsers
             CardSets.Add(cardSet);
         }
         
-        public Rarity ParseRarity(string rarityString) {
-            switch (rarityString) {
-                case "Common": return Rarity.Common;
-                case "Uncommon": return Rarity.Uncommon;
-                case "Rare": return Rarity.Rare;
-                case "Mythic Rare": return Rarity.Mythic;
-                default: return Rarity.Common;
+        public Rarity? ParseRarity(string rarityString) {
+            switch (rarityString.ToLower())
+            {
+                case "basic": return Rarity.Basic;
+                case "common": return Rarity.Common;
+                case "uncommon": return Rarity.Uncommon;
+                case "rare": return Rarity.Rare;
+                case "mythic": return Rarity.Mythic;
+                default: return null;
             }
         }
 
         public string Retrieve()
         {
-            if (!File.Exists("../AllSets-x.json"))
+            if (!File.Exists("../AllSets.json"))
             {
                 using (var client = new WebClient())
                 {
@@ -86,7 +89,7 @@ namespace MtgCardOrganizer.Bll.Parsers
                 }
                 ZipFile.ExtractToDirectory(DownloadFilename, "../");
             }
-            return File.ReadAllText("../AllSets-x.json");
+            return File.ReadAllText("../AllSets.json");
         }
     }
 }

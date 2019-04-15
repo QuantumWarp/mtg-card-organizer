@@ -16,7 +16,7 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
         // public ManaCostQuery ManaCost { get; set; } = new ManaCostQuery();
 
         public List<int> SetIds { get; set; } = new List<int>();
-        public List<Rarity> Rarities { get; set; } = new List<Rarity>();
+        public List<Rarity?> Rarities { get; set; } = new List<Rarity?>();
         public List<string> Nums { get; set; } = new List<string>();
 
         public List<int> CollectionIds { get; set; } = new List<int>();
@@ -26,7 +26,7 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
             queryable = ApplyIncludes(queryable);
 
             foreach (var part in Name) queryable = NameContains(queryable, part.ToLower());
-            foreach (var part in Text) queryable = OracleTextContains(queryable, part.ToLower());
+            foreach (var part in Text) queryable = TextContains(queryable, part.ToLower());
             foreach (var part in Type) queryable = TypeContains(queryable, part.ToLower());            
             // queryable = queryable.ApplyQuery(ManaCost, transform);
 
@@ -45,11 +45,11 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
         protected abstract IQueryable<T> ApplyIncludes(IQueryable<T> queryable);
 
         protected abstract IQueryable<T> NameContains(IQueryable<T> queryable, string substring);
-        protected abstract IQueryable<T> OracleTextContains(IQueryable<T> queryable, string substring);
+        protected abstract IQueryable<T> TextContains(IQueryable<T> queryable, string substring);
         protected abstract IQueryable<T> TypeContains(IQueryable<T> queryable, string substring);
 
         protected abstract IQueryable<T> IsInSets(IQueryable<T> queryable, List<int> setIds);
-        protected abstract IQueryable<T> IsInRarities(IQueryable<T> queryable, List<Rarity> rarities);
+        protected abstract IQueryable<T> IsInRarities(IQueryable<T> queryable, List<Rarity?> rarities);
         protected abstract IQueryable<T> IsInNums(IQueryable<T> queryable, List<string> nums);
 
         protected abstract IQueryable<T> IsInCollections(IQueryable<T> queryable, List<int> collectionIds);

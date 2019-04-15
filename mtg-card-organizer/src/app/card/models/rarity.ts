@@ -1,5 +1,5 @@
 export enum Rarity {
-  Unknown,
+  Basic,
   Common,
   Uncommon,
   Rare,

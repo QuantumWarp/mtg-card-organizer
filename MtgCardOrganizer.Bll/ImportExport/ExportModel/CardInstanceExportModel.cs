@@ -37,7 +37,7 @@ namespace MtgCardOrganizer.Dal.Utilities.ImportExport
             };
         }
         
-        private Func<CardSet, Boolean> GetCondition(List<Set> sets)
+        private Func<CardSet, bool> GetCondition(List<Set> sets)
         {
             var possibleSetIds = sets
                 .Where(set => set.Name.ToLower() == SetName.ToLower())

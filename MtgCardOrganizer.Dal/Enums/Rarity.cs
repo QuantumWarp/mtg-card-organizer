@@ -4,7 +4,7 @@ namespace MtgCardOrganizer.Dal.Enums
 {
     public enum Rarity
     {
-        Unknown,
+        Basic,
         Common,
         Uncommon,
         Rare,
