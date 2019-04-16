@@ -29,4 +29,17 @@ export class SnackNotificationService {
       duration: 2000,
     });
   }
+
+  notifyWarning(message: string): void {
+    const model = new SnackNotificationModel({
+      type: SnackNotificationType.Warning,
+      message: message,
+    });
+
+    this.snackBar.openFromComponent(SnackNotificationComponent, {
+      data: model,
+      panelClass: ['mat-elevation-z4'],
+      duration: 2000,
+    });
+  }
 }

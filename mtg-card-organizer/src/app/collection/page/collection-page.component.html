@@ -17,7 +17,7 @@
 
   <div fxLayout="row" fxLayoutGap="20px">
     <mco-card-filter *ngIf="mode === 'filter'" (filterChanged)="filter = $event"></mco-card-filter>
-    <mco-card-rapid-entry *ngIf="mode === 'fastAdd'" (searched)="refreshDataSource()" [collection]="collection"></mco-card-rapid-entry>
+    <mco-card-rapid-entry fxFlex *ngIf="mode === 'fastAdd'" (searched)="refreshDataSource()" [collection]="collection"></mco-card-rapid-entry>
 
     <mco-card fxFlex contentPadding="0px">
       <mco-card-instance-grid

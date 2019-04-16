@@ -19,6 +19,7 @@ export class CardRapidEntryResultComponent implements OnInit {
   @Output() refocusEntry = new EventEmitter();
   @Input() collection: Collection;
 
+  totalSessionCount = 0;
   rapidEntryResult: RapidEntryResult;
   sets: Set[];
 
@@ -55,21 +56,16 @@ export class CardRapidEntryResultComponent implements OnInit {
     }
 
     if (this.rapidEntryResult.results.length > 1) {
-      this.snackNotificationService.notify({
-        type: SnackNotificationType.Warning,
-        message: 'Please select a result or clear',
-      });
+      this.snackNotificationService.notifyWarning('Please select a result or clear');
       return;
     }
 
     this.rapidEntryResult.cardInstance.cardSetId = this.rapidEntryResult.results[0].id;
 
     this.collectionCardService.addCards(this.collection.id, [ this.rapidEntryResult.cardInstance ]).subscribe(() => {
-      this.snackNotificationService.notify({
-        type: SnackNotificationType.Success,
-        message: 'Added ' + this.rapidEntryResult.results[0].card.name,
-      });
+      this.snackNotificationService.notifySuccess(`Added ${this.rapidEntryResult.results[0].card.name}`);
       this.rapidEntryResult = rapidEntryResult;
+      this.totalSessionCount = this.totalSessionCount + 1;
       this.applied.emit();
       this.refocusEntry.emit();
     });

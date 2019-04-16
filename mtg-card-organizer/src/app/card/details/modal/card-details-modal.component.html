@@ -1,7 +1,9 @@
 <mco-modal>
-  <span>{{ cardSet.card.name }}</span>
+  <span mcoModalHeader>{{ cardSet.card.name }}</span>
 
   <mco-card-details [cardSet]="cardSet"></mco-card-details>
 
-  <button mat-raised-button mat-dialog-close>Close</button>
+  <div mcoModalActions>
+    <button mat-raised-button mat-dialog-close>Close</button>
+  </div>
 </mco-modal>

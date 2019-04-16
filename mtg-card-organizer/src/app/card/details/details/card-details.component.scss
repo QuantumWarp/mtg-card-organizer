@@ -1,26 +1,12 @@
-.card-details-modal {
-  flex: 1;
+.card-image {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
   align-items: stretch;
+  min-width: 223px;
+  max-width: 223px;
+  min-height: 311px;
+  max-height: 311px;
 
-  > .card-details {
-    display: flex;
-    flex-direction: column;
-    margin-right: 20px;
-  }
-
-  > .card-image {
-    display: flex;
-    align-items: stretch;
-    min-width: 223px;
-    max-width: 223px;
-    min-height: 311px;
-    max-height: 311px;
-
-    > mco-card-image {
-      flex: 1;
-    }
+  > mco-card-image {
+    flex: 1;
   }
 }

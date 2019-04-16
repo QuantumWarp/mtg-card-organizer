@@ -42,6 +42,12 @@ namespace MtgCardOrganizer.Dal.Utilities.ImportExport
             var possibleSetIds = sets
                 .Where(set => set.Name.ToLower() == SetName.ToLower())
                 .Select(x => x.Id);
+
+            if (possibleSetIds.Count() == 0)
+            {
+                possibleSetIds = sets.Select(x => x.Id);
+            }
+
             return x => x.Card.Name.ToLower() == Name.ToLower() &&
                 possibleSetIds.Contains(x.SetId) &&
                 (x.Num == null || x.Num == Num || x.Num == Num + "a");
