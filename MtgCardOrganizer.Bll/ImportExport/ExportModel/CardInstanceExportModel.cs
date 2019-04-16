@@ -26,31 +26,22 @@ namespace MtgCardOrganizer.Dal.Utilities.ImportExport
 
         public CardInstance ToCardInstance(Collection collection, List<CardSet> cardSets, List<Set> sets)
         {
-            var possibleCardSets = cardSets.Where(GetCondition(sets));
-            var cardSet = possibleCardSets.First();
+            var set = sets.Where(x => x.Name.ToLower() == SetName.ToLower()).FirstOrDefault();
+            if (set == null) throw new Exception($"Set with name '{SetName}' not found");
 
+            var cardsSetsInSet = cardSets.Where(x => set.Id == x.SetId);
+            var possibleCardSets = cardsSetsInSet.Where(x => x.Card.Name.ToLower() == Name.ToLower());
+            if (possibleCardSets.Count() == 0) throw new Exception($"Card with name '{Name}' not found in set '{SetName}'");
+
+            var cardSet = possibleCardSets.FirstOrDefault(x => x.Num == Num);
+            if (cardSet == null) throw new Exception($"Card with name '{Name}' in set '{SetName}' had invalid num '{Num}'");
+            
             return new CardInstance {
                 Foil = Foil,
                 Promo = Promo,
                 CardSetId = cardSet.Id,
                 CollectionId = collection.Id,
             };
-        }
-        
-        private Func<CardSet, bool> GetCondition(List<Set> sets)
-        {
-            var possibleSetIds = sets
-                .Where(set => set.Name.ToLower() == SetName.ToLower())
-                .Select(x => x.Id);
-
-            if (possibleSetIds.Count() == 0)
-            {
-                possibleSetIds = sets.Select(x => x.Id);
-            }
-
-            return x => x.Card.Name.ToLower() == Name.ToLower() &&
-                possibleSetIds.Contains(x.SetId) &&
-                (x.Num == null || x.Num == Num || x.Num == Num + "a");
         }
     }
 }
