@@ -6,7 +6,7 @@
 
     <div fxLayout="row">
       <button mat-raised-button color="primary" (click)="openFileDialog()">Select From File</button>
-      <input class="file-selector" type="file" ng2FileSelect #fileInput (change)="fileChanged($event)"/>
+      <input class="file-selector" type="file" ng2FileSelect #fileInput (change)="fileChanged()"/>
       <span fxFlex></span>
       <button mat-raised-button color="primary" (click)="import()">Import</button>
     </div>

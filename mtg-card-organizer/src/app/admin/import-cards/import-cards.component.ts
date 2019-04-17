@@ -26,7 +26,6 @@ export class ImportCardsComponent {
   }
 
   fileChanged() {
-    console.log(this.fileInput.nativeElement.files[0]);
     const file: File = this.fileInput.nativeElement.files[0];
     const myReader: FileReader = new FileReader();
 
