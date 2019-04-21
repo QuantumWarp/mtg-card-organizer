@@ -52,7 +52,7 @@ namespace MtgCardOrganizer.Bll.Parsers
             if (cardObj.ContainsKey("power")) card.Power = cardObj["power"].ToString();
             if (cardObj.ContainsKey("toughness")) card.Toughness = cardObj["toughness"].ToString();
             if (cardObj.ContainsKey("text")) card.Text = cardObj["text"].ToString();
-            if (cardObj.ContainsKey("type")) card.Text = cardObj["type"].ToString();
+            if (cardObj.ContainsKey("type")) card.Type = cardObj["type"].ToString();
 
             var cardSet = new CardSet();
             if (cardObj.ContainsKey("artist")) cardSet.Artist = cardObj["artist"].ToString();
