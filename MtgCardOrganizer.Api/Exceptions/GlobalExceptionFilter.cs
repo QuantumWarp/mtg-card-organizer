@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using MtgCardOrganizer.Bll.Exceptions;
 using MtgCardOrganizer.Dal.Exceptions;
+using MtgCardOrganizer.Dal.Utilities;
 
 namespace MtgCardOrganizer.Api.Exceptions
 {
@@ -22,6 +25,7 @@ namespace MtgCardOrganizer.Api.Exceptions
 
         public override void OnException(ExceptionContext context)
         {
+
             var exception = context.Exception;
 
             var errorModel = new ErrorModel();
@@ -36,6 +40,15 @@ namespace MtgCardOrganizer.Api.Exceptions
             {
                 errorModel.Message = "Unexpected error occurred";
                 _logger.LogError(_globalExceptionEventId, exception, "Unexpected Exception");
+
+                var isAdministrator = context.HttpContext.User.Claims
+                    .Where(c => c.Type == ClaimTypes.Role)
+                    .Any(c => c.Value == Roles.Administrator);
+
+                if (isAdministrator)
+                {
+                    errorModel.Data = exception;
+                }
             }
 
             context.Result = new ObjectResult(errorModel)
