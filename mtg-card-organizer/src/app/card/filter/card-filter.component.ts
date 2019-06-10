@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { Collection } from '../../collection/models/collection';
 import { CollectionService } from '../../collection/services/collection.service';
@@ -7,6 +8,7 @@ import { CardQuery } from '../models/card-query';
 import { Rarity } from '../models/rarity';
 import { Set } from '../models/set';
 import { SetService } from '../services/set.service';
+import { CardFilterData } from './card-filter-data';
 
 @Component({
   selector: 'mco-card-filter',
@@ -14,9 +16,6 @@ import { SetService } from '../services/set.service';
   styleUrls: ['./card-filter.component.scss'],
 })
 export class CardFilterComponent implements OnInit {
-  @Output() filterChanged = new EventEmitter<CardQuery>();
-  @Input() disableCollectionSearch = false;
-
   rarities = Rarity;
   collections: Collection[];
 
@@ -24,17 +23,21 @@ export class CardFilterComponent implements OnInit {
   form: FormGroup;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: CardFilterData,
     private formBuilder: FormBuilder,
     private setService: SetService,
     private collectionService: CollectionService,
+    private dialogRef: MatDialogRef<CardFilterComponent>,
   ) { }
 
   ngOnInit(): void {
-    this.setService.query().subscribe(results => {
-      this.sets = results.data.sort((x, y) => x.name > y.name ? 1 : -1);
-    });
+    if (this.data.cardSetSearch) {
+      this.setService.query().subscribe(results => {
+        this.sets = results.data.sort((x, y) => x.name > y.name ? 1 : -1);
+      });
+    }
 
-    if (!this.disableCollectionSearch) {
+    if (this.data.collectionSearch) {
       this.collectionService.getBookmarks().subscribe(pagedData => {
         this.collections = pagedData.data;
       });
@@ -51,16 +54,24 @@ export class CardFilterComponent implements OnInit {
 
       collectionIds: [[], ],
     });
+
+    if (this.data.currentFilter) {
+      this.form.patchValue({
+        ...this.data.currentFilter,
+        name: this.data.currentFilter.name[0],
+        text: this.data.currentFilter.text[0],
+        type: this.data.currentFilter.type[0],
+      });
+    }
   }
 
   apply(): void {
     const filter = Object.assign(new CardQuery(), this.form.value);
 
-    // TODO: this is too dynamic
     filter.name = filter.name ? [ filter.name ] : [];
     filter.text = filter.text ? [ filter.text ] : [];
     filter.type = filter.type ? [ filter.type ] : [];
 
-    this.filterChanged.emit(<CardQuery>filter);
+    this.dialogRef.close(filter);
   }
 }

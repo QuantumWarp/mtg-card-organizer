@@ -1,9 +1,10 @@
 <mco-default-page title="Card Search">
   <div fxLayout="row" fxLayoutGap="20px">
-    <mco-card-filter (filterChanged)="filter = $event"></mco-card-filter>
-
     <mco-card contentPadding="0px" fxFlex>
-      <span mcoCardHeader>Search Results</span>
+      <span mcoCardHeader>
+        Search Results
+        <button mat-raised-button (click)="openFilter()">Filter</button>
+      </span>
 
       <mco-card-set-grid
         [filter]="filter"

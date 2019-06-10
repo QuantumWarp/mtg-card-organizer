@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { filter } from 'rxjs/internal/operators';
 
 import { CardDetailsModalComponent } from '../../details/modal/card-details-modal.component';
+import { CardFilterData } from '../../filter/card-filter-data';
+import { CardFilterComponent } from '../../filter/card-filter.component';
 import { CardQuery } from '../../models/card-query';
 import { CardSet } from '../../models/card-set';
 
@@ -12,9 +15,17 @@ import { CardSet } from '../../models/card-set';
 export class CardSearchPageComponent {
   filter = new CardQuery();
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+  ) { }
 
-  cardSetSelected(cardSet: CardSet) {
+  cardSetSelected(cardSet: CardSet): void {
     this.dialog.open(CardDetailsModalComponent, { data: cardSet });
+  }
+
+  openFilter(): void {
+    this.dialog.open(CardFilterComponent, {
+      data: new CardFilterData(),
+    });
   }
 }

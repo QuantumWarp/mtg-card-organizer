@@ -15,6 +15,9 @@ import { CardModule } from '../../card/card.module';
 
     CardModule,
   ],
+  entryComponents: [
+    CardRapidEntryComponent,
+  ],
   exports: [
     CardRapidEntryComponent,
     CardRapidEntryResultComponent,

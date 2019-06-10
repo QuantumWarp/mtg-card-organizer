@@ -2,9 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { filter } from 'rxjs/internal/operators';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { CardDetailsModalComponent } from '../../card/details/modal/card-details-modal.component';
+import { CardFilterData } from '../../card/filter/card-filter-data';
+import { CardFilterComponent } from '../../card/filter/card-filter.component';
 import { CardQuery } from '../../card/models/card-query';
 import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
@@ -31,8 +34,6 @@ export class CollectionPageComponent implements OnInit {
   collection: Collection;
   wrappedService: WrappedDataService<CardInstance, CardInstance>;
 
-  mode: 'view' | 'filter' | 'fastAdd' = 'view';
-
   constructor(
     public authService: AuthenticationService,
     public collectionCardService: CollectionCardService,
@@ -47,6 +48,27 @@ export class CollectionPageComponent implements OnInit {
       this.collection = this.route.snapshot.data['collection'];
       const collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionCardService);
       this.wrappedService = WrappedDataService.construct(collectionCardServiceWrapper);
+    });
+  }
+
+  openFilter(): void {
+    const filterDialog = this.dialog.open(CardFilterComponent, {
+      data: new CardFilterData({
+        canSelectCollection: false,
+        currentFilter: this.filter,
+      }),
+    });
+
+    filterDialog.afterClosed().subscribe((result) => {
+      if (!result) { return; }
+      this.filter = result;
+    });
+  }
+
+  openRapidEntry(): void {
+    this.dialog.open(CardRapidEntryComponent, {
+      disableClose: true,
+      width: '75vw',
     });
   }
 
@@ -77,20 +99,6 @@ export class CollectionPageComponent implements OnInit {
 
   refreshDataSource(): void {
     this.grid.cardSetGrid.cardGrid.basicGrid.dataSource.refresh();
-  }
-
-  openRapidEntry() {
-    const dialogRef = this.dialog.open(CardRapidEntryComponent, {
-      disableClose: true,
-      minWidth: '600px',
-      data: (cio: CardInstance[]) => this.collectionCardService.addCards(this.collection.id, cio).toPromise()
-    });
-
-    dialogRef.afterClosed().subscribe(results => {
-      this.notificationService.notify({ message: 'Added Cards', type: SnackNotificationType.Success });
-      // TODO: dont reload
-      location.reload();
-    });
   }
 
   toggleBookmark(): void {

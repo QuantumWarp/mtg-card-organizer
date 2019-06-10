@@ -1,41 +1,62 @@
-<mco-card>
-  <span mcoCardHeader>Filter</span>
+<mco-modal>
+  <span mcoModalHeader>Filter</span>
 
-  <form [formGroup]="form" fxLayout="column">
-    <mat-form-field *ngIf="!disableCollectionSearch">
-      <mat-select placeholder="Collection" formControlName="collectionIds" multiple>
-        <mat-option *ngFor="let collection of collections" [value]="collection.id">{{ collection.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <form [formGroup]="form" fxLayout="row" fxLayoutGap="10px">
+    <div fxLayout="column" *ngIf="data.collectionSearch">
+      <span class="section-header">Collection</span>
 
-    <mat-form-field>
-      <input autocomplete="off" matInput placeholder="Name" formControlName="name">
-    </mat-form-field>
+      <mat-form-field *ngIf="data.canSelectCollection">
+        <mat-select placeholder="Collection" formControlName="collectionIds" multiple>
+          <mat-option *ngFor="let collection of collections" [value]="collection.id">{{ collection.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-select placeholder="Sets" formControlName="setIds" multiple>
-        <mat-option *ngFor="let set of sets" [value]="set.id">{{ set.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-checkbox>Group by Card</mat-checkbox>
+    </div>
 
-    <mat-form-field>
-      <mat-select placeholder="Rarity" formControlName="rarities" multiple>
-        <mat-option *ngFor="let rarity of rarities | keys" [value]="rarity.key">{{ rarity.value }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <mat-divider *ngIf="data.collectionSearch" [vertical]="true"></mat-divider>
 
-    <mat-form-field>
-      <input autocomplete="off" matInput placeholder="Text" formControlName="text">
-    </mat-form-field>
+    <div fxLayout="column" *ngIf="data.cardSetSearch">
+      <span class="section-header">Set Info</span>
 
-    <mat-form-field>
-      <input autocomplete="off" matInput placeholder="Type" formControlName="type">
-    </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Sets" formControlName="setIds" multiple>
+          <mat-option *ngFor="let set of sets" [value]="set.id">{{ set.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field>
-      <input autocomplete="off" matInput placeholder="Number" formControlName="nums">
-    </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Rarity" formControlName="rarities" multiple>
+          <mat-option *ngFor="let rarity of rarities | keys" [value]="rarity.key">{{ rarity.value }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="apply()">Apply</button>
+      <mat-form-field>
+        <input autocomplete="off" matInput placeholder="Number" formControlName="nums">
+      </mat-form-field>
+    </div>
+
+    <mat-divider [vertical]="true"></mat-divider>
+
+    <div fxLayout="column">
+      <span class="section-header">Card</span>
+
+      <mat-form-field>
+        <input autocomplete="off" matInput placeholder="Name" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input autocomplete="off" matInput placeholder="Text" formControlName="text">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input autocomplete="off" matInput placeholder="Type" formControlName="type">
+      </mat-form-field>
+    </div>
   </form>
-</mco-card>
+
+  <div mcoModalActions fxLayoutGap="5px">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" (click)="apply()">Apply</button>
+  </div>
+</mco-modal>

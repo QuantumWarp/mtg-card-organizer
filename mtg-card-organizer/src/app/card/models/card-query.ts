@@ -10,21 +10,25 @@ export class CardQuery extends Base64QueryStringGenerator implements IPageable {
   name: string[] = [];
   text: string[] = [];
   type: string[] = [];
+  manaCost = new ManaCostQuery();
 
   setIds: number[] = [];
   rarities: Rarity[] = [];
   nums: string[] = [];
 
+  groupByCard = false;
   collectionIds: number[];
 
-  manaCost = new ManaCostQuery();
+  constructor(init?: Partial<CardQuery>) {
+    super('cardQuery');
+    Object.assign(this, init);
+  }
 
   applyPaging(paging: Paging): void {
     this.paging = paging;
   }
 
-  constructor(init?: Partial<CardQuery>) {
-    super('cardQuery');
-    Object.assign(this, init);
+  isCollectionSearch(): boolean {
+    return this.collectionIds.length !== 0;
   }
 }

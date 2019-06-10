@@ -10,6 +10,9 @@ import { CardFilterComponent } from './card-filter.component';
   imports: [
     SharedModule,
   ],
+  entryComponents: [
+    CardFilterComponent,
+  ],
   exports: [
     CardFilterComponent,
   ],

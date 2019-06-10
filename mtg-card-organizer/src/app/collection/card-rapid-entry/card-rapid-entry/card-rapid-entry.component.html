@@ -1,5 +1,5 @@
-<mco-card>
-  <span mcoCardHeader>Fast Add ({{ resultComponent.totalSessionCount }} added this session)</span>
+<mco-modal>
+  <span mcoModalHeader>Fast Add ({{ resultComponent.totalSessionCount }} added this session)</span>
 
   <form [formGroup]="form" fxLayout="column">
     <mat-form-field>
@@ -18,4 +18,8 @@
     (applied)="searched.emit()"
     [collection]="collection">
   </mco-card-rapid-entry-result>
-</mco-card>
+
+  <div mcoModalActions>
+    <button mat-raised-button mat-dialog-close>Done</button>
+  </div>
+</mco-modal>
