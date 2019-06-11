@@ -8,6 +8,33 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
 {
     public class CardInstanceQuery : AbstractCardQuery<CardInstance>
     {
+        public List<int> SetIds { get; set; } = new List<int>();
+        public List<Rarity?> Rarities { get; set; } = new List<Rarity?>();
+        public List<string> Nums { get; set; } = new List<string>();
+
+        public List<int> CollectionIds { get; set; } = new List<int>();
+
+        public override IQueryable<CardInstance> ApplyQuery(IQueryable<CardInstance> queryable)
+        {
+            queryable = ApplyIncludes(queryable);
+
+            foreach (var part in Name) queryable = NameContains(queryable, part.ToLower());
+            foreach (var part in Text) queryable = TextContains(queryable, part.ToLower());
+            foreach (var part in Type) queryable = TypeContains(queryable, part.ToLower());            
+            // queryable = queryable.ApplyQuery(ManaCost, transform);
+
+            var nums = Nums.SelectMany(x => NumStrings(x)).ToList();
+            if (SetIds.Any()) queryable = IsInSets(queryable, SetIds);
+            if (Rarities.Any()) queryable = IsInRarities(queryable, Rarities);
+            if (nums.Any()) queryable = IsInNums(queryable, nums);
+
+            if (CollectionIds.Any()) queryable = IsInCollections(queryable, CollectionIds);
+
+            queryable = OrderResults(queryable);
+
+            return queryable;
+        }
+
         protected override IQueryable<CardInstance> ApplyIncludes(IQueryable<CardInstance> queryable)
         {
             return queryable
@@ -37,23 +64,23 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
         }
 
         // Card Set
-        protected override IQueryable<CardInstance> IsInSets(IQueryable<CardInstance> queryable, List<int> setIds)
+        protected IQueryable<CardInstance> IsInSets(IQueryable<CardInstance> queryable, List<int> setIds)
         {
             return queryable.Where(x => setIds.Contains(x.CardSet.SetId));
         }
         
-        protected override IQueryable<CardInstance> IsInRarities(IQueryable<CardInstance> queryable, List<Rarity?> rarities)
+        protected IQueryable<CardInstance> IsInRarities(IQueryable<CardInstance> queryable, List<Rarity?> rarities)
         {
             return queryable.Where(x => rarities.Contains(x.CardSet.Rarity));
         }
 
-        protected override IQueryable<CardInstance> IsInNums(IQueryable<CardInstance> queryable, List<string> nums)
+        protected IQueryable<CardInstance> IsInNums(IQueryable<CardInstance> queryable, List<string> nums)
         {
             return queryable.Where(x => nums.Contains(x.CardSet.Num));
         }
 
         // Card Instance
-        protected override IQueryable<CardInstance> IsInCollections(IQueryable<CardInstance> queryable, List<int> collectionIds)
+        protected IQueryable<CardInstance> IsInCollections(IQueryable<CardInstance> queryable, List<int> collectionIds)
         {
             return queryable.Where(x => collectionIds.Contains(x.CollectionId));
         }

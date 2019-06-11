@@ -54,13 +54,6 @@ namespace MtgCardOrganizer.Api.Areas.Main.Controllers
         }
         
         // Card Tasks
-        [HttpGet("{id}/cards")]
-        public async Task<ActionResult<PagedData<CardInstanceDto>>> GetCards(int id, [Base64Binder] CardInstanceQuery cardQuery)
-        {
-            var cardInstances = await _collectionRepository.GetCardsAsync(id, cardQuery);
-            return _mapper.Map<PagedData<CardInstanceDto>>(cardInstances);
-        }
-        
         [HttpPost("{id}/cards")]
         public async Task<IActionResult> AddCards(int id, [FromBody] List<CardInstance> cardInstanceDtos)
         {

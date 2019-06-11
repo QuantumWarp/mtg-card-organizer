@@ -6,6 +6,7 @@ using MtgCardOrganizer.Dal.Initialization;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
     public interface IPermissionRepository
     {
         Task CheckAsync(int containerId, Permission requiredPermission);
+        Task CheckAsync(List<int> containerIds, Permission requiredPermission);
         Task<PagedData<ContainerUserPermission>> GetPermissionsAsync(int containerId, Paging paging);
         Task<Permission> GetPermissionAsync(int containerId);
         Task UpdatePermissionAsync(ContainerUserPermission containerUserLink);
@@ -39,6 +41,12 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
 
             if (!valid)
                 throw new PermissionException("Invalid permissions");
+        }
+
+        public async Task CheckAsync(List<int> containerIds, Permission requiredPermission)
+        {
+            var tasks = containerIds.Select(x => CheckAsync(x, requiredPermission));
+            await Task.WhenAll(tasks);
         }
 
         public async Task<PagedData<ContainerUserPermission>> GetPermissionsAsync(int containerId, Paging paging)

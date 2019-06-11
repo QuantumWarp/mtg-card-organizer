@@ -8,6 +8,20 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
 {
     public class CardQuery : AbstractCardQuery<Card>
     {
+        public override IQueryable<Card> ApplyQuery(IQueryable<Card> queryable)
+        {
+            queryable = ApplyIncludes(queryable);
+
+            foreach (var part in Name) queryable = NameContains(queryable, part.ToLower());
+            foreach (var part in Text) queryable = TextContains(queryable, part.ToLower());
+            foreach (var part in Type) queryable = TypeContains(queryable, part.ToLower());            
+            // queryable = queryable.ApplyQuery(ManaCost, transform);
+
+            queryable = OrderResults(queryable);
+
+            return queryable;
+        }
+
         protected override IQueryable<Card> ApplyIncludes(IQueryable<Card> queryable)
         {
             return queryable
@@ -34,28 +48,6 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
         protected override IQueryable<Card> TypeContains(IQueryable<Card> queryable, string substring)
         {
             return queryable.Where(x => x.Type.ToLower().Contains(substring));
-        }
-
-        // Card Set
-        protected override IQueryable<Card> IsInSets(IQueryable<Card> queryable, List<int> setIds)
-        {
-            return queryable.Where(x => x.CardSets.Any(y => setIds.Contains(y.SetId)));
-        }
-        
-        protected override IQueryable<Card> IsInRarities(IQueryable<Card> queryable, List<Rarity?> rarities)
-        {
-            return queryable.Where(x => x.CardSets.Any(y => rarities.Contains(y.Rarity)));
-        }
-
-        protected override IQueryable<Card> IsInNums(IQueryable<Card> queryable, List<string> nums)
-        {
-            return queryable.Where(x => x.CardSets.Any(y => nums.Contains(y.Num)));
-        }
-
-        // Card Instance
-        protected override IQueryable<Card> IsInCollections(IQueryable<Card> queryable, List<int> collectionIds)
-        {
-            return queryable.Where(x => x.CardSets.Any(y => y.CardInstances.Any(z => collectionIds.Contains(z.CollectionId))));
         }
     }
 }

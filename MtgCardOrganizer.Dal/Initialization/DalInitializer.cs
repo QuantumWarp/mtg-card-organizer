@@ -41,6 +41,7 @@ namespace MtgCardOrganizer.Dal.Initialization
             services.AddScoped<IPermissionRepository, PermissionRepository>();
             services.AddScoped<IContainerRepository, ContainerRepository>();
             services.AddScoped<ICollectionRepository, CollectionRepository>();
+            services.AddScoped<ICollectionCardQueryRepository, CollectionCardQueryRepository>();
             services.AddScoped<IDeckRepository, DeckRepository>();
             services.AddScoped<ICardRepository, CardRepository>();
             services.AddScoped<ICardSetRepository, CardSetRepository>();

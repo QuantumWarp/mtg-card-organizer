@@ -14,7 +14,8 @@ export class CollectionCardService {
   constructor(private apiService: ApiService) { }
 
   queryCards(collectionId: number, cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
-    return this.apiService.get<PagedData<CardInstance>>('api/collections/' + collectionId + '/cards', cardQuery);
+    cardQuery.collectionIds = [ collectionId ];
+    return this.apiService.get<PagedData<CardInstance>>('api/collections/cards', cardQuery);
   }
 
   addCards(collectionId: number, cardInstances: CardInstance[]): Observable<void> {

@@ -24,8 +24,16 @@ export class CardSearchPageComponent {
   }
 
   openFilter(): void {
-    this.dialog.open(CardFilterComponent, {
-      data: new CardFilterData(),
+    const filterDialog = this.dialog.open(CardFilterComponent, {
+      data: new CardFilterData({
+        collectionSearch: false,
+        currentFilter: this.filter,
+      }),
+    });
+
+    filterDialog.afterClosed().subscribe((result) => {
+      if (!result) { return; }
+      this.filter = result;
     });
   }
 }
