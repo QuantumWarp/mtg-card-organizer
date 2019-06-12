@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CardInstance } from '../models/card-instance';
-import { CardQuery } from '../../card/models/card-query';
 import { ApiService } from '../../core/communication/api.service';
-import { PagedData } from '../../shared/filtering/paged-data';
-import { DataService } from '../../shared/grid/grid-data-source.interfaces';
+import { CardInstance } from '../models/card-instance';
 
 @Injectable({
   providedIn: 'root',
@@ -13,29 +10,11 @@ import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 export class CollectionCardService {
   constructor(private apiService: ApiService) { }
 
-  queryCards(collectionId: number, cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
-    cardQuery.collectionIds = [ collectionId ];
-    return this.apiService.get<PagedData<CardInstance>>('api/collections/cards', cardQuery);
-  }
-
   addCards(collectionId: number, cardInstances: CardInstance[]): Observable<void> {
     return this.apiService.post('api/collections/' + collectionId + '/cards', cardInstances);
   }
 
   deleteCards(collectionId: number, cardInstanceIds: number[]): Observable<void> {
     return this.apiService.post('api/collections/' + collectionId + '/cards/delete', cardInstanceIds);
-  }
-}
-
-export class CollectionCardServiceWrapper extends DataService<CardInstance> {
-  constructor(
-    public collectionId: number,
-    private collectionCardService: CollectionCardService,
-  ) {
-    super();
-  }
-
-  query(cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
-    return this.collectionCardService.queryCards(this.collectionId, cardQuery);
   }
 }

@@ -1,0 +1,15 @@
+<mco-card-set-grid matSort
+  [wrappedService]="cardSetWrappedService"
+  (rowSelected)="rowSelected.emit($event)"
+  [inputColumnDefs]="columnDefs"
+  [filter]="filter"
+  [displayedColumns]="displayedColumns">
+  <ng-container matColumnDef="count">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Count</mat-header-cell>
+    <mat-cell *matCellDef="let record">
+      <mat-checkbox disabled [(ngModel)]="wrappedService.transform(record).count"></mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <ng-content></ng-content>
+</mco-card-set-grid>

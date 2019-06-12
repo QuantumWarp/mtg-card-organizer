@@ -19,8 +19,10 @@ import { CardInstanceGridComponent } from '../card-instance-grid/card-instance-g
 import { CardRapidEntryComponent } from '../card-rapid-entry/card-rapid-entry/card-rapid-entry.component';
 import { CardInstance } from '../models/card-instance';
 import { Collection } from '../models/collection';
-import { CollectionCardService, CollectionCardServiceWrapper } from '../services/collection-card.service';
+import { CollectionCardService } from '../services/collection-card.service';
 import { CollectionService } from '../services/collection.service';
+import { CollectionCardQueryService, CollectionInstanceServiceWrapper, CollectionGroupedByCardServiceWrapper } from '../services/collection-card-query.service';
+import { CardInstanceGroupedCard } from '../models/card-instance-grouped-card';
 
 @Component({
   selector: 'mco-collection-page',
@@ -32,11 +34,12 @@ export class CollectionPageComponent implements OnInit {
 
   filter = new CardQuery();
   collection: Collection;
-  wrappedService: WrappedDataService<CardInstance, CardInstance>;
+  wrappedService: WrappedDataService<CardInstanceGroupedCard, CardInstanceGroupedCard>;
 
   constructor(
     public authService: AuthenticationService,
     public collectionCardService: CollectionCardService,
+    public collectionCardQueryService: CollectionCardQueryService,
     public collectionService: CollectionService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -46,8 +49,9 @@ export class CollectionPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(() => {
       this.collection = this.route.snapshot.data['collection'];
-      const collectionCardServiceWrapper = new CollectionCardServiceWrapper(this.collection.id, this.collectionCardService);
-      this.wrappedService = WrappedDataService.construct(collectionCardServiceWrapper);
+      // const collectionInstanceServiceWrapper = new CollectionInstanceServiceWrapper(this.collection.id, this.collectionCardQueryService);
+      const collectionGroupedByCardServiceWrapper = new CollectionGroupedByCardServiceWrapper(this.collection.id, this.collectionCardQueryService);
+      this.wrappedService = WrappedDataService.construct(collectionGroupedByCardServiceWrapper);
     });
   }
 

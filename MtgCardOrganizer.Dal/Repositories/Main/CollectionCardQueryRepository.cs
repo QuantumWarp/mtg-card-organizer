@@ -7,6 +7,7 @@ using MtgCardOrganizer.Dal.Requests.CardQueries;
 using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,32 +41,59 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
         {
             await CheckQueryPermissions(cardQuery);
 
-            return await _dbContext.CardInstances
+            var groupedInstances = await _dbContext.CardInstances
                 .AsNoTracking()
                 .ApplyQuery(cardQuery)
-                .GroupBy(x => x.CardSet.CardId)
-                .Select(x => new CardInstanceGroupedCard {
-                  Card = x.First().CardSet.Card,
-                  Count = x.Count(),
-                  FoilCount = x.Count(y => y.Foil),
+                .GroupBy(x => x.CardSet.Card.Name)
+                .Select(x => new {
+                    CardName = x.Key,
+                    Count = x.Count(),
                 })
+                .OrderBy(x => x.CardName)
                 .ApplyPagingAsync(cardQuery?.Paging);
+
+            return new PagedData<CardInstanceGroupedCard>(
+                groupedInstances.Data
+                    .GroupJoin(
+                        _dbContext.Cards,
+                        x => x.CardName,
+                        x => x.Name,
+                        (x, card) => new CardInstanceGroupedCard {
+                            Card = card.First(),
+                            Count = x.Count,
+                        })
+                    .ToList(),
+                groupedInstances.TotalCount
+            );
         }
 
         public async Task<PagedData<CardInstanceGroupedCardSet>> GetGroupedByCardSetAsync(CardInstanceQuery cardQuery)
         {
             await CheckQueryPermissions(cardQuery);
 
-            return await _dbContext.CardInstances
+            var groupedInstances = await _dbContext.CardInstances
                 .AsNoTracking()
                 .ApplyQuery(cardQuery)
                 .GroupBy(x => x.CardSetId)
-                .Select(x => new CardInstanceGroupedCardSet {
-                  CardSet = x.First().CardSet,
-                  Count = x.Count(),
-                  FoilCount = x.Count(y => y.Foil),
+                .Select(x => new {
+                    CardSetId = x.Key,
+                    Count = x.Count(),
                 })
                 .ApplyPagingAsync(cardQuery?.Paging);
+
+            return new PagedData<CardInstanceGroupedCardSet>(
+                groupedInstances.Data
+                    .Join(
+                        _dbContext.CardSets,
+                        x => x.CardSetId,
+                        x => x.Id,
+                        (x, cardSet) => new CardInstanceGroupedCardSet {
+                            CardSet = cardSet,
+                            Count = x.Count,
+                        })
+                    .ToList(),
+                groupedInstances.TotalCount
+            );
         }
 
         public async Task<PagedData<CardInstance>> GetInstancesAsync(CardInstanceQuery cardQuery)

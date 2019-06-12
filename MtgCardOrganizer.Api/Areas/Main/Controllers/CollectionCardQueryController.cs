@@ -37,7 +37,7 @@ namespace MtgCardOrganizer.Api.Areas.Main.Controllers
             return _mapper.Map<PagedData<CardInstanceGroupedCardDto>>(result);
         }
         
-        [HttpGet("cards/group-by-cardset")]
+        [HttpGet("cards/group-by-card-set")]
         public async Task<ActionResult<PagedData<CardInstanceGroupedCardSetDto>>> GetGroupedByCardSet([Base64Binder] CardInstanceQuery cardQuery)
         {
             var result = await _collectionCardQueryRepository.GetGroupedByCardSetAsync(cardQuery);

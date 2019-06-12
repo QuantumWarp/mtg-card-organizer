@@ -7,9 +7,13 @@ import { CardInstanceGridComponent } from './card-instance-grid/card-instance-gr
 import { CardRapidEntryModule } from './card-rapid-entry/card-rapid-entry.module';
 import { CollectionPageComponent } from './page/collection-page.component';
 import { CollectionResolver } from './services/collection.resolver';
+import { CardInstanceGroupedCardGridComponent } from './card-instance-grouped-card-grid/card-instance-grouped-card-grid.component';
+import { CardInstanceGroupedCardSetGridComponent } from './card-instance-grouped-card-set-grid/card-instance-grouped-card-set-grid.component';
 
 @NgModule({
   declarations: [
+    CardInstanceGroupedCardGridComponent,
+    CardInstanceGroupedCardSetGridComponent,
     CardInstanceGridComponent,
     CollectionPageComponent,
   ],

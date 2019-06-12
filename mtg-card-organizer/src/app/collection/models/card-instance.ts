@@ -9,8 +9,6 @@ export class CardInstance {
   cardSetId: number;
   cardSet: CardSet;
 
-  imageUrl: string;
-
   public constructor(init?: Partial<CardInstance>) {
     Object.assign(this, init);
   }

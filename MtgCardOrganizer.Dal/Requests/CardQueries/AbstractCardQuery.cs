@@ -17,13 +17,9 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
 
         public abstract IQueryable<T> ApplyQuery(IQueryable<T> queryable);
 
-        protected abstract IQueryable<T> ApplyIncludes(IQueryable<T> queryable);
-
         protected abstract IQueryable<T> NameContains(IQueryable<T> queryable, string substring);
         protected abstract IQueryable<T> TextContains(IQueryable<T> queryable, string substring);
         protected abstract IQueryable<T> TypeContains(IQueryable<T> queryable, string substring);
-
-        protected abstract IQueryable<T> OrderResults(IQueryable<T> queryable);
 
         protected IEnumerable<string> NumStrings(string searchNum)
         {

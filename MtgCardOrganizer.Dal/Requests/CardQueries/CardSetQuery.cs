@@ -14,8 +14,6 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
 
         public override IQueryable<CardSet> ApplyQuery(IQueryable<CardSet> queryable)
         {
-            queryable = ApplyIncludes(queryable);
-
             foreach (var part in Name) queryable = NameContains(queryable, part.ToLower());
             foreach (var part in Text) queryable = TextContains(queryable, part.ToLower());
             foreach (var part in Type) queryable = TypeContains(queryable, part.ToLower());            
@@ -26,21 +24,7 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
             if (Rarities.Any()) queryable = IsInRarities(queryable, Rarities);
             if (nums.Any()) queryable = IsInNums(queryable, nums);
 
-            queryable = OrderResults(queryable);
-
             return queryable;
-        }
-
-        protected override IQueryable<CardSet> ApplyIncludes(IQueryable<CardSet> queryable)
-        {
-            return queryable
-                .Include(x => x.Card)
-                .Include(x => x.CardInstances);
-        }
-        
-        protected override IQueryable<CardSet> OrderResults(IQueryable<CardSet> queryable)
-        {
-            return queryable.OrderBy(x => x.Card.Name);
         }
 
         // Card

@@ -10,28 +10,12 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
     {
         public override IQueryable<Card> ApplyQuery(IQueryable<Card> queryable)
         {
-            queryable = ApplyIncludes(queryable);
-
             foreach (var part in Name) queryable = NameContains(queryable, part.ToLower());
             foreach (var part in Text) queryable = TextContains(queryable, part.ToLower());
             foreach (var part in Type) queryable = TypeContains(queryable, part.ToLower());            
             // queryable = queryable.ApplyQuery(ManaCost, transform);
 
-            queryable = OrderResults(queryable);
-
             return queryable;
-        }
-
-        protected override IQueryable<Card> ApplyIncludes(IQueryable<Card> queryable)
-        {
-            return queryable
-                .Include(x => x.CardSets)
-                    .ThenInclude(x => x.CardInstances);
-        }
-        
-        protected override IQueryable<Card> OrderResults(IQueryable<Card> queryable)
-        {
-            return queryable.OrderBy(x => x.Name);
         }
 
         // Card
