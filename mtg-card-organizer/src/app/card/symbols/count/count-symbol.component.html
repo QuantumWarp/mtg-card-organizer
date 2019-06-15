@@ -1,0 +1,14 @@
+<div fxLayout="row" fxFlexAlign="center"
+  [matTooltip]="count + ' Cards'" [matTooltipDisabled]="count <= 4">
+    <div fxLayout="column">
+      <div fxLayout="row">
+        <span class="dot" [class.show]="count > 0"></span>
+        <span class="dot" [class.show]="count > 1"></span>
+      </div>
+      <div fxLayout="row">
+        <span class="dot" [class.show]="count > 2"></span>
+        <span class="dot" [class.show]="count > 3"></span>
+      </div>
+    </div>
+    <span class="plus" *ngIf="count > 4">+</span>
+</div>

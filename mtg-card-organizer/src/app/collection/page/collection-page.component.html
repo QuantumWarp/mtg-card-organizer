@@ -15,7 +15,7 @@
   <mco-card fxFlex contentPadding="0px">
     <mco-card-instance-grouped-card-grid *ngIf="!filter.groupByCard"
       [filter]="filter"
-      [displayedColumns]="['count', 'name', 'manaCost', 'power', 'toughness', 'actions']"
+      [displayedColumns]="['count', 'name', 'manaCost', 'type', 'pt', 'actions']"
       [wrappedService]="wrappedService"
       (rowSelected)="cardInstanceSelected($event)">
 

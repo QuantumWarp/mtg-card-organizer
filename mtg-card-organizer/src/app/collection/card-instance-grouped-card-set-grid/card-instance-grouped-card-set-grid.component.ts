@@ -17,7 +17,7 @@ export class CardInstanceGroupedCardSetGridComponent extends AbstractGridCompone
 
   @Input() filter = new CardQuery();
 
-  @Input() displayedColumns = ['count', 'name', 'setSymbol', 'manaCost', 'power', 'toughness'];
+  @Input() displayedColumns = ['count', 'name', 'setSymbol', 'manaCost', 'type', 'pt'];
 
   @Input() wrappedService: WrappedDataService<any, CardInstanceGroupedCardSet>;
   cardSetWrappedService: WrappedDataService<any, CardSet>;

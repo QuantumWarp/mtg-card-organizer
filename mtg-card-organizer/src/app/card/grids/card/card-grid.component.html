@@ -18,13 +18,21 @@
     </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="power">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Power</mat-header-cell>
-    <mat-cell *matCellDef="let record">{{wrappedService.transform(record).power}}</mat-cell>
+  <ng-container matColumnDef="type">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+    <mat-cell *matCellDef="let record">
+      <span [matTooltip]="wrappedService.transform(record).type.split('—')[1]">
+        {{wrappedService.transform(record).type.split('—')[0]}}
+      </span>
+    </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="toughness">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Toughness</mat-header-cell>
-    <mat-cell *matCellDef="let record">{{wrappedService.transform(record).toughness}}</mat-cell>
+  <ng-container matColumnDef="pt">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Power/Toughness</mat-header-cell>
+    <mat-cell class="cell-power-toughness" *matCellDef="let record">
+      {{wrappedService.transform(record).power}}
+      {{wrappedService.transform(record).power ? '/' : '-'}}
+      {{wrappedService.transform(record).toughness}}
+    </mat-cell>
   </ng-container>
 </mco-basic-grid>

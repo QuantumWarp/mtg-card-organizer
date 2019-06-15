@@ -5,8 +5,10 @@
   [filter]="filter"
   [displayedColumns]="displayedColumns">
   <ng-container matColumnDef="count">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Count</mat-header-cell>
-    <mat-cell *matCellDef="let record">{{wrappedService.transform(record).count}}</mat-cell>
+    <mat-header-cell class="grid-count-column" *matHeaderCellDef mat-sort-header>Count</mat-header-cell>
+    <mat-cell class="grid-count-column" *matCellDef="let record">
+      <mco-count-symbol [count]="wrappedService.transform(record).count"></mco-count-symbol>
+    </mat-cell>
   </ng-container>
 
   <ng-content></ng-content>

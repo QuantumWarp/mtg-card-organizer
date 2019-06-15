@@ -16,7 +16,7 @@ export class CardGridComponent extends AbstractGridComponent {
   @ViewChild(BasicGridComponent) basicGrid: BasicGridComponent<Card>;
 
   @Input() filter = new CardQuery();
-  @Input() displayedColumns = ['name', 'manaCost', 'power', 'toughness'];
+  @Input() displayedColumns = ['name', 'manaCost', 'type', 'pt'];
 
   @Input() wrappedService: WrappedDataService<any, Card>;
 

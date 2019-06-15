@@ -5,11 +5,13 @@ import { CustomManaSymbolComponent } from './mana/custom-mana-symbol/custom-mana
 import { ManaCostComponent } from './mana/mana-cost/mana-cost.component';
 import { RealManaSymbolComponent } from './mana/real-mana-symbol/real-mana-symbol.component';
 import { SetSymbolComponent } from './set/set-symbol.component';
+import { CountSymbolComponent } from './count/count-symbol.component';
 
 @NgModule({
   declarations: [
     RealManaSymbolComponent,
     CustomManaSymbolComponent,
+    CountSymbolComponent,
     SetSymbolComponent,
     ManaCostComponent,
   ],
@@ -17,6 +19,7 @@ import { SetSymbolComponent } from './set/set-symbol.component';
     SharedModule,
   ],
   exports: [
+    CountSymbolComponent,
     SetSymbolComponent,
     ManaCostComponent,
   ],
