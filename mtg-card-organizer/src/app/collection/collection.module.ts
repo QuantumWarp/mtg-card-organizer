@@ -3,18 +3,13 @@ import { RouterModule } from '@angular/router';
 
 import { CardModule } from '../card/card.module';
 import { SharedModule } from '../shared/shared.module';
-import { CardInstanceGridComponent } from './card-instance-grid/card-instance-grid.component';
 import { CardRapidEntryModule } from './card-rapid-entry/card-rapid-entry.module';
+import { CollectionGridModule } from './grids/collection-grids.module';
 import { CollectionPageComponent } from './page/collection-page.component';
 import { CollectionResolver } from './services/collection.resolver';
-import { CardInstanceGroupedCardGridComponent } from './card-instance-grouped-card-grid/card-instance-grouped-card-grid.component';
-import { CardInstanceGroupedCardSetGridComponent } from './card-instance-grouped-card-set-grid/card-instance-grouped-card-set-grid.component';
 
 @NgModule({
   declarations: [
-    CardInstanceGroupedCardGridComponent,
-    CardInstanceGroupedCardSetGridComponent,
-    CardInstanceGridComponent,
     CollectionPageComponent,
   ],
   imports: [
@@ -24,6 +19,7 @@ import { CardInstanceGroupedCardSetGridComponent } from './card-instance-grouped
     ]),
 
     CardModule,
+    CollectionGridModule,
     CardRapidEntryModule,
   ],
   providers: [

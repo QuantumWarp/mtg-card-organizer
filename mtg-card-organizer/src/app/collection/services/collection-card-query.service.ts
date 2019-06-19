@@ -12,60 +12,38 @@ import { CardInstanceGroupedCard } from '../models/card-instance-grouped-card';
 @Injectable({
   providedIn: 'root',
 })
-export class CollectionCardQueryService {
-  constructor(private apiService: ApiService) { }
-
-  queryGroupedByCard(cardQuery: CardQuery): Observable<PagedData<CardInstanceGroupedCard>> {
-    return this.apiService.get<PagedData<CardInstanceGroupedCard>>('api/collections/cards/group-by-card', cardQuery);
-  }
-
-  queryGroupedByCardSet(cardQuery: CardQuery): Observable<PagedData<CardInstanceGroupedCardSet>> {
-    return this.apiService.get<PagedData<CardInstanceGroupedCardSet>>('api/collections/cards/group-by-card-set', cardQuery);
-  }
-
-  queryInstances(cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
-    return this.apiService.get<PagedData<CardInstance>>('api/collections/cards', cardQuery);
-  }
-}
-
 export class CollectionGroupedByCardServiceWrapper extends DataService<CardInstanceGroupedCard> {
-  constructor(
-    public collectionId: number,
-    private collectionCardQueryService: CollectionCardQueryService,
-  ) {
+  constructor(private apiService: ApiService) {
     super();
   }
 
   query(cardQuery: CardQuery): Observable<PagedData<CardInstanceGroupedCard>> {
-    cardQuery.collectionIds = [ this.collectionId ];
-    return this.collectionCardQueryService.queryGroupedByCard(cardQuery);
+    return this.apiService.get<PagedData<CardInstanceGroupedCard>>('api/collections/cards/group-by-card', cardQuery);
   }
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class CollectionGroupedByCardSetServiceWrapper extends DataService<CardInstanceGroupedCardSet> {
-  constructor(
-    public collectionId: number,
-    private collectionCardQueryService: CollectionCardQueryService,
-  ) {
+  constructor(private apiService: ApiService) {
     super();
   }
 
   query(cardQuery: CardQuery): Observable<PagedData<CardInstanceGroupedCardSet>> {
-    cardQuery.collectionIds = [ this.collectionId ];
-    return this.collectionCardQueryService.queryGroupedByCardSet(cardQuery);
+    return this.apiService.get<PagedData<CardInstanceGroupedCardSet>>('api/collections/cards/group-by-card-set', cardQuery);
   }
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class CollectionInstanceServiceWrapper extends DataService<CardInstance> {
-  constructor(
-    public collectionId: number,
-    private collectionCardQueryService: CollectionCardQueryService,
-  ) {
+  constructor(private apiService: ApiService) {
     super();
   }
 
   query(cardQuery: CardQuery): Observable<PagedData<CardInstance>> {
-    cardQuery.collectionIds = [ this.collectionId ];
-    return this.collectionCardQueryService.queryInstances(cardQuery);
+    return this.apiService.get<PagedData<CardInstance>>('api/collections/cards', cardQuery);
   }
 }

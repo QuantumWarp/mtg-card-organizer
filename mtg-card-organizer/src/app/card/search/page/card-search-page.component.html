@@ -6,10 +6,11 @@
         <button mat-raised-button (click)="openFilter()">Filter</button>
       </span>
 
-      <mco-card-set-grid
+      <mco-variable-grid
         [filter]="filter"
-        (rowSelected)="cardSetSelected($event)">
-      </mco-card-set-grid>
+        [displayedColumns]="['count', 'name', 'setSymbol', 'manaCost', 'type', 'pt', 'foil']"
+        (rowSelected)="rowSelected($event)">
+      </mco-variable-grid>
     </mco-card>
   </div>
 </mco-default-page>

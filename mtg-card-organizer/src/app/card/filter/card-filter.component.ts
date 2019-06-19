@@ -53,6 +53,8 @@ export class CardFilterComponent implements OnInit {
       nums: [[], ],
 
       collectionIds: [[], ],
+      groupByCard: [[], ],
+      groupByCardSet:  [[], ],
     });
 
     if (this.data.currentFilter) {

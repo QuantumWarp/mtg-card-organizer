@@ -11,7 +11,8 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-checkbox>Group by Card</mat-checkbox>
+      <mat-checkbox formControlName="groupByCard">Group by Card</mat-checkbox>
+      <mat-checkbox formControlName="groupByCardSet">Group by Card Set</mat-checkbox>
     </div>
 
     <mat-divider *ngIf="data.collectionSearch" [vertical]="true"></mat-divider>

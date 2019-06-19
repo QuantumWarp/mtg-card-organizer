@@ -30,7 +30,9 @@ namespace MtgCardOrganizer.Dal.Repositories.Common
         {
             return await _dbContext.CardSets
                 .AsNoTracking()
+                .Include(x => x.Card)
                 .ApplyQuery(query)
+                .OrderBy(x => x.Card.Name)
                 .ApplyPagingAsync(query?.Paging);
         }
 

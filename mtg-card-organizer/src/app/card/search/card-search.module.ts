@@ -6,6 +6,7 @@ import { CardGridModule } from '../grids/card-grids.module';
 import { SymbolsModule } from '../symbols/symbols.module';
 import { CardSearchBarComponent } from './bar/card-search-bar.component';
 import { CardSearchPageComponent } from './page/card-search-page.component';
+import { CollectionGridModule } from '../../collection/grids/collection-grids.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CardSearchPageComponent } from './page/card-search-page.component';
   imports: [
     SharedModule,
 
+    CollectionGridModule,
     CardGridModule,
     CardFilterModule,
     SymbolsModule,

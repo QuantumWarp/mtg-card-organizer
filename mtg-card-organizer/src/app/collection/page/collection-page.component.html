@@ -13,35 +13,19 @@
   </div>
 
   <mco-card fxFlex contentPadding="0px">
-    <mco-card-instance-grouped-card-grid *ngIf="!filter.groupByCard"
+    <mco-variable-grid
       [filter]="filter"
-      [displayedColumns]="['count', 'name', 'manaCost', 'type', 'pt', 'actions']"
-      [wrappedService]="wrappedService"
-      (rowSelected)="cardInstanceSelected($event)">
+      [displayedColumns]="['count', 'name', 'setSymbol', 'manaCost', 'type', 'pt', 'foil', 'actions']"
+      (rowSelected)="rowSelected($event)">
 
       <ng-container matColumnDef="actions">
-        <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
+        <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef>Actions</mat-header-cell>
         <mat-cell class="crud-grid-action-column" *matCellDef="let record">
           <button mat-icon-button (click)="$event.stopPropagation(); removeFromCollection(record)">
             <mat-icon>highlight_off</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
-    </mco-card-instance-grouped-card-grid>
-    <!-- <mco-card-instance-grid *ngIf="!filter.groupByCard"
-      [filter]="filter"
-      [displayedColumns]="['name', 'setSymbol', 'manaCost', 'power', 'toughness', 'foil', 'promo', 'actions']"
-      [wrappedService]="wrappedService"
-      (rowSelected)="cardInstanceSelected($event)">
-
-      <ng-container matColumnDef="actions">
-        <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
-        <mat-cell class="crud-grid-action-column" *matCellDef="let record">
-          <button mat-icon-button (click)="$event.stopPropagation(); removeFromCollection(record)">
-            <mat-icon>highlight_off</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-    </mco-card-instance-grid> -->
+    </mco-variable-grid>
   </mco-card>
 </mco-default-page>

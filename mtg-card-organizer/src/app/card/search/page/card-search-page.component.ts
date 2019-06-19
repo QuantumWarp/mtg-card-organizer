@@ -7,26 +7,26 @@ import { CardFilterData } from '../../filter/card-filter-data';
 import { CardFilterComponent } from '../../filter/card-filter.component';
 import { CardQuery } from '../../models/card-query';
 import { CardSet } from '../../models/card-set';
+import { ConvertedCard } from '../../../collection/grids/variable-grid/variable-grid.component';
 
 @Component({
   templateUrl: './card-search-page.component.html',
   styleUrls: ['./card-search-page.component.scss'],
 })
 export class CardSearchPageComponent {
-  filter = new CardQuery();
+  filter = new CardQuery({ groupByCardSet: true });
 
   constructor(
     private dialog: MatDialog,
   ) { }
 
-  cardSetSelected(cardSet: CardSet): void {
-    this.dialog.open(CardDetailsModalComponent, { data: cardSet });
+  rowSelected(convertedCard: ConvertedCard): void {
+    this.dialog.open(CardDetailsModalComponent, { data: convertedCard.cardSet });
   }
 
   openFilter(): void {
     const filterDialog = this.dialog.open(CardFilterComponent, {
       data: new CardFilterData({
-        collectionSearch: false,
         currentFilter: this.filter,
       }),
     });

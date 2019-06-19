@@ -5,6 +5,7 @@ using MtgCardOrganizer.Dal.Requests.CardQueries;
 using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MtgCardOrganizer.Dal.Repositories.Common
@@ -29,6 +30,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Common
             return await _dbContext.Cards
                 .AsNoTracking()
                 .ApplyQuery(query)
+                .OrderBy(x => x.Name)
                 .ApplyPagingAsync(query?.Paging);
         }
 

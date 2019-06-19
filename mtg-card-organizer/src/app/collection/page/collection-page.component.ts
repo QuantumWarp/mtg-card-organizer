@@ -15,14 +15,13 @@ import { SnackNotificationType } from '../../core/notifications/snack-notificati
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
-import { CardInstanceGridComponent } from '../card-instance-grid/card-instance-grid.component';
 import { CardRapidEntryComponent } from '../card-rapid-entry/card-rapid-entry/card-rapid-entry.component';
 import { CardInstance } from '../models/card-instance';
 import { Collection } from '../models/collection';
 import { CollectionCardService } from '../services/collection-card.service';
 import { CollectionService } from '../services/collection.service';
-import { CollectionCardQueryService, CollectionInstanceServiceWrapper, CollectionGroupedByCardServiceWrapper } from '../services/collection-card-query.service';
 import { CardInstanceGroupedCard } from '../models/card-instance-grouped-card';
+import { VariableGridComponent, ConvertedCard } from '../grids/variable-grid/variable-grid.component';
 
 @Component({
   selector: 'mco-collection-page',
@@ -30,7 +29,7 @@ import { CardInstanceGroupedCard } from '../models/card-instance-grouped-card';
   styleUrls: ['./collection-page.component.scss']
 })
 export class CollectionPageComponent implements OnInit {
-  @ViewChild(CardInstanceGridComponent) grid: CardInstanceGridComponent;
+  @ViewChild(VariableGridComponent) grid: VariableGridComponent;
 
   filter = new CardQuery();
   collection: Collection;
@@ -39,7 +38,6 @@ export class CollectionPageComponent implements OnInit {
   constructor(
     public authService: AuthenticationService,
     public collectionCardService: CollectionCardService,
-    public collectionCardQueryService: CollectionCardQueryService,
     public collectionService: CollectionService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -49,9 +47,8 @@ export class CollectionPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(() => {
       this.collection = this.route.snapshot.data['collection'];
-      // const collectionInstanceServiceWrapper = new CollectionInstanceServiceWrapper(this.collection.id, this.collectionCardQueryService);
-      const collectionGroupedByCardServiceWrapper = new CollectionGroupedByCardServiceWrapper(this.collection.id, this.collectionCardQueryService);
-      this.wrappedService = WrappedDataService.construct(collectionGroupedByCardServiceWrapper);
+      this.filter.collectionIds = [ this.collection.id ];
+      this.filter.groupByCard = true;
     });
   }
 
@@ -76,8 +73,8 @@ export class CollectionPageComponent implements OnInit {
     });
   }
 
-  cardInstanceSelected(cardInstance: CardInstance): void {
-    this.dialog.open(CardDetailsModalComponent, { data: cardInstance.cardSet });
+  rowSelected(convertedCard: ConvertedCard): void {
+    this.dialog.open(CardDetailsModalComponent, { data: convertedCard.cardSet });
   }
 
   removeFromCollection(cardInstance: CardInstance): void {
@@ -102,7 +99,7 @@ export class CollectionPageComponent implements OnInit {
   }
 
   refreshDataSource(): void {
-    this.grid.cardSetGrid.cardGrid.basicGrid.dataSource.refresh();
+    // this.grid.cardSetGrid.cardGrid.basicGrid.dataSource.refresh();
   }
 
   toggleBookmark(): void {

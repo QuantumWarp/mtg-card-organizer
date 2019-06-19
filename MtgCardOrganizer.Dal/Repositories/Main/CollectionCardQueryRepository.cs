@@ -84,7 +84,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
             return new PagedData<CardInstanceGroupedCardSet>(
                 groupedInstances.Data
                     .Join(
-                        _dbContext.CardSets,
+                        _dbContext.CardSets.Include(x => x.Card),
                         x => x.CardSetId,
                         x => x.Id,
                         (x, cardSet) => new CardInstanceGroupedCardSet {
@@ -102,6 +102,8 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
 
             return await _dbContext.CardInstances
                 .AsNoTracking()
+                .Include(x => x.CardSet)
+                    .ThenInclude(x => x.Card)
                 .ApplyQuery(cardQuery)
                 .ApplyPagingAsync(cardQuery?.Paging);
         }
