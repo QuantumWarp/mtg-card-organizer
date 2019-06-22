@@ -16,7 +16,6 @@ import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confir
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 import { CardRapidEntryComponent } from '../card-rapid-entry/card-rapid-entry/card-rapid-entry.component';
 import { ConvertedCard, VariableGridComponent } from '../grids/variable-grid/variable-grid.component';
-import { CardInstance } from '../models/card-instance';
 import { CardInstanceGroupedCard } from '../models/card-instance-grouped-card';
 import { Collection } from '../models/collection';
 import { CollectionCardService } from '../services/collection-card.service';

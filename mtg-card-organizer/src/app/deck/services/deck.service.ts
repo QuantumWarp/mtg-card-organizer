@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 
 import { ApiService } from '../../core/communication/api.service';
 import { Deck } from '../models/deck';
+import { DeckCard } from '../models/deck-card';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,9 @@ export class DeckService {
   }
 
   update(deck: Deck): Observable<Deck> {
+    deck = new Deck(deck);
+    deck.deckCards = deck.deckCards.map(x => new DeckCard(x));
+    deck.deckCards.forEach(x => x.card = null);
     return this.apiService.patch<Deck>('api/decks', deck);
   }
 

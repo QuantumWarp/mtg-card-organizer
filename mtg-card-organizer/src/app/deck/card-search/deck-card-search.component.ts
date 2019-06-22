@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { MatDialog } from '@angular/material';
 
+import { CardFilterData } from '../../card/filter/card-filter-data';
+import { CardFilterComponent } from '../../card/filter/card-filter.component';
 import { Card } from '../../card/models/card';
 import { CardQuery } from '../../card/models/card-query';
-import { CardService } from '../../card/services/card.service';
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 
 @Component({
@@ -16,11 +18,23 @@ export class DeckCardSearchComponent {
   @Output() save = new EventEmitter();
   @Output() rowSelected = new EventEmitter<Card>();
 
-  filter = new CardQuery();
+  filter = new CardQuery({ groupByCard: true });
 
   wrappedService: WrappedDataService<Card, Card>;
 
-  constructor(cardService: CardService) {
-    this.wrappedService = WrappedDataService.construct(cardService);
+  constructor(
+    private dialog: MatDialog,
+  ) { }
+
+  openFilter(): void {
+    const filterDialog = this.dialog.open(CardFilterComponent, {
+      data: new CardFilterData({
+        currentFilter: this.filter,
+      }),
+    });
+    filterDialog.afterClosed().subscribe(result => {
+      if (!result) { return; }
+      this.filter = result;
+    });
   }
 }

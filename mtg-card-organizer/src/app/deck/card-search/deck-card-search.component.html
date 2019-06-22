@@ -1,18 +1,19 @@
-<mco-card-filter (filterChanged)="filter = $event"></mco-card-filter>
+<mco-card fxFlex contentPadding="0px">
+  <div mcoCardHeader fxLayoutAlign="space-between center">
+    <span>Search</span>
+    <button mat-raised-button (click)="openFilter()">Filter</button>
+  </div>
 
-<mco-card contentPadding="0px">
-  <span mcoCardHeader>Search Results</span>
-
-  <mco-card-grid
+  <mco-variable-grid
     [filter]="filter"
-    [displayedColumns]="['name', 'manaCost', 'toMain', 'toSideboard']"
-    [wrappedService]="wrappedService"
+    [extraColumns]="['toMain', 'toSideboard']"
+    [displayedColumns]="['count', 'name', 'manaCost']"
     (rowSelected)="rowSelected.emit($event)">
     <ng-container matColumnDef="toMain">
       <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
       <mat-cell class="crud-grid-action-column" *matCellDef="let record">
-        <button mat-icon-button (click)="$event.stopPropagation(); toMain.emit(record)">
-          <mat-icon>label_important</mat-icon>
+        <button mat-icon-button matTooltip="Main Deck" (click)="$event.stopPropagation(); toMain.emit(record)">
+          <mat-icon>description</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
@@ -20,10 +21,10 @@
     <ng-container matColumnDef="toSideboard">
       <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
       <mat-cell class="crud-grid-action-column" *matCellDef="let record">
-        <button mat-icon-button (click)="$event.stopPropagation(); toSideboard.emit(record)">
-          <mat-icon>label_important</mat-icon>
+        <button mat-icon-button matTooltip="Sideboard" (click)="$event.stopPropagation(); toSideboard.emit(record)">
+          <mat-icon>class</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
-  </mco-card-grid>
+  </mco-variable-grid>
 </mco-card>

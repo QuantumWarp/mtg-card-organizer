@@ -1,5 +1,9 @@
 <mco-default-page [title]="'Deck - ' + deck.name">
-  <div mcoPageExtraHeader fxFlex fxLayoutAlign="end center">
+  <div mcoPageExtraHeader fxFlex fxLayoutAlign="end center" fxLayoutGap="20px">
+    <button mat-raised-button color="primary" *ngIf="changes" (click)="saveDeck()">
+      <mat-icon>save</mat-icon> Save
+    </button>
+
     <div class="mat-elevation-z2">
       <mat-button-toggle-group name="fontStyle" class="toggle-group" [(ngModel)]="mode">
         <mat-button-toggle value="view">View</mat-button-toggle>
@@ -9,7 +13,7 @@
   </div>
 
   <div fxLayout="row" fxLayoutGap="20px">
-    <mco-deck-card-search *ngIf="mode === 'edit'"
+    <mco-deck-card-search fxFlex *ngIf="mode === 'edit'"
       (toMain)="addCard($event, deckParts.Main)"
       (toSideboard)="addCard($event, deckParts.Sideboard)"
       (save)="saveDeck()"
@@ -17,12 +21,16 @@
     </mco-deck-card-search>
 
     <mco-main-grid fxFlex [dataService]="mainDataService"
+      [mode]="mode"
+      [mainDeckCount]="countDeckPart(deckParts.Main)"
       (toSideboard)="moveCard($event, deckParts.Sideboard)"
       (remove)="moveCard($event)"
       (rowSelected)="openCardDialog($event)">
     </mco-main-grid>
 
     <mco-sideboard-grid fxFlex [dataService]="sideBoardDataService"
+      [mode]="mode"
+      [sideboardCount]="countDeckPart(deckParts.Sideboard)"
       (toMain)="moveCard($event, deckParts.Main)"
       (remove)="moveCard($event)"
       (rowSelected)="openCardDialog($event)">

@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { Card } from '../../card/models/card';
@@ -24,12 +24,14 @@ export class DeckPageComponent implements OnInit, AfterViewInit {
 
   mode: 'view' | 'edit' = 'view';
 
+  changes = false;
   mainDataService = new LocalDataService([]);
   sideBoardDataService = new LocalDataService([]);
 
   constructor(
     public deckService: DeckService,
     private route: ActivatedRoute,
+    private router: Router,
     private notificationService: SnackNotificationService,
     public authService: AuthenticationService,
     private cdf: ChangeDetectorRef) { }
@@ -46,11 +48,13 @@ export class DeckPageComponent implements OnInit, AfterViewInit {
   }
 
   saveDeck(): void {
-    this.deckService.update(this.deck).subscribe(() =>
+    this.deckService.update(this.deck).subscribe(() => {
       this.notificationService.notify(new SnackNotificationModel({
         message: 'Deck Saved',
         type: SnackNotificationType.Success,
-      })));
+      }));
+      this.changes = false;
+    });
   }
 
   openCardDialog(card: Card) {
@@ -58,12 +62,17 @@ export class DeckPageComponent implements OnInit, AfterViewInit {
   }
 
   addCard(card: Card, deckPart: DeckPart): void {
-    console.log(card);
+    if (this.currentCardCount(card) >= 4) {
+      return;
+    }
+
+    this.changes = true;
     const currentDeckCard = this.deck.deckCards.find(x => x.card.id === card.id && x.part === deckPart);
     if (currentDeckCard) {
       currentDeckCard.count = currentDeckCard.count + 1;
     } else {
       this.deck.deckCards.push(new DeckCard({
+        cardId: card.id,
         card: card,
         count: 1,
         part: deckPart,
@@ -73,6 +82,7 @@ export class DeckPageComponent implements OnInit, AfterViewInit {
   }
 
   moveCard(deckCard: DeckCard, deckPart?: DeckPart): void {
+    this.changes = true;
     deckCard.count = deckCard.count - 1;
     if (deckCard.count === 0) {
       const index = this.deck.deckCards.indexOf(deckCard);
@@ -86,8 +96,22 @@ export class DeckPageComponent implements OnInit, AfterViewInit {
     }
   }
 
-  updateDataServices() {
+  updateDataServices(): void {
     this.mainDataService.updateData(this.deck.deckCards.filter(x => x.part === DeckPart.Main));
     this.sideBoardDataService.updateData(this.deck.deckCards.filter(x => x.part === DeckPart.Sideboard));
+  }
+
+  countDeckPart(deckPart: DeckPart): number {
+    return this.deck.deckCards
+      .filter(x => x.part === deckPart)
+      .map(x => x.count)
+      .reduce((a, b) => a + b, 0);
+  }
+
+  private currentCardCount(card: Card): number {
+    return this.deck.deckCards
+      .filter(x => x.card.id === card.id)
+      .map(x => x.count)
+      .reduce((a, b) => a + b, 0);
   }
 }

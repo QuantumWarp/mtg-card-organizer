@@ -59,7 +59,6 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
             foreach (var item in deck.DeckCards)
             {
                 item.DeckId = deck.Id;
-                item.CardId = item.Card.Id;
                 item.Card = null;
             }
 

@@ -8,6 +8,7 @@ import { MainGridComponent } from './main-grid/main-grid.component';
 import { DeckPageComponent } from './page/deck-page.component';
 import { DeckResolver } from './services/deck.resolver';
 import { SideboardGridComponent } from './sideboard-grid/sideboard-grid.component';
+import { CollectionGridModule } from '../collection/grids/collection-grids.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SideboardGridComponent } from './sideboard-grid/sideboard-grid.componen
       { path: ':id', component: DeckPageComponent, resolve: { deck: DeckResolver } },
     ]),
     CardModule,
+    CollectionGridModule,
   ],
   exports: [],
   providers: [

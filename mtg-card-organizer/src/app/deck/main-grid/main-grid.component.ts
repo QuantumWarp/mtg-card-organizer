@@ -16,6 +16,8 @@ export class MainGridComponent implements OnChanges {
   @Output() remove = new EventEmitter<DeckCard>();
   @Output() rowSelected = new EventEmitter<Card>();
 
+  @Input() mode: 'view' | 'edit';
+  @Input() mainDeckCount: number;
   @Input() dataService: DataService<DeckCard>;
   wrappedService: WrappedDataService<DeckCard, Card>;
 
