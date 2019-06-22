@@ -32,6 +32,6 @@ export class AddDeckModalComponent implements OnInit {
 
     this.deckService
       .create(this.form.value.name, this.parentContainer.id)
-      .subscribe(result => this.dialogRef.close(result));
+      .subscribe(result => this.dialogRef.close(result || true));
   }
 }

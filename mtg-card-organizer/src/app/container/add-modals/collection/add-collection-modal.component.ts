@@ -31,6 +31,6 @@ export class AddCollectionModalComponent implements OnInit {
 
     this.collectionService
       .create(this.form.value.name, this.parentContainer.id)
-      .subscribe(result => this.dialogRef.close(result));
+      .subscribe(result => this.dialogRef.close(result || true));
   }
 }
