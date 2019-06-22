@@ -24,4 +24,8 @@ export class CardGridComponent extends AbstractGridComponent {
     super();
     this.wrappedService = WrappedDataService.construct(defaultCardService);
   }
+
+  refreshDataSource(): void {
+    this.basicGrid.refreshDataSource();
+  }
 }

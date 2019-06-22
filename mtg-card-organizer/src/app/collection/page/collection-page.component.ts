@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs/internal/operators';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
 import { CardDetailsModalComponent } from '../../card/details/modal/card-details-modal.component';
@@ -16,12 +15,12 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 import { CardRapidEntryComponent } from '../card-rapid-entry/card-rapid-entry/card-rapid-entry.component';
+import { ConvertedCard, VariableGridComponent } from '../grids/variable-grid/variable-grid.component';
 import { CardInstance } from '../models/card-instance';
+import { CardInstanceGroupedCard } from '../models/card-instance-grouped-card';
 import { Collection } from '../models/collection';
 import { CollectionCardService } from '../services/collection-card.service';
 import { CollectionService } from '../services/collection.service';
-import { CardInstanceGroupedCard } from '../models/card-instance-grouped-card';
-import { VariableGridComponent, ConvertedCard } from '../grids/variable-grid/variable-grid.component';
 
 @Component({
   selector: 'mco-collection-page',
@@ -67,10 +66,12 @@ export class CollectionPageComponent implements OnInit {
   }
 
   openRapidEntry(): void {
-    this.dialog.open(CardRapidEntryComponent, {
+    const rapidEntryDialog = this.dialog.open(CardRapidEntryComponent, {
+      data: this.collection,
       disableClose: true,
       width: '75vw',
     });
+    rapidEntryDialog.afterClosed().subscribe(() => this.grid.refreshDataSource());
   }
 
   rowSelected(convertedCard: ConvertedCard): void {
@@ -88,7 +89,7 @@ export class CollectionPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         this.collectionCardService.deleteCards(this.collection.id, [ cardInstance.id ]).subscribe(() => {
-          this.refreshDataSource();
+          this.grid.refreshDataSource();
           this.notificationService.notify(new SnackNotificationModel({
             message: 'Removed',
             type: SnackNotificationType.Success,
@@ -96,10 +97,6 @@ export class CollectionPageComponent implements OnInit {
         });
       }
     });
-  }
-
-  refreshDataSource(): void {
-    // this.grid.cardSetGrid.cardGrid.basicGrid.dataSource.refresh();
   }
 
   toggleBookmark(): void {

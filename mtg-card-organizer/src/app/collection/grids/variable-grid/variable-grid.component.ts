@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 
 import { CardQuery } from '../../../card/models/card-query';
 import { WrappedDataService } from '../../../shared/utils/wrapped-data-service';
@@ -11,6 +11,11 @@ import { CardSetService } from '../../../card/services/card-set.service';
 import { CollectionGroupedByCardServiceWrapper, CollectionGroupedByCardSetServiceWrapper, CollectionInstanceServiceWrapper } from '../../services/collection-card-query.service';
 import { CardInstanceGroupedCard } from '../../models/card-instance-grouped-card';
 import { CardInstance } from '../../models/card-instance';
+import { CardGridComponent } from '../../../card/grids/card/card-grid.component';
+import { CardSetGridComponent } from '../../../card/grids/card-set/card-set-grid.component';
+import { CardInstanceGroupedCardGridComponent } from '../card-instance-grouped-card-grid/card-instance-grouped-card-grid.component';
+import { CardInstanceGroupedCardSetGridComponent } from '../card-instance-grouped-card-set-grid/card-instance-grouped-card-set-grid.component';
+import { CardInstanceGridComponent } from '../card-instance-grid/card-instance-grid.component';
 
 type GridMode = 'card' | 'cardSet' | 'groupedCard' | 'groupedCardSet' | 'cardInstance';
 
@@ -27,6 +32,12 @@ export interface ConvertedCard {
   styleUrls: ['./variable-grid.component.scss'],
 })
 export class VariableGridComponent extends AbstractGridComponent implements OnInit {
+  @ViewChild(CardGridComponent) cardGrid: CardGridComponent;
+  @ViewChild(CardSetGridComponent) cardSetGrid: CardSetGridComponent;
+  @ViewChild(CardInstanceGroupedCardGridComponent) groupedCardGrid: CardInstanceGroupedCardGridComponent;
+  @ViewChild(CardInstanceGroupedCardSetGridComponent) groupedCardSetGrid: CardInstanceGroupedCardSetGridComponent;
+  @ViewChild(CardInstanceGridComponent) cardInstanceGrid: CardInstanceGridComponent;
+
   @Output() rowSelected = new EventEmitter<ConvertedCard>();
 
   @Input() filter: CardQuery;
@@ -106,6 +117,21 @@ export class VariableGridComponent extends AbstractGridComponent implements OnIn
           cardSet: (record as CardInstanceGroupedCardSet).cardSet,
           count: (record as CardInstanceGroupedCardSet).count,
         };
+    }
+  }
+
+  refreshDataSource(): void {
+    switch (this.gridMode) {
+      case 'card':
+        return this.cardGrid.refreshDataSource();
+      case 'cardSet':
+        return this.cardSetGrid.refreshDataSource();
+      case 'cardInstance':
+        return this.cardInstanceGrid.refreshDataSource();
+      case 'groupedCard':
+        return this.groupedCardGrid.refreshDataSource();
+      case 'groupedCardSet':
+        return this.groupedCardSetGrid.refreshDataSource();
     }
   }
 }

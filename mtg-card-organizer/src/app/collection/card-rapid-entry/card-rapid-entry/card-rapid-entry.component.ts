@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, Inject } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -11,6 +11,7 @@ import { Paging } from '../../../shared/filtering/paging';
 import { CardInstance } from '../../models/card-instance';
 import { CardRapidEntryResultComponent } from '../card-rapid-entry-result/card-rapid-entry-result.component';
 import { RapidEntryResult } from '../rapid-entry-result';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'mco-card-rapid-entry',
@@ -21,7 +22,6 @@ export class CardRapidEntryComponent implements OnInit {
   @Output() searched = new EventEmitter();
 
   @ViewChild(CardRapidEntryResultComponent) resultComponent: CardRapidEntryResultComponent;
-  @Input() collection: Collection;
   form: FormGroup;
 
   sets: Set[];
@@ -31,6 +31,7 @@ export class CardRapidEntryComponent implements OnInit {
   lastSearchText: string;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public collection: Collection,
     private setService: SetService,
     private cardSetService: CardSetService,
     private formBuilder: FormBuilder,

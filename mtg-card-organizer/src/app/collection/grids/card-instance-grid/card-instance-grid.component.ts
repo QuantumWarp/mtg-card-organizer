@@ -27,4 +27,8 @@ export class CardInstanceGridComponent extends AbstractGridComponent implements 
       this.cardSetWrappedService = this.wrappedService.wrapMore(x => x.cardSet);
     }
   }
+
+  refreshDataSource(): void {
+    this.cardSetGrid.refreshDataSource();
+  }
 }

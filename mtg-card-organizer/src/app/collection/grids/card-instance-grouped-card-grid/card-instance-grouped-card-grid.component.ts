@@ -27,4 +27,8 @@ export class CardInstanceGroupedCardGridComponent extends AbstractGridComponent 
       this.cardWrappedService = this.wrappedService.wrapMore(x => x.card);
     }
   }
+
+  refreshDataSource(): void {
+    this.cardGrid.refreshDataSource();
+  }
 }

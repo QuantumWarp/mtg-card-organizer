@@ -45,4 +45,8 @@ export class CardSetGridComponent extends AbstractGridComponent implements OnIni
       this.cardWrappedService = this.wrappedService.wrapMore(x => x.card);
     }
   }
+
+  refreshDataSource(): void {
+    this.cardGrid.refreshDataSource();
+  }
 }

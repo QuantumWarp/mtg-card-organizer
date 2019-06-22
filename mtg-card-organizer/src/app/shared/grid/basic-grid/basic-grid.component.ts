@@ -43,4 +43,8 @@ export class BasicGridComponent<T> extends AbstractGridComponent implements OnCh
 
     this.columnDefs.forEach(columnDef => this.table.addColumnDef(columnDef));
   }
+
+  refreshDataSource(): void {
+    this.dataSource.refresh();
+  }
 }
