@@ -13,7 +13,7 @@
   </div>
 
   <mco-card fxFlex contentPadding="0px">
-    <mco-variable-grid
+    <mco-variable-grid #grid
       [filter]="filter"
       [extraColumns]="['actions']"
       [displayedColumns]="['count', 'name', 'setSymbol', 'manaCost', 'type', 'pt', 'foil']"
@@ -22,7 +22,7 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
         <mat-cell class="crud-grid-action-column" *matCellDef="let record">
-          <button mat-icon-button (click)="$event.stopPropagation(); removeFromCollection(record)">
+          <button *ngIf="grid.gridMode === 'cardInstance'" mat-icon-button (click)="$event.stopPropagation(); removeFromCollection(grid.convert(record))">
             <mat-icon>highlight_off</mat-icon>
           </button>
         </mat-cell>

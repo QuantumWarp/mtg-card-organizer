@@ -47,7 +47,6 @@ export class CollectionPageComponent implements OnInit {
     this.route.params.subscribe(() => {
       this.collection = this.route.snapshot.data['collection'];
       this.filter.collectionIds = [ this.collection.id ];
-      this.filter.groupByCard = true;
     });
   }
 
@@ -78,17 +77,17 @@ export class CollectionPageComponent implements OnInit {
     this.dialog.open(CardDetailsModalComponent, { data: convertedCard.cardSet });
   }
 
-  removeFromCollection(cardInstance: CardInstance): void {
+  removeFromCollection(convertedCard: ConvertedCard): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: <ConfirmDialogData> {
-        title: `Remove ${cardInstance.cardSet.card.name}`,
+        title: `Remove ${convertedCard.card.name}`,
         description: 'Are you sure?',
       }
     });
 
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
-        this.collectionCardService.deleteCards(this.collection.id, [ cardInstance.id ]).subscribe(() => {
+        this.collectionCardService.deleteCards(this.collection.id, [ convertedCard.cardInstance.id ]).subscribe(() => {
           this.grid.refreshDataSource();
           this.notificationService.notify(new SnackNotificationModel({
             message: 'Removed',

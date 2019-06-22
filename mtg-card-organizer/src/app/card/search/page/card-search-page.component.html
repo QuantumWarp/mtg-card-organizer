@@ -1,11 +1,10 @@
 <mco-default-page title="Card Search">
-  <div fxLayout="row" fxLayoutGap="20px">
-    <mco-card contentPadding="0px" fxFlex>
-      <span mcoCardHeader>
-        Search Results
-        <button mat-raised-button (click)="openFilter()">Filter</button>
-      </span>
+  <div mcoPageExtraHeader fxFlex fxLayoutAlign="end center">
+    <button mat-raised-button (click)="openFilter()">Filter</button>
+  </div>
 
+  <div fxLayout="row" fxLayoutGap="20px">
+    <mco-card fxFlex contentPadding="0px">
       <mco-variable-grid
         [filter]="filter"
         [displayedColumns]="['count', 'name', 'setSymbol', 'manaCost', 'type', 'pt', 'foil']"

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { Collection } from '../../collection/models/collection';
@@ -21,6 +21,14 @@ export class CardFilterComponent implements OnInit {
 
   sets: Array<Set>;
   form: FormGroup;
+
+  get collectionIdsControl(): AbstractControl {
+    return this.form.get('collectionIds');
+  }
+
+  get groupingControl(): AbstractControl {
+    return this.form.get('grouping');
+  }
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: CardFilterData,
@@ -53,8 +61,7 @@ export class CardFilterComponent implements OnInit {
       nums: [[], ],
 
       collectionIds: [[], ],
-      groupByCard: [[], ],
-      groupByCardSet:  [[], ],
+      grouping: [[], ],
     });
 
     if (this.data.currentFilter) {
@@ -63,16 +70,26 @@ export class CardFilterComponent implements OnInit {
         name: this.data.currentFilter.name[0],
         text: this.data.currentFilter.text[0],
         type: this.data.currentFilter.type[0],
+        grouping: this.data.currentFilter.groupByCardSet ? 2 : (this.data.currentFilter.groupByCard ? 1 : 0),
       });
     }
+
+    this.collectionIdsControl.valueChanges.subscribe(x => {
+      if (this.groupingControl.value === 0 && x.length === 0) {
+        this.groupingControl.patchValue(1);
+      }
+    });
   }
 
   apply(): void {
     const filter = Object.assign(new CardQuery(), this.form.value);
+    console.log(filter);
 
     filter.name = filter.name ? [ filter.name ] : [];
     filter.text = filter.text ? [ filter.text ] : [];
     filter.type = filter.type ? [ filter.type ] : [];
+    filter.groupByCardSet = filter.grouping === 2;
+    filter.groupByCard = filter.grouping === 1;
 
     this.dialogRef.close(filter);
   }

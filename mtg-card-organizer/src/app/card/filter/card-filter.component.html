@@ -11,8 +11,11 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-checkbox formControlName="groupByCard">Group by Card</mat-checkbox>
-      <mat-checkbox formControlName="groupByCardSet">Group by Card Set</mat-checkbox>
+      <mat-radio-group formControlName="grouping" fxLayout="column" fxLayoutGap="5px">
+        <mat-radio-button *ngIf="collectionIdsControl.value.length !== 0" [value]="0">No Grouping</mat-radio-button>
+        <mat-radio-button [value]="1">Group by Card</mat-radio-button>
+        <mat-radio-button [value]="2">Group by Card Set</mat-radio-button>
+      </mat-radio-group>
     </div>
 
     <mat-divider *ngIf="data.collectionSearch" [vertical]="true"></mat-divider>
