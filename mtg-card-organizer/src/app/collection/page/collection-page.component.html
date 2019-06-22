@@ -15,11 +15,12 @@
   <mco-card fxFlex contentPadding="0px">
     <mco-variable-grid
       [filter]="filter"
-      [displayedColumns]="['count', 'name', 'setSymbol', 'manaCost', 'type', 'pt', 'foil', 'actions']"
+      [extraColumns]="['actions']"
+      [displayedColumns]="['count', 'name', 'setSymbol', 'manaCost', 'type', 'pt', 'foil']"
       (rowSelected)="rowSelected($event)">
 
       <ng-container matColumnDef="actions">
-        <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
         <mat-cell class="crud-grid-action-column" *matCellDef="let record">
           <button mat-icon-button (click)="$event.stopPropagation(); removeFromCollection(record)">
             <mat-icon>highlight_off</mat-icon>

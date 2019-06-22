@@ -30,6 +30,7 @@ export class VariableGridComponent extends AbstractGridComponent implements OnIn
   @Output() rowSelected = new EventEmitter<ConvertedCard>();
 
   @Input() filter: CardQuery;
+  @Input() extraColumns = [];
   @Input() displayedColumns: string[];
 
   cardWrappedService: WrappedDataService<any, Card>;
@@ -73,7 +74,7 @@ export class VariableGridComponent extends AbstractGridComponent implements OnIn
   filteredDisplayedColumns(allowedColumns: string[]): string[] {
     const filteredColumns = allowedColumns.filter(x => this.displayedColumns.includes(x));
     allowedColumns.length = 0;
-    allowedColumns.push(...filteredColumns);
+    allowedColumns.push(...filteredColumns, ...this.extraColumns);
     return allowedColumns;
   }
 

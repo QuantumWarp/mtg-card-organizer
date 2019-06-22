@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 
 namespace MtgCardOrganizer.Bll.Parsers
@@ -59,10 +60,16 @@ namespace MtgCardOrganizer.Bll.Parsers
             if (cardObj.ContainsKey("number")) cardSet.Num = cardObj["number"].ToString();
             if (cardObj.ContainsKey("rarity")) cardSet.Rarity = ParseRarity(cardObj["rarity"].ToString());
             if (cardObj.ContainsKey("multiverseId")) cardSet.MultiverseId = cardObj["multiverseId"].ToString();
-            cardSet.Card = card;
-            cardSet.Set = set;
 
-            Cards.Add(card);
+            var existingCard = Cards.FirstOrDefault(x => x.Name == card.Name);
+            if (existingCard == null) {
+                cardSet.Card = card;
+                Cards.Add(card);
+            } else {
+                cardSet.Card = existingCard;
+            }
+
+            cardSet.Set = set;
             CardSets.Add(cardSet);
         }
         

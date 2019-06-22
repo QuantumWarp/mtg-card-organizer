@@ -1,7 +1,7 @@
 <mco-card-grid *ngIf="gridMode === 'card'"
   [filter]="filter"
   [inputColumnDefs]="columnDefs"
-  [displayedColumns]="filteredDisplayedColumns(['name', 'manaCost', 'type', 'pt', 'actions'])"
+  [displayedColumns]="filteredDisplayedColumns(['name', 'manaCost', 'type', 'pt'])"
   [wrappedService]="cardWrappedService"
   (rowSelected)="rowSelected.emit(convert($event))">
 </mco-card-grid>
@@ -9,7 +9,7 @@
 <mco-card-set-grid *ngIf="gridMode === 'cardSet'"
   [filter]="filter"
   [inputColumnDefs]="columnDefs"
-  [displayedColumns]="filteredDisplayedColumns(['name', 'setSymbol', 'manaCost', 'type', 'pt', 'actions'])"
+  [displayedColumns]="filteredDisplayedColumns(['name', 'setSymbol', 'manaCost', 'type', 'pt'])"
   [wrappedService]="cardSetWrappedService"
   (rowSelected)="rowSelected.emit(convert($event))">
 </mco-card-set-grid>
@@ -17,7 +17,7 @@
 <mco-card-instance-grouped-card-grid *ngIf="gridMode === 'groupedCard'"
   [filter]="filter"
   [inputColumnDefs]="columnDefs"
-  [displayedColumns]="filteredDisplayedColumns(['count', 'name', 'manaCost', 'type', 'pt', 'actions'])"
+  [displayedColumns]="filteredDisplayedColumns(['count', 'name', 'manaCost', 'type', 'pt'])"
   [wrappedService]="groupedCardWrappedService"
   (rowSelected)="rowSelected.emit(convert($event))">
 </mco-card-instance-grouped-card-grid>
@@ -25,7 +25,7 @@
 <mco-card-instance-grouped-card-set-grid *ngIf="gridMode === 'groupedCardSet'"
   [filter]="filter"
   [inputColumnDefs]="columnDefs"
-  [displayedColumns]="filteredDisplayedColumns(['count', 'name', 'setSymbol', 'manaCost', 'type', 'pt', 'actions'])"
+  [displayedColumns]="filteredDisplayedColumns(['count', 'name', 'setSymbol', 'manaCost', 'type', 'pt'])"
   [wrappedService]="groupedCardSetWrappedService"
   (rowSelected)="rowSelected.emit(convert($event))">
 </mco-card-instance-grouped-card-set-grid>
@@ -33,7 +33,7 @@
 <mco-card-instance-grid *ngIf="gridMode === 'cardInstance'"
   [filter]="filter"
   [inputColumnDefs]="columnDefs"
-  [displayedColumns]="filteredDisplayedColumns(['name', 'setSymbol', 'manaCost', 'pt', 'foil', 'promo', 'actions'])"
+  [displayedColumns]="filteredDisplayedColumns(['name', 'setSymbol', 'manaCost', 'pt', 'foil', 'promo'])"
   [wrappedService]="cardInstanceWrappedService"
   (rowSelected)="rowSelected.emit(convert($event))">
 </mco-card-instance-grid>
