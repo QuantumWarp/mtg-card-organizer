@@ -16,15 +16,9 @@ import { CardSetGridComponent } from '../../../card/grids/card-set/card-set-grid
 import { CardInstanceGroupedCardGridComponent } from '../card-instance-grouped-card-grid/card-instance-grouped-card-grid.component';
 import { CardInstanceGroupedCardSetGridComponent } from '../card-instance-grouped-card-set-grid/card-instance-grouped-card-set-grid.component';
 import { CardInstanceGridComponent } from '../card-instance-grid/card-instance-grid.component';
+import { ConvertedCard } from '../../models/converted-card';
 
 type GridMode = 'card' | 'cardSet' | 'groupedCard' | 'groupedCardSet' | 'cardInstance';
-
-export interface ConvertedCard {
-  card: Card;
-  cardSet?: CardSet;
-  cardInstance?: CardInstance;
-  count?: number;
-}
 
 @Component({
   selector: 'mco-variable-grid',

@@ -15,9 +15,10 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
 import { ConfirmDialogData } from '../../shared/components/confirm-dialog/confirm-dialog.data';
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 import { CardRapidEntryComponent } from '../card-rapid-entry/card-rapid-entry/card-rapid-entry.component';
-import { ConvertedCard, VariableGridComponent } from '../grids/variable-grid/variable-grid.component';
+import { VariableGridComponent } from '../grids/variable-grid/variable-grid.component';
 import { CardInstanceGroupedCard } from '../models/card-instance-grouped-card';
 import { Collection } from '../models/collection';
+import { ConvertedCard } from '../models/converted-card';
 import { CollectionCardService } from '../services/collection-card.service';
 import { CollectionService } from '../services/collection.service';
 
@@ -73,7 +74,7 @@ export class CollectionPageComponent implements OnInit {
   }
 
   rowSelected(convertedCard: ConvertedCard): void {
-    this.dialog.open(CardDetailsModalComponent, { data: convertedCard.cardSet });
+    this.dialog.open(CardDetailsModalComponent, { data: convertedCard });
   }
 
   removeFromCollection(convertedCard: ConvertedCard): void {

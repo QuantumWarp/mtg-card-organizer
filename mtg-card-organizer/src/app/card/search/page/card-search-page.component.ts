@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { filter } from 'rxjs/internal/operators';
 
+import { ConvertedCard } from '../../../collection/models/converted-card';
 import { CardDetailsModalComponent } from '../../details/modal/card-details-modal.component';
 import { CardFilterData } from '../../filter/card-filter-data';
 import { CardFilterComponent } from '../../filter/card-filter.component';
 import { CardQuery } from '../../models/card-query';
-import { CardSet } from '../../models/card-set';
-import { ConvertedCard } from '../../../collection/grids/variable-grid/variable-grid.component';
 
 @Component({
   templateUrl: './card-search-page.component.html',
@@ -21,7 +19,7 @@ export class CardSearchPageComponent {
   ) { }
 
   rowSelected(convertedCard: ConvertedCard): void {
-    this.dialog.open(CardDetailsModalComponent, { data: convertedCard.cardSet });
+    this.dialog.open(CardDetailsModalComponent, { data: convertedCard });
   }
 
   openFilter(): void {

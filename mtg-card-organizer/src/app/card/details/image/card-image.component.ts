@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { CardSet } from '../../models/card-set';
+import { ConvertedCard } from '../../../collection/models/converted-card';
 
 @Component({
   selector: 'mco-card-image',
@@ -8,6 +8,6 @@ import { CardSet } from '../../models/card-set';
   styleUrls: ['./card-image.component.scss']
 })
 export class CardImageComponent {
-  @Input() cardSet: CardSet;
+  @Input() convertedCard: ConvertedCard;
   loaded = false;
 }

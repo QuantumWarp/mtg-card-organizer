@@ -1,8 +1,8 @@
 import { transition, trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
 
+import { ConvertedCard } from '../../../collection/models/converted-card';
 import { fadeInAnimation } from '../../../shared/animations/fade-in-animation';
-import { CardSet } from '../../models/card-set';
 
 @Component({
   selector: 'mco-card-details',
@@ -13,5 +13,5 @@ import { CardSet } from '../../models/card-set';
   ]
 })
 export class CardDetailsComponent {
-  @Input() cardSet: CardSet;
+  @Input() convertedCard: ConvertedCard;
 }

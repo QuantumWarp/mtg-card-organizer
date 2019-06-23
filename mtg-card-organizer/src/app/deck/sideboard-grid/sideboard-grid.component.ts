@@ -5,6 +5,7 @@ import { Card } from '../../card/models/card';
 import { DataService } from '../../shared/grid/grid-data-source.interfaces';
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
 import { DeckCard } from '../models/deck-card';
+import { ConvertedCard } from '../../collection/models/converted-card';
 
 @Component({
   selector: 'mco-sideboard-grid',
@@ -14,7 +15,7 @@ import { DeckCard } from '../models/deck-card';
 export class SideboardGridComponent implements OnChanges {
   @Output() toMain = new EventEmitter<DeckCard>();
   @Output() remove = new EventEmitter<DeckCard>();
-  @Output() rowSelected = new EventEmitter<Card>();
+  @Output() rowSelected = new EventEmitter<ConvertedCard>();
 
   @Input() mode: 'view' | 'edit';
   @Input() sideboardCount: number;

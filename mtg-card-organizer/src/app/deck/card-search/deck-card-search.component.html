@@ -4,7 +4,7 @@
     <button mat-raised-button (click)="openFilter()">Filter</button>
   </div>
 
-  <mco-variable-grid
+  <mco-variable-grid #grid
     [filter]="filter"
     [extraColumns]="['toMain', 'toSideboard']"
     [displayedColumns]="['count', 'name', 'manaCost']"
@@ -12,7 +12,7 @@
     <ng-container matColumnDef="toMain">
       <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
       <mat-cell class="crud-grid-action-column" *matCellDef="let record">
-        <button mat-icon-button matTooltip="Main Deck" (click)="$event.stopPropagation(); toMain.emit(record)">
+        <button mat-icon-button matTooltip="Main Deck" (click)="$event.stopPropagation(); toMain.emit(grid.convert(record).card)">
           <mat-icon>description</mat-icon>
         </button>
       </mat-cell>
@@ -21,7 +21,7 @@
     <ng-container matColumnDef="toSideboard">
       <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef></mat-header-cell>
       <mat-cell class="crud-grid-action-column" *matCellDef="let record">
-        <button mat-icon-button matTooltip="Sideboard" (click)="$event.stopPropagation(); toSideboard.emit(record)">
+        <button mat-icon-button matTooltip="Sideboard" (click)="$event.stopPropagation(); toSideboard.emit(grid.convert(record).card)">
           <mat-icon>class</mat-icon>
         </button>
       </mat-cell>

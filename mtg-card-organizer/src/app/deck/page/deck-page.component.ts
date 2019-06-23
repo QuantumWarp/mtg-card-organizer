@@ -1,9 +1,12 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '../../authentication/services/authentication.service';
+import { CardDetailsModalComponent } from '../../card/details/modal/card-details-modal.component';
 import { Card } from '../../card/models/card';
+import { ConvertedCard } from '../../collection/models/converted-card';
 import { SnackNotificationModel } from '../../core/notifications/snack-notification.model';
 import { SnackNotificationService } from '../../core/notifications/snack-notification.service';
 import { SnackNotificationType } from '../../core/notifications/snack-notification.type';
@@ -31,7 +34,7 @@ export class DeckPageComponent implements OnInit, AfterViewInit {
   constructor(
     public deckService: DeckService,
     private route: ActivatedRoute,
-    private router: Router,
+    private dialog: MatDialog,
     private notificationService: SnackNotificationService,
     public authService: AuthenticationService,
     private cdf: ChangeDetectorRef) { }
@@ -57,8 +60,8 @@ export class DeckPageComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openCardDialog(card: Card) {
-    // this.dialog.open(CardDetailsModalComponent, { data: cardSet });
+  openCardDialog(convertedCard: ConvertedCard) {
+    this.dialog.open(CardDetailsModalComponent, { data: convertedCard });
   }
 
   addCard(card: Card, deckPart: DeckPart): void {

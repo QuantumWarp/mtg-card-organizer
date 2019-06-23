@@ -1,11 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { CardSet } from '../../models/card-set';
+import { ConvertedCard } from '../../../collection/models/converted-card';
 
 @Pipe({name: 'toCardImageUrl'})
 export class CardImagePipe implements PipeTransform {
-  transform(cardSet: CardSet): string {
-    const multiverseId = (cardSet && cardSet.multiverseId) ? cardSet.multiverseId : '0';
-    return `http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=${multiverseId}&type=card`;
+  transform(convertedCard: ConvertedCard): string {
+    if (convertedCard.cardSet && convertedCard.cardSet.multiverseId) {
+      return `http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=${convertedCard.cardSet.multiverseId}&type=card`;
+    } else if (convertedCard.card && convertedCard.card.name) {
+      return `http://gatherer.wizards.com/Handlers/Image.ashx?name=${encodeURIComponent(convertedCard.card.name)}&type=card`;
+    } else {
+      return `http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=0&type=card`;
+    }
   }
 }

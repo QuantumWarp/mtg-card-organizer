@@ -7,7 +7,7 @@
   <mco-card-grid fxFlex
     [displayedColumns]="mode === 'view' ? ['name', 'manaCost', 'count'] : ['actions', 'name', 'manaCost', 'count']"
     [wrappedService]="wrappedService"
-    (rowSelected)="rowSelected.emit($event.card)">
+    (rowSelected)="rowSelected.emit({ card: $event.card })">
     <ng-container matColumnDef="count">
       <mat-header-cell class="crud-grid-action-column" *matHeaderCellDef>Count</mat-header-cell>
       <mat-cell class="crud-grid-action-column" *matCellDef="let record">

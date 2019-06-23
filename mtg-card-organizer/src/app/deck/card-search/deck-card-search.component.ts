@@ -6,6 +6,7 @@ import { CardFilterComponent } from '../../card/filter/card-filter.component';
 import { Card } from '../../card/models/card';
 import { CardQuery } from '../../card/models/card-query';
 import { WrappedDataService } from '../../shared/utils/wrapped-data-service';
+import { ConvertedCard } from '../../collection/models/converted-card';
 
 @Component({
   selector: 'mco-deck-card-search',
@@ -16,7 +17,7 @@ export class DeckCardSearchComponent {
   @Output() toMain = new EventEmitter<Card>();
   @Output() toSideboard = new EventEmitter<Card>();
   @Output() save = new EventEmitter();
-  @Output() rowSelected = new EventEmitter<Card>();
+  @Output() rowSelected = new EventEmitter<ConvertedCard>();
 
   filter = new CardQuery({ groupByCard: true });
 
