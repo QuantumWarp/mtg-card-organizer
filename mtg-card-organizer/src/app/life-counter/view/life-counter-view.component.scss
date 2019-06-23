@@ -1,0 +1,20 @@
+mco-life-counter-controller {
+  flex: 1;
+}
+
+.main-container {
+  align-items: flex-start;
+}
+
+.life-counters {
+  flex: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+mco-life-counter-single {
+  min-width: calc(50% - 10px);
+  max-width: calc(50% - 10px);
+  margin-bottom: 10px;
+}

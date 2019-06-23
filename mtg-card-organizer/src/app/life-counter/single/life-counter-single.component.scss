@@ -1,3 +1,16 @@
-.selectedCounter {
-  background-color: lightgrey;
+.counter-span.selected-counter {
+  border: 2px solid black;
+  border-radius: 6px;
+  padding: 4px;
+}
+.counter-span {
+  padding: 6px;
+}
+
+.life {
+  font-size: 50px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

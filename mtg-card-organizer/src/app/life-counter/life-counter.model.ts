@@ -1,12 +1,11 @@
+import { LifeCounterConfig } from './life-counter-config.model';
 export class LifeCounter {
+  name: string;
   life: number;
   selected = false;
 
-  constructor(startingLife: number) {
-    this.reset(startingLife);
-  }
-
-  reset(startingLife: number): void {
+  constructor(name: string, startingLife: number) {
+    this.name = name;
     this.life = startingLife;
   }
 
@@ -16,44 +15,24 @@ export class LifeCounter {
 }
 
 export class LifeCounterModel {
-    startingLife = 20;
-    lifeCounters = new Array<LifeCounter>();
-    get selectedLifeCounters(): Array<LifeCounter> {
-      return this.lifeCounters.filter(x => x.selected);
-    }
+  lifeCounters = new Array<LifeCounter>();
 
-    static default(): LifeCounterModel {
-      return new LifeCounterModel(20, 2);
-    }
+  get selectedLifeCounters(): Array<LifeCounter> {
+    return this.lifeCounters.filter(x => x.selected);
+  }
 
-    constructor(startingLife: number, playerCount: number) {
-      this.startingLife = startingLife;
-      this.addPlayers(playerCount);
-    }
+  adjustLife(gain: boolean, amount: number, selectedOnly = true) {
+    const lifeCounters = selectedOnly ? this.selectedLifeCounters : this.lifeCounters;
+    lifeCounters.forEach(lifeCounter => {
+      lifeCounter.adjustLife(gain, amount);
+    });
+  }
 
-    addPlayers(amount: number): void {
-      if (amount > 0) {
-        for (let x = 0; x < amount; x++) {
-            this.lifeCounters.push(new LifeCounter(this.startingLife));
-        }
-      } else if (amount < 0) {
-        for (let x = 0; -x < amount; x++) {
-            this.lifeCounters.pop();
-        }
-      }
-    }
-
-    adjustLife(gain: boolean, amount: number, selectedOnly = true) {
-      const lifeCounters = selectedOnly ? this.selectedLifeCounters : this.lifeCounters;
-      lifeCounters.forEach(lifeCounter => {
-        lifeCounter.adjustLife(gain, amount);
-      });
-    }
-
-    resetCounters(selectedOnly = true): void {
-      const lifeCounters = selectedOnly ? this.selectedLifeCounters : this.lifeCounters;
-      lifeCounters.forEach(lifeCounter => {
-          lifeCounter.reset(this.startingLife);
-      });
-    }
+  resetCounters(config: LifeCounterConfig): void {
+    this.lifeCounters.length = 0;
+    config.playerNames.forEach(name => {
+      const lifeCounter = new LifeCounter(name, config.startingLife);
+      this.lifeCounters.push(lifeCounter);
+    });
+  }
 }

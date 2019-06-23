@@ -1,3 +1,19 @@
-<mat-card (click)="lifeCounter.selected=!lifeCounter.selected" [class.selectedCounter]="lifeCounter.selected">
-  <h1>{{ lifeCounter.life }}</h1>
-</mat-card>
+<mco-card (click)="lifeCounter.selected = !lifeCounter.selected" >
+  <div mcoCardHeader fxFlex fxLayoutAlign="center center">
+    <span class="counter-span" [class.selected-counter]="lifeCounter.selected">{{ lifeCounter.name }}</span>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxLayoutGap="5px">
+      <button mat-mini-fab color="primary" (click)="$event.stopPropagation(); lifeCounter.adjustLife(false, 5)">-5</button>
+      <button mat-mini-fab color="primary" (click)="$event.stopPropagation(); lifeCounter.adjustLife(false, 1)">-1</button>
+    </div>
+
+    <span class="life">{{ lifeCounter.life }}</span>
+
+    <div fxLayoutGap="5px">
+      <button mat-mini-fab color="primary" (click)="$event.stopPropagation(); lifeCounter.adjustLife(true, 1)">+1</button>
+      <button mat-mini-fab color="primary" (click)="$event.stopPropagation(); lifeCounter.adjustLife(true, 5)">+5</button>
+    </div>
+  </div>
+</mco-card>

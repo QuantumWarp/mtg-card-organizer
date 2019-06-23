@@ -1,6 +1,28 @@
-<mat-card fxLayoutGap="10px">
-    <button mat-raised-button color="primary" (click)="resetCounters()">Reset</button>
+<mco-card fxLayoutGap="10px">
+  <span mcoCardHeader>Controller</span>
+
+  <form fxLayout="column" [formGroup]="form">
     <mat-form-field>
-        <input matInput [(ngModel)]="lifeCounterModel.startingLife" placeholder="Starting Life"/>
+      <input matInput formControlName="startingLife" placeholder="Starting Life"/>
     </mat-form-field>
-</mat-card>
+
+    <mat-form-field class="example-chip-list">
+      <mat-chip-list #playerNameChipList>
+        <mat-chip *ngFor="let name of form.get('playerNames').value"
+          removable (removed)="removePlayerName(name)">
+          {{name}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Players"
+          [matChipInputFor]="playerNameChipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          matChipInputAddOnBlur
+          (matChipInputTokenEnd)="addPlayerName($event)">
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
+
+  <div mcoCardActions>
+    <button mat-raised-button color="primary" (click)="resetCounters()">Reset</button>
+  </div>
+</mco-card>
