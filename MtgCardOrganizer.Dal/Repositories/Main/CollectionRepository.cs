@@ -19,7 +19,6 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
         Task CreateAsync(Collection collection);
         Task DeleteAsync(int collectionId);
 
-        Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardInstanceQuery query);
         Task AddCardsAsync(int collectionId, List<CardInstance> cardInstances);
         Task DeleteCardsAsync(int collectionId, List<int> cardInstanceIds);
 
@@ -65,20 +64,6 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
             _dbContext.Collections.Remove(collection);
             await _dbContext.SaveChangesAsync();
         }
-
-        // Card Management
-        public async Task<PagedData<CardInstance>> GetCardsAsync(int collectionId, CardInstanceQuery query)
-        {
-            var collection = await _dbContext.Collections.FindAsync(collectionId);
-            await _permissionRepository.CheckAsync(collection.ContainerId, Permission.Read);
-
-            return await _dbContext.CardInstances
-                .AsNoTracking()
-                .Where(x => x.CollectionId == collectionId)
-                .ApplyQuery(query)
-                .ApplyPagingAsync(query?.Paging);
-        }
-
         public async Task AddCardsAsync(int collectionId, List<CardInstance> cardInstances)
         {
             var collection = await _dbContext.Collections.FindAsync(collectionId);

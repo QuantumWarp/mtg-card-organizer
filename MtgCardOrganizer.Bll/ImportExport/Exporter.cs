@@ -17,6 +17,7 @@ namespace MtgCardOrganizer.Dal.Utilities.ImportExport
         
         private IContainerRepository _containerRepository;
         private ICollectionRepository _collectionRepository;
+        private ICollectionCardQueryRepository _collectionCardQueryRepository;
         private IDeckRepository _deckRepository;
 
         private List<Set> _sets;
@@ -24,12 +25,14 @@ namespace MtgCardOrganizer.Dal.Utilities.ImportExport
         public Exporter(
             IContainerRepository containerRepository,
             ICollectionRepository collectionRepository,
+            ICollectionCardQueryRepository collectionCardQueryRepository,
             IDeckRepository deckRepository,
             ISetRepository setRepository)
         {
             _setRepository = setRepository;
             _containerRepository = containerRepository;        
             _collectionRepository = collectionRepository;
+            _collectionCardQueryRepository = collectionCardQueryRepository;
             _deckRepository = deckRepository;
         }
 
@@ -53,7 +56,10 @@ namespace MtgCardOrganizer.Dal.Utilities.ImportExport
             foreach (var collection in container.Collections)
             {
                 var collectionModel = new CollectionExportModel(collection);
-                var cardInstances = await _collectionRepository.GetCardsAsync(collection.Id, new CardInstanceQuery { Paging = new Paging() });
+                var cardInstances = await _collectionCardQueryRepository.GetInstancesAsync(new CardInstanceQuery {
+                    CollectionIds = new List<int> { collection.Id },
+                    Paging = new Paging()
+                });
                 collectionModel.Cards = cardInstances.Data.Select(x => new CardInstanceExportModel(x, _sets)).ToList();
                 containerModel.Collections.Add(collectionModel);
             }

@@ -18,6 +18,7 @@ namespace MtgCardOrganizer.Bll.Services
         private readonly MtgCardOrganizerContext _dbContext;
         private readonly IContainerRepository _containerRepository;
         private readonly ICollectionRepository _collectionRepository;
+        private readonly ICollectionCardQueryRepository _collectionCardQueryRepository;
         private readonly IDeckRepository _deckRepository;
         private readonly ICardSetRepository _cardSetRepository;
         private readonly ISetRepository _setRepository;
@@ -26,6 +27,7 @@ namespace MtgCardOrganizer.Bll.Services
             MtgCardOrganizerContext dbContext,
             IContainerRepository containerRepository,
             ICollectionRepository collectionRepository,
+            ICollectionCardQueryRepository collectionCardQueryRepository,
             IDeckRepository deckRepository,
             ICardSetRepository cardSetRepository,
             ISetRepository setRepository)
@@ -33,6 +35,7 @@ namespace MtgCardOrganizer.Bll.Services
             _dbContext = dbContext;
             _containerRepository = containerRepository;
             _collectionRepository = collectionRepository;
+            _collectionCardQueryRepository = collectionCardQueryRepository;
             _deckRepository = deckRepository;
             _cardSetRepository = cardSetRepository;
             _setRepository = setRepository;
@@ -40,7 +43,7 @@ namespace MtgCardOrganizer.Bll.Services
 
         public async Task<string> ExportAsync(int containerId)
         {
-            var exporter = new Exporter(_containerRepository, _collectionRepository, _deckRepository, _setRepository);
+            var exporter = new Exporter(_containerRepository, _collectionRepository, _collectionCardQueryRepository, _deckRepository, _setRepository);
             return await exporter.GetExportStringAsync(containerId);
         }
 
