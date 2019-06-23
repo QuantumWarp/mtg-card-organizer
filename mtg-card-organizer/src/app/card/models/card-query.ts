@@ -19,6 +19,7 @@ export class CardQuery extends Base64QueryStringGenerator implements IPageable {
   groupByCard = false;
   groupByCardSet = false;
   collectionIds: number[] = [];
+  minCount = 0;
 
   constructor(init?: Partial<CardQuery>) {
     super('cardQuery');

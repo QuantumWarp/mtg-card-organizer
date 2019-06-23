@@ -1,0 +1,6 @@
+dotnet publish -c Release
+
+cd /var/aspnetcore/databases/
+chown www-data:www-data mtg-card-organizer.db
+
+systemctl restart mtg-card-organizer

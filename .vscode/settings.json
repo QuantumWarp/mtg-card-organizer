@@ -1,28 +1,28 @@
 {
     "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
+        "*.db.bak": true,
         "**/.DS_Store": true,
-
-        // C#
+        "**/.editorconfig": true,
+        "**/.git": true,
+        "**/.gitignore": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/.vscode": true,
         "**/bin": true,
-        "**/obj": true,
-
-        // Angular
-        "**/node_modules": true,
+        "**/CVS": true,
         "**/karma.conf.js": true,
+        "**/node_modules": true,
+        "**/obj": true,
+        "**/package-lock.json": true,
         "**/protractor.conf.js": true,
         "**/tsconfig.json": true,
-        "**/tslint.json": true,
-        "**/package-lock.json": true,
-        "**/.editorconfig": true,
-        
-        // Other
-        "**/.vscode": true,
-        "**/.gitignore": true,
-        "AllSets-x.json*": true,
-        "*.db.bak": true
-    }
+        "AllSets-x.json*": true
+    },
+    "sqltools.connections": [
+        {
+            "database": ".\\mtg-card-organizer.db",
+            "dialect": "SQLite",
+            "name": "LocalMtg"
+        }
+    ]
 }

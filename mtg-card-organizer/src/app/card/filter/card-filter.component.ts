@@ -62,6 +62,7 @@ export class CardFilterComponent implements OnInit {
 
       collectionIds: [[], ],
       grouping: [[], ],
+      minCount: [, ],
     });
 
     if (this.data.currentFilter) {
@@ -83,7 +84,6 @@ export class CardFilterComponent implements OnInit {
 
   apply(): void {
     const filter = Object.assign(new CardQuery(), this.form.value);
-    console.log(filter);
 
     filter.name = filter.name ? [ filter.name ] : [];
     filter.text = filter.text ? [ filter.text ] : [];

@@ -52,7 +52,7 @@ export class RegisterComponent implements OnInit {
         type: SnackNotificationType.Success,
         message: 'Registration Successful'
       }));
-      this.router.navigateByUrl('/auth/login');
+      this.router.navigateByUrl('/containers');
     },
     () => this.loading = false);
   }

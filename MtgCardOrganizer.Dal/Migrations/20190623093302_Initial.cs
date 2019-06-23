@@ -109,7 +109,8 @@ namespace MtgCardOrganizer.Dal.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: false),
-                    Code = table.Column<string>(nullable: true)
+                    Code = table.Column<string>(nullable: true),
+                    ReleaseDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

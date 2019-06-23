@@ -34,6 +34,7 @@ namespace MtgCardOrganizer.Bll.Parsers
             var newSet = new Set {
                 Code = setObj["code"].ToString(),
                 Name = setObj["name"].ToString(),
+                ReleaseDate = DateTime.Parse(setObj["releaseDate"].ToString()),
             };
             Sets.Add(newSet);
 

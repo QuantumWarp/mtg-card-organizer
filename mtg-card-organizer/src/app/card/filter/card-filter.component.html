@@ -16,6 +16,10 @@
         <mat-radio-button [value]="1">Group by Card</mat-radio-button>
         <mat-radio-button [value]="2">Group by Card Set</mat-radio-button>
       </mat-radio-group>
+
+      <mat-form-field *ngIf="collectionIdsControl.value.length !== 0 && groupingControl.value !== 0">
+        <input autocomplete="off" matInput type="number" placeholder="Minimum Count" formControlName="minCount">
+      </mat-form-field>
     </div>
 
     <mat-divider *ngIf="data.collectionSearch" [vertical]="true"></mat-divider>

@@ -9,7 +9,7 @@ using MtgCardOrganizer.Dal.Initialization;
 namespace MtgCardOrganizer.Dal.Migrations
 {
     [DbContext(typeof(MtgCardOrganizerContext))]
-    [Migration("20190415215102_Initial")]
+    [Migration("20190623093302_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -187,6 +187,8 @@ namespace MtgCardOrganizer.Dal.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired();
+
+                    b.Property<DateTime>("ReleaseDate");
 
                     b.HasKey("Id");
 

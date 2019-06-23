@@ -12,3 +12,8 @@
 .card-image-area-loading {
   border: 1px grey solid;
 }
+
+img {
+  object-fit: contain;
+  width: 100%;
+}

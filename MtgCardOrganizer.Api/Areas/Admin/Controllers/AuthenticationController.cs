@@ -19,16 +19,16 @@ namespace MtgCardOrganizer.Api.Areas.Admin.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
+        public async Task<ActionResult<string>> Register([FromBody] RegisterRequest registerRequest)
         {
-            await _identityService.RegisterAsync(registerRequest);
-            return NoContent();
+            var token = await _identityService.RegisterAsync(registerRequest);
+            return Ok(new JwtSecurityTokenHandler().WriteToken(token));
         }
         
         [HttpPost("login")]
         public async Task<ActionResult<string>> GenerateToken([FromBody] LoginRequest loginRequest)
         {
-            var token = await _identityService.GenerateTokenAsync(loginRequest);
+            var token = await _identityService.LoginAsync(loginRequest);
             return Ok(new JwtSecurityTokenHandler().WriteToken(token));
         }
     }

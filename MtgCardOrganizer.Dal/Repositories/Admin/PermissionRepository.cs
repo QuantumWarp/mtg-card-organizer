@@ -75,8 +75,8 @@ namespace MtgCardOrganizer.Dal.Repositories.Admin
                 var container = await _dbContext.Containers
                     .AsNoTracking()
                     .Where(x => x.Id == containerId)
-                    .SingleAsync();
-                return container.IsPublic ? Permission.Read : Permission.None;
+                    .SingleOrDefaultAsync();
+                return (container != null && container.IsPublic) ? Permission.Read : Permission.None;
             }
         }
 

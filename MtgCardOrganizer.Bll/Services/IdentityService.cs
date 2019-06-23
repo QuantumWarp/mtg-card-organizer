@@ -20,8 +20,8 @@ namespace MtgCardOrganizer.Bll.Services
 {
     public interface IIdentityService
     {
-        Task RegisterAsync(RegisterRequest registerCommand);
-        Task<JwtSecurityToken> GenerateTokenAsync(LoginRequest loginCommand);
+        Task<JwtSecurityToken> RegisterAsync(RegisterRequest registerCommand);
+        Task<JwtSecurityToken> LoginAsync(LoginRequest loginCommand);
         Task ToggleSuspension(string userId);
     }
 
@@ -47,7 +47,7 @@ namespace MtgCardOrganizer.Bll.Services
             _signInManager = signInManager;
         }
         
-        public async Task RegisterAsync(RegisterRequest registerRequest)
+        public async Task<JwtSecurityToken> RegisterAsync(RegisterRequest registerRequest)
         {
             using (var transaction = await _dbContext.Database.BeginTransactionAsync())
             {
@@ -76,10 +76,12 @@ namespace MtgCardOrganizer.Bll.Services
                 await _userManager.AddToRolesAsync(user, roles);
 
                 transaction.Commit();
+                
+                return await GenerateTokenAsync(user);
             }
         }
         
-        public async Task<JwtSecurityToken> GenerateTokenAsync(LoginRequest loginRequest)
+        public async Task<JwtSecurityToken> LoginAsync(LoginRequest loginRequest)
         {
             var user = await _userManager.FindByNameAsync(loginRequest.LoginName);
             if (user == null) await _userManager.FindByEmailAsync(loginRequest.LoginName);
@@ -93,6 +95,17 @@ namespace MtgCardOrganizer.Bll.Services
             if (!result.Succeeded)
                 throw new LoginException("Invalid login details");
 
+            return await GenerateTokenAsync(user);
+        }
+
+        public async Task ToggleSuspension(string userId)
+        {
+            // TODO: Logout user
+            await _userRepository.ToggleSuspension(userId);
+        }
+
+        private async Task<JwtSecurityToken> GenerateTokenAsync(User user)
+        {
             var roles = await _userManager.GetRolesAsync(user);
 
             var claims = new List<Claim>
@@ -117,12 +130,6 @@ namespace MtgCardOrganizer.Bll.Services
                 signingCredentials: credentials);
 
             return token;
-        }
-
-        public async Task ToggleSuspension(string userId)
-        {
-            // TODO: Logout user
-            await _userRepository.ToggleSuspension(userId);
         }
     }
 }

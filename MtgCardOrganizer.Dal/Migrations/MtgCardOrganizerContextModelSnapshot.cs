@@ -186,6 +186,8 @@ namespace MtgCardOrganizer.Dal.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
+                    b.Property<DateTime>("ReleaseDate");
+
                     b.HasKey("Id");
 
                     b.ToTable("Sets");

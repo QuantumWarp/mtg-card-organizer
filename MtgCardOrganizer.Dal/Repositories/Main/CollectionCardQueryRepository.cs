@@ -4,11 +4,8 @@ using MtgCardOrganizer.Dal.Enums;
 using MtgCardOrganizer.Dal.Initialization;
 using MtgCardOrganizer.Dal.Repositories.Admin;
 using MtgCardOrganizer.Dal.Requests.CardQueries;
-using MtgCardOrganizer.Dal.Requests.Generic;
 using MtgCardOrganizer.Dal.Responses;
 using MtgCardOrganizer.Dal.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -50,16 +47,17 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
                     Count = x.Count(),
                 })
                 .OrderBy(x => x.CardName)
+                .Where(x => x.Count >= cardQuery.MinCount)
                 .ApplyPagingAsync(cardQuery?.Paging);
 
             return new PagedData<CardInstanceGroupedCard>(
                 groupedInstances.Data
-                    .GroupJoin(
+                    .Join(
                         _dbContext.Cards,
                         x => x.CardName,
                         x => x.Name,
                         (x, card) => new CardInstanceGroupedCard {
-                            Card = card.First(),
+                            Card = card,
                             Count = x.Count,
                         })
                     .ToList(),
@@ -79,6 +77,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
                     CardSetId = x.Key,
                     Count = x.Count(),
                 })
+                .Where(x => x.Count >= cardQuery.MinCount)
                 .ApplyPagingAsync(cardQuery?.Paging);
 
             return new PagedData<CardInstanceGroupedCardSet>(
@@ -105,6 +104,7 @@ namespace MtgCardOrganizer.Dal.Repositories.Main
                 .Include(x => x.CardSet)
                     .ThenInclude(x => x.Card)
                 .ApplyQuery(cardQuery)
+                .OrderBy(x => x.CardSet.Card.Name)
                 .ApplyPagingAsync(cardQuery?.Paging);
         }
 

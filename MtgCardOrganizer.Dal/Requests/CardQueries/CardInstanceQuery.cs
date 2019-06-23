@@ -12,6 +12,7 @@ namespace MtgCardOrganizer.Dal.Requests.CardQueries
         public List<Rarity?> Rarities { get; set; } = new List<Rarity?>();
         public List<string> Nums { get; set; } = new List<string>();
 
+        public int MinCount { get; set; } = 0;
         public List<int> CollectionIds { get; set; } = new List<int>();
 
         public override IQueryable<CardInstance> ApplyQuery(IQueryable<CardInstance> queryable)

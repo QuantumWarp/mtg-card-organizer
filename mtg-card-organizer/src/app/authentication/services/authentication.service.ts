@@ -43,8 +43,10 @@ export class AuthenticationService {
     private jwtHelperService: JwtHelperService
   ) { }
 
-  register(registerModel: RegisterModel): Observable<void> {
-    return this.apiService.post<void>('api/auth/register', registerModel);
+  register(registerModel: RegisterModel): Observable<string> {
+    return this.apiService.post<string>('api/auth/register', registerModel).pipe(
+      tap((token) => this.parseToken(token))
+    );
   }
 
   login(loginModel: LoginModel): Observable<string> {
