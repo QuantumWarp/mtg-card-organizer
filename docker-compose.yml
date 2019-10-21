@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  web:
+    container_name: 'mtg-card-organizer-web'
+    build:
+      context: ./mtg-card-organizer/
+      dockerfile: Dockerfile
+    networks:
+      - proxy
+  api:
+    container_name: 'mtg-card-organizer-api'
+    build:
+      context: .
+      dockerfile: ./MtgCardOrganizer.Api/Dockerfile
+    networks:
+      - proxy
+    volumes:
+      - "db:/var/mtgdb"
+
+volumes:
+  db:
+
+networks:
+  proxy:
+    name: proxy
