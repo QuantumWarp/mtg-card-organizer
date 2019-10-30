@@ -11,7 +11,6 @@ COPY MtgCardOrganizer.Bll/ MtgCardOrganizer.Bll/
 COPY MtgCardOrganizer.Dal/ MtgCardOrganizer.Dal/
 RUN dotnet publish ./MtgCardOrganizer.Api/MtgCardOrganizer.Api.csproj -c Release -o ../dist
 
-
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-alpine
 WORKDIR /app
 COPY --from=builder /app/dist/ .

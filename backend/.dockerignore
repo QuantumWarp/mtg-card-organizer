@@ -1,10 +1,6 @@
-.git
 .dockerignore
+Build.Dockerfile
 Dockerfile
-.docker-compose.yml
-.vscode
-.gitignore
-mtg-card-organizer
 
 */bin
 */obj

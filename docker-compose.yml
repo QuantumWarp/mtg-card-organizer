@@ -3,19 +3,22 @@ services:
   web:
     container_name: 'mtg-card-organizer-web'
     build:
-      context: ./mtg-card-organizer/
+      context: ./frontend/
       dockerfile: Dockerfile
     networks:
       - proxy
+    restart: always
+
   api:
     container_name: 'mtg-card-organizer-api'
     build:
-      context: .
-      dockerfile: ./MtgCardOrganizer.Api/Dockerfile
+      context: ./backend/
+      dockerfile: Dockerfile
     networks:
       - proxy
     volumes:
       - "db:/var/mtgdb"
+    restart: always
 
 volumes:
   db:
